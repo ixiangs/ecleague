@@ -1,22 +1,19 @@
 <?php
 namespace Toys\Data;
 
-class Configuration{
-	
-	public static $tablePrefix = '';
-	public static $trace = false;
-	public static $defaultConnection = 'default';
-	public static $connectionSettings = array();
+class Configuration
+{
+
+    public static $tablePrefix = '';
+    public static $trace = false;
+    public static $defaultConnection = 'default';
+    public static $connectionSettings = array();
     public static $logger = null;
-	
-	public static function addConnection($name, $provider, $dsn, $user, $password, $options = array()){
+
+	public static function addConnection($name, $provider, $settings){
 		self::$connectionSettings[$name] = array(
-			'name'=>$name,
-			'provider'=>$provider,
-			'dsn'=>$dsn,
-			'user'=>$user,
-			'password'=>$password,
-			'options'=>$options
-		);
+            'provider'=>$provider,
+            'settings'=>$settings
+        );
 	}
 }

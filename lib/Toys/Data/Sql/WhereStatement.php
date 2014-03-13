@@ -18,10 +18,6 @@ abstract class WhereStatement extends BaseStatement{
         return $this->conditions;
     }
 
-//    public function resetWhere(){
-//        $this->conditions = array();
-//    }
-
     public function orNext(){
         $this->conditions = 'OR';
         return $this;
@@ -33,52 +29,62 @@ abstract class WhereStatement extends BaseStatement{
     }
 
     public function eq($field, $value){
-        $this->conditions[] = array($field, $value, 'eq');
+        $this->conditions[] = array('eq', $field, $value);
         return $this;
     }
 
     public function gt($field, $value){
-        $this->conditions[] = array($field, $value, 'gt');
+        $this->conditions[] = array('gt', $field, $value);
         return $this;
     }
 
     public function lt($field, $value){
-        $this->conditions[] = array($field, $value, 'lt');
+        $this->conditions[] = array('lt', $field, $value);
         return $this;
     }
 
     public function ge($field, $value){
-        $this->conditions[] = array($field, $value, 'ge');
+        $this->conditions[] = array('ge', $field, $value);
         return $this;
     }
 
     public function le($field, $value){
-        $this->conditions[] = array($field, $value, 'le');
+        $this->conditions[] = array('le', $field, $value);
         return $this;
     }
 
     public function ne($field, $value){
-        $this->conditions[] = array($field, $value, 'ne');
+        $this->conditions[] = array('ne', $field, $value);
         return $this;
     }
 
     public function like($field, $value){
-        $this->conditions[] = array($field, $value, 'like');
+        $this->conditions[] = array('like', $field, $value);
         return $this;
     }
 
     public function in($field, $value){
-        $this->conditions[] = array($field, $value, 'in');
+        $this->conditions[] = array('in', $field, $value);
         return $this;
     }
 
     public function notIn($field, $value){
-        $this->conditions[] = array($field, $value, 'notin');
+        $this->conditions[] = array('notin', $field, $value);
+        return $this;
+    }
+
+    public function isNull($field){
+        $this->conditions[] = array('isnull', $field);
+        return $this;
+    }
+
+    public function notNull($field){
+        $this->conditions[] = array('notnull', $field);
         return $this;
     }
 
     public function between($field, $value){
-        $this->conditions[] = array($field, $value, 'between');
+        $this->conditions[] = array('between', $field, $value);
         return $this;
     }
 } 

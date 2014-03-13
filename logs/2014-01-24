@@ -1,0 +1,1745 @@
+v|2014-01-24 09:16:51|::1|sql|SELECT COUNT(*) FROM {t}auth_account
+v|2014-01-24 09:16:51|::1|sql|SELECT id,username,password,email,status,level,role_ids FROM {t}auth_account LIMIT 0,50
+v|2014-01-24 09:16:51|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/auth/account/index.php
+v|2014-01-24 09:16:51|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/pagination.php
+v|2014-01-24 09:16:51|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/master.php
+v|2014-01-24 09:16:51|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 09:19:04|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/auth/account/edit.php
+v|2014-01-24 09:19:04|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/alert.php
+v|2014-01-24 09:19:04|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/master.php
+v|2014-01-24 09:19:04|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 09:19:16|::1|sql|SELECT id,username,password,email,status,level,role_ids FROM {t}auth_account WHERE username=:p0[:p0:testlogin]
+v|2014-01-24 09:19:45|::1|sql|SELECT id,username,password,email,status,level,role_ids FROM {t}auth_account WHERE username=:p0[:p0:testlogin]
+v|2014-01-24 09:20:06|::1|sql|SELECT id,username,password,email,status,level,role_ids FROM {t}auth_account WHERE username=:p0[:p0:testlogin]
+v|2014-01-24 09:20:07|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/auth/account/edit.php
+v|2014-01-24 09:20:07|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/alert.php
+v|2014-01-24 09:20:07|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/master.php
+v|2014-01-24 09:20:07|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 09:20:15|::1|sql|SELECT id,username,password,email,status,level,role_ids FROM {t}auth_account WHERE username=:p0[:p0:testlogin]
+v|2014-01-24 09:20:15|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/auth/account/edit.php
+v|2014-01-24 09:20:15|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/alert.php
+v|2014-01-24 09:20:15|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/master.php
+v|2014-01-24 09:20:15|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 09:20:36|::1|sql|SELECT id,username,password,email,status,level,role_ids FROM {t}auth_account WHERE username=:p0[:p0:testlogin]
+v|2014-01-24 09:20:36|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/auth/account/edit.php
+v|2014-01-24 09:20:36|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/alert.php
+v|2014-01-24 09:20:36|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/master.php
+v|2014-01-24 09:20:36|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 09:21:30|::1|sql|SELECT id,username,password,email,status,level,role_ids FROM {t}auth_account WHERE username=:p0[:p0:testlogin]
+v|2014-01-24 09:21:30|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/auth/account/edit.php
+v|2014-01-24 09:21:30|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/alert.php
+v|2014-01-24 09:21:53|::1|sql|SELECT id,username,password,email,status,level,role_ids FROM {t}auth_account WHERE username=:p0[:p0:testlogin]
+v|2014-01-24 09:21:53|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/auth/account/edit.php
+v|2014-01-24 09:21:53|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/alert.php
+v|2014-01-24 09:21:53|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/master.php
+v|2014-01-24 09:21:53|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 09:22:31|::1|sql|SELECT id,username,password,email,status,level,role_ids FROM {t}auth_account WHERE username=:p0[:p0:testlogin]
+v|2014-01-24 09:22:31|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/auth/account/edit.php
+v|2014-01-24 09:22:31|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/alert.php
+v|2014-01-24 09:22:31|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/master.php
+v|2014-01-24 09:22:31|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 09:23:19|::1|sql|SELECT id,username,password,email,status,level,role_ids FROM {t}auth_account WHERE username=:p0[:p0:testlogin]
+v|2014-01-24 09:23:19|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/auth/account/edit.php
+v|2014-01-24 09:23:19|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/alert.php
+v|2014-01-24 09:23:19|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/master.php
+v|2014-01-24 09:23:19|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 09:24:29|::1|sql|SELECT id,username,password,email,status,level,role_ids FROM {t}auth_account WHERE username=:p0[:p0:testlogin]
+v|2014-01-24 09:24:29|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/auth/account/edit.php
+v|2014-01-24 09:24:29|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/alert.php
+v|2014-01-24 09:24:29|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/master.php
+v|2014-01-24 09:24:29|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 09:24:57|::1|sql|SELECT id,username,password,email,status,level,role_ids FROM {t}auth_account WHERE username=:p0[:p0:testlogin]
+v|2014-01-24 09:24:57|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/auth/account/edit.php
+v|2014-01-24 09:24:57|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/alert.php
+v|2014-01-24 09:24:57|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/master.php
+v|2014-01-24 09:24:57|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 09:25:33|::1|sql|SELECT id,username,password,email,status,level,role_ids FROM {t}auth_account WHERE username=:p0[:p0:testlogin]
+v|2014-01-24 09:25:33|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/auth/account/edit.php
+v|2014-01-24 09:25:33|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/alert.php
+v|2014-01-24 09:25:33|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/master.php
+v|2014-01-24 09:25:33|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 09:25:43|::1|sql|SELECT id,username,password,email,status,level,role_ids FROM {t}auth_account WHERE username=:p0[:p0:testlogin]
+v|2014-01-24 09:25:43|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/auth/account/edit.php
+v|2014-01-24 09:25:43|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/alert.php
+v|2014-01-24 09:25:43|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/master.php
+v|2014-01-24 09:25:43|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 09:26:11|::1|sql|SELECT id,username,password,email,status,level,role_ids FROM {t}auth_account WHERE username=:p0[:p0:testlogin]
+v|2014-01-24 09:26:11|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/auth/account/edit.php
+v|2014-01-24 09:26:11|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/alert.php
+v|2014-01-24 09:26:11|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/master.php
+v|2014-01-24 09:26:11|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 09:26:18|::1|sql|SELECT id,username,password,email,status,level,role_ids FROM {t}auth_account WHERE username=:p0[:p0:testlogin]
+v|2014-01-24 09:26:18|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/auth/account/edit.php
+v|2014-01-24 09:26:18|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/alert.php
+v|2014-01-24 09:26:18|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/master.php
+v|2014-01-24 09:26:18|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 09:26:28|::1|sql|SELECT id,username,password,email,status,level,role_ids FROM {t}auth_account WHERE username=:p0[:p0:testlogin]
+v|2014-01-24 09:26:28|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/auth/account/edit.php
+v|2014-01-24 09:26:28|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/alert.php
+v|2014-01-24 09:26:28|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/master.php
+v|2014-01-24 09:26:28|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 09:26:38|::1|sql|SELECT id,username,password,email,status,level,role_ids FROM {t}auth_account WHERE username=:p0[:p0:testlogin]
+v|2014-01-24 09:26:38|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/auth/account/edit.php
+v|2014-01-24 09:26:38|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/alert.php
+v|2014-01-24 09:26:38|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/master.php
+v|2014-01-24 09:26:38|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 09:26:49|::1|sql|SELECT id,username,password,email,status,level,role_ids FROM {t}auth_account WHERE username=:p0[:p0:testlogin]
+v|2014-01-24 09:26:49|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/auth/account/edit.php
+v|2014-01-24 09:26:49|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/alert.php
+v|2014-01-24 09:26:49|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/master.php
+v|2014-01-24 09:26:49|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 09:27:07|::1|sql|SELECT id,username,password,email,status,level,role_ids FROM {t}auth_account WHERE username=:p0[:p0:testlogin]
+v|2014-01-24 09:27:07|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/auth/account/edit.php
+v|2014-01-24 09:27:07|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/alert.php
+v|2014-01-24 09:27:07|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/master.php
+v|2014-01-24 09:27:07|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 09:27:37|::1|sql|SELECT id,username,password,email,status,level,role_ids FROM {t}auth_account WHERE username=:p0[:p0:testlogin]
+v|2014-01-24 09:27:37|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/auth/account/edit.php
+v|2014-01-24 09:27:37|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/alert.php
+v|2014-01-24 09:27:37|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/master.php
+v|2014-01-24 09:27:37|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 09:27:42|::1|sql|SELECT id,username,password,email,status,level,role_ids FROM {t}auth_account WHERE username=:p0[:p0:testlogin]
+v|2014-01-24 09:27:42|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/auth/account/edit.php
+v|2014-01-24 09:27:42|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/alert.php
+v|2014-01-24 09:27:42|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/master.php
+v|2014-01-24 09:27:42|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 09:28:09|::1|sql|SELECT id,username,password,email,status,level,role_ids FROM {t}auth_account WHERE username=:p0[:p0:testlogin]
+v|2014-01-24 09:28:09|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/auth/account/edit.php
+v|2014-01-24 09:28:09|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/alert.php
+v|2014-01-24 09:28:09|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/master.php
+v|2014-01-24 09:28:09|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 09:29:40|::1|sql|SELECT id,username,password,email,status,level,role_ids FROM {t}auth_account WHERE username=:p0[:p0:testlogin]
+v|2014-01-24 09:29:40|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/auth/account/edit.php
+v|2014-01-24 09:29:40|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/alert.php
+v|2014-01-24 09:29:40|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/master.php
+v|2014-01-24 09:29:40|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 09:29:51|::1|sql|SELECT id,username,password,email,status,level,role_ids FROM {t}auth_account WHERE username=:p0[:p0:testlogin]
+v|2014-01-24 09:29:51|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/auth/account/edit.php
+v|2014-01-24 09:29:51|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/alert.php
+v|2014-01-24 09:29:51|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/master.php
+v|2014-01-24 09:29:51|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 09:30:17|::1|sql|SELECT id,username,password,email,status,level,role_ids FROM {t}auth_account WHERE username=:p0[:p0:testlogin2]
+v|2014-01-24 09:30:44|::1|sql|SELECT id,username,password,email,status,level,role_ids FROM {t}auth_account WHERE username=:p0[:p0:testlogin2]
+v|2014-01-24 09:43:08|::1|sql|SELECT id,username,password,email,status,level,role_ids FROM {t}auth_account WHERE username=:p0[:p0:testlogin2]
+v|2014-01-24 09:43:08|::1|sql|INSERT INTO {t}auth_account (username,password,email,status,level,role_ids) VALUES (:p0,:p1,:p2,:p3,:p4,:p5)[:p0:testlogin2][:p1:e3af258ab3eba2d62763326bf7a7bfc0][:p2:testlogin@abc.com][:p3:1][:p4:2][:p5:]
+v|2014-01-24 09:43:09|::1|sql|SELECT COUNT(*) FROM {t}auth_account
+v|2014-01-24 09:43:09|::1|sql|SELECT id,username,password,email,status,level,role_ids FROM {t}auth_account LIMIT 0,50
+v|2014-01-24 09:43:09|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/auth/account/index.php
+v|2014-01-24 09:43:09|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/pagination.php
+v|2014-01-24 09:43:09|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/master.php
+v|2014-01-24 09:43:09|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 09:43:14|::1|sql|SELECT id,username,password,email,status,level,role_ids FROM {t}auth_account WHERE id=:p0[:p0:40]
+v|2014-01-24 09:43:14|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/auth/account/edit.php
+v|2014-01-24 09:43:14|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/alert.php
+v|2014-01-24 09:43:14|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/master.php
+v|2014-01-24 09:43:14|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 09:43:20|::1|sql|SELECT id,username,password,email,status,level,role_ids FROM {t}auth_account WHERE id=:p0[:p0:]
+v|2014-01-24 09:45:28|::1|sql|SELECT id,username,password,email,status,level,role_ids FROM {t}auth_account WHERE id=:p0[:p0:]
+v|2014-01-24 09:47:53|::1|sql|SELECT id,username,password,email,status,level,role_ids FROM {t}auth_account WHERE id=:p0[:p0:40]
+v|2014-01-24 09:47:53|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/auth/account/edit.php
+v|2014-01-24 09:47:53|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/alert.php
+v|2014-01-24 09:47:53|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/master.php
+v|2014-01-24 09:47:53|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 09:47:56|::1|sql|SELECT COUNT(*) FROM {t}system_area
+v|2014-01-24 09:47:56|::1|sql|SELECT id,parent_id,name,phone_code FROM {t}system_area ORDER BY level ASC,id ASC LIMIT 0,50
+v|2014-01-24 09:47:56|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/system/area/index.php
+v|2014-01-24 09:47:56|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/pagination.php
+v|2014-01-24 09:47:56|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/master.php
+v|2014-01-24 09:47:56|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 09:47:59|::1|sql|SELECT id,parent_id,name,phone_code FROM {t}system_area WHERE id=:p0[:p0:1234]
+v|2014-01-24 09:47:59|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/system/area/edit.php
+v|2014-01-24 09:47:59|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/alert.php
+v|2014-01-24 09:47:59|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/master.php
+v|2014-01-24 09:47:59|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 09:48:03|::1|sql|SELECT COUNT(*) FROM {t}system_area
+v|2014-01-24 09:48:03|::1|sql|SELECT id,parent_id,name,phone_code FROM {t}system_area ORDER BY level ASC,id ASC LIMIT 0,50
+v|2014-01-24 09:48:03|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/system/area/index.php
+v|2014-01-24 09:48:03|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/pagination.php
+v|2014-01-24 09:48:03|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/master.php
+v|2014-01-24 09:48:03|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 09:48:07|::1|sql|SELECT COUNT(*) FROM {t}auth_account
+v|2014-01-24 09:48:07|::1|sql|SELECT id,username,password,email,status,level,role_ids FROM {t}auth_account LIMIT 0,50
+v|2014-01-24 09:48:07|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/auth/account/index.php
+v|2014-01-24 09:48:07|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/pagination.php
+v|2014-01-24 09:48:07|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/master.php
+v|2014-01-24 09:48:07|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 09:48:11|::1|sql|SELECT id,username,password,email,status,level,role_ids FROM {t}auth_account WHERE id=:p0[:p0:40]
+v|2014-01-24 09:48:11|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/auth/account/edit.php
+v|2014-01-24 09:48:11|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/alert.php
+v|2014-01-24 09:48:11|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/master.php
+v|2014-01-24 09:48:11|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 09:48:17|::1|sql|SELECT COUNT(*) FROM {t}auth_account
+v|2014-01-24 09:48:17|::1|sql|SELECT id,username,password,email,status,level,role_ids FROM {t}auth_account LIMIT 0,50
+v|2014-01-24 09:48:17|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/auth/account/index.php
+v|2014-01-24 09:48:17|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/pagination.php
+v|2014-01-24 09:48:17|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/master.php
+v|2014-01-24 09:48:17|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 09:48:19|::1|sql|SELECT id,username,password,email,status,level,role_ids FROM {t}auth_account WHERE id=:p0[:p0:40]
+v|2014-01-24 09:48:19|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/auth/account/edit.php
+v|2014-01-24 09:48:19|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/alert.php
+v|2014-01-24 09:48:19|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/master.php
+v|2014-01-24 09:48:19|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 09:48:22|::1|sql|SELECT COUNT(*) FROM {t}auth_account
+v|2014-01-24 09:48:22|::1|sql|SELECT id,username,password,email,status,level,role_ids FROM {t}auth_account LIMIT 0,50
+v|2014-01-24 09:48:22|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/auth/account/index.php
+v|2014-01-24 09:48:22|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/pagination.php
+v|2014-01-24 09:48:22|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/master.php
+v|2014-01-24 09:48:22|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 09:48:25|::1|sql|SELECT id,username,password,email,status,level,role_ids FROM {t}auth_account WHERE id=:p0[:p0:40]
+v|2014-01-24 09:48:25|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/auth/account/edit.php
+v|2014-01-24 09:48:25|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/alert.php
+v|2014-01-24 09:48:25|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/master.php
+v|2014-01-24 09:48:25|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 09:48:35|::1|sql|SELECT id,username,password,email,status,level,role_ids FROM {t}auth_account WHERE id=:p0[:p0:]
+v|2014-01-24 09:50:14|::1|sql|SELECT id,username,password,email,status,level,role_ids FROM {t}auth_account WHERE id=:p0[:p0:]
+v|2014-01-24 09:50:16|::1|sql|SELECT id,username,password,email,status,level,role_ids FROM {t}auth_account WHERE id=:p0[:p0:40]
+v|2014-01-24 09:50:16|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/auth/account/edit.php
+v|2014-01-24 09:50:16|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/alert.php
+v|2014-01-24 09:50:16|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/master.php
+v|2014-01-24 09:50:16|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 09:50:20|::1|sql|SELECT COUNT(*) FROM {t}auth_account
+v|2014-01-24 09:50:20|::1|sql|SELECT id,username,password,email,status,level,role_ids FROM {t}auth_account LIMIT 0,50
+v|2014-01-24 09:50:20|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/auth/account/index.php
+v|2014-01-24 09:50:20|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/pagination.php
+v|2014-01-24 09:50:20|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/master.php
+v|2014-01-24 09:50:20|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 09:50:21|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/auth/account/edit.php
+v|2014-01-24 09:50:21|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/alert.php
+v|2014-01-24 09:50:21|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/master.php
+v|2014-01-24 09:50:21|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 09:58:35|::1|sql|SELECT COUNT(*) FROM {t}system_area
+v|2014-01-24 09:58:35|::1|sql|SELECT id,parent_id,name,phone_code FROM {t}system_area ORDER BY level ASC,id ASC LIMIT 0,50
+v|2014-01-24 09:58:35|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/system/area/index.php
+v|2014-01-24 09:58:35|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/pagination.php
+v|2014-01-24 09:58:35|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/master.php
+v|2014-01-24 09:58:35|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 09:58:38|::1|sql|SELECT COUNT(*) FROM {t}auth_account
+v|2014-01-24 09:58:38|::1|sql|SELECT id,username,password,email,status,level,role_ids FROM {t}auth_account LIMIT 0,50
+v|2014-01-24 09:58:38|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/auth/account/index.php
+v|2014-01-24 09:58:38|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/pagination.php
+v|2014-01-24 09:58:38|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/master.php
+v|2014-01-24 09:58:38|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 09:59:10|::1|sql|SELECT id,username,password,email,status,level,role_ids FROM {t}auth_account WHERE id=:p0[:p0:29]
+v|2014-01-24 09:59:10|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/auth/account/edit.php
+v|2014-01-24 09:59:10|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/alert.php
+v|2014-01-24 09:59:10|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/master.php
+v|2014-01-24 09:59:10|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 10:18:32|::1|sql|SELECT COUNT(*) FROM {t}system_area
+v|2014-01-24 10:18:32|::1|sql|SELECT id,parent_id,name,phone_code FROM {t}system_area ORDER BY level ASC,id ASC LIMIT 0,50
+v|2014-01-24 10:18:32|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/system/area/index.php
+v|2014-01-24 10:18:32|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/pagination.php
+v|2014-01-24 10:18:32|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/master.php
+v|2014-01-24 10:18:32|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 10:19:52|::1|sql|SELECT COUNT(*) FROM {t}system_area
+v|2014-01-24 10:19:52|::1|sql|SELECT id,parent_id,name,phone_code FROM {t}system_area ORDER BY level ASC,id ASC LIMIT 0,50
+v|2014-01-24 10:19:52|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/system/area/index.php
+v|2014-01-24 10:19:52|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/pagination.php
+v|2014-01-24 10:19:52|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/master.php
+v|2014-01-24 10:19:52|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 10:25:02|::1|sql|SELECT COUNT(*) FROM {t}system_area
+v|2014-01-24 10:25:02|::1|sql|SELECT id,parent_id,name,phone_code FROM {t}system_area ORDER BY level ASC,id ASC LIMIT 0,50
+v|2014-01-24 10:25:18|::1|sql|SELECT COUNT(*) FROM {t}system_area
+v|2014-01-24 10:25:18|::1|sql|SELECT id,parent_id,name,phone_code FROM {t}system_area ORDER BY level ASC,id ASC LIMIT 0,50
+v|2014-01-24 10:26:42|::1|sql|SELECT COUNT(*) FROM {t}system_area
+v|2014-01-24 10:26:42|::1|sql|SELECT id,parent_id,name,phone_code FROM {t}system_area ORDER BY level ASC,id ASC LIMIT 0,50
+v|2014-01-24 10:27:15|::1|sql|SELECT COUNT(*) FROM {t}system_area
+v|2014-01-24 10:27:15|::1|sql|SELECT id,parent_id,name,phone_code FROM {t}system_area ORDER BY level ASC,id ASC LIMIT 0,50
+v|2014-01-24 10:27:15|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/system/area/index.php
+v|2014-01-24 10:27:15|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/pagination.php
+v|2014-01-24 10:27:15|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/master.php
+v|2014-01-24 10:27:15|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 10:27:20|::1|sql|SELECT COUNT(*) FROM {t}system_area
+v|2014-01-24 10:27:20|::1|sql|SELECT id,parent_id,name,phone_code FROM {t}system_area ORDER BY level ASC,id ASC LIMIT 450,50
+v|2014-01-24 10:27:20|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/system/area/index.php
+v|2014-01-24 10:27:20|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/pagination.php
+v|2014-01-24 10:27:20|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/master.php
+v|2014-01-24 10:27:20|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 10:27:22|::1|sql|SELECT id,parent_id,name,phone_code FROM {t}system_area WHERE id=:p0[:p0:130303]
+v|2014-01-24 10:27:22|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/system/area/edit.php
+v|2014-01-24 10:27:22|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/alert.php
+v|2014-01-24 10:27:22|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/master.php
+v|2014-01-24 10:27:22|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 10:27:49|::1|sql|SELECT id,parent_id,name,phone_code FROM {t}system_area WHERE id=:p0[:p0:130303]
+v|2014-01-24 10:27:49|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/system/area/edit.php
+v|2014-01-24 10:27:49|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/alert.php
+v|2014-01-24 10:27:49|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/master.php
+v|2014-01-24 10:27:49|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 10:27:53|::1|sql|SELECT id,parent_id,name,phone_code FROM {t}system_area WHERE id=:p0[:p0:130303]
+v|2014-01-24 10:27:53|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/system/area/edit.php
+v|2014-01-24 10:27:53|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/alert.php
+v|2014-01-24 10:27:53|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/master.php
+v|2014-01-24 10:27:53|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 10:28:27|::1|sql|SELECT id,parent_id,name,phone_code FROM {t}system_area WHERE id=:p0[:p0:130303]
+v|2014-01-24 10:28:27|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/system/area/edit.php
+v|2014-01-24 10:28:27|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/alert.php
+v|2014-01-24 10:28:27|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/master.php
+v|2014-01-24 10:28:27|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 10:28:31|::1|sql|SELECT id,parent_id,name,phone_code FROM {t}system_area WHERE id=:p0[:p0:130303]
+v|2014-01-24 10:28:31|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/system/area/edit.php
+v|2014-01-24 10:28:31|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/alert.php
+v|2014-01-24 10:28:31|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/master.php
+v|2014-01-24 10:28:31|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 10:28:33|::1|sql|SELECT COUNT(*) FROM {t}system_area
+v|2014-01-24 10:28:33|::1|sql|SELECT id,parent_id,name,phone_code FROM {t}system_area ORDER BY level ASC,id ASC LIMIT 450,50
+v|2014-01-24 10:28:33|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/system/area/index.php
+v|2014-01-24 10:28:33|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/pagination.php
+v|2014-01-24 10:28:33|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/master.php
+v|2014-01-24 10:28:33|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 10:28:37|::1|sql|SELECT COUNT(*) FROM {t}system_area
+v|2014-01-24 10:28:37|::1|sql|SELECT id,parent_id,name,phone_code FROM {t}system_area ORDER BY level ASC,id ASC LIMIT 600,50
+v|2014-01-24 10:28:37|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/system/area/index.php
+v|2014-01-24 10:28:37|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/pagination.php
+v|2014-01-24 10:28:37|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/master.php
+v|2014-01-24 10:28:37|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 10:28:41|::1|sql|SELECT COUNT(*) FROM {t}system_area
+v|2014-01-24 10:28:41|::1|sql|SELECT id,parent_id,name,phone_code FROM {t}system_area ORDER BY level ASC,id ASC LIMIT 650,50
+v|2014-01-24 10:28:41|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/system/area/index.php
+v|2014-01-24 10:28:41|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/pagination.php
+v|2014-01-24 10:28:41|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/master.php
+v|2014-01-24 10:28:41|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 10:28:44|::1|sql|SELECT id,parent_id,name,phone_code FROM {t}system_area WHERE id=:p0[:p0:140702]
+v|2014-01-24 10:28:44|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/system/area/edit.php
+v|2014-01-24 10:28:44|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/alert.php
+v|2014-01-24 10:28:44|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/master.php
+v|2014-01-24 10:28:44|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 10:28:47|::1|sql|SELECT id,parent_id,name,phone_code FROM {t}system_area WHERE id=:p0[:p0:140702]
+v|2014-01-24 10:28:47|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/system/area/edit.php
+v|2014-01-24 10:28:47|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/alert.php
+v|2014-01-24 10:28:47|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/master.php
+v|2014-01-24 10:28:47|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 10:29:29|::1|sql|SELECT id,parent_id,name,phone_code FROM {t}system_area WHERE id=:p0[:p0:140702]
+v|2014-01-24 10:29:29|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/system/area/edit.php
+v|2014-01-24 10:29:29|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/alert.php
+v|2014-01-24 10:29:29|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/master.php
+v|2014-01-24 10:29:29|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 10:29:32|::1|sql|SELECT id,parent_id,name,phone_code FROM {t}system_area WHERE id=:p0[:p0:140702]
+v|2014-01-24 10:29:32|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/system/area/edit.php
+v|2014-01-24 10:29:32|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/alert.php
+v|2014-01-24 10:29:32|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/master.php
+v|2014-01-24 10:29:32|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 10:29:36|::1|sql|SELECT id,parent_id,name,phone_code FROM {t}system_area WHERE id=:p0[:p0:140702]
+v|2014-01-24 10:29:36|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/system/area/edit.php
+v|2014-01-24 10:29:36|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/alert.php
+v|2014-01-24 10:29:36|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/master.php
+v|2014-01-24 10:29:36|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 10:29:48|::1|sql|SELECT COUNT(*) FROM {t}system_area
+v|2014-01-24 10:29:48|::1|sql|SELECT id,parent_id,name,phone_code FROM {t}system_area ORDER BY level ASC,id ASC LIMIT 0,50
+v|2014-01-24 10:29:48|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/system/area/index.php
+v|2014-01-24 10:29:48|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/pagination.php
+v|2014-01-24 10:29:48|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/master.php
+v|2014-01-24 10:29:48|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 10:29:52|::1|sql|SELECT COUNT(*) FROM {t}system_area
+v|2014-01-24 10:29:52|::1|sql|SELECT id,parent_id,name,phone_code FROM {t}system_area ORDER BY level ASC,id ASC LIMIT 250,50
+v|2014-01-24 10:29:52|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/system/area/index.php
+v|2014-01-24 10:29:52|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/pagination.php
+v|2014-01-24 10:29:52|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/master.php
+v|2014-01-24 10:29:52|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 10:29:56|::1|sql|SELECT COUNT(*) FROM {t}system_area
+v|2014-01-24 10:29:56|::1|sql|SELECT id,parent_id,name,phone_code FROM {t}system_area ORDER BY level ASC,id ASC LIMIT 250,50
+v|2014-01-24 10:29:56|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/system/area/index.php
+v|2014-01-24 10:29:56|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/pagination.php
+v|2014-01-24 10:29:56|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/master.php
+v|2014-01-24 10:29:56|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 10:30:17|::1|sql|SELECT COUNT(*) FROM {t}system_area
+v|2014-01-24 10:30:17|::1|sql|SELECT id,parent_id,name,phone_code FROM {t}system_area ORDER BY level ASC,id ASC LIMIT 250,50
+v|2014-01-24 10:30:17|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/system/area/index.php
+v|2014-01-24 10:30:17|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/pagination.php
+v|2014-01-24 10:30:17|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/master.php
+v|2014-01-24 10:30:17|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 10:30:20|::1|sql|SELECT COUNT(*) FROM {t}system_area
+v|2014-01-24 10:30:20|::1|sql|SELECT id,parent_id,name,phone_code FROM {t}system_area ORDER BY level ASC,id ASC LIMIT 250,50
+v|2014-01-24 10:30:20|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/system/area/index.php
+v|2014-01-24 10:30:20|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/pagination.php
+v|2014-01-24 10:30:20|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/master.php
+v|2014-01-24 10:30:20|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 10:30:39|::1|sql|SELECT COUNT(*) FROM {t}system_area
+v|2014-01-24 10:30:39|::1|sql|SELECT id,parent_id,name,phone_code FROM {t}system_area ORDER BY level ASC,id ASC LIMIT 250,50
+v|2014-01-24 10:30:39|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/system/area/index.php
+v|2014-01-24 10:30:39|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/pagination.php
+v|2014-01-24 10:30:39|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/master.php
+v|2014-01-24 10:30:39|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 10:30:49|::1|sql|SELECT COUNT(*) FROM {t}system_area
+v|2014-01-24 10:30:49|::1|sql|SELECT id,parent_id,name,phone_code FROM {t}system_area ORDER BY level ASC,id ASC LIMIT 300,50
+v|2014-01-24 10:30:49|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/system/area/index.php
+v|2014-01-24 10:30:49|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/pagination.php
+v|2014-01-24 10:30:49|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/master.php
+v|2014-01-24 10:30:49|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 10:30:53|::1|sql|SELECT COUNT(*) FROM {t}system_area
+v|2014-01-24 10:30:53|::1|sql|SELECT id,parent_id,name,phone_code FROM {t}system_area ORDER BY level ASC,id ASC LIMIT 300,50
+v|2014-01-24 10:30:53|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/system/area/index.php
+v|2014-01-24 10:30:53|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/pagination.php
+v|2014-01-24 10:30:53|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/master.php
+v|2014-01-24 10:30:53|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 10:31:06|::1|sql|SELECT COUNT(*) FROM {t}system_area
+v|2014-01-24 10:31:06|::1|sql|SELECT id,parent_id,name,phone_code FROM {t}system_area ORDER BY level ASC,id ASC LIMIT 350,50
+v|2014-01-24 10:31:06|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/system/area/index.php
+v|2014-01-24 10:31:06|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/pagination.php
+v|2014-01-24 10:31:06|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/master.php
+v|2014-01-24 10:31:06|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 10:31:08|::1|sql|SELECT COUNT(*) FROM {t}system_area
+v|2014-01-24 10:31:08|::1|sql|SELECT id,parent_id,name,phone_code FROM {t}system_area ORDER BY level ASC,id ASC LIMIT 350,50
+v|2014-01-24 10:31:09|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/system/area/index.php
+v|2014-01-24 10:31:09|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/pagination.php
+v|2014-01-24 10:31:09|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/master.php
+v|2014-01-24 10:31:09|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 10:32:26|::1|sql|SELECT COUNT(*) FROM {t}system_area
+v|2014-01-24 10:32:26|::1|sql|SELECT id,parent_id,name,phone_code FROM {t}system_area ORDER BY level ASC,id ASC LIMIT 400,50
+v|2014-01-24 10:32:26|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/system/area/index.php
+v|2014-01-24 10:32:26|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/pagination.php
+v|2014-01-24 10:32:26|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/master.php
+v|2014-01-24 10:32:26|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 10:32:29|::1|sql|SELECT COUNT(*) FROM {t}system_area
+v|2014-01-24 10:32:29|::1|sql|SELECT id,parent_id,name,phone_code FROM {t}system_area ORDER BY level ASC,id ASC LIMIT 400,50
+v|2014-01-24 10:32:29|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/system/area/index.php
+v|2014-01-24 10:32:29|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/pagination.php
+v|2014-01-24 10:32:29|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/master.php
+v|2014-01-24 10:32:29|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 10:32:34|::1|sql|SELECT COUNT(*) FROM {t}system_area
+v|2014-01-24 10:32:34|::1|sql|SELECT id,parent_id,name,phone_code FROM {t}system_area ORDER BY level ASC,id ASC LIMIT 450,50
+v|2014-01-24 10:32:34|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/system/area/index.php
+v|2014-01-24 10:32:34|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/pagination.php
+v|2014-01-24 10:32:34|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/master.php
+v|2014-01-24 10:32:34|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 10:32:37|::1|sql|SELECT COUNT(*) FROM {t}system_area
+v|2014-01-24 10:32:37|::1|sql|SELECT id,parent_id,name,phone_code FROM {t}system_area ORDER BY level ASC,id ASC LIMIT 450,50
+v|2014-01-24 10:32:37|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/system/area/index.php
+v|2014-01-24 10:32:37|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/pagination.php
+v|2014-01-24 10:32:37|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/master.php
+v|2014-01-24 10:32:37|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 10:34:47|::1|sql|SELECT COUNT(*) FROM {t}system_area
+v|2014-01-24 10:34:47|::1|sql|SELECT id,parent_id,name,phone_code FROM {t}system_area ORDER BY level ASC,id ASC LIMIT 400,50
+v|2014-01-24 10:34:47|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/system/area/index.php
+v|2014-01-24 10:34:47|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/pagination.php
+v|2014-01-24 10:34:47|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/master.php
+v|2014-01-24 10:34:47|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 10:34:50|::1|sql|SELECT COUNT(*) FROM {t}system_area
+v|2014-01-24 10:34:50|::1|sql|SELECT id,parent_id,name,phone_code FROM {t}system_area ORDER BY level ASC,id ASC LIMIT 300,50
+v|2014-01-24 10:34:50|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/system/area/index.php
+v|2014-01-24 10:34:50|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/pagination.php
+v|2014-01-24 10:34:50|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/master.php
+v|2014-01-24 10:34:50|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 10:34:53|::1|sql|SELECT COUNT(*) FROM {t}system_area
+v|2014-01-24 10:34:53|::1|sql|SELECT id,parent_id,name,phone_code FROM {t}system_area ORDER BY level ASC,id ASC LIMIT 150,50
+v|2014-01-24 10:34:53|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/system/area/index.php
+v|2014-01-24 10:34:53|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/pagination.php
+v|2014-01-24 10:34:53|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/master.php
+v|2014-01-24 10:34:53|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 10:34:56|::1|sql|SELECT COUNT(*) FROM {t}system_area
+v|2014-01-24 10:34:56|::1|sql|SELECT id,parent_id,name,phone_code FROM {t}system_area ORDER BY level ASC,id ASC LIMIT 150,50
+v|2014-01-24 10:34:56|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/system/area/index.php
+v|2014-01-24 10:34:56|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/pagination.php
+v|2014-01-24 10:34:56|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/master.php
+v|2014-01-24 10:34:56|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 10:36:11|::1|sql|SELECT COUNT(*) FROM {t}system_area
+v|2014-01-24 10:36:11|::1|sql|SELECT id,parent_id,name,phone_code FROM {t}system_area ORDER BY level ASC,id ASC LIMIT 500,50
+v|2014-01-24 10:36:11|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/system/area/index.php
+v|2014-01-24 10:36:11|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/pagination.php
+v|2014-01-24 10:36:11|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/master.php
+v|2014-01-24 10:36:11|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 10:36:15|::1|sql|SELECT COUNT(*) FROM {t}system_area
+v|2014-01-24 10:36:15|::1|sql|SELECT id,parent_id,name,phone_code FROM {t}system_area ORDER BY level ASC,id ASC LIMIT 550,50
+v|2014-01-24 10:36:15|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/system/area/index.php
+v|2014-01-24 10:36:15|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/pagination.php
+v|2014-01-24 10:36:15|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/master.php
+v|2014-01-24 10:36:15|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 10:36:19|::1|sql|SELECT COUNT(*) FROM {t}system_area
+v|2014-01-24 10:36:19|::1|sql|SELECT id,parent_id,name,phone_code FROM {t}system_area ORDER BY level ASC,id ASC LIMIT 550,50
+v|2014-01-24 10:36:19|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/system/area/index.php
+v|2014-01-24 10:36:19|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/pagination.php
+v|2014-01-24 10:36:19|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/master.php
+v|2014-01-24 10:36:19|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 10:36:40|::1|sql|SELECT COUNT(*) FROM {t}system_area
+v|2014-01-24 10:36:40|::1|sql|SELECT id,parent_id,name,phone_code FROM {t}system_area ORDER BY level ASC,id ASC LIMIT 550,50
+v|2014-01-24 10:36:40|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/system/area/index.php
+v|2014-01-24 10:36:40|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/pagination.php
+v|2014-01-24 10:36:40|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/master.php
+v|2014-01-24 10:36:40|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 10:36:43|::1|sql|SELECT COUNT(*) FROM {t}system_area
+v|2014-01-24 10:36:43|::1|sql|SELECT id,parent_id,name,phone_code FROM {t}system_area ORDER BY level ASC,id ASC LIMIT 550,50
+v|2014-01-24 10:36:43|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/system/area/index.php
+v|2014-01-24 10:36:43|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/pagination.php
+v|2014-01-24 10:36:43|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/master.php
+v|2014-01-24 10:36:43|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 10:36:57|::1|sql|SELECT COUNT(*) FROM {t}system_area
+v|2014-01-24 10:36:57|::1|sql|SELECT id,parent_id,name,phone_code FROM {t}system_area ORDER BY level ASC,id ASC LIMIT 600,50
+v|2014-01-24 10:36:57|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/system/area/index.php
+v|2014-01-24 10:36:57|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/pagination.php
+v|2014-01-24 10:36:57|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/master.php
+v|2014-01-24 10:36:57|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 10:37:00|::1|sql|SELECT COUNT(*) FROM {t}system_area
+v|2014-01-24 10:37:00|::1|sql|SELECT id,parent_id,name,phone_code FROM {t}system_area ORDER BY level ASC,id ASC LIMIT 600,50
+v|2014-01-24 10:37:00|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/system/area/index.php
+v|2014-01-24 10:37:00|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/pagination.php
+v|2014-01-24 10:37:00|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/master.php
+v|2014-01-24 10:37:00|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 10:37:30|::1|sql|SELECT COUNT(*) FROM {t}system_area
+v|2014-01-24 10:37:30|::1|sql|SELECT id,parent_id,name,phone_code FROM {t}system_area ORDER BY level ASC,id ASC LIMIT 600,50
+v|2014-01-24 10:37:30|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/system/area/index.php
+v|2014-01-24 10:37:30|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/pagination.php
+v|2014-01-24 10:37:30|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/master.php
+v|2014-01-24 10:37:30|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 10:37:34|::1|sql|SELECT COUNT(*) FROM {t}system_area
+v|2014-01-24 10:37:34|::1|sql|SELECT id,parent_id,name,phone_code FROM {t}system_area ORDER BY level ASC,id ASC LIMIT 700,50
+v|2014-01-24 10:37:34|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/system/area/index.php
+v|2014-01-24 10:37:34|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/pagination.php
+v|2014-01-24 10:37:34|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/master.php
+v|2014-01-24 10:37:34|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 10:37:37|::1|sql|SELECT COUNT(*) FROM {t}system_area
+v|2014-01-24 10:37:37|::1|sql|SELECT id,parent_id,name,phone_code FROM {t}system_area ORDER BY level ASC,id ASC LIMIT 700,50
+v|2014-01-24 10:37:37|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/system/area/index.php
+v|2014-01-24 10:37:37|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/pagination.php
+v|2014-01-24 10:37:37|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/master.php
+v|2014-01-24 10:37:37|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 10:38:18|::1|sql|SELECT COUNT(*) FROM {t}system_area
+v|2014-01-24 10:38:18|::1|sql|SELECT id,parent_id,name,phone_code FROM {t}system_area ORDER BY level ASC,id ASC LIMIT 700,50
+v|2014-01-24 10:38:18|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/system/area/index.php
+v|2014-01-24 10:38:18|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/pagination.php
+v|2014-01-24 10:38:18|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/master.php
+v|2014-01-24 10:38:18|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 10:38:20|::1|sql|SELECT id,parent_id,name,phone_code FROM {t}system_area WHERE id=:p0[:p0:141029]
+v|2014-01-24 10:38:20|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/system/area/edit.php
+v|2014-01-24 10:38:20|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/alert.php
+v|2014-01-24 10:38:20|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/master.php
+v|2014-01-24 10:38:20|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 10:38:41|::1|sql|SELECT id,parent_id,name,phone_code FROM {t}system_area WHERE id=:p0[:p0:141029]
+v|2014-01-24 10:38:41|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/system/area/edit.php
+v|2014-01-24 10:38:41|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/alert.php
+v|2014-01-24 10:38:41|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/master.php
+v|2014-01-24 10:38:41|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 10:38:46|::1|sql|SELECT COUNT(*) FROM {t}system_area
+v|2014-01-24 10:38:46|::1|sql|SELECT id,parent_id,name,phone_code FROM {t}system_area ORDER BY level ASC,id ASC LIMIT 700,50
+v|2014-01-24 10:38:46|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/system/area/index.php
+v|2014-01-24 10:38:46|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/pagination.php
+v|2014-01-24 10:38:46|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/master.php
+v|2014-01-24 10:38:46|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 10:38:51|::1|sql|SELECT COUNT(*) FROM {t}system_area
+v|2014-01-24 10:38:51|::1|sql|SELECT id,parent_id,name,phone_code FROM {t}system_area ORDER BY level ASC,id ASC LIMIT 750,50
+v|2014-01-24 10:38:51|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/system/area/index.php
+v|2014-01-24 10:38:51|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/pagination.php
+v|2014-01-24 10:38:51|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/master.php
+v|2014-01-24 10:38:51|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 10:39:38|::1|sql|SELECT COUNT(*) FROM {t}system_area
+v|2014-01-24 10:39:38|::1|sql|SELECT id,parent_id,name,phone_code FROM {t}system_area ORDER BY level ASC,id ASC LIMIT 750,50
+v|2014-01-24 10:39:38|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/system/area/index.php
+v|2014-01-24 10:39:38|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/pagination.php
+v|2014-01-24 10:39:38|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/master.php
+v|2014-01-24 10:39:38|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 10:39:42|::1|sql|SELECT COUNT(*) FROM {t}system_area
+v|2014-01-24 10:39:42|::1|sql|SELECT id,parent_id,name,phone_code FROM {t}system_area ORDER BY level ASC,id ASC LIMIT 0,50
+v|2014-01-24 10:39:42|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/system/area/index.php
+v|2014-01-24 10:39:42|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/pagination.php
+v|2014-01-24 10:39:42|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/master.php
+v|2014-01-24 10:39:42|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 10:39:43|::1|sql|SELECT COUNT(*) FROM {t}system_area
+v|2014-01-24 10:39:43|::1|sql|SELECT id,parent_id,name,phone_code FROM {t}system_area ORDER BY level ASC,id ASC LIMIT 0,50
+v|2014-01-24 10:39:43|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/system/area/index.php
+v|2014-01-24 10:39:43|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/pagination.php
+v|2014-01-24 10:39:43|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/master.php
+v|2014-01-24 10:39:43|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 10:39:46|::1|sql|SELECT id,parent_id,name,phone_code FROM {t}system_area WHERE id=:p0[:p0:1234]
+v|2014-01-24 10:39:46|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/system/area/edit.php
+v|2014-01-24 10:39:46|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/alert.php
+v|2014-01-24 10:39:46|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/master.php
+v|2014-01-24 10:39:46|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 10:39:51|::1|sql|SELECT id,parent_id,name,phone_code FROM {t}system_area WHERE id=:p0[:p0:1234]
+v|2014-01-24 10:39:51|::1|sql|UPDATE {t}system_area SET parent_id=:p0,name=:p1,phone_code=:p2 WHERE id=:p3[:p0:][:p1:ddddd][:p2:][:p3:1234]
+v|2014-01-24 10:40:03|::1|sql|SELECT id,parent_id,name,phone_code FROM {t}system_area WHERE id=:p0[:p0:1234]
+v|2014-01-24 10:40:03|::1|sql|UPDATE {t}system_area SET parent_id=:p0,name=:p1,phone_code=:p2 WHERE id=:p3[:p0:][:p1:ddddd][:p2:][:p3:1234]
+v|2014-01-24 10:40:39|::1|sql|SELECT id,parent_id,name,phone_code FROM {t}system_area WHERE id=:p0[:p0:1234]
+v|2014-01-24 10:40:39|::1|sql|UPDATE {t}system_area SET parent_id=:p0,name=:p1,phone_code=:p2 WHERE id=:p3[:p0:][:p1:ddddd][:p2:][:p3:1234]
+v|2014-01-24 10:40:40|::1|sql|SELECT COUNT(*) FROM {t}system_area
+v|2014-01-24 10:40:40|::1|sql|SELECT id,parent_id,name,phone_code FROM {t}system_area ORDER BY level ASC,id ASC LIMIT 0,50
+v|2014-01-24 10:40:40|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/system/area/index.php
+v|2014-01-24 10:40:40|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/pagination.php
+v|2014-01-24 10:40:40|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/master.php
+v|2014-01-24 10:40:40|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 10:40:44|::1|sql|SELECT COUNT(*) FROM {t}system_area
+v|2014-01-24 10:40:44|::1|sql|SELECT id,parent_id,name,phone_code FROM {t}system_area ORDER BY level ASC,id ASC LIMIT 200,50
+v|2014-01-24 10:40:44|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/system/area/index.php
+v|2014-01-24 10:40:44|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/pagination.php
+v|2014-01-24 10:40:44|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/master.php
+v|2014-01-24 10:40:44|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 10:40:47|::1|sql|SELECT id,parent_id,name,phone_code FROM {t}system_area WHERE id=:p0[:p0:4115]
+v|2014-01-24 10:40:47|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/system/area/edit.php
+v|2014-01-24 10:40:47|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/alert.php
+v|2014-01-24 10:40:47|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/master.php
+v|2014-01-24 10:40:47|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 10:40:49|::1|sql|SELECT id,parent_id,name,phone_code FROM {t}system_area WHERE id=:p0[:p0:4115]
+v|2014-01-24 10:40:49|::1|sql|UPDATE {t}system_area SET parent_id=:p0,name=:p1,phone_code=:p2 WHERE id=:p3[:p0:41][:p1:信阳市][:p2:][:p3:4115]
+v|2014-01-24 10:40:50|::1|sql|SELECT COUNT(*) FROM {t}system_area
+v|2014-01-24 10:40:50|::1|sql|SELECT id,parent_id,name,phone_code FROM {t}system_area ORDER BY level ASC,id ASC LIMIT 200,50
+v|2014-01-24 10:40:50|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/system/area/index.php
+v|2014-01-24 10:40:50|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/pagination.php
+v|2014-01-24 10:40:50|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/master.php
+v|2014-01-24 10:40:50|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 10:53:46|::1|sql|SELECT COUNT(*) FROM {t}system_area
+v|2014-01-24 10:53:46|::1|sql|SELECT id,parent_id,name,phone_code FROM {t}system_area ORDER BY level ASC,id ASC LIMIT 0,50
+v|2014-01-24 10:53:46|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/system/area/index.php
+v|2014-01-24 10:53:46|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/pagination.php
+v|2014-01-24 10:53:46|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/master.php
+v|2014-01-24 10:53:46|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 11:09:24|::1|sql|SELECT COUNT(*) FROM {t}system_area
+v|2014-01-24 11:09:24|::1|sql|SELECT id,parent_id,name,phone_code FROM {t}system_area ORDER BY level ASC,id ASC LIMIT 0,50
+v|2014-01-24 11:09:24|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/system/area/index.php
+v|2014-01-24 11:09:24|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/pagination.php
+v|2014-01-24 11:09:24|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/master.php
+v|2014-01-24 11:09:24|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 11:09:38|::1|sql|SELECT COUNT(*) FROM {t}system_area
+v|2014-01-24 11:09:38|::1|sql|SELECT id,parent_id,name,phone_code FROM {t}system_area ORDER BY level ASC,id ASC LIMIT 0,50
+v|2014-01-24 11:09:38|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/system/area/index.php
+v|2014-01-24 11:09:38|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/pagination.php
+v|2014-01-24 11:09:38|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/master.php
+v|2014-01-24 11:09:38|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 11:09:41|::1|sql|SELECT COUNT(*) FROM {t}auth_behavior
+v|2014-01-24 11:09:41|::1|sql|SELECT id,code,label,enabled FROM {t}auth_behavior LIMIT 0,50
+v|2014-01-24 11:09:41|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/auth/behavior/index.php
+v|2014-01-24 11:09:41|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/pagination.php
+v|2014-01-24 11:09:41|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/master.php
+v|2014-01-24 11:09:41|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 11:10:03|::1|sql|SELECT COUNT(*) FROM {t}auth_behavior
+v|2014-01-24 11:10:03|::1|sql|SELECT id,code,label,enabled FROM {t}auth_behavior LIMIT 0,50
+v|2014-01-24 11:10:03|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/auth/behavior/index.php
+v|2014-01-24 11:10:03|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/pagination.php
+v|2014-01-24 11:10:03|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/master.php
+v|2014-01-24 11:10:03|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 11:10:39|::1|sql|SELECT COUNT(*) FROM {t}auth_behavior
+v|2014-01-24 11:10:39|::1|sql|SELECT id,code,label,enabled FROM {t}auth_behavior LIMIT 0,50
+v|2014-01-24 11:10:39|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/auth/behavior/index.php
+v|2014-01-24 11:10:39|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/pagination.php
+v|2014-01-24 11:10:39|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/master.php
+v|2014-01-24 11:10:39|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 11:10:45|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/auth/behavior/edit.php
+v|2014-01-24 11:10:45|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/alert.php
+v|2014-01-24 11:10:45|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/master.php
+v|2014-01-24 11:10:45|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 11:12:39|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/auth/behavior/edit.php
+v|2014-01-24 11:12:39|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/alert.php
+v|2014-01-24 11:12:39|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/master.php
+v|2014-01-24 11:12:39|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 11:12:56|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/auth/behavior/edit.php
+v|2014-01-24 11:12:56|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/alert.php
+v|2014-01-24 11:12:56|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/master.php
+v|2014-01-24 11:12:56|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 11:14:07|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/auth/behavior/edit.php
+v|2014-01-24 11:14:07|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/alert.php
+v|2014-01-24 11:14:07|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/master.php
+v|2014-01-24 11:14:07|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 11:14:19|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/auth/behavior/edit.php
+v|2014-01-24 11:14:19|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/alert.php
+v|2014-01-24 11:14:19|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/master.php
+v|2014-01-24 11:14:19|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 11:14:34|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/auth/behavior/edit.php
+v|2014-01-24 11:14:34|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/alert.php
+v|2014-01-24 11:14:34|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/master.php
+v|2014-01-24 11:14:34|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 11:16:15|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/auth/behavior/edit.php
+v|2014-01-24 11:16:15|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/alert.php
+v|2014-01-24 11:16:15|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/master.php
+v|2014-01-24 11:16:15|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 11:16:25|::1|sql|INSERT INTO {t}auth_behavior (code,label,enabled) VALUES (:p0,:p1,:p2)[:p0:new_order][:p1:我的文本][:p2:1]
+v|2014-01-24 11:16:26|::1|sql|SELECT COUNT(*) FROM {t}auth_behavior
+v|2014-01-24 11:16:26|::1|sql|SELECT id,code,label,enabled FROM {t}auth_behavior LIMIT 0,50
+v|2014-01-24 11:16:26|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/auth/behavior/index.php
+v|2014-01-24 11:16:26|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/pagination.php
+v|2014-01-24 11:16:26|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/master.php
+v|2014-01-24 11:16:26|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 11:17:43|::1|sql|SELECT COUNT(*) FROM {t}auth_behavior
+v|2014-01-24 11:17:43|::1|sql|SELECT id,code,label,enabled FROM {t}auth_behavior LIMIT 0,50
+v|2014-01-24 11:17:44|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/auth/behavior/index.php
+v|2014-01-24 11:17:51|::1|sql|SELECT COUNT(*) FROM {t}auth_behavior
+v|2014-01-24 11:17:51|::1|sql|SELECT id,code,label,enabled FROM {t}auth_behavior LIMIT 0,50
+v|2014-01-24 11:17:51|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/auth/behavior/index.php
+v|2014-01-24 11:17:51|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/pagination.php
+v|2014-01-24 11:17:51|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/master.php
+v|2014-01-24 11:17:51|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 11:18:07|::1|sql|SELECT id,code,label,enabled FROM {t}auth_behavior WHERE id=:p0[:p0:73]
+v|2014-01-24 11:18:07|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/auth/behavior/edit.php
+v|2014-01-24 11:18:07|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/alert.php
+v|2014-01-24 11:18:07|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/master.php
+v|2014-01-24 11:18:07|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 11:19:30|::1|sql|SELECT id,code,label,enabled FROM {t}auth_behavior WHERE id=:p0[:p0:73]
+v|2014-01-24 11:19:30|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/auth/behavior/edit.php
+v|2014-01-24 11:19:54|::1|sql|SELECT id,code,label,enabled FROM {t}auth_behavior WHERE id=:p0[:p0:73]
+v|2014-01-24 11:19:54|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/auth/behavior/edit.php
+v|2014-01-24 11:19:54|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/alert.php
+v|2014-01-24 11:19:54|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/master.php
+v|2014-01-24 11:19:54|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 11:20:38|::1|sql|SELECT id,code,label,enabled FROM {t}auth_behavior WHERE id=:p0[:p0:73]
+v|2014-01-24 11:20:38|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/auth/behavior/edit.php
+v|2014-01-24 11:20:38|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/alert.php
+v|2014-01-24 11:20:38|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/master.php
+v|2014-01-24 11:20:38|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 11:20:40|::1|sql|SELECT id,code,label,enabled FROM {t}auth_behavior WHERE id=:p0[:p0:]
+v|2014-01-24 11:20:45|::1|sql|SELECT id,code,label,enabled FROM {t}auth_behavior WHERE id=:p0[:p0:73]
+v|2014-01-24 11:20:45|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/auth/behavior/edit.php
+v|2014-01-24 11:20:45|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/alert.php
+v|2014-01-24 11:20:45|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/master.php
+v|2014-01-24 11:20:45|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 11:20:55|::1|sql|SELECT id,code,label,enabled FROM {t}auth_behavior WHERE id=:p0[:p0:73]
+v|2014-01-24 11:20:55|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/auth/behavior/edit.php
+v|2014-01-24 11:20:55|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/alert.php
+v|2014-01-24 11:20:55|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/master.php
+v|2014-01-24 11:20:55|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 11:22:04|::1|sql|SELECT id,code,label,enabled FROM {t}auth_behavior WHERE id=:p0[:p0:73]
+v|2014-01-24 11:22:04|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/auth/behavior/edit.php
+v|2014-01-24 11:22:04|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/alert.php
+v|2014-01-24 11:22:04|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/master.php
+v|2014-01-24 11:22:04|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 11:22:08|::1|sql|SELECT id,code,label,enabled FROM {t}auth_behavior WHERE id=:p0[:p0:]
+v|2014-01-24 11:22:50|::1|sql|SELECT id,code,label,enabled FROM {t}auth_behavior WHERE id=:p0[:p0:]
+v|2014-01-24 11:24:27|::1|sql|SELECT id,code,label,enabled FROM {t}auth_behavior WHERE id=:p0[:p0:73]
+v|2014-01-24 11:24:27|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/auth/behavior/edit.php
+v|2014-01-24 11:24:27|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/alert.php
+v|2014-01-24 11:24:27|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/master.php
+v|2014-01-24 11:24:27|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 11:24:30|::1|sql|SELECT id,code,label,enabled FROM {t}auth_behavior WHERE id=:p0[:p0:73]
+v|2014-01-24 11:24:30|::1|sql|UPDATE {t}auth_behavior SET label=:p0,enabled=:p1 WHERE id=:p2[:p0:new_order22][:p1:1][:p2:73]
+v|2014-01-24 11:24:31|::1|sql|SELECT COUNT(*) FROM {t}auth_behavior
+v|2014-01-24 11:24:31|::1|sql|SELECT id,code,label,enabled FROM {t}auth_behavior LIMIT 0,50
+v|2014-01-24 11:24:31|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/auth/behavior/index.php
+v|2014-01-24 11:24:31|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/pagination.php
+v|2014-01-24 11:24:31|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/master.php
+v|2014-01-24 11:24:31|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 11:24:55|::1|sql|SELECT id,code,label,enabled FROM {t}auth_behavior WHERE id=:p0[:p0:73]
+v|2014-01-24 11:24:55|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/auth/behavior/edit.php
+v|2014-01-24 11:24:55|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/alert.php
+v|2014-01-24 11:24:55|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/master.php
+v|2014-01-24 11:24:55|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 11:24:58|::1|sql|SELECT id,code,label,enabled FROM {t}auth_behavior WHERE id=:p0[:p0:73]
+v|2014-01-24 11:24:58|::1|sql|UPDATE {t}auth_behavior SET label=:p0,enabled=:p1 WHERE id=:p2[:p0:new_order][:p1:0][:p2:73]
+v|2014-01-24 11:24:59|::1|sql|SELECT COUNT(*) FROM {t}auth_behavior
+v|2014-01-24 11:24:59|::1|sql|SELECT id,code,label,enabled FROM {t}auth_behavior LIMIT 0,50
+v|2014-01-24 11:24:59|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/auth/behavior/index.php
+v|2014-01-24 11:24:59|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/pagination.php
+v|2014-01-24 11:24:59|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/master.php
+v|2014-01-24 11:24:59|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 11:38:41|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/auth/behavior/edit.php
+v|2014-01-24 11:38:41|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/alert.php
+v|2014-01-24 11:38:41|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/master.php
+v|2014-01-24 11:38:41|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 11:38:49|::1|sql|SELECT COUNT(*) FROM {t}auth_behavior WHERE code=:p0[:p0:new_order]
+v|2014-01-24 11:39:13|::1|sql|SELECT COUNT(*) FROM {t}auth_behavior WHERE code=:p0[:p0:new_order]
+v|2014-01-24 11:39:13|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/auth/behavior/edit.php
+v|2014-01-24 11:39:13|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/alert.php
+v|2014-01-24 11:39:13|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/master.php
+v|2014-01-24 11:39:13|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 11:43:15|::1|sql|SELECT COUNT(*) FROM {t}auth_behavior WHERE code=:p0[:p0:new_order]
+v|2014-01-24 11:43:15|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/auth/behavior/edit.php
+v|2014-01-24 11:43:15|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/alert.php
+v|2014-01-24 11:43:15|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/master.php
+v|2014-01-24 11:43:15|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 11:43:21|::1|sql|SELECT COUNT(*) FROM {t}auth_behavior WHERE code=:p0[:p0:new_order2]
+v|2014-01-24 11:43:21|::1|sql|INSERT INTO {t}auth_behavior (code,label,enabled) VALUES (:p0,:p1,:p2)[:p0:new_order2][:p1:12345678][:p2:1]
+v|2014-01-24 11:43:22|::1|sql|SELECT COUNT(*) FROM {t}auth_behavior
+v|2014-01-24 11:43:22|::1|sql|SELECT id,code,label,enabled FROM {t}auth_behavior LIMIT 0,50
+v|2014-01-24 11:43:22|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/auth/behavior/index.php
+v|2014-01-24 11:43:22|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/pagination.php
+v|2014-01-24 11:43:22|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/master.php
+v|2014-01-24 11:43:22|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 11:52:18|::1|sql|SELECT COUNT(*) FROM {t}auth_behavior
+v|2014-01-24 11:52:18|::1|sql|SELECT id,code,label,enabled FROM {t}auth_behavior LIMIT 0,50
+v|2014-01-24 11:52:18|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/auth/behavior/index.php
+v|2014-01-24 11:52:18|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/pagination.php
+v|2014-01-24 11:52:18|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/master.php
+v|2014-01-24 11:52:18|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 11:52:22|::1|sql|SELECT COUNT(*) FROM {t}auth_role
+v|2014-01-24 11:52:22|::1|sql|SELECT id,code,label,behavior_ids,enabled FROM {t}auth_role LIMIT 0,50
+v|2014-01-24 11:52:22|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/auth/role/index.php
+v|2014-01-24 11:52:22|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/pagination.php
+v|2014-01-24 11:52:22|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/master.php
+v|2014-01-24 11:52:22|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 11:52:38|::1|sql|SELECT COUNT(*) FROM {t}auth_role
+v|2014-01-24 11:52:38|::1|sql|SELECT id,code,label,behavior_ids,enabled FROM {t}auth_role LIMIT 0,50
+v|2014-01-24 11:52:38|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/auth/role/index.php
+v|2014-01-24 11:52:38|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/pagination.php
+v|2014-01-24 11:52:38|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/master.php
+v|2014-01-24 11:52:38|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 11:52:46|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/auth/role/edit.php
+v|2014-01-24 11:52:46|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/alert.php
+v|2014-01-24 11:52:46|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/master.php
+v|2014-01-24 11:52:46|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 11:55:08|::1|sql|SELECT id,code,label,enabled FROM {t}auth_behavior
+v|2014-01-24 11:55:08|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/auth/role/edit.php
+v|2014-01-24 11:55:08|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/alert.php
+v|2014-01-24 11:55:08|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/master.php
+v|2014-01-24 11:55:08|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 11:59:30|::1|sql|SELECT id,code,label,enabled FROM {t}auth_behavior
+v|2014-01-24 11:59:30|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/auth/role/edit.php
+v|2014-01-24 11:59:30|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/alert.php
+v|2014-01-24 11:59:46|::1|sql|SELECT id,code,label,enabled FROM {t}auth_behavior
+v|2014-01-24 11:59:46|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/auth/role/edit.php
+v|2014-01-24 11:59:46|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/alert.php
+v|2014-01-24 11:59:46|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/master.php
+v|2014-01-24 11:59:46|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 12:00:20|::1|sql|SELECT id,code,label,enabled FROM {t}auth_behavior
+v|2014-01-24 12:00:20|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/auth/role/edit.php
+v|2014-01-24 12:00:20|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/alert.php
+v|2014-01-24 12:00:20|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/master.php
+v|2014-01-24 12:00:20|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 13:07:15|::1|sql|SELECT id,code,label,enabled FROM {t}auth_behavior
+v|2014-01-24 13:07:15|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/auth/role/edit.php
+v|2014-01-24 13:07:15|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/alert.php
+v|2014-01-24 13:07:15|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/master.php
+v|2014-01-24 13:07:15|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 13:07:57|::1|sql|SELECT id,code,label,enabled FROM {t}auth_behavior
+v|2014-01-24 13:07:57|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/auth/role/edit.php
+v|2014-01-24 13:07:57|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/alert.php
+v|2014-01-24 13:08:23|::1|sql|SELECT id,code,label,enabled FROM {t}auth_behavior
+v|2014-01-24 13:08:23|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/auth/role/edit.php
+v|2014-01-24 13:08:23|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/alert.php
+v|2014-01-24 13:08:46|::1|sql|SELECT id,code,label,enabled FROM {t}auth_behavior
+v|2014-01-24 13:08:46|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/auth/role/edit.php
+v|2014-01-24 13:08:46|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/alert.php
+v|2014-01-24 13:08:46|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/master.php
+v|2014-01-24 13:08:46|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 13:11:01|::1|sql|SELECT COUNT(*) FROM {t}auth_role WHERE code=:p0[:p0:new_role]
+v|2014-01-24 13:11:01|::1|sql|INSERT INTO {t}auth_role (code,label,behavior_ids,enabled) VALUES (:p0,:p1,:p2,:p3)[:p0:new_role][:p1:1234567][:p2:72,73][:p3:1]
+v|2014-01-24 13:11:02|::1|sql|SELECT COUNT(*) FROM {t}auth_role
+v|2014-01-24 13:11:02|::1|sql|SELECT id,code,label,behavior_ids,enabled FROM {t}auth_role LIMIT 0,50
+v|2014-01-24 13:11:02|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/auth/role/index.php
+v|2014-01-24 13:11:02|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/pagination.php
+v|2014-01-24 13:11:02|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/master.php
+v|2014-01-24 13:11:02|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 13:11:07|::1|sql|SELECT id,code,label,behavior_ids,enabled FROM {t}auth_role WHERE id=:p0[:p0:32]
+v|2014-01-24 13:11:07|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/auth/role/edit.php
+v|2014-01-24 13:11:07|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/alert.php
+v|2014-01-24 13:11:07|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/master.php
+v|2014-01-24 13:11:07|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 13:31:23|::1|sql|SELECT id,code,label,behavior_ids,enabled FROM {t}auth_role WHERE id=:p0[:p0:32]
+v|2014-01-24 13:31:23|::1|sql|SELECT id,code,label,enabled FROM {t}auth_behavior
+v|2014-01-24 13:31:23|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/auth/role/edit.php
+v|2014-01-24 13:31:23|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/alert.php
+v|2014-01-24 13:31:23|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/master.php
+v|2014-01-24 13:31:23|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 13:31:27|::1|sql|SELECT id,code,label,behavior_ids,enabled FROM {t}auth_role WHERE id=:p0[:p0:32]
+v|2014-01-24 13:31:27|::1|sql|UPDATE {t}auth_role SET code=:p0,label=:p1,behavior_ids=:p2,enabled=:p3 WHERE id=:p4[:p0:new_role][:p1:1234567][:p2:72][:p3:1][:p4:32]
+v|2014-01-24 13:31:29|::1|sql|SELECT COUNT(*) FROM {t}auth_role
+v|2014-01-24 13:31:29|::1|sql|SELECT id,code,label,behavior_ids,enabled FROM {t}auth_role LIMIT 0,50
+v|2014-01-24 13:31:29|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/auth/role/index.php
+v|2014-01-24 13:31:29|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/pagination.php
+v|2014-01-24 13:31:29|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/master.php
+v|2014-01-24 13:31:29|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 13:31:48|::1|sql|SELECT id,code,label,behavior_ids,enabled FROM {t}auth_role WHERE id=:p0[:p0:31]
+v|2014-01-24 13:31:48|::1|sql|SELECT id,code,label,enabled FROM {t}auth_behavior
+v|2014-01-24 13:31:49|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/auth/role/edit.php
+v|2014-01-24 13:31:49|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/alert.php
+v|2014-01-24 13:31:49|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/master.php
+v|2014-01-24 13:31:49|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 13:31:54|::1|sql|SELECT id,code,label,behavior_ids,enabled FROM {t}auth_role WHERE id=:p0[:p0:31]
+v|2014-01-24 13:31:54|::1|sql|UPDATE {t}auth_role SET code=:p0,label=:p1,behavior_ids=:p2,enabled=:p3 WHERE id=:p4[:p0:role1][:p1:role two][:p2:73,74][:p3:0][:p4:31]
+v|2014-01-24 13:31:55|::1|sql|SELECT COUNT(*) FROM {t}auth_role
+v|2014-01-24 13:31:55|::1|sql|SELECT id,code,label,behavior_ids,enabled FROM {t}auth_role LIMIT 0,50
+v|2014-01-24 13:31:55|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/auth/role/index.php
+v|2014-01-24 13:31:55|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/pagination.php
+v|2014-01-24 13:31:55|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/master.php
+v|2014-01-24 13:31:55|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 13:36:03|::1|sql|SELECT COUNT(*) FROM {t}auth_role
+v|2014-01-24 13:36:03|::1|sql|SELECT id,code,label,behavior_ids,enabled FROM {t}auth_role LIMIT 0,50
+v|2014-01-24 13:36:03|::1|sql|SELECT id,code,label,enabled FROM {t}auth_behavior
+v|2014-01-24 13:36:03|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/auth/role/index.php
+v|2014-01-24 13:36:03|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/pagination.php
+v|2014-01-24 13:36:03|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/master.php
+v|2014-01-24 13:36:03|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 13:36:29|::1|sql|SELECT COUNT(*) FROM {t}auth_role
+v|2014-01-24 13:36:29|::1|sql|SELECT id,code,label,behavior_ids,enabled FROM {t}auth_role LIMIT 0,50
+v|2014-01-24 13:36:29|::1|sql|SELECT id,code,label,enabled FROM {t}auth_behavior
+v|2014-01-24 13:36:29|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/auth/role/index.php
+v|2014-01-24 13:36:29|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/pagination.php
+v|2014-01-24 13:36:29|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/master.php
+v|2014-01-24 13:36:29|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 13:36:38|::1|sql|SELECT COUNT(*) FROM {t}auth_role
+v|2014-01-24 13:36:38|::1|sql|SELECT id,code,label,behavior_ids,enabled FROM {t}auth_role LIMIT 0,50
+v|2014-01-24 13:36:38|::1|sql|SELECT id,code,label,enabled FROM {t}auth_behavior
+v|2014-01-24 13:36:38|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/auth/role/index.php
+v|2014-01-24 13:36:38|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/pagination.php
+v|2014-01-24 13:36:38|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/master.php
+v|2014-01-24 13:36:38|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 13:36:53|::1|sql|SELECT COUNT(*) FROM {t}auth_role
+v|2014-01-24 13:36:53|::1|sql|SELECT id,code,label,behavior_ids,enabled FROM {t}auth_role LIMIT 0,50
+v|2014-01-24 13:36:53|::1|sql|SELECT id,code,label,enabled FROM {t}auth_behavior
+v|2014-01-24 13:36:53|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/auth/role/index.php
+v|2014-01-24 13:36:53|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/pagination.php
+v|2014-01-24 13:36:53|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/master.php
+v|2014-01-24 13:36:53|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 13:37:36|::1|sql|SELECT COUNT(*) FROM {t}auth_role
+v|2014-01-24 13:37:36|::1|sql|SELECT id,code,label,behavior_ids,enabled FROM {t}auth_role LIMIT 0,50
+v|2014-01-24 13:37:36|::1|sql|SELECT id,code,label,enabled FROM {t}auth_behavior
+v|2014-01-24 13:37:36|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/auth/role/index.php
+v|2014-01-24 13:37:36|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/pagination.php
+v|2014-01-24 13:37:36|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/master.php
+v|2014-01-24 13:37:36|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 13:37:44|::1|sql|SELECT COUNT(*) FROM {t}auth_role
+v|2014-01-24 13:37:44|::1|sql|SELECT id,code,label,behavior_ids,enabled FROM {t}auth_role LIMIT 0,50
+v|2014-01-24 13:37:44|::1|sql|SELECT id,code,label,enabled FROM {t}auth_behavior
+v|2014-01-24 13:37:44|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/auth/role/index.php
+v|2014-01-24 13:37:44|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/pagination.php
+v|2014-01-24 13:37:44|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/master.php
+v|2014-01-24 13:37:44|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 13:49:08|::1|sql|SELECT id,code,label,behavior_ids,enabled FROM {t}auth_role WHERE id=:p0[:p0:31]
+v|2014-01-24 13:49:08|::1|sql|SELECT id,code,label,enabled FROM {t}auth_behavior
+v|2014-01-24 13:49:08|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/auth/role/edit.php
+v|2014-01-24 13:49:08|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/alert.php
+v|2014-01-24 13:49:08|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/master.php
+v|2014-01-24 13:49:08|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 13:49:13|::1|sql|SELECT id,code,label,behavior_ids,enabled FROM {t}auth_role WHERE id=:p0[:p0:31]
+v|2014-01-24 13:49:13|::1|sql|UPDATE {t}auth_role SET code=:p0,label=:p1,behavior_ids=:p2,enabled=:p3 WHERE id=:p4[:p0:role1][:p1:role two][:p2:73,74][:p3:0][:p4:31]
+v|2014-01-24 13:49:14|::1|sql|SELECT COUNT(*) FROM {t}auth_role
+v|2014-01-24 13:49:14|::1|sql|SELECT id,code,label,behavior_ids,enabled FROM {t}auth_role LIMIT 0,50
+v|2014-01-24 13:49:14|::1|sql|SELECT id,code,label,enabled FROM {t}auth_behavior
+v|2014-01-24 13:49:14|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/auth/role/index.php
+v|2014-01-24 13:49:14|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/pagination.php
+v|2014-01-24 13:49:14|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/master.php
+v|2014-01-24 13:49:14|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 13:49:17|::1|sql|SELECT id,code,label,behavior_ids,enabled FROM {t}auth_role WHERE id=:p0[:p0:31]
+v|2014-01-24 13:49:17|::1|sql|SELECT id,code,label,enabled FROM {t}auth_behavior
+v|2014-01-24 13:49:17|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/auth/role/edit.php
+v|2014-01-24 13:49:17|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/alert.php
+v|2014-01-24 13:49:17|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/master.php
+v|2014-01-24 13:49:17|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 13:49:21|::1|sql|SELECT id,code,label,behavior_ids,enabled FROM {t}auth_role WHERE id=:p0[:p0:31]
+v|2014-01-24 13:49:21|::1|sql|UPDATE {t}auth_role SET code=:p0,label=:p1,behavior_ids=:p2,enabled=:p3 WHERE id=:p4[:p0:role1][:p1:role two][:p2:73][:p3:0][:p4:31]
+v|2014-01-24 13:49:23|::1|sql|SELECT COUNT(*) FROM {t}auth_role
+v|2014-01-24 13:49:23|::1|sql|SELECT id,code,label,behavior_ids,enabled FROM {t}auth_role LIMIT 0,50
+v|2014-01-24 13:49:23|::1|sql|SELECT id,code,label,enabled FROM {t}auth_behavior
+v|2014-01-24 13:49:23|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/auth/role/index.php
+v|2014-01-24 13:49:23|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/pagination.php
+v|2014-01-24 13:49:23|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/master.php
+v|2014-01-24 13:49:23|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 13:49:28|::1|sql|SELECT id,code,label,behavior_ids,enabled FROM {t}auth_role WHERE id=:p0[:p0:31]
+v|2014-01-24 13:49:28|::1|sql|SELECT id,code,label,enabled FROM {t}auth_behavior
+v|2014-01-24 13:49:28|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/auth/role/edit.php
+v|2014-01-24 13:49:28|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/alert.php
+v|2014-01-24 13:49:28|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/master.php
+v|2014-01-24 13:49:28|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 13:49:31|::1|sql|SELECT id,code,label,behavior_ids,enabled FROM {t}auth_role WHERE id=:p0[:p0:31]
+v|2014-01-24 13:49:31|::1|sql|UPDATE {t}auth_role SET code=:p0,label=:p1,behavior_ids=:p2,enabled=:p3 WHERE id=:p4[:p0:role1][:p1:role two][:p2:73][:p3:0][:p4:31]
+v|2014-01-24 13:49:32|::1|sql|SELECT COUNT(*) FROM {t}auth_role
+v|2014-01-24 13:49:32|::1|sql|SELECT id,code,label,behavior_ids,enabled FROM {t}auth_role LIMIT 0,50
+v|2014-01-24 13:49:32|::1|sql|SELECT id,code,label,enabled FROM {t}auth_behavior
+v|2014-01-24 13:49:32|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/auth/role/index.php
+v|2014-01-24 13:49:32|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/pagination.php
+v|2014-01-24 13:49:32|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/master.php
+v|2014-01-24 13:49:32|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 13:53:20|::1|sql|SELECT COUNT(*) FROM {t}auth_account
+v|2014-01-24 13:53:20|::1|sql|SELECT id,username,password,email,status,level,role_ids FROM {t}auth_account LIMIT 0,50
+v|2014-01-24 13:53:20|::1|sql|SELECT id,code,label,behavior_ids,enabled FROM {t}auth_role
+v|2014-01-24 13:53:20|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/auth/account/index.php
+v|2014-01-24 13:53:20|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/pagination.php
+v|2014-01-24 13:53:20|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/master.php
+v|2014-01-24 13:53:20|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 13:53:33|::1|sql|SELECT COUNT(*) FROM {t}auth_account
+v|2014-01-24 13:53:33|::1|sql|SELECT id,username,password,email,status,level,role_ids FROM {t}auth_account LIMIT 0,50
+v|2014-01-24 13:53:33|::1|sql|SELECT id,code,label,behavior_ids,enabled FROM {t}auth_role
+v|2014-01-24 13:53:33|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/auth/account/index.php
+v|2014-01-24 13:53:33|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/pagination.php
+v|2014-01-24 13:53:33|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/master.php
+v|2014-01-24 13:53:33|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 13:54:17|::1|sql|SELECT COUNT(*) FROM {t}auth_account
+v|2014-01-24 13:54:17|::1|sql|SELECT id,username,password,email,status,level,role_ids FROM {t}auth_account LIMIT 0,50
+v|2014-01-24 13:54:17|::1|sql|SELECT id,code,label,behavior_ids,enabled FROM {t}auth_role
+v|2014-01-24 13:54:17|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/auth/account/index.php
+v|2014-01-24 13:54:17|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/pagination.php
+v|2014-01-24 13:54:17|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/master.php
+v|2014-01-24 13:54:17|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 13:54:24|::1|sql|SELECT id,code,label,behavior_ids,enabled FROM {t}auth_role
+v|2014-01-24 13:54:24|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/auth/account/edit.php
+v|2014-01-24 13:54:24|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/alert.php
+v|2014-01-24 13:54:24|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/master.php
+v|2014-01-24 13:54:24|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 13:54:28|::1|sql|SELECT COUNT(*) FROM {t}auth_account
+v|2014-01-24 13:54:28|::1|sql|SELECT id,username,password,email,status,level,role_ids FROM {t}auth_account LIMIT 0,50
+v|2014-01-24 13:54:28|::1|sql|SELECT id,code,label,behavior_ids,enabled FROM {t}auth_role
+v|2014-01-24 13:54:28|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/auth/account/index.php
+v|2014-01-24 13:54:28|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/pagination.php
+v|2014-01-24 13:54:28|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/master.php
+v|2014-01-24 13:54:28|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 13:54:35|::1|sql|SELECT id,username,password,email,status,level,role_ids FROM {t}auth_account WHERE id=:p0[:p0:29]
+v|2014-01-24 13:54:35|::1|sql|SELECT id,code,label,behavior_ids,enabled FROM {t}auth_role
+v|2014-01-24 13:54:35|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/auth/account/edit.php
+v|2014-01-24 13:54:35|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/alert.php
+v|2014-01-24 13:54:35|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/master.php
+v|2014-01-24 13:54:35|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 13:54:39|::1|sql|SELECT id,username,password,email,status,level,role_ids FROM {t}auth_account WHERE id=:p0[:p0:29]
+v|2014-01-24 13:54:39|::1|sql|UPDATE {t}auth_account SET password=:p0,email=:p1,status=:p2,level=:p3,role_ids=:p4 WHERE id=:p5[:p0:e3af258ab3eba2d62763326bf7a7bfc0][:p1:administrator@aaa.com][:p2:2][:p3:1][:p4:31][:p5:29]
+v|2014-01-24 13:54:40|::1|sql|SELECT COUNT(*) FROM {t}auth_account
+v|2014-01-24 13:54:40|::1|sql|SELECT id,username,password,email,status,level,role_ids FROM {t}auth_account LIMIT 0,50
+v|2014-01-24 13:54:40|::1|sql|SELECT id,code,label,behavior_ids,enabled FROM {t}auth_role
+v|2014-01-24 13:54:40|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/auth/account/index.php
+v|2014-01-24 13:54:40|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/pagination.php
+v|2014-01-24 13:54:40|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/master.php
+v|2014-01-24 13:54:40|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 13:54:44|::1|sql|SELECT id,code,label,behavior_ids,enabled FROM {t}auth_role
+v|2014-01-24 13:54:44|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/auth/account/edit.php
+v|2014-01-24 13:54:44|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/alert.php
+v|2014-01-24 13:54:44|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/master.php
+v|2014-01-24 13:54:44|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 13:56:01|::1|sql|SELECT COUNT(*) FROM {t}auth_account
+v|2014-01-24 13:56:01|::1|sql|SELECT id,username,password,email,status,level,role_ids FROM {t}auth_account LIMIT 0,50
+v|2014-01-24 13:56:01|::1|sql|SELECT id,code,label,behavior_ids,enabled FROM {t}auth_role
+v|2014-01-24 13:56:01|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/auth/account/index.php
+v|2014-01-24 13:56:01|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/pagination.php
+v|2014-01-24 13:56:01|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/master.php
+v|2014-01-24 13:56:01|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 13:56:03|::1|sql|SELECT id,username,password,email,status,level,role_ids FROM {t}auth_account WHERE id=:p0[:p0:29]
+v|2014-01-24 13:56:03|::1|sql|SELECT id,code,label,behavior_ids,enabled FROM {t}auth_role
+v|2014-01-24 13:56:03|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/auth/account/edit.php
+v|2014-01-24 13:56:03|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/alert.php
+v|2014-01-24 13:56:03|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/master.php
+v|2014-01-24 13:56:03|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 13:56:19|::1|sql|SELECT id,username,password,email,status,level,role_ids FROM {t}auth_account WHERE id=:p0[:p0:29]
+v|2014-01-24 13:56:19|::1|sql|SELECT id,code,label,behavior_ids,enabled FROM {t}auth_role
+v|2014-01-24 13:56:19|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/auth/account/edit.php
+v|2014-01-24 13:56:19|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/alert.php
+v|2014-01-24 13:56:19|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/master.php
+v|2014-01-24 13:56:19|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 13:56:23|::1|sql|SELECT id,username,password,email,status,level,role_ids FROM {t}auth_account WHERE id=:p0[:p0:29]
+v|2014-01-24 13:56:23|::1|sql|UPDATE {t}auth_account SET password=:p0,email=:p1,status=:p2,level=:p3,role_ids=:p4 WHERE id=:p5[:p0:e3af258ab3eba2d62763326bf7a7bfc0][:p1:administrator@aaa.com][:p2:2][:p3:1][:p4:31,32][:p5:29]
+v|2014-01-24 13:56:24|::1|sql|SELECT COUNT(*) FROM {t}auth_account
+v|2014-01-24 13:56:24|::1|sql|SELECT id,username,password,email,status,level,role_ids FROM {t}auth_account LIMIT 0,50
+v|2014-01-24 13:56:24|::1|sql|SELECT id,code,label,behavior_ids,enabled FROM {t}auth_role
+v|2014-01-24 13:56:24|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/auth/account/index.php
+v|2014-01-24 13:56:24|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/pagination.php
+v|2014-01-24 13:56:24|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/master.php
+v|2014-01-24 13:56:24|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 13:56:27|::1|sql|SELECT id,username,password,email,status,level,role_ids FROM {t}auth_account WHERE id=:p0[:p0:29]
+v|2014-01-24 13:56:27|::1|sql|SELECT id,code,label,behavior_ids,enabled FROM {t}auth_role
+v|2014-01-24 13:56:27|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/auth/account/edit.php
+v|2014-01-24 13:56:27|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/alert.php
+v|2014-01-24 13:56:27|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/master.php
+v|2014-01-24 13:56:27|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 13:56:31|::1|sql|SELECT id,username,password,email,status,level,role_ids FROM {t}auth_account WHERE id=:p0[:p0:29]
+v|2014-01-24 13:56:31|::1|sql|UPDATE {t}auth_account SET password=:p0,email=:p1,status=:p2,level=:p3,role_ids=:p4 WHERE id=:p5[:p0:e3af258ab3eba2d62763326bf7a7bfc0][:p1:administrator@aaa.com][:p2:2][:p3:1][:p4:][:p5:29]
+v|2014-01-24 13:56:32|::1|sql|SELECT COUNT(*) FROM {t}auth_account
+v|2014-01-24 13:56:32|::1|sql|SELECT id,username,password,email,status,level,role_ids FROM {t}auth_account LIMIT 0,50
+v|2014-01-24 13:56:32|::1|sql|SELECT id,code,label,behavior_ids,enabled FROM {t}auth_role
+v|2014-01-24 13:56:32|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/auth/account/index.php
+v|2014-01-24 13:56:32|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/pagination.php
+v|2014-01-24 13:56:32|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/master.php
+v|2014-01-24 13:56:32|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 13:56:55|::1|sql|SELECT COUNT(*) FROM {t}auth_account
+v|2014-01-24 13:56:55|::1|sql|SELECT id,username,password,email,status,level,role_ids FROM {t}auth_account LIMIT 0,50
+v|2014-01-24 13:56:55|::1|sql|SELECT id,code,label,behavior_ids,enabled FROM {t}auth_role
+v|2014-01-24 13:56:55|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/auth/account/index.php
+v|2014-01-24 13:56:55|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/pagination.php
+v|2014-01-24 13:56:55|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/master.php
+v|2014-01-24 13:56:55|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 14:01:03|::1|sql|SELECT id,username,password,email,status,level,role_ids FROM {t}auth_account WHERE id=:p0[:p0:29]
+v|2014-01-24 14:01:03|::1|sql|SELECT id,code,label,behavior_ids,enabled FROM {t}auth_role
+v|2014-01-24 14:01:03|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/auth/account/edit.php
+v|2014-01-24 14:01:03|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/alert.php
+v|2014-01-24 14:01:03|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/master.php
+v|2014-01-24 14:01:03|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 14:01:07|::1|sql|SELECT id,username,password,email,status,level,role_ids FROM {t}auth_account WHERE id=:p0[:p0:29]
+v|2014-01-24 14:01:07|::1|sql|UPDATE {t}auth_account SET password=:p0,email=:p1,status=:p2,level=:p3,role_ids=:p4 WHERE id=:p5[:p0:e3af258ab3eba2d62763326bf7a7bfc0][:p1:administrator@aaa.com][:p2:2][:p3:1][:p4:31,32][:p5:29]
+v|2014-01-24 14:01:08|::1|sql|SELECT COUNT(*) FROM {t}auth_account
+v|2014-01-24 14:01:08|::1|sql|SELECT id,username,password,email,status,level,role_ids FROM {t}auth_account LIMIT 0,50
+v|2014-01-24 14:01:08|::1|sql|SELECT id,code,label,behavior_ids,enabled FROM {t}auth_role
+v|2014-01-24 14:01:08|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/auth/account/index.php
+v|2014-01-24 14:01:08|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/pagination.php
+v|2014-01-24 14:01:08|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/master.php
+v|2014-01-24 14:01:08|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 14:02:02|::1|sql|SELECT COUNT(*) FROM {t}auth_account
+v|2014-01-24 14:02:03|::1|sql|SELECT id,username,password,email,status,level,role_ids FROM {t}auth_account LIMIT 0,50
+v|2014-01-24 14:02:03|::1|sql|SELECT id,code,label,behavior_ids,enabled FROM {t}auth_role
+v|2014-01-24 14:02:03|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/auth/account/index.php
+v|2014-01-24 14:02:03|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/pagination.php
+v|2014-01-24 14:02:03|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/master.php
+v|2014-01-24 14:02:03|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 14:02:44|::1|sql|SELECT COUNT(*) FROM {t}auth_account
+v|2014-01-24 14:02:44|::1|sql|SELECT id,username,password,email,status,level,role_ids FROM {t}auth_account LIMIT 0,50
+v|2014-01-24 14:02:44|::1|sql|SELECT id,code,label,behavior_ids,enabled FROM {t}auth_role
+v|2014-01-24 14:02:44|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/auth/account/index.php
+v|2014-01-24 14:02:44|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/pagination.php
+v|2014-01-24 14:02:44|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/master.php
+v|2014-01-24 14:02:44|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 14:07:01|::1|sql|SELECT COUNT(*) FROM {t}auth_account
+v|2014-01-24 14:07:01|::1|sql|SELECT id,username,password,email,status,level,role_ids FROM {t}auth_account LIMIT 0,50
+v|2014-01-24 14:07:01|::1|sql|SELECT id,code,label,behavior_ids,enabled FROM {t}auth_role
+v|2014-01-24 14:07:01|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/auth/account/index.php
+v|2014-01-24 14:07:01|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/pagination.php
+v|2014-01-24 14:07:01|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/master.php
+v|2014-01-24 14:07:01|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 14:07:04|::1|sql|SELECT id,username,password,email,status,level,role_ids FROM {t}auth_account WHERE id=:p0[:p0:29]
+v|2014-01-24 14:07:04|::1|sql|DELETE FROM {t}auth_account WHERE id=:p0[:p0:29]
+v|2014-01-24 14:07:06|::1|sql|SELECT COUNT(*) FROM {t}auth_account
+v|2014-01-24 14:07:06|::1|sql|SELECT id,username,password,email,status,level,role_ids FROM {t}auth_account LIMIT 0,50
+v|2014-01-24 14:07:06|::1|sql|SELECT id,code,label,behavior_ids,enabled FROM {t}auth_role
+v|2014-01-24 14:07:06|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/auth/account/index.php
+v|2014-01-24 14:07:06|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/pagination.php
+v|2014-01-24 14:07:06|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/master.php
+v|2014-01-24 14:07:06|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 14:07:09|::1|sql|SELECT id,username,password,email,status,level,role_ids FROM {t}auth_account WHERE id=:p0[:p0:40]
+v|2014-01-24 14:07:09|::1|sql|DELETE FROM {t}auth_account WHERE id=:p0[:p0:40]
+v|2014-01-24 14:07:10|::1|sql|SELECT COUNT(*) FROM {t}auth_account
+v|2014-01-24 14:07:10|::1|sql|SELECT id,username,password,email,status,level,role_ids FROM {t}auth_account LIMIT 0,50
+v|2014-01-24 14:07:10|::1|sql|SELECT id,code,label,behavior_ids,enabled FROM {t}auth_role
+v|2014-01-24 14:07:10|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/auth/account/index.php
+v|2014-01-24 14:07:10|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/pagination.php
+v|2014-01-24 14:07:10|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/master.php
+v|2014-01-24 14:07:10|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 14:14:11|::1|sql|SELECT COUNT(*) FROM {t}auth_account
+v|2014-01-24 14:14:11|::1|sql|SELECT id,username,password,email,status,level,role_ids FROM {t}auth_account LIMIT 0,50
+v|2014-01-24 14:14:11|::1|sql|SELECT id,code,label,behavior_ids,enabled FROM {t}auth_role
+v|2014-01-24 14:14:11|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/auth/account/index.php
+v|2014-01-24 14:14:11|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/pagination.php
+v|2014-01-24 14:14:11|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/master.php
+v|2014-01-24 14:14:11|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 14:15:17|::1|sql|SELECT COUNT(*) FROM {t}auth_account
+v|2014-01-24 14:15:17|::1|sql|SELECT id,username,password,email,status,level,role_ids FROM {t}auth_account LIMIT 0,50
+v|2014-01-24 14:15:17|::1|sql|SELECT id,code,label,behavior_ids,enabled FROM {t}auth_role
+v|2014-01-24 14:15:17|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/auth/account/index.php
+v|2014-01-24 14:15:17|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/pagination.php
+v|2014-01-24 14:15:17|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/master.php
+v|2014-01-24 14:15:17|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 14:15:26|::1|sql|SELECT COUNT(*) FROM {t}auth_account
+v|2014-01-24 14:15:26|::1|sql|SELECT id,username,password,email,status,level,role_ids FROM {t}auth_account LIMIT 0,50
+v|2014-01-24 14:15:26|::1|sql|SELECT id,code,label,behavior_ids,enabled FROM {t}auth_role
+v|2014-01-24 14:15:26|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/auth/account/index.php
+v|2014-01-24 14:15:26|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/pagination.php
+v|2014-01-24 14:15:26|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/master.php
+v|2014-01-24 14:15:26|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 14:15:52|::1|sql|SELECT COUNT(*) FROM {t}auth_account
+v|2014-01-24 14:15:52|::1|sql|SELECT id,username,password,email,status,level,role_ids FROM {t}auth_account LIMIT 0,50
+v|2014-01-24 14:15:52|::1|sql|SELECT id,code,label,behavior_ids,enabled FROM {t}auth_role
+v|2014-01-24 14:15:52|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/auth/account/index.php
+v|2014-01-24 14:15:52|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/pagination.php
+v|2014-01-24 14:15:52|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/master.php
+v|2014-01-24 14:15:52|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 14:18:11|::1|sql|SELECT COUNT(*) FROM {t}auth_account
+v|2014-01-24 14:18:11|::1|sql|SELECT id,username,password,email,status,level,role_ids FROM {t}auth_account LIMIT 0,50
+v|2014-01-24 14:18:11|::1|sql|SELECT id,code,label,behavior_ids,enabled FROM {t}auth_role
+v|2014-01-24 14:18:11|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/auth/account/index.php
+v|2014-01-24 14:18:11|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/pagination.php
+v|2014-01-24 14:18:11|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/master.php
+v|2014-01-24 14:18:11|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 14:18:20|::1|sql|SELECT id,username,password,email,status,level,role_ids FROM {t}auth_account WHERE id=:p0[:p0:39]
+v|2014-01-24 14:18:20|::1|sql|DELETE FROM {t}auth_account WHERE id=:p0[:p0:39]
+v|2014-01-24 14:18:21|::1|sql|SELECT COUNT(*) FROM {t}auth_account
+v|2014-01-24 14:18:21|::1|sql|SELECT id,username,password,email,status,level,role_ids FROM {t}auth_account LIMIT 0,50
+v|2014-01-24 14:18:21|::1|sql|SELECT id,code,label,behavior_ids,enabled FROM {t}auth_role
+v|2014-01-24 14:18:21|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/auth/account/index.php
+v|2014-01-24 14:18:21|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/pagination.php
+v|2014-01-24 14:18:21|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/master.php
+v|2014-01-24 14:18:21|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 14:19:47|::1|sql|SELECT COUNT(*) FROM {t}auth_behavior
+v|2014-01-24 14:19:48|::1|sql|SELECT id,code,label,enabled FROM {t}auth_behavior LIMIT 0,50
+v|2014-01-24 14:19:48|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/auth/behavior/index.php
+v|2014-01-24 14:19:48|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/pagination.php
+v|2014-01-24 14:19:48|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/master.php
+v|2014-01-24 14:19:48|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 14:19:57|::1|sql|SELECT id,code,label,enabled FROM {t}auth_behavior WHERE id=:p0[:p0:74]
+v|2014-01-24 14:19:57|::1|sql|DELETE FROM {t}auth_behavior WHERE id=:p0[:p0:74]
+v|2014-01-24 14:19:58|::1|sql|SELECT COUNT(*) FROM {t}auth_behavior
+v|2014-01-24 14:19:58|::1|sql|SELECT id,code,label,enabled FROM {t}auth_behavior LIMIT 0,50
+v|2014-01-24 14:19:58|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/auth/behavior/index.php
+v|2014-01-24 14:19:58|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/pagination.php
+v|2014-01-24 14:19:58|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/master.php
+v|2014-01-24 14:19:58|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 14:20:32|::1|sql|SELECT COUNT(*) FROM {t}auth_role
+v|2014-01-24 14:20:32|::1|sql|SELECT id,code,label,behavior_ids,enabled FROM {t}auth_role LIMIT 0,50
+v|2014-01-24 14:20:32|::1|sql|SELECT id,code,label,enabled FROM {t}auth_behavior
+v|2014-01-24 14:20:32|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/auth/role/index.php
+v|2014-01-24 14:20:32|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/pagination.php
+v|2014-01-24 14:20:32|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/master.php
+v|2014-01-24 14:20:32|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 14:20:50|::1|sql|SELECT COUNT(*) FROM {t}auth_role
+v|2014-01-24 14:20:50|::1|sql|SELECT id,code,label,behavior_ids,enabled FROM {t}auth_role LIMIT 0,50
+v|2014-01-24 14:20:50|::1|sql|SELECT id,code,label,enabled FROM {t}auth_behavior
+v|2014-01-24 14:20:50|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/auth/role/index.php
+v|2014-01-24 14:20:50|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/pagination.php
+v|2014-01-24 14:20:50|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/master.php
+v|2014-01-24 14:20:50|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 14:20:53|::1|sql|SELECT COUNT(*) FROM {t}auth_role
+v|2014-01-24 14:20:53|::1|sql|SELECT id,code,label,behavior_ids,enabled FROM {t}auth_role LIMIT 0,50
+v|2014-01-24 14:20:53|::1|sql|SELECT id,code,label,enabled FROM {t}auth_behavior
+v|2014-01-24 14:20:53|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/auth/role/index.php
+v|2014-01-24 14:20:53|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/pagination.php
+v|2014-01-24 14:20:53|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/master.php
+v|2014-01-24 14:20:53|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 14:21:00|::1|sql|SELECT id,code,label,behavior_ids,enabled FROM {t}auth_role WHERE id=:p0[:p0:32]
+v|2014-01-24 14:21:00|::1|sql|DELETE FROM {t}auth_role WHERE id=:p0[:p0:32]
+v|2014-01-24 14:21:01|::1|sql|SELECT COUNT(*) FROM {t}auth_role
+v|2014-01-24 14:21:01|::1|sql|SELECT id,code,label,behavior_ids,enabled FROM {t}auth_role LIMIT 0,50
+v|2014-01-24 14:21:01|::1|sql|SELECT id,code,label,enabled FROM {t}auth_behavior
+v|2014-01-24 14:21:01|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/auth/role/index.php
+v|2014-01-24 14:21:01|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/pagination.php
+v|2014-01-24 14:21:01|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/master.php
+v|2014-01-24 14:21:01|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 14:29:32|::1|template|E:\projects\php\comexoa\pri\templates\frontend/default/auth/account/login.php
+v|2014-01-24 14:30:19|::1|template|E:\projects\php\comexoa\pri\templates\frontend/default/auth/account/login.php
+v|2014-01-24 14:30:19|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 14:30:41|::1|template|E:\projects\php\comexoa\pri\templates\frontend/default/auth/account/login.php
+v|2014-01-24 14:30:48|::1|template|E:\projects\php\comexoa\pri\templates\frontend/default/auth/account/login.php
+v|2014-01-24 14:30:48|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 14:31:04|::1|template|E:\projects\php\comexoa\pri\templates\frontend/default/auth/account/login.php
+v|2014-01-24 14:31:04|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 14:31:10|::1|template|E:\projects\php\comexoa\pri\templates\frontend/default/auth/account/login.php
+v|2014-01-24 14:31:10|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 14:31:20|::1|template|E:\projects\php\comexoa\pri\templates\frontend/default/auth/account/login.php
+v|2014-01-24 14:31:20|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 14:31:25|::1|template|E:\projects\php\comexoa\pri\templates\frontend/default/auth/account/login.php
+v|2014-01-24 14:31:25|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 14:31:39|::1|template|E:\projects\php\comexoa\pri\templates\frontend/default/auth/account/login.php
+v|2014-01-24 14:31:39|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 14:32:28|::1|template|E:\projects\php\comexoa\pri\templates\frontend/default/auth/account/login.php
+v|2014-01-24 14:32:40|::1|template|E:\projects\php\comexoa\pri\templates\frontend/default/auth/account/login.php
+v|2014-01-24 14:32:40|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 14:32:46|::1|template|E:\projects\php\comexoa\pri\templates\frontend/default/auth/account/login.php
+v|2014-01-24 14:32:46|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 14:34:51|::1|template|E:\projects\php\comexoa\pri\templates\frontend/default/auth/account/login.php
+v|2014-01-24 14:34:51|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 15:02:47|::1|template|E:\projects\php\comexoa\pri\templates\frontend/default/auth/account/login.php
+v|2014-01-24 15:02:47|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 15:02:49|::1|template|E:\projects\php\comexoa\pri\templates\frontend/default/auth/account/login.php
+v|2014-01-24 15:02:49|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 15:02:55|::1|sql|SELECT id,username,password,email,status,level,role_ids FROM {t}auth_account WHERE username=:p0[:p0:1111111]
+v|2014-01-24 15:02:55|::1|template|E:\projects\php\comexoa\pri\templates\frontend/default/auth/account/login.php
+v|2014-01-24 15:02:55|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 15:03:43|::1|sql|SELECT id,username,password,email,status,level,role_ids FROM {t}auth_account WHERE username=:p0[:p0:1111111]
+v|2014-01-24 15:03:43|::1|template|E:\projects\php\comexoa\pri\templates\frontend/default/auth/account/login.php
+v|2014-01-24 15:03:43|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 15:03:50|::1|sql|SELECT id,username,password,email,status,level,role_ids FROM {t}auth_account WHERE username=:p0[:p0:1111111]
+v|2014-01-24 15:03:50|::1|template|E:\projects\php\comexoa\pri\templates\frontend/default/auth/account/login.php
+v|2014-01-24 15:03:50|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 15:04:27|::1|sql|SELECT id,username,password,email,status,level,role_ids FROM {t}auth_account WHERE username=:p0[:p0:11234567]
+v|2014-01-24 15:04:47|::1|sql|SELECT id,username,password,email,status,level,role_ids FROM {t}auth_account WHERE username=:p0[:p0:11234567]
+v|2014-01-24 15:04:47|::1|template|E:\projects\php\comexoa\pri\templates\frontend/default/auth/account/login.php
+v|2014-01-24 15:04:47|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 15:04:53|::1|sql|SELECT id,username,password,email,status,level,role_ids FROM {t}auth_account WHERE username=:p0[:p0:123456]
+v|2014-01-24 15:04:53|::1|template|E:\projects\php\comexoa\pri\templates\frontend/default/auth/account/login.php
+v|2014-01-24 15:04:53|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 15:05:33|::1|sql|SELECT id,username,password,email,status,level,role_ids FROM {t}auth_account WHERE username=:p0[:p0:1234567]
+v|2014-01-24 15:06:08|::1|sql|SELECT id,username,password,email,status,level,role_ids FROM {t}auth_account WHERE username=:p0[:p0:1234567]
+v|2014-01-24 15:06:08|::1|template|E:\projects\php\comexoa\pri\templates\frontend/default/auth/account/login.php
+v|2014-01-24 15:06:08|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 15:08:37|::1|sql|SELECT id,username,password,email,status,level,role_ids FROM {t}auth_account WHERE username=:p0[:p0:1234567]
+v|2014-01-24 15:08:37|::1|template|E:\projects\php\comexoa\pri\templates\frontend/default/auth/account/login.php
+v|2014-01-24 15:08:37|::1|template|E:\projects\php\comexoa\pri\templates\frontend/default/alert.php
+v|2014-01-24 15:08:37|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 15:08:48|::1|sql|SELECT id,username,password,email,status,level,role_ids FROM {t}auth_account WHERE username=:p0[:p0:administrator]
+v|2014-01-24 15:08:48|::1|sql|SELECT id,code,label,behavior_ids,enabled FROM {t}auth_role WHERE id IN('1','2','3','4','5') AND enabled=:p0[:p0:1]
+v|2014-01-24 15:08:48|::1|sql|SELECT id,code,label,enabled,code FROM {t}auth_behavior WHERE id IN() AND enabled=:p0[:p0:1]
+v|2014-01-24 15:09:25|::1|sql|SELECT COUNT(*) FROM {t}auth_account
+v|2014-01-24 15:09:25|::1|sql|SELECT id,username,password,email,status,level,role_ids FROM {t}auth_account LIMIT 0,50
+v|2014-01-24 15:09:25|::1|sql|SELECT id,code,label,behavior_ids,enabled FROM {t}auth_role
+v|2014-01-24 15:09:25|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/auth/account/index.php
+v|2014-01-24 15:09:25|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/pagination.php
+v|2014-01-24 15:09:25|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/master.php
+v|2014-01-24 15:09:25|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 15:09:28|::1|sql|SELECT id,username,password,email,status,level,role_ids FROM {t}auth_account WHERE id=:p0[:p0:38]
+v|2014-01-24 15:09:28|::1|sql|SELECT id,code,label,behavior_ids,enabled FROM {t}auth_role
+v|2014-01-24 15:09:28|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/auth/account/edit.php
+v|2014-01-24 15:09:28|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/alert.php
+v|2014-01-24 15:09:28|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/master.php
+v|2014-01-24 15:09:28|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 15:09:32|::1|sql|SELECT id,username,password,email,status,level,role_ids FROM {t}auth_account WHERE id=:p0[:p0:38]
+v|2014-01-24 15:09:32|::1|sql|UPDATE {t}auth_account SET password=:p0,email=:p1,status=:p2,level=:p3,role_ids=:p4 WHERE id=:p5[:p0:e3af258ab3eba2d62763326bf7a7bfc0][:p1:administrator@aaa.com][:p2:1][:p3:1][:p4:31][:p5:38]
+v|2014-01-24 15:09:33|::1|sql|SELECT COUNT(*) FROM {t}auth_account
+v|2014-01-24 15:09:33|::1|sql|SELECT id,username,password,email,status,level,role_ids FROM {t}auth_account LIMIT 0,50
+v|2014-01-24 15:09:33|::1|sql|SELECT id,code,label,behavior_ids,enabled FROM {t}auth_role
+v|2014-01-24 15:09:33|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/auth/account/index.php
+v|2014-01-24 15:09:33|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/pagination.php
+v|2014-01-24 15:09:33|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/master.php
+v|2014-01-24 15:09:33|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 15:09:37|::1|template|E:\projects\php\comexoa\pri\templates\frontend/default/auth/account/login.php
+v|2014-01-24 15:09:37|::1|template|E:\projects\php\comexoa\pri\templates\frontend/default/alert.php
+v|2014-01-24 15:09:37|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 15:09:43|::1|sql|SELECT id,username,password,email,status,level,role_ids FROM {t}auth_account WHERE username=:p0[:p0:administrator]
+v|2014-01-24 15:09:43|::1|sql|SELECT id,code,label,behavior_ids,enabled FROM {t}auth_role WHERE id IN('31') AND enabled=:p0[:p0:1]
+v|2014-01-24 15:09:43|::1|sql|SELECT id,code,label,enabled,code FROM {t}auth_behavior WHERE id IN() AND enabled=:p0[:p0:1]
+v|2014-01-24 15:10:23|::1|sql|SELECT COUNT(*) FROM {t}auth_account
+v|2014-01-24 15:10:23|::1|sql|SELECT id,username,password,email,status,level,role_ids FROM {t}auth_account LIMIT 0,50
+v|2014-01-24 15:10:23|::1|sql|SELECT id,code,label,behavior_ids,enabled FROM {t}auth_role
+v|2014-01-24 15:10:23|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/auth/account/index.php
+v|2014-01-24 15:10:23|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/pagination.php
+v|2014-01-24 15:10:23|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/master.php
+v|2014-01-24 15:10:23|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 15:10:27|::1|sql|SELECT COUNT(*) FROM {t}auth_role
+v|2014-01-24 15:10:27|::1|sql|SELECT id,code,label,behavior_ids,enabled FROM {t}auth_role LIMIT 0,50
+v|2014-01-24 15:10:27|::1|sql|SELECT id,code,label,enabled FROM {t}auth_behavior
+v|2014-01-24 15:10:27|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/auth/role/index.php
+v|2014-01-24 15:10:27|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/pagination.php
+v|2014-01-24 15:10:27|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/master.php
+v|2014-01-24 15:10:27|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 15:10:29|::1|sql|SELECT id,code,label,behavior_ids,enabled FROM {t}auth_role WHERE id=:p0[:p0:31]
+v|2014-01-24 15:10:29|::1|sql|SELECT id,code,label,enabled FROM {t}auth_behavior
+v|2014-01-24 15:10:30|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/auth/role/edit.php
+v|2014-01-24 15:10:30|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/alert.php
+v|2014-01-24 15:10:30|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/master.php
+v|2014-01-24 15:10:30|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 15:10:35|::1|sql|SELECT id,code,label,behavior_ids,enabled FROM {t}auth_role WHERE id=:p0[:p0:31]
+v|2014-01-24 15:10:35|::1|sql|UPDATE {t}auth_role SET code=:p0,label=:p1,behavior_ids=:p2,enabled=:p3 WHERE id=:p4[:p0:role1][:p1:role two][:p2:72,73][:p3:0][:p4:31]
+v|2014-01-24 15:10:36|::1|sql|SELECT COUNT(*) FROM {t}auth_role
+v|2014-01-24 15:10:36|::1|sql|SELECT id,code,label,behavior_ids,enabled FROM {t}auth_role LIMIT 0,50
+v|2014-01-24 15:10:36|::1|sql|SELECT id,code,label,enabled FROM {t}auth_behavior
+v|2014-01-24 15:10:36|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/auth/role/index.php
+v|2014-01-24 15:10:36|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/pagination.php
+v|2014-01-24 15:10:36|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/master.php
+v|2014-01-24 15:10:36|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 15:10:50|::1|sql|SELECT id,code,label,behavior_ids,enabled FROM {t}auth_role WHERE id=:p0[:p0:31]
+v|2014-01-24 15:10:50|::1|sql|SELECT id,code,label,enabled FROM {t}auth_behavior
+v|2014-01-24 15:10:50|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/auth/role/edit.php
+v|2014-01-24 15:10:50|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/alert.php
+v|2014-01-24 15:10:50|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/master.php
+v|2014-01-24 15:10:51|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 15:10:54|::1|sql|SELECT id,code,label,behavior_ids,enabled FROM {t}auth_role WHERE id=:p0[:p0:31]
+v|2014-01-24 15:10:54|::1|sql|UPDATE {t}auth_role SET code=:p0,label=:p1,behavior_ids=:p2,enabled=:p3 WHERE id=:p4[:p0:role1][:p1:role two][:p2:72,73][:p3:1][:p4:31]
+v|2014-01-24 15:10:55|::1|sql|SELECT COUNT(*) FROM {t}auth_role
+v|2014-01-24 15:10:55|::1|sql|SELECT id,code,label,behavior_ids,enabled FROM {t}auth_role LIMIT 0,50
+v|2014-01-24 15:10:55|::1|sql|SELECT id,code,label,enabled FROM {t}auth_behavior
+v|2014-01-24 15:10:55|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/auth/role/index.php
+v|2014-01-24 15:10:55|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/pagination.php
+v|2014-01-24 15:10:55|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/master.php
+v|2014-01-24 15:10:55|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 15:11:14|::1|template|E:\projects\php\comexoa\pri\templates\frontend/default/auth/account/login.php
+v|2014-01-24 15:11:14|::1|template|E:\projects\php\comexoa\pri\templates\frontend/default/alert.php
+v|2014-01-24 15:11:14|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 15:11:19|::1|sql|SELECT id,username,password,email,status,level,role_ids FROM {t}auth_account WHERE username=:p0[:p0:administrator]
+v|2014-01-24 15:11:19|::1|sql|SELECT id,code,label,behavior_ids,enabled FROM {t}auth_role WHERE id IN('31') AND enabled=:p0[:p0:1]
+v|2014-01-24 15:11:19|::1|sql|SELECT id,code,label,enabled,code FROM {t}auth_behavior WHERE id IN() AND enabled=:p0[:p0:1]
+v|2014-01-24 15:13:02|::1|sql|SELECT id,username,password,email,status,level,role_ids FROM {t}auth_account WHERE username=:p0[:p0:administrator]
+v|2014-01-24 15:13:02|::1|sql|SELECT id,code,label,behavior_ids,enabled FROM {t}auth_role WHERE id IN('31') AND enabled=:p0[:p0:1]
+v|2014-01-24 15:13:02|::1|sql|SELECT id,code,label,enabled,code FROM {t}auth_behavior WHERE id IN() AND enabled=:p0[:p0:1]
+v|2014-01-24 15:13:04|::1|template|E:\projects\php\comexoa\pri\templates\frontend/default/auth/account/login.php
+v|2014-01-24 15:13:04|::1|template|E:\projects\php\comexoa\pri\templates\frontend/default/alert.php
+v|2014-01-24 15:13:04|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 15:13:09|::1|sql|SELECT id,username,password,email,status,level,role_ids FROM {t}auth_account WHERE username=:p0[:p0:administrator]
+v|2014-01-24 15:13:09|::1|sql|SELECT id,code,label,behavior_ids,enabled FROM {t}auth_role WHERE id IN('31') AND enabled=:p0[:p0:1]
+v|2014-01-24 15:13:09|::1|sql|SELECT id,code,label,enabled,code FROM {t}auth_behavior WHERE id IN() AND enabled=:p0[:p0:1]
+v|2014-01-24 15:14:36|::1|sql|SELECT id,username,password,email,status,level,role_ids FROM {t}auth_account WHERE username=:p0[:p0:administrator]
+v|2014-01-24 15:14:36|::1|sql|SELECT id,code,label,behavior_ids,enabled FROM {t}auth_role WHERE id IN('31') AND enabled=:p0[:p0:1]
+v|2014-01-24 15:18:30|::1|template|E:\projects\php\comexoa\pri\templates\frontend/default/auth/account/login.php
+v|2014-01-24 15:18:30|::1|template|E:\projects\php\comexoa\pri\templates\frontend/default/alert.php
+v|2014-01-24 15:18:30|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 15:18:35|::1|sql|SELECT id,username,password,email,status,level,role_ids FROM {t}auth_account WHERE username=:p0[:p0:administrator]
+v|2014-01-24 15:18:35|::1|sql|SELECT id,code,label,behavior_ids,enabled FROM {t}auth_role WHERE id IN('31') AND enabled=:p0[:p0:1]
+v|2014-01-24 15:19:05|::1|sql|SELECT id,username,password,email,status,level,role_ids FROM {t}auth_account WHERE username=:p0[:p0:administrator]
+v|2014-01-24 15:19:05|::1|sql|SELECT id,code,label,behavior_ids,enabled FROM {t}auth_role WHERE id IN('31') AND enabled=:p0[:p0:1]
+v|2014-01-24 15:19:32|::1|sql|SELECT id,username,password,email,status,level,role_ids FROM {t}auth_account WHERE username=:p0[:p0:administrator]
+v|2014-01-24 15:19:32|::1|sql|SELECT id,code,label,behavior_ids,enabled FROM {t}auth_role WHERE id IN('31') AND enabled=:p0[:p0:1]
+v|2014-01-24 15:20:47|::1|sql|SELECT id,username,password,email,status,level,role_ids FROM {t}auth_account WHERE username=:p0[:p0:administrator]
+v|2014-01-24 15:20:47|::1|sql|SELECT id,code,label,behavior_ids,enabled FROM {t}auth_role WHERE id IN('31') AND enabled=:p0[:p0:1]
+v|2014-01-24 15:20:47|::1|sql|SELECT id,code,label,enabled,code FROM {t}auth_behavior WHERE id IN('72','73') AND enabled=:p0[:p0:1]
+v|2014-01-24 15:21:07|::1|template|E:\projects\php\comexoa\pri\templates\frontend/default/auth/account/login.php
+v|2014-01-24 15:21:07|::1|template|E:\projects\php\comexoa\pri\templates\frontend/default/alert.php
+v|2014-01-24 15:21:07|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 15:21:11|::1|sql|SELECT id,username,password,email,status,level,role_ids FROM {t}auth_account WHERE username=:p0[:p0:administrator]
+v|2014-01-24 15:21:11|::1|template|E:\projects\php\comexoa\pri\templates\frontend/default/auth/account/login.php
+v|2014-01-24 15:21:11|::1|template|E:\projects\php\comexoa\pri\templates\frontend/default/alert.php
+v|2014-01-24 15:21:11|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 15:21:18|::1|sql|SELECT id,username,password,email,status,level,role_ids FROM {t}auth_account WHERE username=:p0[:p0:administrator]
+v|2014-01-24 15:21:18|::1|sql|SELECT id,code,label,behavior_ids,enabled FROM {t}auth_role WHERE id IN('31') AND enabled=:p0[:p0:1]
+v|2014-01-24 15:21:18|::1|sql|SELECT id,code,label,enabled,code FROM {t}auth_behavior WHERE id IN('72','73') AND enabled=:p0[:p0:1]
+v|2014-01-24 15:28:15|::1|template|E:\projects\php\comexoa\pri\templates\frontend/default/main/dashboard.php
+v|2014-01-24 15:28:15|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 15:52:54|::1|template|E:\projects\php\comexoa\pri\templates\frontend/default/auth/guard/login.php
+v|2014-01-24 15:52:54|::1|template|E:\projects\php\comexoa\pri\templates\frontend/default/alert.php
+v|2014-01-24 15:52:54|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 15:53:39|::1|template|E:\projects\php\comexoa\pri\templates\frontend/default/auth/guard/login.php
+v|2014-01-24 15:53:39|::1|template|E:\projects\php\comexoa\pri\templates\frontend/default/alert.php
+v|2014-01-24 15:53:39|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 15:53:49|::1|sql|SELECT id,username,password,email,status,level,role_ids FROM {t}auth_account WHERE username=:p0[:p0:administrator1]
+v|2014-01-24 15:53:49|::1|template|E:\projects\php\comexoa\pri\templates\frontend/default/auth/guard/login.php
+v|2014-01-24 15:53:49|::1|template|E:\projects\php\comexoa\pri\templates\frontend/default/alert.php
+v|2014-01-24 15:53:49|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 15:57:56|::1|sql|SELECT id,username,password,email,status,level,role_ids FROM {t}auth_account WHERE username=:p0[:p0:administrator]
+v|2014-01-24 15:57:56|::1|sql|SELECT id,code,label,behavior_ids,enabled FROM {t}auth_role WHERE id IN('31') AND enabled=:p0[:p0:1]
+v|2014-01-24 15:57:56|::1|sql|SELECT id,code,label,enabled,code FROM {t}auth_behavior WHERE id IN('72','73') AND enabled=:p0[:p0:1]
+v|2014-01-24 16:00:16|::1|template|E:\projects\php\comexoa\pri\templates\frontend/default/auth/guard/login.php
+v|2014-01-24 16:00:16|::1|template|E:\projects\php\comexoa\pri\templates\frontend/default/alert.php
+v|2014-01-24 16:00:16|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 16:00:40|::1|template|E:\projects\php\comexoa\pri\templates\frontend/default/auth/guard/login.php
+v|2014-01-24 16:00:40|::1|template|E:\projects\php\comexoa\pri\templates\frontend/default/alert.php
+v|2014-01-24 16:00:40|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 16:00:47|::1|sql|SELECT id,username,password,email,status,level,role_ids FROM {t}auth_account WHERE username=:p0[:p0:administrator]
+v|2014-01-24 16:00:47|::1|sql|SELECT id,code,label,behavior_ids,enabled FROM {t}auth_role WHERE id IN('31') AND enabled=:p0[:p0:1]
+v|2014-01-24 16:00:47|::1|sql|SELECT id,code,label,enabled,code FROM {t}auth_behavior WHERE id IN('72','73') AND enabled=:p0[:p0:1]
+v|2014-01-24 16:01:05|::1|sql|SELECT id,username,password,email,status,level,role_ids FROM {t}auth_account WHERE username=:p0[:p0:administrator]
+v|2014-01-24 16:01:05|::1|sql|SELECT id,code,label,behavior_ids,enabled FROM {t}auth_role WHERE id IN('31') AND enabled=:p0[:p0:1]
+v|2014-01-24 16:01:05|::1|sql|SELECT id,code,label,enabled,code FROM {t}auth_behavior WHERE id IN('72','73') AND enabled=:p0[:p0:1]
+v|2014-01-24 16:02:37|::1|template|E:\projects\php\comexoa\pri\templates\frontend/default/auth/guard/login.php
+v|2014-01-24 16:02:37|::1|template|E:\projects\php\comexoa\pri\templates\frontend/default/alert.php
+v|2014-01-24 16:02:37|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 16:02:43|::1|sql|SELECT id,username,password,email,status,level,role_ids FROM {t}auth_account WHERE username=:p0[:p0:administrator]
+v|2014-01-24 16:02:43|::1|sql|SELECT id,code,label,behavior_ids,enabled FROM {t}auth_role WHERE id IN('31') AND enabled=:p0[:p0:1]
+v|2014-01-24 16:02:43|::1|sql|SELECT id,code,label,enabled,code FROM {t}auth_behavior WHERE id IN('72','73') AND enabled=:p0[:p0:1]
+v|2014-01-24 16:02:43|::1|template|E:\projects\php\comexoa\pri\templates\frontend/default/index/index/index.php
+v|2014-01-24 16:02:43|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 16:03:36|::1|template|E:\projects\php\comexoa\pri\templates\frontend/default/auth/guard/login.php
+v|2014-01-24 16:03:36|::1|template|E:\projects\php\comexoa\pri\templates\frontend/default/alert.php
+v|2014-01-24 16:03:36|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 16:05:16|::1|sql|SELECT id,username,password,email,status,level,role_ids FROM {t}auth_account WHERE username=:p0[:p0:administrator]
+v|2014-01-24 16:05:16|::1|sql|SELECT id,code,label,behavior_ids,enabled FROM {t}auth_role WHERE id IN('31') AND enabled=:p0[:p0:1]
+v|2014-01-24 16:05:16|::1|sql|SELECT id,code,label,enabled,code FROM {t}auth_behavior WHERE id IN('72','73') AND enabled=:p0[:p0:1]
+v|2014-01-24 16:05:44|::1|template|E:\projects\php\comexoa\pri\templates\frontend/default/auth/guard/login.php
+v|2014-01-24 16:05:44|::1|template|E:\projects\php\comexoa\pri\templates\frontend/default/alert.php
+v|2014-01-24 16:05:44|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 16:05:48|::1|sql|SELECT id,username,password,email,status,level,role_ids FROM {t}auth_account WHERE username=:p0[:p0:administrator]
+v|2014-01-24 16:05:48|::1|sql|SELECT id,code,label,behavior_ids,enabled FROM {t}auth_role WHERE id IN('31') AND enabled=:p0[:p0:1]
+v|2014-01-24 16:05:48|::1|sql|SELECT id,code,label,enabled,code FROM {t}auth_behavior WHERE id IN('72','73') AND enabled=:p0[:p0:1]
+v|2014-01-24 16:05:48|::1|template|E:\projects\php\comexoa\pri\templates\frontend/default/index/index/index.php
+v|2014-01-24 16:05:48|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 16:07:53|::1|sql|SELECT COUNT(*) FROM {t}auth_role
+v|2014-01-24 16:07:53|::1|sql|SELECT id,code,label,behavior_ids,enabled FROM {t}auth_role LIMIT 0,50
+v|2014-01-24 16:07:53|::1|sql|SELECT id,code,label,enabled FROM {t}auth_behavior
+v|2014-01-24 16:07:53|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/auth/role/index.php
+v|2014-01-24 16:07:53|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/pagination.php
+v|2014-01-24 16:07:53|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/master.php
+v|2014-01-24 16:07:53|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 16:08:00|::1|template|E:\projects\php\comexoa\pri\templates\frontend/default/index/index/index.php
+v|2014-01-24 16:08:00|::1|template|E:\projects\php\comexoa\pri\templates\frontend/default/master.php
+v|2014-01-24 16:08:00|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 16:11:54|::1|template|E:\projects\php\comexoa\pri\templates\frontend/default/index/index/index.php
+v|2014-01-24 16:11:54|::1|template|E:\projects\php\comexoa\pri\templates\frontend/default/master.php
+v|2014-01-24 16:11:54|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 16:12:14|::1|template|E:\projects\php\comexoa\pri\templates\frontend/default/index/index/index.php
+v|2014-01-24 16:12:14|::1|template|E:\projects\php\comexoa\pri\templates\frontend/default/master.php
+v|2014-01-24 16:12:14|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 16:12:43|::1|template|E:\projects\php\comexoa\pri\templates\frontend/default/index/index/index.php
+v|2014-01-24 16:12:43|::1|template|E:\projects\php\comexoa\pri\templates\frontend/default/master.php
+v|2014-01-24 16:12:43|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 16:13:20|::1|template|E:\projects\php\comexoa\pri\templates\frontend/default/index/index/index.php
+v|2014-01-24 16:13:20|::1|template|E:\projects\php\comexoa\pri\templates\frontend/default/master.php
+v|2014-01-24 16:13:20|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 16:17:36|::1|template|E:\projects\php\comexoa\pri\templates\frontend/default/index/index/index.php
+v|2014-01-24 16:17:36|::1|template|E:\projects\php\comexoa\pri\templates\frontend/default/master.php
+v|2014-01-24 16:17:36|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 16:18:14|::1|template|E:\projects\php\comexoa\pri\templates\frontend/default/auth/guard/login.php
+v|2014-01-24 16:18:14|::1|template|E:\projects\php\comexoa\pri\templates\frontend/default/alert.php
+v|2014-01-24 16:18:14|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 16:19:31|::1|sql|SELECT id,username,password,email,status,level,role_ids FROM {t}auth_account WHERE username=:p0[:p0:administrator]
+v|2014-01-24 16:19:31|::1|sql|SELECT id,code,label,behavior_ids,enabled FROM {t}auth_role WHERE id IN('31') AND enabled=:p0[:p0:1]
+v|2014-01-24 16:19:31|::1|sql|SELECT id,code,label,enabled,code FROM {t}auth_behavior WHERE id IN('72','73') AND enabled=:p0[:p0:1]
+v|2014-01-24 16:19:31|::1|template|E:\projects\php\comexoa\pri\templates\frontend/default/index/index/index.php
+v|2014-01-24 16:19:31|::1|template|E:\projects\php\comexoa\pri\templates\frontend/default/master.php
+v|2014-01-24 16:19:31|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 16:20:19|::1|template|E:\projects\php\comexoa\pri\templates\frontend/default/auth/guard/login.php
+v|2014-01-24 16:20:19|::1|template|E:\projects\php\comexoa\pri\templates\frontend/default/alert.php
+v|2014-01-24 16:20:19|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 16:21:00|::1|template|E:\projects\php\comexoa\pri\templates\frontend/default/auth/guard/login.php
+v|2014-01-24 16:21:00|::1|template|E:\projects\php\comexoa\pri\templates\frontend/default/alert.php
+v|2014-01-24 16:21:00|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 16:21:05|::1|sql|SELECT id,username,password,email,status,level,role_ids FROM {t}auth_account WHERE username=:p0[:p0:administrator]
+v|2014-01-24 16:21:05|::1|sql|SELECT id,code,label,behavior_ids,enabled FROM {t}auth_role WHERE id IN('31') AND enabled=:p0[:p0:1]
+v|2014-01-24 16:21:05|::1|sql|SELECT id,code,label,enabled,code FROM {t}auth_behavior WHERE id IN('72','73') AND enabled=:p0[:p0:1]
+v|2014-01-24 16:21:05|::1|template|E:\projects\php\comexoa\pri\templates\frontend/default/index/index/index.php
+v|2014-01-24 16:21:05|::1|template|E:\projects\php\comexoa\pri\templates\frontend/default/master.php
+v|2014-01-24 16:21:05|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 16:21:07|::1|template|E:\projects\php\comexoa\pri\templates\frontend/default/auth/guard/login.php
+v|2014-01-24 16:21:07|::1|template|E:\projects\php\comexoa\pri\templates\frontend/default/alert.php
+v|2014-01-24 16:21:07|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 16:21:09|::1|template|E:\projects\php\comexoa\pri\templates\frontend/default/auth/guard/login.php
+v|2014-01-24 16:21:09|::1|template|E:\projects\php\comexoa\pri\templates\frontend/default/alert.php
+v|2014-01-24 16:21:09|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 16:21:10|::1|template|E:\projects\php\comexoa\pri\templates\frontend/default/auth/guard/login.php
+v|2014-01-24 16:21:10|::1|template|E:\projects\php\comexoa\pri\templates\frontend/default/alert.php
+v|2014-01-24 16:21:10|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 16:21:11|::1|template|E:\projects\php\comexoa\pri\templates\frontend/default/auth/guard/login.php
+v|2014-01-24 16:21:11|::1|template|E:\projects\php\comexoa\pri\templates\frontend/default/alert.php
+v|2014-01-24 16:21:11|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 16:21:12|::1|template|E:\projects\php\comexoa\pri\templates\frontend/default/auth/guard/login.php
+v|2014-01-24 16:21:12|::1|template|E:\projects\php\comexoa\pri\templates\frontend/default/alert.php
+v|2014-01-24 16:21:12|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 16:21:18|::1|sql|SELECT id,username,password,email,status,level,role_ids FROM {t}auth_account WHERE username=:p0[:p0:administrator]
+v|2014-01-24 16:21:18|::1|sql|SELECT id,code,label,behavior_ids,enabled FROM {t}auth_role WHERE id IN('31') AND enabled=:p0[:p0:1]
+v|2014-01-24 16:21:18|::1|sql|SELECT id,code,label,enabled,code FROM {t}auth_behavior WHERE id IN('72','73') AND enabled=:p0[:p0:1]
+v|2014-01-24 16:21:19|::1|template|E:\projects\php\comexoa\pri\templates\frontend/default/index/index/index.php
+v|2014-01-24 16:21:19|::1|template|E:\projects\php\comexoa\pri\templates\frontend/default/master.php
+v|2014-01-24 16:21:19|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 16:23:49|::1|sql|SELECT COUNT(*) FROM {t}system_area
+v|2014-01-24 16:23:49|::1|sql|SELECT id,parent_id,name,phone_code FROM {t}system_area ORDER BY level ASC,id ASC LIMIT 0,50
+v|2014-01-24 16:23:49|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/system/area/index.php
+v|2014-01-24 16:23:49|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/pagination.php
+v|2014-01-24 16:23:49|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/master.php
+v|2014-01-24 16:23:49|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 16:24:17|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/auth/guard/login.php
+v|2014-01-24 16:24:17|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/alert.php
+v|2014-01-24 16:24:17|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 16:24:29|::1|sql|SELECT id,username,password,email,status,level,role_ids FROM {t}auth_account WHERE username=:p0[:p0:administrator]
+v|2014-01-24 16:24:29|::1|sql|SELECT id,code,label,behavior_ids,enabled FROM {t}auth_role WHERE id IN('31') AND enabled=:p0[:p0:1]
+v|2014-01-24 16:24:29|::1|sql|SELECT id,code,label,enabled,code FROM {t}auth_behavior WHERE id IN('72','73') AND enabled=:p0[:p0:1]
+v|2014-01-24 16:26:32|::1|sql|SELECT id,username,password,email,status,level,role_ids FROM {t}auth_account WHERE username=:p0[:p0:administrator]
+v|2014-01-24 16:26:32|::1|sql|SELECT id,code,label,behavior_ids,enabled FROM {t}auth_role WHERE id IN('31') AND enabled=:p0[:p0:1]
+v|2014-01-24 16:26:32|::1|sql|SELECT id,code,label,enabled,code FROM {t}auth_behavior WHERE id IN('72','73') AND enabled=:p0[:p0:1]
+v|2014-01-24 16:26:53|::1|sql|SELECT id,username,password,email,status,level,role_ids FROM {t}auth_account WHERE username=:p0[:p0:administrator]
+v|2014-01-24 16:26:53|::1|sql|SELECT id,code,label,behavior_ids,enabled FROM {t}auth_role WHERE id IN('31') AND enabled=:p0[:p0:1]
+v|2014-01-24 16:26:53|::1|sql|SELECT id,code,label,enabled,code FROM {t}auth_behavior WHERE id IN('72','73') AND enabled=:p0[:p0:1]
+v|2014-01-24 16:27:40|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/index/index/index.php
+v|2014-01-24 16:27:40|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/master.php
+v|2014-01-24 16:27:40|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 16:27:49|::1|sql|SELECT COUNT(*) FROM {t}auth_account
+v|2014-01-24 16:27:49|::1|sql|SELECT id,username,password,email,status,level,role_ids FROM {t}auth_account LIMIT 0,50
+v|2014-01-24 16:27:49|::1|sql|SELECT id,code,label,behavior_ids,enabled FROM {t}auth_role
+v|2014-01-24 16:27:49|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/auth/account/index.php
+v|2014-01-24 16:27:49|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/pagination.php
+v|2014-01-24 16:27:49|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/master.php
+v|2014-01-24 16:27:49|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 16:27:54|::1|sql|SELECT id,username,password,email,status,level,role_ids FROM {t}auth_account WHERE id=:p0[:p0:38]
+v|2014-01-24 16:27:54|::1|sql|SELECT id,code,label,behavior_ids,enabled FROM {t}auth_role
+v|2014-01-24 16:27:54|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/auth/account/edit.php
+v|2014-01-24 16:27:54|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/alert.php
+v|2014-01-24 16:27:54|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/master.php
+v|2014-01-24 16:27:54|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 16:27:58|::1|sql|SELECT COUNT(*) FROM {t}auth_account
+v|2014-01-24 16:27:58|::1|sql|SELECT id,username,password,email,status,level,role_ids FROM {t}auth_account LIMIT 0,50
+v|2014-01-24 16:27:58|::1|sql|SELECT id,code,label,behavior_ids,enabled FROM {t}auth_role
+v|2014-01-24 16:27:58|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/auth/account/index.php
+v|2014-01-24 16:27:58|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/pagination.php
+v|2014-01-24 16:27:58|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/master.php
+v|2014-01-24 16:27:58|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 16:28:10|::1|sql|SELECT id,username,password,email,status,level,role_ids FROM {t}auth_account WHERE id=:p0[:p0:38]
+v|2014-01-24 16:28:10|::1|sql|SELECT id,code,label,behavior_ids,enabled FROM {t}auth_role
+v|2014-01-24 16:28:10|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/auth/account/edit.php
+v|2014-01-24 16:28:10|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/alert.php
+v|2014-01-24 16:28:10|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/master.php
+v|2014-01-24 16:28:10|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 16:28:15|::1|sql|SELECT COUNT(*) FROM {t}auth_account
+v|2014-01-24 16:28:15|::1|sql|SELECT id,username,password,email,status,level,role_ids FROM {t}auth_account LIMIT 0,50
+v|2014-01-24 16:28:15|::1|sql|SELECT id,code,label,behavior_ids,enabled FROM {t}auth_role
+v|2014-01-24 16:28:15|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/auth/account/index.php
+v|2014-01-24 16:28:15|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/pagination.php
+v|2014-01-24 16:28:15|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/master.php
+v|2014-01-24 16:28:15|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 16:28:37|::1|sql|SELECT id,code,label,behavior_ids,enabled FROM {t}auth_role
+v|2014-01-24 16:28:37|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/auth/account/edit.php
+v|2014-01-24 16:28:37|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/alert.php
+v|2014-01-24 16:28:37|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/master.php
+v|2014-01-24 16:28:37|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 16:28:39|::1|sql|SELECT COUNT(*) FROM {t}auth_account
+v|2014-01-24 16:28:39|::1|sql|SELECT id,username,password,email,status,level,role_ids FROM {t}auth_account LIMIT 0,50
+v|2014-01-24 16:28:39|::1|sql|SELECT id,code,label,behavior_ids,enabled FROM {t}auth_role
+v|2014-01-24 16:28:39|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/auth/account/index.php
+v|2014-01-24 16:28:39|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/pagination.php
+v|2014-01-24 16:28:39|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/master.php
+v|2014-01-24 16:28:39|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 16:28:42|::1|sql|SELECT id,username,password,email,status,level,role_ids FROM {t}auth_account WHERE id=:p0[:p0:38]
+v|2014-01-24 16:28:42|::1|sql|SELECT id,code,label,behavior_ids,enabled FROM {t}auth_role
+v|2014-01-24 16:28:42|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/auth/account/edit.php
+v|2014-01-24 16:28:42|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/alert.php
+v|2014-01-24 16:28:42|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/master.php
+v|2014-01-24 16:28:42|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 16:28:57|::1|sql|SELECT id,username,password,email,status,level,role_ids FROM {t}auth_account WHERE id=:p0[:p0:38]
+v|2014-01-24 16:28:57|::1|sql|UPDATE {t}auth_account SET password=:p0,email=:p1,status=:p2,level=:p3,role_ids=:p4 WHERE id=:p5[:p0:e3af258ab3eba2d62763326bf7a7bfc0][:p1:ronald.xian@comexholdings.com][:p2:1][:p3:1][:p4:31][:p5:38]
+v|2014-01-24 16:28:58|::1|sql|SELECT COUNT(*) FROM {t}auth_account
+v|2014-01-24 16:28:58|::1|sql|SELECT id,username,password,email,status,level,role_ids FROM {t}auth_account LIMIT 0,50
+v|2014-01-24 16:28:58|::1|sql|SELECT id,code,label,behavior_ids,enabled FROM {t}auth_role
+v|2014-01-24 16:28:58|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/auth/account/index.php
+v|2014-01-24 16:28:58|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/pagination.php
+v|2014-01-24 16:28:58|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/master.php
+v|2014-01-24 16:28:58|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 16:29:01|::1|sql|SELECT id,code,label,behavior_ids,enabled FROM {t}auth_role
+v|2014-01-24 16:29:01|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/auth/account/edit.php
+v|2014-01-24 16:29:01|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/alert.php
+v|2014-01-24 16:29:01|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/master.php
+v|2014-01-24 16:29:01|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 16:29:42|::1|sql|SELECT id,code,label,behavior_ids,enabled FROM {t}auth_role
+v|2014-01-24 16:29:42|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/auth/account/edit.php
+v|2014-01-24 16:29:42|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/alert.php
+v|2014-01-24 16:29:42|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/master.php
+v|2014-01-24 16:29:42|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 16:29:57|::1|sql|SELECT id,code,label,behavior_ids,enabled FROM {t}auth_role
+v|2014-01-24 16:29:57|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/auth/account/edit.php
+v|2014-01-24 16:29:57|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/alert.php
+v|2014-01-24 16:29:57|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/master.php
+v|2014-01-24 16:29:57|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 16:30:15|::1|sql|SELECT id,code,label,behavior_ids,enabled FROM {t}auth_role
+v|2014-01-24 16:30:15|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/auth/account/edit.php
+v|2014-01-24 16:30:15|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/alert.php
+v|2014-01-24 16:30:15|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/master.php
+v|2014-01-24 16:30:15|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 16:34:13|::1|sql|SELECT id,code,label,behavior_ids,enabled FROM {t}auth_role
+v|2014-01-24 16:34:13|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/auth/account/edit.php
+v|2014-01-24 16:34:13|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/alert.php
+v|2014-01-24 16:34:13|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/master.php
+v|2014-01-24 16:34:13|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 16:34:41|::1|sql|SELECT id,code,label,behavior_ids,enabled FROM {t}auth_role
+v|2014-01-24 16:34:41|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/auth/account/edit.php
+v|2014-01-24 16:34:41|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/alert.php
+v|2014-01-24 16:34:41|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/master.php
+v|2014-01-24 16:34:41|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 16:35:17|::1|sql|SELECT id,code,label,behavior_ids,enabled FROM {t}auth_role
+v|2014-01-24 16:35:17|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/auth/account/edit.php
+v|2014-01-24 16:35:17|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/alert.php
+v|2014-01-24 16:35:17|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/master.php
+v|2014-01-24 16:35:17|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 16:35:37|::1|sql|SELECT id,code,label,behavior_ids,enabled FROM {t}auth_role
+v|2014-01-24 16:35:37|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/auth/account/edit.php
+v|2014-01-24 16:35:37|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/alert.php
+v|2014-01-24 16:35:37|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/master.php
+v|2014-01-24 16:35:37|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 16:36:19|::1|sql|SELECT id,code,label,behavior_ids,enabled FROM {t}auth_role
+v|2014-01-24 16:36:19|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/auth/account/edit.php
+v|2014-01-24 16:36:19|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/alert.php
+v|2014-01-24 16:36:19|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/master.php
+v|2014-01-24 16:36:19|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 16:36:27|::1|sql|SELECT id,code,label,behavior_ids,enabled FROM {t}auth_role
+v|2014-01-24 16:36:27|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/auth/account/edit.php
+v|2014-01-24 16:36:27|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/alert.php
+v|2014-01-24 16:36:27|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/master.php
+v|2014-01-24 16:36:27|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 16:36:39|::1|sql|SELECT id,code,label,behavior_ids,enabled FROM {t}auth_role
+v|2014-01-24 16:36:39|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/auth/account/edit.php
+v|2014-01-24 16:36:39|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/alert.php
+v|2014-01-24 16:36:39|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/master.php
+v|2014-01-24 16:36:39|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 16:36:49|::1|sql|SELECT id,code,label,behavior_ids,enabled FROM {t}auth_role
+v|2014-01-24 16:36:49|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/auth/account/edit.php
+v|2014-01-24 16:36:49|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/alert.php
+v|2014-01-24 16:36:49|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/master.php
+v|2014-01-24 16:36:49|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 16:37:09|::1|sql|SELECT id,username,password,email,status,level,role_ids FROM {t}auth_account WHERE username=:p0[:p0:ronald.xian@comexholdings.com]
+v|2014-01-24 16:37:09|::1|sql|INSERT INTO {t}auth_account (username,password,email,status,level,role_ids) VALUES (:p0,:p1,:p2,:p3,:p4,:p5)[:p0:ronald.xian@comexholdings.com][:p1:e3af258ab3eba2d62763326bf7a7bfc0][:p2:ronald.xian@comexholdings.com][:p3:1][:p4:2][:p5:31]
+v|2014-01-24 16:37:10|::1|sql|SELECT COUNT(*) FROM {t}auth_account
+v|2014-01-24 16:37:10|::1|sql|SELECT id,username,password,email,status,level,role_ids FROM {t}auth_account LIMIT 0,50
+v|2014-01-24 16:37:10|::1|sql|SELECT id,code,label,behavior_ids,enabled FROM {t}auth_role
+v|2014-01-24 16:37:10|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/auth/account/index.php
+v|2014-01-24 16:37:10|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/pagination.php
+v|2014-01-24 16:37:10|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/master.php
+v|2014-01-24 16:37:10|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 16:38:05|::1|sql|SELECT COUNT(*) FROM {t}auth_account
+v|2014-01-24 16:38:05|::1|sql|SELECT id,username,password,email,status,level,role_ids FROM {t}auth_account LIMIT 0,50
+v|2014-01-24 16:38:05|::1|sql|SELECT id,code,label,behavior_ids,enabled FROM {t}auth_role
+v|2014-01-24 16:38:05|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/auth/account/index.php
+v|2014-01-24 16:38:05|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/pagination.php
+v|2014-01-24 16:38:05|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/master.php
+v|2014-01-24 16:38:05|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 16:38:10|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/auth/guard/login.php
+v|2014-01-24 16:38:10|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/alert.php
+v|2014-01-24 16:38:10|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 16:38:19|::1|sql|SELECT id,username,password,email,status,level,role_ids FROM {t}auth_account WHERE username=:p0[:p0:ronald.xian@comexholdings.com]
+v|2014-01-24 16:38:19|::1|sql|SELECT id,code,label,behavior_ids,enabled FROM {t}auth_role WHERE id IN('31') AND enabled=:p0[:p0:1]
+v|2014-01-24 16:38:19|::1|sql|SELECT id,code,label,enabled,code FROM {t}auth_behavior WHERE id IN('72','73') AND enabled=:p0[:p0:1]
+v|2014-01-24 16:38:19|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/auth/guard/login.php
+v|2014-01-24 16:38:19|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/alert.php
+v|2014-01-24 16:38:19|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 16:42:18|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/auth/guard/login.php
+v|2014-01-24 16:42:18|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/alert.php
+v|2014-01-24 16:42:18|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 16:42:25|::1|sql|SELECT id,username,password,email,status,level,role_ids FROM {t}auth_account WHERE username=:p0[:p0:ronald.xian@comexholdings.com]
+v|2014-01-24 16:42:25|::1|sql|SELECT id,code,label,behavior_ids,enabled FROM {t}auth_role WHERE id IN('31') AND enabled=:p0[:p0:1]
+v|2014-01-24 16:42:25|::1|sql|SELECT id,code,label,enabled,code FROM {t}auth_behavior WHERE id IN('72','73') AND enabled=:p0[:p0:1]
+v|2014-01-24 16:42:25|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/auth/guard/login.php
+v|2014-01-24 16:42:25|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/alert.php
+v|2014-01-24 16:42:25|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 16:42:29|::1|template|E:\projects\php\comexoa\pri\templates\frontend/default/auth/guard/login.php
+v|2014-01-24 16:42:29|::1|template|E:\projects\php\comexoa\pri\templates\frontend/default/alert.php
+v|2014-01-24 16:42:29|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 16:42:39|::1|sql|SELECT id,username,password,email,status,level,role_ids FROM {t}auth_account WHERE username=:p0[:p0:ronald.xian@comexholdings.com]
+v|2014-01-24 16:42:39|::1|sql|SELECT id,code,label,behavior_ids,enabled FROM {t}auth_role WHERE id IN('31') AND enabled=:p0[:p0:1]
+v|2014-01-24 16:42:39|::1|sql|SELECT id,code,label,enabled,code FROM {t}auth_behavior WHERE id IN('72','73') AND enabled=:p0[:p0:1]
+v|2014-01-24 16:42:39|::1|template|E:\projects\php\comexoa\pri\templates\frontend/default/index/index/index.php
+v|2014-01-24 16:42:39|::1|template|E:\projects\php\comexoa\pri\templates\frontend/default/master.php
+v|2014-01-24 16:42:39|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 16:43:17|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/auth/guard/login.php
+v|2014-01-24 16:43:17|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/alert.php
+v|2014-01-24 16:43:17|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 16:44:28|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/auth/guard/login.php
+v|2014-01-24 16:44:28|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/alert.php
+v|2014-01-24 16:44:28|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 16:44:31|::1|template|E:\projects\php\comexoa\pri\templates\frontend/default/index/index/index.php
+v|2014-01-24 16:44:31|::1|template|E:\projects\php\comexoa\pri\templates\frontend/default/master.php
+v|2014-01-24 16:44:31|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 16:52:58|::1|template|E:\projects\php\comexoa\pri\templates\frontend/default/index/index/index.php
+v|2014-01-24 16:52:58|::1|template|E:\projects\php\comexoa\pri\templates\frontend/default/master.php
+v|2014-01-24 16:52:58|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 16:53:02|::1|template|E:\projects\php\comexoa\pri\templates\frontend/default/auth/account/change-password.php
+v|2014-01-24 16:53:02|::1|template|E:\projects\php\comexoa\pri\templates\frontend/default/alert.php
+v|2014-01-24 16:53:02|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 16:53:14|::1|template|E:\projects\php\comexoa\pri\templates\frontend/default/auth/account/change-password.php
+v|2014-01-24 16:53:14|::1|template|E:\projects\php\comexoa\pri\templates\frontend/default/alert.php
+v|2014-01-24 16:53:14|::1|template|E:\projects\php\comexoa\pri\templates\frontend/default/master.php
+v|2014-01-24 16:53:14|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 17:04:41|::1|template|E:\projects\php\comexoa\pri\templates\frontend/default/auth/account/change-password.php
+v|2014-01-24 17:04:41|::1|template|E:\projects\php\comexoa\pri\templates\frontend/default/alert.php
+v|2014-01-24 17:04:41|::1|template|E:\projects\php\comexoa\pri\templates\frontend/default/master.php
+v|2014-01-24 17:04:41|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 17:05:08|::1|template|E:\projects\php\comexoa\pri\templates\frontend/default/auth/account/change-password.php
+v|2014-01-24 17:05:08|::1|template|E:\projects\php\comexoa\pri\templates\frontend/default/alert.php
+v|2014-01-24 17:05:08|::1|template|E:\projects\php\comexoa\pri\templates\frontend/default/master.php
+v|2014-01-24 17:05:08|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 17:05:36|::1|template|E:\projects\php\comexoa\pri\templates\frontend/default/auth/account/change-password.php
+v|2014-01-24 17:05:36|::1|template|E:\projects\php\comexoa\pri\templates\frontend/default/alert.php
+v|2014-01-24 17:05:36|::1|template|E:\projects\php\comexoa\pri\templates\frontend/default/master.php
+v|2014-01-24 17:05:36|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 17:06:12|::1|template|E:\projects\php\comexoa\pri\templates\frontend/default/auth/account/change-password.php
+v|2014-01-24 17:06:12|::1|template|E:\projects\php\comexoa\pri\templates\frontend/default/alert.php
+v|2014-01-24 17:06:12|::1|template|E:\projects\php\comexoa\pri\templates\frontend/default/master.php
+v|2014-01-24 17:06:12|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 17:25:19|::1|template|E:\projects\php\comexoa\pri\templates\frontend/default/auth/account/change-password.php
+v|2014-01-24 17:25:19|::1|template|E:\projects\php\comexoa\pri\templates\alert.php
+v|2014-01-24 17:25:19|::1|template|E:\projects\php\comexoa\pri\templates\frontend/default/master.php
+v|2014-01-24 17:25:19|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 17:25:27|::1|sql|SELECT id,username,password,email,status,level,role_ids FROM {t}auth_account WHERE id=:p0[:p0:41]
+v|2014-01-24 17:25:56|::1|sql|SELECT id,username,password,email,status,level,role_ids FROM {t}auth_account WHERE id=:p0[:p0:41]
+v|2014-01-24 17:25:56|::1|sql|UPDATE {t}auth_account SET password=:p0 WHERE ID = 41[:p0:be6f8506ed6d55d265fbaa4515a04d4a]
+v|2014-01-24 17:26:25|::1|sql|SELECT id,username,password,email,status,level,role_ids FROM {t}auth_account WHERE id=:p0[:p0:41]
+v|2014-01-24 17:26:25|::1|template|E:\projects\php\comexoa\pri\templates\frontend/default/auth/account/change-password.php
+v|2014-01-24 17:26:25|::1|template|E:\projects\php\comexoa\pri\templates\alert.php
+v|2014-01-24 17:26:25|::1|template|E:\projects\php\comexoa\pri\templates\frontend/default/master.php
+v|2014-01-24 17:26:25|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 17:26:42|::1|template|E:\projects\php\comexoa\pri\templates\frontend/default/auth/account/change-password.php
+v|2014-01-24 17:26:42|::1|template|E:\projects\php\comexoa\pri\templates\alert.php
+v|2014-01-24 17:26:42|::1|template|E:\projects\php\comexoa\pri\templates\frontend/default/master.php
+v|2014-01-24 17:26:42|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 17:26:55|::1|template|E:\projects\php\comexoa\pri\templates\frontend/default/auth/account/change-password.php
+v|2014-01-24 17:26:55|::1|template|E:\projects\php\comexoa\pri\templates\alert.php
+v|2014-01-24 17:26:55|::1|template|E:\projects\php\comexoa\pri\templates\frontend/default/master.php
+v|2014-01-24 17:26:55|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 17:27:08|::1|template|E:\projects\php\comexoa\pri\templates\frontend/default/auth/account/change-password.php
+v|2014-01-24 17:27:08|::1|template|E:\projects\php\comexoa\pri\templates\alert.php
+v|2014-01-24 17:27:08|::1|template|E:\projects\php\comexoa\pri\templates\frontend/default/master.php
+v|2014-01-24 17:27:08|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 17:27:36|::1|template|E:\projects\php\comexoa\pri\templates\frontend/default/auth/account/change-password.php
+v|2014-01-24 17:27:36|::1|template|E:\projects\php\comexoa\pri\templates\alert.php
+v|2014-01-24 17:27:36|::1|template|E:\projects\php\comexoa\pri\templates\frontend/default/master.php
+v|2014-01-24 17:27:36|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 17:28:32|::1|template|E:\projects\php\comexoa\pri\templates\frontend/default/auth/account/change-password.php
+v|2014-01-24 17:28:32|::1|template|E:\projects\php\comexoa\pri\templates\alert.php
+v|2014-01-24 17:28:32|::1|template|E:\projects\php\comexoa\pri\templates\frontend/default/master.php
+v|2014-01-24 17:28:32|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 17:28:38|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/auth/guard/login.php
+v|2014-01-24 17:28:38|::1|template|E:\projects\php\comexoa\pri\templates\alert.php
+v|2014-01-24 17:28:38|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 17:28:44|::1|sql|SELECT id,username,password,email,status,level,role_ids FROM {t}auth_account WHERE username=:p0[:p0:administrator]
+v|2014-01-24 17:28:44|::1|sql|SELECT id,code,label,behavior_ids,enabled FROM {t}auth_role WHERE id IN('31') AND enabled=:p0[:p0:1]
+v|2014-01-24 17:28:44|::1|sql|SELECT id,code,label,enabled,code FROM {t}auth_behavior WHERE id IN('72','73') AND enabled=:p0[:p0:1]
+v|2014-01-24 17:28:44|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/index/index/index.php
+v|2014-01-24 17:28:44|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/master.php
+v|2014-01-24 17:28:44|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 17:28:48|::1|sql|SELECT COUNT(*) FROM {t}auth_account
+v|2014-01-24 17:28:48|::1|sql|SELECT id,username,password,email,status,level,role_ids FROM {t}auth_account LIMIT 0,50
+v|2014-01-24 17:28:48|::1|sql|SELECT id,code,label,behavior_ids,enabled FROM {t}auth_role
+v|2014-01-24 17:28:48|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/auth/account/index.php
+v|2014-01-24 17:28:48|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/pagination.php
+v|2014-01-24 17:28:48|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/master.php
+v|2014-01-24 17:28:48|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 17:29:03|::1|template|E:\projects\php\comexoa\pri\templates\frontend/default/auth/account/change-password.php
+v|2014-01-24 17:29:03|::1|template|E:\projects\php\comexoa\pri\templates\alert.php
+v|2014-01-24 17:29:03|::1|template|E:\projects\php\comexoa\pri\templates\frontend/default/master.php
+v|2014-01-24 17:29:03|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 17:29:37|::1|template|E:\projects\php\comexoa\pri\templates\frontend/default/auth/account/change-password.php
+v|2014-01-24 17:29:37|::1|template|E:\projects\php\comexoa\pri\templates\alert.php
+v|2014-01-24 17:29:37|::1|template|E:\projects\php\comexoa\pri\templates\frontend/default/master.php
+v|2014-01-24 17:29:37|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 17:29:53|::1|template|E:\projects\php\comexoa\pri\templates\frontend/default/auth/account/change-password.php
+v|2014-01-24 17:29:53|::1|template|E:\projects\php\comexoa\pri\templates\alert.php
+v|2014-01-24 17:29:53|::1|template|E:\projects\php\comexoa\pri\templates\frontend/default/master.php
+v|2014-01-24 17:29:53|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 17:30:41|::1|template|E:\projects\php\comexoa\pri\templates\frontend/default/auth/account/change-password.php
+v|2014-01-24 17:30:41|::1|template|E:\projects\php\comexoa\pri\templates\alert.php
+v|2014-01-24 17:30:41|::1|template|E:\projects\php\comexoa\pri\templates\frontend/default/master.php
+v|2014-01-24 17:30:41|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 17:30:54|::1|sql|SELECT id,username,password,email,status,level,role_ids FROM {t}auth_account WHERE id=:p0[:p0:38]
+v|2014-01-24 17:30:54|::1|template|E:\projects\php\comexoa\pri\templates\frontend/default/auth/account/change-password.php
+v|2014-01-24 17:30:54|::1|template|E:\projects\php\comexoa\pri\templates\alert.php
+v|2014-01-24 17:30:54|::1|template|E:\projects\php\comexoa\pri\templates\frontend/default/master.php
+v|2014-01-24 17:30:54|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 17:31:39|::1|template|E:\projects\php\comexoa\pri\templates\frontend/default/auth/guard/login.php
+v|2014-01-24 17:31:39|::1|template|E:\projects\php\comexoa\pri\templates\alert.php
+v|2014-01-24 17:31:39|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-01-24 17:31:46|::1|sql|SELECT id,username,password,email,status,level,role_ids FROM {t}auth_account WHERE username=:p0[:p0:ronald.xian@comexholdings.com]
+v|2014-01-24 17:31:46|::1|sql|SELECT id,code,label,behavior_ids,enabled FROM {t}auth_role WHERE id IN('31') AND enabled=:p0[:p0:1]
+v|2014-01-24 17:31:46|::1|sql|SELECT id,code,label,enabled,code FROM {t}auth_behavior WHERE id IN('72','73') AND enabled=:p0[:p0:1]
+v|2014-01-24 17:31:46|::1|template|E:\projects\php\comexoa\pri\templates\frontend/default/index/index/index.php
+v|2014-01-24 17:31:46|::1|template|E:\projects\php\comexoa\pri\templates\frontend/default/master.php
+v|2014-01-24 17:31:46|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php

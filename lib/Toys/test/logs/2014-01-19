@@ -1,0 +1,38 @@
+v|2014-01-19 18:10:28|localhost|sql|INSERT INTO test1 (fullname,age) VALUES (:p0,:p1)[:p0:ronald][:p1:40]
+v|2014-01-19 18:10:28|localhost|sql|INSERT INTO test1 (fullname,age) VALUES (:p0,:p1)[:p0:forupdate][:p1:40]
+v|2014-01-19 18:10:28|localhost|sql|UPDATE test1 SET fullname=:p0 WHERE id=:p1[:p0:updated1390126228][:p1:168]
+v|2014-01-19 18:10:28|localhost|sql|UPDATE test1 SET fullname=:p0 WHERE id<:p1 AND id=:p2[:p0:updated before][:p1:168][:p2:168]
+v|2014-01-19 18:10:28|localhost|sql|UPDATE test1 SET fullname=:p0 WHERE id<:p1 OR id=:p2[:p0:updated or][:p1:168][:p2:168]
+v|2014-01-19 18:10:28|localhost|sql|DELETE FROM test1 WHERE id=:p0[:p0:168]
+v|2014-01-19 18:10:28|localhost|sql|SELECT * FROM test1
+v|2014-01-19 18:10:28|localhost|sql|SELECT * FROM test1
+v|2014-01-19 18:10:28|localhost|sql|SELECT * FROM test1
+v|2014-01-19 18:10:28|localhost|sql|SELECT * FROM test1 WHERE id>:p0[:p0:50]
+v|2014-01-19 18:10:28|localhost|sql|SELECT * FROM test1 WHERE id > 50
+v|2014-01-19 18:10:28|localhost|sql|SELECT * FROM test1 WHERE id>:p0 AND fullname=:p1[:p0:50][:p1:updated or]
+v|2014-01-19 18:10:28|localhost|sql|SELECT * FROM test1 WHERE id > 50 AND fullname='updated or'
+v|2014-01-19 18:10:28|localhost|sql|SELECT * FROM test1 WHERE id>:p0 OR fullname=:p1[:p0:50][:p1:updated or]
+v|2014-01-19 18:10:28|localhost|sql|SELECT * FROM test1 WHERE id > 50 OR fullname='updated or'
+v|2014-01-19 18:10:28|localhost|sql|SELECT * FROM test1 WHERE id>:p0 ORDER BY fullname DESC,age ASC[:p0:50]
+v|2014-01-19 18:10:28|localhost|sql|SELECT * FROM test1 WHERE id > 50 ORDER BY fullname DESC, age ASC
+v|2014-01-19 18:10:28|localhost|sql|SELECT * FROM test1 WHERE id>:p0 ORDER BY fullname DESC,age ASC LIMIT 0,10[:p0:50]
+v|2014-01-19 18:10:28|localhost|sql|SELECT * FROM test1 WHERE id > 50 ORDER BY fullname DESC, age ASC LIMIT 0, 10
+v|2014-01-19 18:15:20|localhost|sql|INSERT INTO test1 (fullname,age) VALUES (:p0,:p1)[:p0:ronald][:p1:40]
+v|2014-01-19 18:15:20|localhost|sql|INSERT INTO test1 (fullname,age) VALUES (:p0,:p1)[:p0:forupdate][:p1:40]
+v|2014-01-19 18:15:20|localhost|sql|UPDATE test1 SET fullname=:p0 WHERE id=:p1[:p0:updated1390126520][:p1:170]
+v|2014-01-19 18:15:20|localhost|sql|UPDATE test1 SET fullname=:p0 WHERE id<:p1 AND id=:p2[:p0:updated before][:p1:170][:p2:170]
+v|2014-01-19 18:15:20|localhost|sql|UPDATE test1 SET fullname=:p0 WHERE id<:p1 OR id=:p2[:p0:updated or][:p1:170][:p2:170]
+v|2014-01-19 18:15:20|localhost|sql|DELETE FROM test1 WHERE id=:p0[:p0:170]
+v|2014-01-19 18:15:20|localhost|sql|SELECT * FROM test1
+v|2014-01-19 18:15:20|localhost|sql|SELECT * FROM test1
+v|2014-01-19 18:15:20|localhost|sql|SELECT * FROM test1
+v|2014-01-19 18:15:20|localhost|sql|SELECT * FROM test1 WHERE id>:p0[:p0:50]
+v|2014-01-19 18:15:20|localhost|sql|SELECT * FROM test1 WHERE id > 50
+v|2014-01-19 18:15:20|localhost|sql|SELECT * FROM test1 WHERE id>:p0 AND fullname=:p1[:p0:50][:p1:updated or]
+v|2014-01-19 18:15:20|localhost|sql|SELECT * FROM test1 WHERE id > 50 AND fullname='updated or'
+v|2014-01-19 18:15:20|localhost|sql|SELECT * FROM test1 WHERE id>:p0 OR fullname=:p1[:p0:50][:p1:updated or]
+v|2014-01-19 18:15:20|localhost|sql|SELECT * FROM test1 WHERE id > 50 OR fullname='updated or'
+v|2014-01-19 18:15:20|localhost|sql|SELECT * FROM test1 WHERE id>:p0 ORDER BY fullname DESC,age ASC[:p0:50]
+v|2014-01-19 18:15:20|localhost|sql|SELECT * FROM test1 WHERE id > 50 ORDER BY fullname DESC, age ASC
+v|2014-01-19 18:15:20|localhost|sql|SELECT * FROM test1 WHERE id>:p0 ORDER BY fullname DESC,age ASC LIMIT 0,10[:p0:50]
+v|2014-01-19 18:15:20|localhost|sql|SELECT * FROM test1 WHERE id > 50 ORDER BY fullname DESC, age ASC LIMIT 0, 10

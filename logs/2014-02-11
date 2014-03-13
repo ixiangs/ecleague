@@ -1,0 +1,83 @@
+v|2014-02-11 14:48:36|::1|template|E:\projects\php\comexoa\pri\templates\frontend/default/user/defend/login.php
+v|2014-02-11 14:48:36|::1|template|E:\projects\php\comexoa\pri\templates\alert.php
+v|2014-02-11 14:48:36|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-02-11 14:48:42|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/user/defend/login.php
+v|2014-02-11 14:48:42|::1|template|E:\projects\php\comexoa\pri\templates\alert.php
+v|2014-02-11 14:48:42|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-02-11 14:48:48|::1|sql|SELECT {t}user_account.id,{t}user_account.username,{t}user_account.password,{t}user_account.email,{t}user_account.status,{t}user_account.level,{t}user_account.role_ids FROM {t}user_account WHERE username=:p0[:p0:administrator]
+v|2014-02-11 14:48:48|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/index/index/index.php
+v|2014-02-11 14:48:48|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/master.php
+v|2014-02-11 14:48:48|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-02-11 14:48:52|::1|sql|SELECT COUNT(*) FROM {t}user_account
+v|2014-02-11 14:48:52|::1|sql|SELECT {t}user_account.id,{t}user_account.username,{t}user_account.password,{t}user_account.email,{t}user_account.status,{t}user_account.level,{t}user_account.role_ids FROM {t}user_account ORDER BY id ASC LIMIT 0,50
+v|2014-02-11 14:48:53|::1|sql|SELECT {t}user_role.id,{t}user_role.code,{t}user_role.label,{t}user_role.behavior_ids,{t}user_role.enabled FROM {t}user_role
+v|2014-02-11 14:48:53|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/user/account/index.php
+v|2014-02-11 14:48:53|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/pagination.php
+v|2014-02-11 14:48:53|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/master.php
+v|2014-02-11 14:48:53|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-02-11 14:49:43|::1|sql|SELECT {t}user_profile.account_id,{t}user_profile.chinese_name,{t}user_profile.english_name,{t}user_profile.gender,{t}user_profile.work_email,{t}user_profile.work_phone,{t}user_profile.personal_email,{t}user_profile.personal_phone,{t}user_profile.mobile FROM {t}user_profile WHERE account_id=:p0[:p0:1]
+v|2014-02-11 14:49:43|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/user/account/profile.php
+v|2014-02-11 14:49:43|::1|template|E:\projects\php\comexoa\pri\templates\alert.php
+v|2014-02-11 14:49:43|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/master.php
+v|2014-02-11 14:49:43|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-02-11 14:49:46|::1|sql|SELECT COUNT(*) FROM {t}user_account
+v|2014-02-11 14:49:46|::1|sql|SELECT {t}user_account.id,{t}user_account.username,{t}user_account.password,{t}user_account.email,{t}user_account.status,{t}user_account.level,{t}user_account.role_ids FROM {t}user_account ORDER BY id ASC LIMIT 0,50
+v|2014-02-11 14:49:46|::1|sql|SELECT {t}user_role.id,{t}user_role.code,{t}user_role.label,{t}user_role.behavior_ids,{t}user_role.enabled FROM {t}user_role
+v|2014-02-11 14:49:46|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/user/account/index.php
+v|2014-02-11 14:49:46|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/pagination.php
+v|2014-02-11 14:49:46|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/master.php
+v|2014-02-11 14:49:46|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-02-11 14:49:57|::1|sql|SELECT {t}user_role.id,{t}user_role.code,{t}user_role.label,{t}user_role.behavior_ids,{t}user_role.enabled FROM {t}user_role
+v|2014-02-11 14:49:57|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/user/account/edit.php
+v|2014-02-11 14:49:57|::1|template|E:\projects\php\comexoa\pri\templates\alert.php
+v|2014-02-11 14:49:57|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/master.php
+v|2014-02-11 14:49:57|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-02-11 15:22:08|::1|sql|SELECT {t}user_role.id,{t}user_role.code,{t}user_role.label,{t}user_role.behavior_ids,{t}user_role.enabled FROM {t}user_role
+v|2014-02-11 15:22:08|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/user/account/edit.php
+v|2014-02-11 15:22:08|::1|template|E:\projects\php\comexoa\pri\templates\alert.php
+v|2014-02-11 15:22:08|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/master.php
+v|2014-02-11 15:22:08|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-02-11 15:22:14|::1|sql|SELECT {t}user_account.id,{t}user_account.username,{t}user_account.password,{t}user_account.email,{t}user_account.status,{t}user_account.level,{t}user_account.role_ids FROM {t}user_account WHERE username=:p0[:p0:]
+v|2014-02-11 15:22:14|::1|sql|INSERT INTO {t}user_account (username,password,email,status,level,role_ids) VALUES (:p0,:p1,:p2,:p3,:p4,:p5)[:p0:][:p1:d41d8cd98f00b204e9800998ecf8427e][:p2:][:p3:1][:p4:2][:p5:]
+v|2014-02-11 15:22:20|::1|sql|SELECT {t}user_role.id,{t}user_role.code,{t}user_role.label,{t}user_role.behavior_ids,{t}user_role.enabled FROM {t}user_role
+v|2014-02-11 15:22:20|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/user/account/edit.php
+v|2014-02-11 15:22:20|::1|template|E:\projects\php\comexoa\pri\templates\alert.php
+v|2014-02-11 15:22:20|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/master.php
+v|2014-02-11 15:22:20|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-02-11 15:23:29|::1|sql|SELECT {t}user_role.id,{t}user_role.code,{t}user_role.label,{t}user_role.behavior_ids,{t}user_role.enabled FROM {t}user_role
+v|2014-02-11 15:23:29|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/user/account/edit.php
+v|2014-02-11 15:23:29|::1|template|E:\projects\php\comexoa\pri\templates\alert.php
+v|2014-02-11 15:23:29|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/master.php
+v|2014-02-11 15:23:29|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-02-11 15:23:57|::1|sql|SELECT {t}user_role.id,{t}user_role.code,{t}user_role.label,{t}user_role.behavior_ids,{t}user_role.enabled FROM {t}user_role
+v|2014-02-11 15:23:57|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/user/account/edit.php
+v|2014-02-11 15:23:57|::1|template|E:\projects\php\comexoa\pri\templates\alert.php
+v|2014-02-11 15:23:57|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/master.php
+v|2014-02-11 15:23:57|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-02-11 15:24:29|::1|sql|SELECT {t}user_role.id,{t}user_role.code,{t}user_role.label,{t}user_role.behavior_ids,{t}user_role.enabled FROM {t}user_role
+v|2014-02-11 15:24:29|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/user/account/edit.php
+v|2014-02-11 15:24:29|::1|template|E:\projects\php\comexoa\pri\templates\alert.php
+v|2014-02-11 15:24:29|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/master.php
+v|2014-02-11 15:24:29|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-02-11 15:36:36|::1|sql|SELECT {t}user_role.id,{t}user_role.code,{t}user_role.label,{t}user_role.behavior_ids,{t}user_role.enabled FROM {t}user_role
+v|2014-02-11 15:36:36|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/user/account/edit.php
+v|2014-02-11 15:36:36|::1|template|E:\projects\php\comexoa\pri\templates\alert.php
+v|2014-02-11 15:36:36|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/master.php
+v|2014-02-11 15:36:36|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-02-11 15:40:13|::1|sql|SELECT {t}user_role.id,{t}user_role.code,{t}user_role.label,{t}user_role.behavior_ids,{t}user_role.enabled FROM {t}user_role
+v|2014-02-11 15:40:13|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/user/account/edit.php
+v|2014-02-11 15:40:13|::1|template|E:\projects\php\comexoa\pri\templates\alert.php
+v|2014-02-11 15:40:13|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/master.php
+v|2014-02-11 15:40:13|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-02-11 15:40:58|::1|sql|SELECT {t}user_role.id,{t}user_role.code,{t}user_role.label,{t}user_role.behavior_ids,{t}user_role.enabled FROM {t}user_role
+v|2014-02-11 15:40:58|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/user/account/edit.php
+v|2014-02-11 15:40:58|::1|template|E:\projects\php\comexoa\pri\templates\alert.php
+v|2014-02-11 15:40:58|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/master.php
+v|2014-02-11 15:40:58|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php
+v|2014-02-11 16:15:40|::1|sql|SELECT COUNT(*) FROM {t}user_account
+v|2014-02-11 16:15:40|::1|sql|SELECT {t}user_account.id,{t}user_account.username,{t}user_account.password,{t}user_account.email,{t}user_account.status,{t}user_account.level,{t}user_account.role_ids FROM {t}user_account ORDER BY id ASC LIMIT 0,50
+v|2014-02-11 16:15:40|::1|sql|SELECT {t}user_role.id,{t}user_role.code,{t}user_role.label,{t}user_role.behavior_ids,{t}user_role.enabled FROM {t}user_role
+v|2014-02-11 16:15:40|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/user/account/index.php
+v|2014-02-11 16:15:40|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/pagination.php
+v|2014-02-11 16:15:40|::1|template|E:\projects\php\comexoa\pri\templates\backend/default/master.php
+v|2014-02-11 16:15:40|::1|template|E:\projects\php\comexoa\pri\templates\layouts/base.php

@@ -1,0 +1,58 @@
+<?php
+
+abstract class Soul_Collection_Enumerator implements Iterator, Soul_Convertor_Interface_Array{
+
+    protected $source = NULL;
+
+    protected function __construct($source = array()){
+        $this->source = $source;
+    }
+    
+    public function getSource(){
+        return $this->source;
+    }
+	
+    public function toArray(Closure $function = NULL) {
+    	if(is_callable($function)){
+	        $result = array();
+	        foreach ($this as $index=>$item) {
+				$result[] = $function($item, $index);
+	        }
+	        return $result;
+		}
+		
+		$result = array();
+        foreach ($this->source as $index=>$item) {
+        	if(is_object($item) && method_exists($item, 'toArray')){
+        		$result[$index] = $item->toArray();
+        	}else{
+        		$result[$index] = $item;
+        	}
+        }
+		return $result;
+    }
+
+    public function current() {
+        return current($this->source);
+    }
+
+    public function key() {
+        return key($this->source);
+    }
+
+    public function next() {
+        next($this->source);
+    }
+    
+    public function rewind() {
+        reset($this->source);
+    }
+
+    public function valid() {
+        return current($this->source) !== FALSE;
+    }
+    
+    public function isEmpty(){
+        return count($this->source) == 0;
+    }    
+}

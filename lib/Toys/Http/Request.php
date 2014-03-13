@@ -1,6 +1,8 @@
 <?php
 namespace Toys\Http;
 
+use Toys\Util\StringUtil;
+
 class Request implements \ArrayAccess {
 
 	public function __construct() {
@@ -92,7 +94,7 @@ class Request implements \ArrayAccess {
 	}
 
 	public function getVirtualPath() {
-		return StringUtil() -> subString($_SERVER['REQUEST_URI'], '?');
+		return StringUtil::subString($_SERVER['REQUEST_URI'], '?');
 	}
 
 	public function getHostName() {

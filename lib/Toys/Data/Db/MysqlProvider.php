@@ -149,7 +149,7 @@ class MysqlProvider implements BaseProvider {
 			$params[':p' . count($params)] = $v;
 		}
 		if (count($conditions) > 0) {
-			$where = $this -> buildWhere($conditions, $params);
+			$where = $this -> parseWhere($conditions, $params);
 		}
 		$sql = sprintf('UPDATE %s SET %s %s', $table, implode(',', $fv), $where);
 		return $this -> execute(trim($sql), $params);
@@ -159,13 +159,13 @@ class MysqlProvider implements BaseProvider {
 		$where = '';
 		$params = array();
 		if (count($conditions) > 0) {
-			$where = $this -> buildWhere($conditions, $params);
+			$where = $this -> parseWhere($conditions, $params);
 		}
 		$sql = sprintf('DELETE FROM %s %s', $table, $where);
 		return $this -> execute(trim($sql), $params);
 	}
 
-	public function query($query) {
+	public function select($query) {
 		$params = array();
 		$select = $query -> getSelect();
 		if (count($select) > 0) {
@@ -182,7 +182,7 @@ class MysqlProvider implements BaseProvider {
 
 		$conditions = $query -> getWhere();
 		if (count($conditions) > 0) {
-			$sql .= ' ' . $this -> buildWhere($conditions, $params);
+			$sql .= ' ' . $this -> parseWhere($conditions, $params);
 		}
 		
 		$orders = $query->getOrderBy();
@@ -203,7 +203,7 @@ class MysqlProvider implements BaseProvider {
 		return $this -> fetch($sql, $params);
 	}
 
-	private function buildWhere($conditions, array &$params) {
+	private function parseWhere($conditions, array &$params) {
 		$result = array();
 		foreach ($conditions as $v) {
 			if (is_array($v)) {

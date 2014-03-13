@@ -7,6 +7,7 @@ class Configuration{
 	public static $trace = false;
 	public static $defaultConnection = 'default';
 	public static $connectionSettings = array();
+    public static $logger = null;
 	
 	public static function addConnection($name, $provider, $dsn, $user, $password, $options = array()){
 		self::$connectionSettings[$name] = array(

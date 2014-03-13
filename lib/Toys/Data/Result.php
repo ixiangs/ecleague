@@ -4,14 +4,13 @@ namespace Toys\Data;
 class Result {
 
 	public $rows = null;
-	private $_isEmpty = false;
+
 	public function __construct(array $source) {
 		$this -> rows = $source;
-		$this->_isEmpty = empty($this->rows) || count($this->rows) == 0;
 	}
 	
 	public function isEmpty(){
-		return $this->_isEmpty;
+		return empty($this->rows) || count($this->rows) == 0;
 	}
 	
 	public function rowCount(){

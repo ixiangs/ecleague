@@ -14,6 +14,24 @@ abstract class WhereStatement extends BaseStatement{
 
     protected function __construct(){}
 
+    public function getConditions(){
+        return $this->conditions;
+    }
+
+//    public function resetWhere(){
+//        $this->conditions = array();
+//    }
+
+    public function orNext(){
+        $this->conditions = 'OR';
+        return $this;
+    }
+
+    public function andNext(){
+        $this->conditions = 'AND';
+        return $this;
+    }
+
     public function eq($field, $value){
         $this->conditions[] = array($field, $value, 'eq');
         return $this;

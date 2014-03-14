@@ -36,7 +36,7 @@ abstract class PdoProvider extends BaseProvider
         return $this->connection->quote($value);
     }
 
-    public function disconnect()
+    public function close()
     {
         if ($this->connection) {
             $this->connection = NULL;

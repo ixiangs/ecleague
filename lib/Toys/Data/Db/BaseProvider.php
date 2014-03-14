@@ -26,8 +26,8 @@ abstract class BaseProvider {
     public abstract function isConnected();
     public abstract function inTransaction();
     public abstract function escape($value);
-    public abstract function connect();
-    public abstract function disconnect();
+    public abstract function open();
+    public abstract function close();
     public abstract function begin();
     public abstract function commit();
     public abstract function rollback();

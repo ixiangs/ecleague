@@ -10,7 +10,7 @@ class SqliteProvider extends PdoProvider
         parent::__construct($settings);
     }
 
-    public function connect()
+    public function open()
     {
         if (!$this->connection) {
             $this->connection = new \PDO($this->settings['dsn']);

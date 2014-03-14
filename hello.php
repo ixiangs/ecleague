@@ -4,3 +4,9 @@ function cnt(){
 }
 
 print(count(cnt()));
+
+try{
+    print('11111');
+}finally{
+    print('33333');
+}

@@ -1,0 +1,54 @@
+<?php
+
+class PeopleModel extends \Toys\Orm\Model
+{
+
+}
+
+\Toys\Orm\Entity::register('PeopleModel', array(
+    'table' => 'people',
+    'properties' => array(
+        \Toys\Orm\IntegerProperty::create('id')->setPrimaryKey(true)->setAutoIncrement(true),
+        \Toys\Orm\StringProperty::create('fullname'),
+        \Toys\Orm\IntegerProperty::create('age'),
+        \Toys\Orm\StringProperty::create('address')
+    )
+));
+
+class OrmTestCase extends Toys\Unit\TestCase
+{
+
+    private $_people = null;
+    private $_db = null;
+
+    public function __construct()
+    {
+        $this->_people = PeopleModel::create();
+        $this->_db = \Toys\Data\Helper::openDb();
+    }
+
+    public function testEntity(){
+        $this->assertNotNull($this->_people->getEntity());
+        $this->assertEqual('people', $this->_people->getEntity()->getTableName());
+        $this->assertEqual(4, count($this->_people->getEntity()->getProperties()));
+        $idp = $this->_people->getEntity()->getProperty('id');
+        $this->assertEqual(true, $idp->getPrimaryKey());
+        $this->assertEqual(true, $idp->getAutoIncrement());
+        $this->assertEqual(true, $idp->getUnique());
+        $this->assertEqual(false, $idp->getNullable());
+    }
+
+    public function testQuery(){
+        $rs1 = PeopleModel::find()->execute();
+        $rs2 = $this->_db->fetch('SELECT * FROM people');
+        $this->assertEqual(count($rs1->rows), count($rs2->rows));
+    }
+
+    public function testInsert(){
+        $m = PeopleModel::create(array('fullname'=>'orm'))
+            ->setAge(50)
+            ->setAddress('guangdong');
+        $m->insert();
+        $this->assertTrue($m->getId() > 0);
+    }
+}

@@ -20,10 +20,10 @@ class SelectStatement extends WhereStatement
     {
         $args = func_get_args();
         if (func_num_args() == 1 && is_array($args[0])) {
-            $this->_fields = array_merge($this->_fields, $args[0]);
+            $this->fields = array_merge($this->fields, $args[0]);
         } else {
             foreach ($args as $v) {
-                $this->_fields[] = $v;
+                $this->fields[] = $v;
             }
         }
         return $this;

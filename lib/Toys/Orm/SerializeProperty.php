@@ -1,13 +1,16 @@
 <?php
 namespace Toys\Orm;
 
-class SerizlizeProperty extends PropertyBase {
+class SerizlizeProperty extends BaseProperty
+{
 
-    public function toDbValue($value) {
+    public function toDbValue($value)
+    {
         return serialize($value);
     }
 
-    public function fromDbValue($value) {
+    public function fromDbValue($value)
+    {
         return unserialize($value);
     }
 

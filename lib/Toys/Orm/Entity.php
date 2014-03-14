@@ -1,116 +1,144 @@
 <?php
 namespace Toys\Orm;
 
-class Entity {
+use Toys\Data\Sql\InsertStatement;
+use Toys\Data\Sql\UpdateStatement;
+use Toys\Data\Sql\DeleteStatement;
 
-	private static $_entitys = array();
+class Entity
+{
 
-	private $_modelClass = '';
-	private $_table = '';
-	private $_properties = array();
-	private $_idProperty = null;
+    private static $_entitys = array();
 
-	public function __construct($class, $table) {
-		$this -> _table = $table;
-		$this -> _modelClass = $class;
-	}
+    private $_modelClass = '';
+    private $_table = '';
+    private $_properties = array();
+    private $_idProperty = null;
 
-	public function getTableName() {
-		return $this -> _table;
-	}
+    public function __construct($class, $table)
+    {
+        $this->_table = $table;
+        $this->_modelClass = $class;
+    }
 
-	public function getModelClass() {
-		return $this -> _modelClass;
-	}
+    public function getTableName()
+    {
+        return $this->_table;
+    }
 
-	public function getIdProperty() {
-		return $this -> _idProperty;
-	}
+    public function getModelClass()
+    {
+        return $this->_modelClass;
+    }
 
-	public function getProperty($name) {
-		return $this -> _properties[$name];
-	}
+    public function getIdProperty()
+    {
+        return $this->_idProperty;
+    }
 
-	public function getProperties() {
-		return $this -> _properties;
-	}
+    public function getProperty($name)
+    {
+        return $this->_properties[$name];
+    }
 
-	public function addProperty(PropertyBase $value) {
-		$this -> _properties[$value -> getName()] = $value;
-		if ($value -> getPrimaryKey()) {
-			$this -> _idProperty = $value;
-		}
-		return $this;
-	}
+    public function getProperties()
+    {
+        return $this->_properties;
+    }
 
-	public function insert(ModelBase $model, $db) {
-		$values = array();
-		foreach ($this->_properties as $n => $p) {
-			if ($p->getInsertable()){
-				$values[$n] = $p -> toDbValue($model -> getData($n));
-			}
-		}
+    public function addProperty(BaseProperty $value)
+    {
+        $this->_properties[$value->getName()] = $value;
+        if ($value->getPrimaryKey()) {
+            $this->_idProperty = $value;
+        }
+        return $this;
+    }
 
-		$result = $db -> insert($this -> _table, $values);
-		if ($this -> _idProperty -> getAutoIncrement()) {
-			$model -> setIdValue($db -> getLastInsertId());
-		}
-		return $result;
-	}
+    public function insert(Model $model, $db)
+    {
+        
+        $values = array();
+        foreach ($this->_properties as $n => $p) {
+            if ($p->getInsertable()) {
+                $values[$n] = $p->toDbValue($model->getData($n));
+            }
+        }
 
-	public function update(ModelBase $model, $db) {
-		$values = array();
-		foreach ($this->_properties as $n => $p) {
-			if ($p->getUpdateable()) {
-				$values[$n] = $p -> toDbValue($model -> getData($n));
-			}
-		}
-		if(count($values) == 0){
-			return false;
-		}
-		return $db -> update($this -> _table, $values, array( array($this -> _idProperty -> getName() . ' =', $model -> getIdValue())));
-	}
+        $result = $db->insert(new InsertStatement($this->_table, $values));
+        if ($this->_idProperty->getAutoIncrement()) {
+            $model->setIdValue($db->getLastInsertId());
+        }
+        return $result;
+    }
 
-	public function delete(ModelBase $model, $db) {
-		return $db -> delete($this -> _table, array( array($this -> _idProperty -> getName() . ' =', $model -> getIdValue())));
-	}
+    public function update(Model $model, $db)
+    {
+        $values = array();
+        foreach ($this->_properties as $n => $p) {
+            if ($p->getUpdateable()) {
+                $values[$n] = $p->toDbValue($model->getData($n));
+            }
+        }
+        if (count($values) == 0) {
+            return false;
+        }
+        $us = new UpdateStatement($this->_table, $values);
+        $us->eq($this->_idProperty->getName(), $model->getIdValue());
+        return $db->update($us);
+    }
 
-	public function validate(ModelBase $model) {
-		$result = array();
-		foreach ($this->_properties as $n => $p) {
-			if (!$p -> getAutoIncrement()) {
-				$r = $p -> validate($model -> getData($n));
-				if ($r !== true) {
-					$result[] = $n;
-				}
-			}
-		}
-		return empty($result) ? true : $result;
-	}
+    public function delete(Model $model, $db)
+    {
+        $ds = new DeleteStatement($this->_table);
+        $ds->eq($this->_idProperty->getName(), $model->getIdValue());
+        return $db->delete($ds);
+    }
 
-	public function find() {
-		$fields = array();
-		foreach($this->_properties as $prop){
-			$fields[] = $this->_table.'.'.$prop->getName();
-		}
-		$result = new Finder($this);
-		return $result -> select($fields) -> from($this -> _table);
-	}
+    public function validate(Model $model)
+    {
+        $result = array();
+        foreach ($this->_properties as $n => $p) {
+            if (!$p->getAutoIncrement()) {
+                $r = $p->validate($model->getData($n));
+                if ($r !== true) {
+                    $result[] = $n;
+                }
+            }
+        }
+        return empty($result) ? true : $result;
+    }
 
-	public static function get($class) {
-		if (array_key_exists($class, self::$_entitys)) {
-			return self::$_entitys[$class];
-		}
-		return null;
-	}
+    public function find()
+    {
+        $fields = array();
+        foreach ($this->_properties as $prop) {
+            $fields[] = $this->_table . '.' . $prop->getName();
+        }
+        $result = new Query($this);
+        return $result->select($fields)->from($this->_table);
+    }
 
-	public static function register($class, $metadata) {
-		$r = new self($class, $metadata['table']);
-		foreach ($metadata['properties'] as $p) {
-			$r -> addProperty($p);
-		}
-		self::$_entitys[$class] = $r;
-		return $r;
-	}
+    public function newModel(){
+        return new $this->_modelClass();
+    }
+
+    public static function get($class)
+    {
+        if (array_key_exists($class, self::$_entitys)) {
+            return self::$_entitys[$class];
+        }
+        return null;
+    }
+
+    public static function register($class, $metadata)
+    {
+        $r = new self($class, $metadata['table']);
+        foreach ($metadata['properties'] as $p) {
+            $r->addProperty($p);
+        }
+        self::$_entitys[$class] = $r;
+        return $r;
+    }
 
 }

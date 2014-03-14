@@ -17,7 +17,7 @@ class Helper
         return new $s['provider']($s['settings']);
     }
 
-    public static function connectDb($name = null)
+    public static function openDb($name = null)
     {
         if (is_null($name)) {
             $name = Configuration::$defaultConnection;

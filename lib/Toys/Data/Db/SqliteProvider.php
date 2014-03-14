@@ -10,6 +10,14 @@ class SqliteProvider extends PdoProvider
         parent::__construct($settings);
     }
 
+    public function connect()
+    {
+        if (!$this->connection) {
+            $this->connection = new \PDO($this->settings['dsn']);
+        }
+        return $this;
+    }
+
     public function insert($statement)
     {
         $fa = array();
@@ -54,28 +62,25 @@ class SqliteProvider extends PdoProvider
     public function select($query)
     {
         $params = array();
-        $select = $query->getSelect();
-        if (count($select) > 0) {
-            $sql = 'SELECT ' . implode(',', $select);
+        if (count($query->getFields()) > 0) {
+            $sql = 'SELECT ' . implode(',', $query->getFields());
         } else {
             $sql = 'SELECT *';
         }
-        $sql .= ' FROM ' . $query->getFrom();
+        $sql .= ' FROM ' . $query->getTable();
 
         $joins = $query->getJoins();
         foreach ($joins as $v) {
             $sql .= ' ' . strtoupper($v[0]) . ' JOIN ' . $v[1] . ' ON ' . $v[2] . '=' . $v[3];
         }
 
-        $conditions = $query->getWhere();
-        if (count($conditions) > 0) {
-            $sql .= ' ' . $this->parseWhere($conditions, $params);
+        if (count($query->getConditions()) > 0) {
+            $sql .= ' ' . $this->parseWhere($query->getConditions(), $params);
         }
 
-        $orders = $query->getOrderBy();
-        if (count($orders) > 0) {
+        if (count($query->getOrderBy()) > 0) {
             $arr = array();
-            foreach ($orders as $f => $d) {
+            foreach ($query->getOrderBy() as $f => $d) {
                 $arr[] = $f . ' ' . $d;
             }
             $sql .= ' ORDER BY ' . implode(',', $arr);

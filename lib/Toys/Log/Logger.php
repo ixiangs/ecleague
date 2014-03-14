@@ -1,8 +1,6 @@
 <?php
 namespace Toys\Log;
 
-use Toys\Util\ArrayUtil;
-
 class Logger
 {
 
@@ -13,7 +11,7 @@ class Logger
     const LEVEL_VERBOSE = 0;
 
     private static $_levelLabels = array('v', 'i', 'd', 'w', 'e');
-    private static $_output = null;
+    private static $_appender = null;
 
     private function __construct()
     {
@@ -50,10 +48,10 @@ class Logger
             $str = sprintf("%s|%s|%s|%s|%s\n",
                 self::$_levelLabels[$level],
                 date('Y-m-d H:i:s'),
-                ArrayUtil::get($_SERVER, 'REMOTE_ADDR', 'localhost'),
+                (array_key_exists('REMOTE_ADD', $_SERVER)? $_SERVER['REMOTE_ADD']: 'localhost'),
                 empty($type) ? '-' : $type,
                 $content);
-            self::$_output->write($str);
+            self::$_appender->append($str);
         }
     }
 
@@ -63,8 +61,8 @@ class Logger
     {
         if (is_null(self::$_instance)) {
             self::$_instance = new self();
-            $os = Configuration::$outputSettings[Configuration::$defaultOutput];
-            self::$_output = new $os['class']($os);
+//            $os = Configuration::$outputSettings[Configuration::$defaultOutput];
+            self::$_appender = new Configuration::$appender(); //new $os['class']($os);
         }
         return self::$_instance;
     }

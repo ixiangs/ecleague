@@ -1,7 +1,7 @@
 <?php
-namespace Toys\Data;
+namespace Toys\Data\Db;
 
-use Toys\Framework\Configuration;
+use Toys\Data\Configuration;
 
 abstract class BaseProvider {
 
@@ -13,6 +13,14 @@ abstract class BaseProvider {
 
     public function getSettings(){
         return $this->settings;
+    }
+
+    protected function log($sql, $arguments){
+        $content = $sql;
+        foreach($arguments as $n=>$v){
+            $content .= '['.$n.':'.$v.']';
+        }
+        Configuration::$logger->v($content, 'sql');
     }
 
     public abstract function isConnected();
@@ -31,12 +39,4 @@ abstract class BaseProvider {
     public abstract function delete($statement);
     public abstract function select($statement);
 //    public abstract function create($statement);
-
-    protected function log($sql, $arguments){
-        $content = $sql;
-        foreach($arguments as $n=>$v){
-            $content .= '['.$n.':'.$v.']';
-        }
-        Configuration::$logger->v($content, 'sql');
-    }
 }

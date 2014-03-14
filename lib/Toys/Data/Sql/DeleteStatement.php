@@ -13,4 +13,8 @@ class DeleteStatement extends WhereStatement{
     public function from($table){
         $this->table = $table;
     }
+
+    public function getTable(){
+        return $this->table;
+    }
 }

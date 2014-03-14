@@ -50,7 +50,7 @@ class Result {
 	}
 
 	public function getFirstRow() {
-		if (!$this->_isEmpty){
+		if (!$this->isEmpty()){
 			return $this -> rows[0];
 		}
 		return null;

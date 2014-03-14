@@ -12,11 +12,19 @@ class InsertStatement extends BaseStatement{
         $this->values = $values;
     }
 
+    public function getValues(){
+        return $this->values;
+    }
+
+    public function getTable(){
+        return $this->table;
+    }
+
     public function into($table){
         $this->table = $table;
     }
 
-    public function set($field, $value){
+    public function setValue($field, $value){
         $this->values[$field] = $value;
     }
 }

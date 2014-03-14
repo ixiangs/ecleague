@@ -5,12 +5,16 @@ class SelectStatement extends WhereStatement
 {
 
     protected $fields = array();
-    protected $from = null;
-//    private $where = array();
+    protected $table = null;
     protected $joins = array();
     protected $orderby = array();
     protected $offset = 0;
     protected $limit = 0;
+
+    public function __construct($table = null, array $fields = array()){
+        $this->table = $table;
+        $this->fields = $fields;
+    }
 
     public function select()
     {
@@ -27,27 +31,27 @@ class SelectStatement extends WhereStatement
 
     public function from($from)
     {
-        $this->from = $from;
+        $this->table = $from;
         return $this;
     }
 
-    public function joinInner($table, $left, $right)
+    public function join($table, $leftField, $rightField, $type = 'inner')
     {
-        $this->joins[] = array('inner', $table, $left, $right);
+        $this->joins[] = array($type, $table, $leftField, $rightField);
         return $this;
     }
 
-    public function joinLeft($table, $left, $right)
-    {
-        $this->joins[] = array('left', $table, $left, $right);
-        return $this;
-    }
-
-    public function joinRight($table, $left, $right)
-    {
-        $this->joins[] = array('right', $table, $left, $right);
-        return $this;
-    }
+//    public function joinLeft($table, $leftField, $rightField)
+//    {
+//        $this->joins[] = array('left', $table, $leftField, $rightField);
+//        return $this;
+//    }
+//
+//    public function joinRight($table, $leftField, $rightField)
+//    {
+//        $this->joins[] = array('right', $table, $leftField, $rightField);
+//        return $this;
+//    }
 
 //    public function andFilter($condition, $value)
 //    {
@@ -115,9 +119,9 @@ class SelectStatement extends WhereStatement
         return $this->fields;
     }
 
-    public function getFrom()
+    public function getTable()
     {
-        return $this->from;
+        return $this->table;
     }
 
     public function getJoins()

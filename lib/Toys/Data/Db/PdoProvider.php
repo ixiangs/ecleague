@@ -1,12 +1,12 @@
 <?php
 namespace Toys\Data\Db;
 
+use Toys\Data\Exception;
 use Toys\Data\Db\Base;
 use Toys\Data\Configuration;
-use Toys\Data\Exception;
 use Toys\Data\Result;
 
-abstract class PdoProvider implements BaseProvider
+abstract class PdoProvider extends BaseProvider
 {
 
     protected $connection = NULL;
@@ -34,14 +34,6 @@ abstract class PdoProvider implements BaseProvider
     public function escape($value)
     {
         return $this->connection->quote($value);
-    }
-
-    public function connect()
-    {
-        if (!$this->connection) {
-            $this->connection = new \PDO($this->_dsn);
-        }
-        return $this;
     }
 
     public function disconnect()
@@ -90,6 +82,9 @@ abstract class PdoProvider implements BaseProvider
     {
         $this->log($sql, $parameters);
         $statement = $this->connection->prepare(str_replace('{t}', Configuration::$tablePrefix, $sql));
+        if($statement === false){
+            $this->handleError($this->connection->errorInfo());
+        }
         foreach ($parameters as $name => $value) {
             $statement->bindValue($name, $value);
         }
@@ -103,6 +98,9 @@ abstract class PdoProvider implements BaseProvider
     {
         $this->log($sql, $parameters);
         $statement = $this->connection->prepare(str_replace('{t}', Configuration::$tablePrefix, $sql));
+        if($statement === false){
+            $this->handleError($this->connection->errorInfo());
+        }
         foreach ($parameters as $name => $value) {
             $statement->bindValue($name, $value);
         }

@@ -96,14 +96,6 @@ class Runner
         }
     }
 
-    public static function runFile(){
-
-    }
-
-    public static function runDirectory(){
-
-    }
-
     public static function run(array $settings)
     {
         $me = new self($settings);

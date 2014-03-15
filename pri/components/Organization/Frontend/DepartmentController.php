@@ -4,7 +4,7 @@ namespace Organization\Frontend;
 use Organization\DepartmentModel;
 use Organization\CompanyModel;
 
-use Toys\Framework\Controller, Toys\Framework\Action\TemplateResult, Toys\Framework\Action\RedirectResult;
+use Toys\Web\Controller, Toys\Web\Action\TemplateResult, Toys\Web\Action\RedirectResult;
 
 class DepartmentController extends Controller{
 

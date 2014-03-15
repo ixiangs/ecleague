@@ -1,10 +1,10 @@
 <?php
 use Toys\Unit\TestCase;
-use Toys\Framework\Configuration;
-use Toys\Framework\Router;
-use Toys\Framework\Dispatcher;
-use Toys\Framework\Template;
-use Toys\Framework\Application;
+use Toys\Web\Configuration;
+use Toys\Web\Router;
+use Toys\Web\Dispatcher;
+use Toys\Web\Template;
+use Toys\Web\Application;
 use Toys\Joy;
 
 class WebTestCase extends TestCase {

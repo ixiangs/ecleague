@@ -3,7 +3,7 @@ namespace Organization\Frontend;
 
 use Organization\DepartmentModel, Organization\PositionModel, Organization\CompanyModel, Organization\EmployeeModel;
 
-use Toys\Framework\Controller, Toys\Framework\Action\DownloadResult, Toys\Framework\Action\TemplateResult, Toys\Framework\Action\RedirectResult, Toys\Framework\Action\JsonResult;
+use Toys\Web\Controller, Toys\Web\Action\DownloadResult, Toys\Web\Action\TemplateResult, Toys\Web\Action\RedirectResult, Toys\Web\Action\JsonResult;
 
 class EmployeeController extends Controller{
 

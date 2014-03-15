@@ -1,12 +1,2 @@
 <?php
-function cnt(){
-    return array('1', '2', '3');
-}
-
-print(count(cnt()));
-
-try{
-    print('11111');
-}finally{
-    print('33333');
-}
+print_r(parse_url('http://news.163.com/14/0315/18'));

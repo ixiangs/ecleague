@@ -166,19 +166,19 @@ abstract class Model{
     public static function load($value)
     {
         $f = self::find();
-        return $f->andFilter($f->getEntity()->getIdProperty()->getName() . ' =', $value)
-            ->execute()
-            ->getFirstModel();
+        return $f->eq($f->getEntity()->getIdProperty()->getName(), $value)
+                ->execute()
+                ->getFirstModel();
     }
 
-    public static function find(array $conditions = array())
+    public static function find()
     {
         $inst = new static();
-        $f = $inst->_entity->find();
-        foreach ($conditions as $cond => $value) {
-            $f->andFilter($cond, $value);
-        }
-        return $f;
+        return $inst->_entity->find();
+//        foreach ($conditions as $cond => $value) {
+//            $f->andFilter($cond, $value);
+//        }
+//        return $f;
     }
 
     public static function create($data = array())

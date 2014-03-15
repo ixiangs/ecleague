@@ -38,17 +38,41 @@ class OrmTestCase extends Toys\Unit\TestCase
         $this->assertEqual(false, $idp->getNullable());
     }
 
-    public function testQuery(){
-        $rs1 = PeopleModel::find()->execute();
-        $rs2 = $this->_db->fetch('SELECT * FROM people');
-        $this->assertEqual(count($rs1->rows), count($rs2->rows));
-    }
-
-    public function testInsert(){
+    public function testSaveLoad(){
         $m = PeopleModel::create(array('fullname'=>'orm'))
             ->setAge(50)
             ->setAddress('guangdong');
         $m->insert();
+        $nid = $m->getId();
+        $this->assertTrue($nid > 0);
+
+        $m = PeopleModel::create(array('fullname'=>'test', 'age'=>30, 'address'=>'shunde'));
+        $m->insert();
+        $m->setAddress('foshan')->update();
+
+        $m = PeopleModel::create(array('fullname'=>'delete', 'age'=>30, 'address'=>'shunde'));
+        $m->insert();
+        $m->delete();
+
+        $m = PeopleModel::load($nid);
         $this->assertTrue($m->getId() > 0);
+        $this->assertEqual(50, $m->getAge());
+        $this->assertEqual('orm', $m->getFullname());
+        $this->assertEqual('guangdong', $m->getAddress());
+
+        $m = PeopleModel::merge($nid, array('fullname'=>'world'));
+        $this->assertTrue($m->getId() > 0);
+        $this->assertEqual(50, $m->getAge());
+        $this->assertEqual('world', $m->getFullname());
+        $this->assertEqual('guangdong', $m->getAddress());
+    }
+
+    public function testQuery(){
+        $rs1 = PeopleModel::find()->execute();
+        $rs2 = $this->_db->fetch('SELECT * FROM people');
+        $this->assertEqual(count($rs1->rows), count($rs2->rows));
+
+        $rs1 = PeopleModel::find()->execute()->getModelArray();
+        $this->assertTrue(count($rs1) > 0);
     }
 }

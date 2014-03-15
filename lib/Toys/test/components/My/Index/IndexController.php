@@ -1,6 +1,6 @@
 <?php
 namespace Index;
-use Toys\Framework\Controller;
+use Toys\Web\Controller;
 
 class IndexController extends Controller{
 	

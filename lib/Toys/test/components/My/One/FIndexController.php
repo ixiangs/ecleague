@@ -1,6 +1,6 @@
 <?php
 namespace My\One;
-use Toys\Framework\Controller;
+use Toys\Web\Controller;
 
 class FIndexController extends Controller{
 	

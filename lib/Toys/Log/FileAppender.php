@@ -3,15 +3,15 @@ namespace Toys\Log;
 
 class FileAppender extends BaseAppender {
 
-	private $_filename = null;
+	private $_directory = null;
 
 	public function __construct($settings) {
-		$this ->_filename = Toys\Log\Configuration::$settings['filename'];
+		$this ->_directory = Configuration::$settings['directory'];
 	}
 
 	public function append($content) {
-//		$filename = $this -> _settings['folder'] . DIRECTORY_SEPARATOR . date('Y-m-d');
-		file_put_contents($this ->_filename, $content, FILE_APPEND);
+		$filename = $this -> _directory . DIRECTORY_SEPARATOR . date('Y-m-d');
+		file_put_contents($filename, $content, FILE_APPEND);
 	}
 
 }

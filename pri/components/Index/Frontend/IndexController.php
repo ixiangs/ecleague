@@ -1,7 +1,7 @@
 <?php
 namespace Index\Frontend;
 
-use Toys\Framework\Controller, Toys\Framework\Action\TemplateResult;
+use Toys\Web\Controller, Toys\Web\Action\TemplateResult;
 
 class IndexController extends Controller{
 

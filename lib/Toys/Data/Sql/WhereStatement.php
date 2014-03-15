@@ -1,7 +1,7 @@
 <?php
 /**
  * Created by PhpStorm.
- * User: ixiangs
+ * Auth: ixiangs
  * Date: 14-3-12
  * Time: 下午11:58
  */

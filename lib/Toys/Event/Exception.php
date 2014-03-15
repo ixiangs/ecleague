@@ -1,4 +1,6 @@
 <?php
 namespace Toys\Event;
 
-class Exception extends \Exception{}
+class Exception extends \Exception
+{
+}

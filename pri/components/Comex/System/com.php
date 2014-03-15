@@ -1,2 +1,2 @@
 <?php
-// \Toys\Framework\Configuration::$components['system'] = new \Toys\Framework\Component('System', 'Comex', null, null);
+// \Toys\Web\Configuration::$components['system'] = new \Toys\Web\Component('System', 'Comex', null, null);

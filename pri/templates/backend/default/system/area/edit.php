@@ -35,7 +35,7 @@ echo $form->renderEnd();
 ?>
 <?php $this->nextBlock('footerjs'); ?>
 <script>
-  var validator = new Toys.FormValidator('form1');
+  var validator = new Toy.FormValidator('form1');
 </script>
 <?php $this->endBlock(); ?>
 <?php echo $this->includeTemplate('master'); ?>

@@ -1,7 +1,7 @@
 <?php
 
-use Toys\Joy;
-use Toys\Unit\TestCase;
+use Toy\Joy;
+use Toy\Unit\TestCase;
 
 class OrganisationTestCase extends TestCase {
 

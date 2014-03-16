@@ -1,4 +1,4 @@
-Toys.FormValidator = new Class({
+Toy.FormValidator = new Class({
   Implements: [Options, Events],
   form: null,
   options: {
@@ -16,7 +16,7 @@ Toys.FormValidator = new Class({
     this.form = typeOf(frm) == "string" ? $(frm) : frm;
     
     this.inputs = {};
-    Toys.FormValidator.selectors.each(function(selector){
+    Toy.FormValidator.selectors.each(function(selector){
     	selector(this).each(function(item) {
 		    var n = item.get('name');
 		    if (n) {
@@ -29,7 +29,7 @@ Toys.FormValidator = new Class({
     }.bind(this));
     
     this.fields = {};
-    Toys.FormValidator.matchers.each(function(matcher){
+    Toy.FormValidator.matchers.each(function(matcher){
     	Object.merge(this.fields, matcher(this));
     }.bind(this));    
 
@@ -107,7 +107,7 @@ Toys.FormValidator = new Class({
     var msgs = {};
 
     Object.each(this.fields[name], function(param, rule) {
-      var checker = Toys.FormValidator.checkers[rule];
+      var checker = Toy.FormValidator.checkers[rule];
       if (!checker.check(t, param, this)) {
         // var msg = null;
         // if (this.options.message && this.options.messages[name] && this.options.messages[name][rule]) {
@@ -117,8 +117,8 @@ Toys.FormValidator = new Class({
       }
     }.bind(this));
 
-    for(var i = 0; i < Toys.FormValidator.renderers.length; i++){
-    	if(Toys.FormValidator.renderers[i](t, msgs, this)){
+    for(var i = 0; i < Toy.FormValidator.renderers.length; i++){
+    	if(Toy.FormValidator.renderers[i](t, msgs, this)){
     		break;
     	}
     }
@@ -127,17 +127,17 @@ Toys.FormValidator = new Class({
   }
 });
 
-Toys.FormValidator.selectors = [
+Toy.FormValidator.selectors = [
 	function(validator){
     return validator.form.getElements('input[type="text"],input[type="checkbox"],input[type="raido"],input[type="email"],input[type="password"],input[type="file"],select,textarea');
 	}
 ];
 
-Toys.FormValidator.matchers = [
+Toy.FormValidator.matchers = [
 	function(validator) {
 	  var result = {};
 	  Object.each(validator.inputs, function(input, inputName) {
-	    Object.each(Toys.FormValidator.checkers, function(checker, checkerName) {
+	    Object.each(Toy.FormValidator.checkers, function(checker, checkerName) {
 	      var r = checker.match(input);
 	      if (r) {
 	        if (!result[inputName]) {
@@ -151,7 +151,7 @@ Toys.FormValidator.matchers = [
  }
 ];
 
-Toys.FormValidator.renderers = [
+Toy.FormValidator.renderers = [
 	function(input, errors, validator) {
 	  var newErrorElement = function(rule) {
 	    var eid = input[0].get('name') + '_' + rule;
@@ -195,7 +195,7 @@ Toys.FormValidator.renderers = [
 	  return true;
 	}
 ];
-Toys.FormValidator.checkers = {
+Toy.FormValidator.checkers = {
   'required': new(new Class({
     match: function(input) {
       return input.some(function(item) {

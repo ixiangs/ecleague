@@ -1,10 +1,10 @@
 <?php
-\Toys\Web\Configuration::addTemplateFunction('deleteConfirm', function($url){
-	$msg = \Toys\Joy::languages()->get('delete_confirm');
+\Toy\Web\Configuration::addTemplateFunction('deleteConfirm', function($url){
+	$msg = \Toy\Joy::languages()->get('delete_confirm');
 	return "javascript:if(confirm('".$msg."')) window.location='$url'";
 });
 
-\Toys\Web\Configuration::addTemplateFunction('formField', function($for, $label, $input){
+\Toy\Web\Configuration::addTemplateFunction('formField', function($for, $label, $input){
   $html = array('<div class="form-group">');
   $html[] = '<label for="'.$for.'">'.$label.'</label>';
 	$html[] = $input;

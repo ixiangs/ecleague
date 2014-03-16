@@ -1,0 +1,66 @@
+{% extends "../../master.html" %}
+{% block content %}
+<ul class="breadcrumb">
+    <li>
+        <a href="#">{{ _("auth_manage") }}</a>
+    </li>
+    <li class="active">
+        {{ _("auth_account_list") }}
+    </li>
+</ul>
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        {{ _("account_list") }}
+        <div class="pull-right">
+            <div class="btn-group">
+                <a href="{{ controller_url }}/add">{{ _("add") }}</a>
+            </div>
+        </div>
+    </div>
+    <div class="panel-body">
+        <div class="table-responsive">
+            <table class="table table-striped table-bordered table-hover">
+                <thead>
+                <tr>
+                    <th class="index">#</th>
+                    <th>{{ _("username") }}</th>
+                    <th>{{ _("email") }}</th>
+                    <th>{{ _("level") }}</th>
+                    <th>{{ _("status") }}</th>
+                    <th style="text-align:center">#</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for idx, model in enumerate(models) %}
+                <tr>
+                    <td class="index">{{ idx + 1}}</td>
+                    <td>{{ escape(model.user_name) }}</td>
+                    <td>{{ escape(model.email) }}</td>
+                    <td>
+                        {% for k, ln in levels.items() %}
+                        {% if model.level == k %}
+                        {{ ln }}
+                        {% end %}
+                        {% end %}
+                    </td>
+                    <td>
+                        {% for k, sn in status.items() %}
+                        {% if model.status == k %}
+                        {{ sn }}
+                        {% end %}
+                        {% end %}
+                    </td>
+                    <td style="text-align:center">
+                        <a href="{{ controller_url }}/edit/{{ model.id }}">{{ _("edit") }}</a>
+                        <a href="javascript:deleteConfirm('{{ controller_url }}/delete/{{ model.id }}');">{{ _("delete") }}</a>
+                    </td>
+                </tr>
+                {% end %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+{% end %}

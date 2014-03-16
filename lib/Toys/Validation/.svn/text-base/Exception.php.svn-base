@@ -1,5 +1,0 @@
-<?php
-
-class Soul_Validation_Exception extends Exception {
-
-}

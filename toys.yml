@@ -25,24 +25,24 @@ components:
   -Log: 
      helpers:
        -name: logger
-        class: \Toys\Extension\Log\Helper
+        class: \Toy\Extension\Log\Helper
      listeners:
        -event: applicationOnStart
-        listener: \Toys\Extension\Log\Listener:applicationOnStart    
+        listener: \Toy\Extension\Log\Listener:applicationOnStart
      settings:
        path:{ROOT_PATH}logs
        accumulation: false
   -I18N:
     helpers:
       -name: i18n
-       class: \Toys\Extension\I18N\Helper
+       class: \Toy\Extension\I18N\Helper
     settings:
       path: {PRI_PATH}i18n
       defaultLanguage: zh-CN
   -Sqlite:
     helpers:
       -name: db
-       class: \Toys\Extension\Sqlite\Helper
+       class: \Toy\Extension\Sqlite\Helper
     settings:
       debug: true
       filename: {ROOT_PATH}data_sqlite.db

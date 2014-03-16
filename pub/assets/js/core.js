@@ -52,4 +52,4 @@ Array.implement({
     return null;
   }
 });
-var Toys = {};
+var Toy = {};

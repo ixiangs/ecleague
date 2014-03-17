@@ -16,6 +16,9 @@ if (preg_match('/\.(?:png|jpg|jpeg|gif|css|js|ico|html)$/', $_SERVER["REQUEST_UR
 
     include_once 'Toy\Autoload.php';
 
+    \Toy\Autoload::$codePath = CODE_PATH;
+    \Toy\Autoload::$codeNamespaces = array('Core');
+    \Toy\Autoload::$ignoreNamespaces = array('Toy');
     \Toy\Autoload::register();
 
 //	include_once 'tmplfunc.php';
@@ -26,7 +29,7 @@ if (preg_match('/\.(?:png|jpg|jpeg|gif|css|js|ico|html)$/', $_SERVER["REQUEST_UR
     \Toy\Data\Configuration::$trace = true;
     \Toy\Data\Configuration::$logger = \Toy\Log\Logger::singleton();
     \Toy\Data\Configuration::addConnection('default', 'Toy\Data\Db\SqliteProvider', array(
-        'dsn'=>'sqlite:'.ROOT_PATH.'db.db'
+        'dsn' => 'sqlite:' . ROOT_PATH . 'db.db'
     ));
 
     \Toy\Web\Configuration::$trace = true;

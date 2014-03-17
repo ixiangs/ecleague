@@ -1,8 +1,8 @@
 <?php
-namespace Components\Auth\Backend;
+namespace Core\Auth\Backend;
 
 use Toy\Web;
-use Components\Auth\BehaviorModel;
+use Auth\Model\BehaviorModel;
 
 class BehaviorController extends Web\Controller{
 

@@ -8,7 +8,7 @@ class Handler {
         $router = $context->router;
 
 //        $ctrlClass = Configuration::$codeNamespaces[0];
-        $ctrlClass = 'Components\\'.str_replace(' ', '', ucwords(str_replace('-', ' ', $router -> component)));
+        $ctrlClass = str_replace(' ', '', ucwords(str_replace('-', ' ', $router -> component)));
 		$ctrlClass .= '\\'.ucfirst($router->domain->getNamespace());
 		$ctrlClass .= '\\'.str_replace(' ', '', ucwords(str_replace('-', ' ', $router -> controller))).'Controller';
 

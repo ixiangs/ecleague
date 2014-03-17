@@ -1,5 +1,5 @@
 <?php
-namespace User;
+namespace Core\Auth\Model;
 
 use Toy\Orm;
 

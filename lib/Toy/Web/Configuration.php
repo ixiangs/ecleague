@@ -11,7 +11,7 @@ class Configuration {
 	public static $templateFunctions = array();
 	public static $templateTheme = 'default';
 	public static $codeDirectory = '';
-    public static $codeNamespaces = array('Core');
+//    public static $codeNamespaces = array('Core');
     public static $logger = null;
 	public static $trace = false;
 

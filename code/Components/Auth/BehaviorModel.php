@@ -1,12 +1,12 @@
 <?php
-namespace Core\Auth;
+namespace Components\Auth;
 
 use Toy\Orm;
 
 class BehaviorModel extends Orm\Model
 {
 
-    const TABLE_NAME = '{t}user_behavior';
+    const TABLE_NAME = '{t}auth_behavior';
 
     public static function checkCode($code)
     {
@@ -15,12 +15,12 @@ class BehaviorModel extends Orm\Model
     }
 }
 
-Orm\Entity::register('Core\Auth\BehaviorModel', array(
+Orm\Entity::register('Components\Auth\BehaviorModel', array(
     'table' => BehaviorModel::TABLE_NAME,
     'properties' => array(
         Orm\IntegerProperty::create('id')->setPrimaryKey(true)->setAutoIncrement(true),
         Orm\StringProperty::create('code')->setUnique(true)->setUpdateable(false),
-        Orm\StringProperty::create('label'),
+        Orm\StringProperty::create('name'),
         Orm\StringProperty::create('url'),
         Orm\BooleanProperty::create('enabled')
     )

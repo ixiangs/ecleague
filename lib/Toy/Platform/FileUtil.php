@@ -1,7 +1,7 @@
 <?php
 namespace Toy\Platform;
 
-class Fs
+class FileUtil
 {
 
     public static function writeFile($filename, $data)

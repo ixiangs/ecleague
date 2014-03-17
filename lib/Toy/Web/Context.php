@@ -13,12 +13,4 @@ class Context {
     public $items = array();
 
 	public function __construct() {}
-
-//    public function getItem($name){
-//        return $this->_items[$name];
-//    }
-//
-//    public function __set($name, $value){
-//        $this->_items[$name] = $value;
-//    }
 }

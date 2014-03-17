@@ -1,14 +1,14 @@
 <?php
-namespace Core\Auth\Backend;
+namespace Components\Auth\Backend;
 
 use Toy\Web;
-use Core\Auth\BehaviorModel;
+use Components\Auth\BehaviorModel;
 
 class BehaviorController extends Web\Controller{
 
 	public function listAction(){
 		$pi = $this->request->getParameter("pageindex", 1);
-		$count = BehaviorModel::find()->count()->execute()->getFirstValue();
+		$count = BehaviorModel::find()->selectCount()->execute()->getFirstValue();
 		$models = BehaviorModel::find()->limit(PAGINATION_SIZE, ($pi-1)*PAGINATION_SIZE)->execute()->getModelArray();	
 		return Web\Result::templateResult(array(
 			'models'=>$models,

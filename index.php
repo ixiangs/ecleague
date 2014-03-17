@@ -20,12 +20,14 @@ if (preg_match('/\.(?:png|jpg|jpeg|gif|css|js|ico|html)$/', $_SERVER["REQUEST_UR
 
 //	include_once 'tmplfunc.php';
 
-    \Toy\Log\Configuration::$settings = array('directory' => ROOT_PATH . 'logs');
+    \Toy\Log\Configuration::$settings = array('directory' => ROOT_PATH . 'log');
     \Toy\Log\Configuration::$appender = '\Toy\Log\FileAppender';
 
     \Toy\Data\Configuration::$trace = true;
     \Toy\Data\Configuration::$logger = \Toy\Log\Logger::singleton();
-    \Toy\Data\Configuration::addConnection('default', 'Toy\Data\Provider\MysqlProvider', 'mysql:host=localhost;dbname=comexoa', 'root', '');
+    \Toy\Data\Configuration::addConnection('default', 'Toy\Data\Db\SqliteProvider', array(
+        'dsn'=>'sqlite:'.ROOT_PATH.'db.db'
+    ));
 
     \Toy\Web\Configuration::$trace = true;
     \Toy\Web\Configuration::$codeDirectory = CODE_PATH;

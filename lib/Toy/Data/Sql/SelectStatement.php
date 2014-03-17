@@ -18,6 +18,7 @@ class SelectStatement extends WhereStatement
 
     public function select()
     {
+        $this->fields = [];
         $args = func_get_args();
         if (func_num_args() == 1 && is_array($args[0])) {
             $this->fields = array_merge($this->fields, $args[0]);
@@ -26,6 +27,26 @@ class SelectStatement extends WhereStatement
                 $this->fields[] = $v;
             }
         }
+        return $this;
+    }
+
+    public function selectAll(){
+        $this->fields = array();
+        return $this;
+    }
+
+    public function selectCount($field = '*'){
+        $this->fields = array(Func::count($field));
+        return $this;
+    }
+
+    public function selectMax($field){
+        $this->fields = array(Func::max($field));
+        return $this;
+    }
+
+    public function selectMin($field){
+        $this->fields = array(Func::min($field));
         return $this;
     }
 

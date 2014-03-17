@@ -1,6 +1,8 @@
 <?php
 namespace Toy\Data\Db;
 
+use Toy\Data\Sql;
+use Toy\Util\ArrayUtil;
 
 class SqliteProvider extends PdoProvider
 {
@@ -63,7 +65,9 @@ class SqliteProvider extends PdoProvider
     {
         $params = array();
         if (count($query->getFields()) > 0) {
-            $sql = 'SELECT ' . implode(',', $query->getFields());
+            $sql = 'SELECT ' . implode(',', ArrayUtil::toArray($query->getFields(), function($item, $index){
+                    return $this->parseFunction($item);
+                }));
         } else {
             $sql = 'SELECT *';
         }
@@ -158,5 +162,20 @@ class SqliteProvider extends PdoProvider
             }
         }
         return 'WHERE ' . implode(' ', $result);
+    }
+
+    private function parseFunction($func){
+        if($func instanceof Sql\Func){
+            switch($func->name){
+                case 'count':
+                    return 'COUNT('.$func->arguments['field'].')';
+                case 'max':
+                    return 'MAX('.$func->arguments['field'].')';
+                case 'min':
+                    return 'MIN('.$func->arguments['field'].')';
+            }
+        }else{
+            return $func;
+        }
     }
 }

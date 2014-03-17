@@ -40,10 +40,10 @@
                     <td><?php echo $this->locale->_($model->enabled? 'yes': 'no'); ?></td>
                     <td style="text-align:center">
                         <a href="<?php echo $this->router->buildUrl(array('id'=>$model->id), 'edit');?>"><?php echo $this->locale->_('edit');?></a>
-                        <a href="javascript:deleteConfirm('<?php echo $this->router->buildUrl(array('id'=>$model->id), 'delete');?>');"><?php echo $this->locale->_('delete');?></a>
+                        <a href="javascript:deleteConfirm('<?php echo $this->router->buildUrl(array("id"=>$model->id), "delete");?>');"><?php echo $this->locale->_('delete');?></a>
                     </td>
                 </tr>
-                {% end %}
+                <?php endforeach; ?>
                 </tbody>
             </table>
 
@@ -51,15 +51,13 @@
         </div>
     </div>
     <div class="panel-footer pagination-panel">
-        <?php echo $this->locale->_('total_records", totals) }}
+        <?php echo $this->locale->_('total_records', $this->totals); ?>
         <div class="pull-right">
 
         </div>
     </div>
-
 </div>
 </div>
 <?php
 $this->endBlock();
 echo $this->includeTemplate('master');
-

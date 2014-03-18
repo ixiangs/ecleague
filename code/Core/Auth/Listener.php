@@ -1,9 +1,9 @@
 <?php
-namespace User;
+namespace Core\Auth;
 
 class Listener{
 	
-	public static function applicationOnStart($app, $argument){
+	static public function applicationOnStart($app, $argument){
 //		$oa = $app->getContext()->getSession()->get('onlineAccount');
 //		if(!empty($oa)){
 //			$oa = unserialize($oa);
@@ -13,7 +13,7 @@ class Listener{
 //		}
 	}
 
-	public static function applicationPostRoute($app, $argument){
+	static public function applicationPostRoute($app, $argument){
 //		$as = $app->getContext()->getObjective();
 //		$oa = $app->getContext()->getItem('onlineAccount');
 //		$domain = $app->getContext()->getDomain();

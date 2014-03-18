@@ -44,7 +44,7 @@ class Recorder{
 	}
 	
 	private static $_instance = NULL;
-	public static function singleton(){
+	static public function singleton(){
 		if (is_null(self::$_instance)) {
 			self::$_instance = new self();
 		}

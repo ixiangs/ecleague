@@ -4,13 +4,13 @@ namespace Toy\Data;
 class Configuration
 {
 
-    public static $tablePrefix = '';
-    public static $trace = false;
-    public static $defaultConnection = 'default';
-    public static $connectionSettings = array();
-    public static $logger = null;
+    static public $tablePrefix = '';
+    static public $trace = false;
+    static public $defaultConnection = 'default';
+    static public $connectionSettings = array();
+    static public $logger = null;
 
-	public static function addConnection($name, $provider, $settings){
+	static public function addConnection($name, $provider, $settings){
 		self::$connectionSettings[$name] = array(
             'provider'=>$provider,
             'settings'=>$settings

@@ -65,12 +65,12 @@ class AccountModel extends Orm\ModelBase {
 		}
 	}
 
-	public static function checkUsername($username) {
+	static public function checkUsername($username) {
 		$m = self::find(array('username =' => $username)) -> count() -> execute() -> getFirstValue();
 		return $m > 0;
 	}
 
-	public static function modifyPassword($id, $old, $new) {
+	static public function modifyPassword($id, $old, $new) {
 		$m = self::load($id);
 		if (!$m -> comparePassword($old)) {
 			return self::ERROR_PASSWORD;
@@ -87,7 +87,7 @@ class AccountModel extends Orm\ModelBase {
 		return true;
 	}
 
-	public static function login($username, $password) {
+	static public function login($username, $password) {
 		$m = self::find(array('username =' => $username)) -> execute() -> getFirstModel();
 		if (empty($m)) {
 			return array(self::ERROR_NOT_FOUND, null);
@@ -125,11 +125,11 @@ class AccountModel extends Orm\ModelBase {
 		return array(true, new OnlineAccount($m -> id, $m -> username, $m->level, $roleCodes, $behaviorCodes));
 	}
 
-	public static function activate($id) {
+	static public function activate($id) {
 		return static::create(array('id' => $id, 'status' => self::STATUS_ACTIVATED)) -> update(array('status'));
 	}
 
-	public static function freeze($id) {
+	static public function freeze($id) {
 		return static::create(array('id' => $id, 'status' => self::STATUS_DISABLED)) -> update(array('status'));
 	}
 

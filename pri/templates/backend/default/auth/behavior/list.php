@@ -10,7 +10,7 @@
 
 <div class="panel panel-default">
     <div class="panel-heading">
-        <?php echo $this->locale->_('behavior_list');?>
+        <?php echo $this->locale->_('auth_behavior_list');?>
         <div class="pull-right">
             <div class="btn-group">
                 <a href="<?php echo $this->router->buildUrl('add'); ?>"><?php echo $this->locale->_('add');?></a>
@@ -31,7 +31,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                <?php foreach(models as $id=>$model):?>
+                <?php foreach($this->models as $id=>$model):?>
                 <tr>
                     <td class="index"><?php echo $id + 1; ?></td>
                     <td><?php echo $model->code; ?></td>
@@ -39,8 +39,8 @@
                     <td><?php echo $model->url; ?></td>
                     <td><?php echo $this->locale->_($model->enabled? 'yes': 'no'); ?></td>
                     <td style="text-align:center">
-                        <a href="<?php echo $this->router->buildUrl(array('id'=>$model->id), 'edit');?>"><?php echo $this->locale->_('edit');?></a>
-                        <a href="javascript:deleteConfirm('<?php echo $this->router->buildUrl(array("id"=>$model->id), "delete");?>');"><?php echo $this->locale->_('delete');?></a>
+                        <a href="<?php echo $this->router->buildUrl('edit', array('id'=>$model->id));?>"><?php echo $this->locale->_('edit');?></a>
+                        <a href="javascript:deleteConfirm('<?php echo $this->router->buildUrl("delete", array("id"=>$model->id));?>');"><?php echo $this->locale->_('delete');?></a>
                     </td>
                 </tr>
                 <?php endforeach; ?>

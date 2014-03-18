@@ -7,7 +7,7 @@ class RoleModel extends Orm\ModelBase{
 
 	const TABLE_NAME = '{t}user_role';
 	
-	public static function checkCode($code){
+	static public function checkCode($code){
 		$m = self::find(array('code =' => $code))->count() -> execute() -> getFirstValue();
 		return $m > 0;			
 	}	

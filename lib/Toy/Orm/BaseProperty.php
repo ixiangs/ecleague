@@ -146,7 +146,7 @@ abstract class BaseProperty
         return true;
     }
 
-    public static function create($name)
+    static public function create($name)
     {
         return new static($name);
     }

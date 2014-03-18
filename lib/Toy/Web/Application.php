@@ -20,7 +20,7 @@ class Application
 
     private static $_instance = NULL;
 
-    public static $componentSettings = array();
+    static public $componentSettings = array();
 
     private $_context = null;
 
@@ -46,7 +46,7 @@ class Application
 
     protected function initialize()
     {
-        $this->loadComponents();
+        $this->initializeComponents();
         $this->_context->request = new Request();
         $this->_context->response = new Response();
         $this->_context->session = new Session();
@@ -57,16 +57,53 @@ class Application
         return $this;
     }
 
-    private function loadComponents()
+    private function initializeComponents()
     {
-//        foreach (Configuration::$codeDirectory as $path) {
-        PathUtil::scanRecursive(Configuration::$codeDirectory, function ($file, $info) {
+        PathUtil::scanRecursive(Configuration::$codeDirectory, function ($file, $info){
             if ($info['basename'] == 'conf.json') {
-                $conf = FileUtil::readJson($file);
-                self::$componentSettings[$conf['name']] = $conf;
-            }
+                $cont = FileUtil::readFile($file);
+                if (preg_match_all('/(<[@]\w+>)/i', $cont, $matches)) {
+                    foreach ($matches[0] as $match) {
+                        $key = substr($match, 1, -1);
+                        if($key[0] == '@'){
+                            $cont = str_replace($match, str_replace('\\', '\\\\' ,constant(substr($key, 1))), $cont);
+                        }
+                    }
+                }
+                $conf = json_decode($cont, true);
+                switch (json_last_error()) {
+                    case JSON_ERROR_NONE:
+                        self::$componentSettings[$conf['name']] = $conf;
+                        break;
+                    case JSON_ERROR_DEPTH:
+                        echo 'Maximum stack depth exceeded';
+                        break;
+                    case JSON_ERROR_STATE_MISMATCH:
+                        echo 'Underflow or the modes mismatch';
+                        break;
+                    case JSON_ERROR_CTRL_CHAR:
+                        echo 'Unexpected control character found';
+                        break;
+                    case JSON_ERROR_SYNTAX:
+                        echo 'Syntax error, malformed JSON';
+                        break;
+                    case JSON_ERROR_UTF8:
+                        echo 'Malformed UTF-8 characters, possibly incorrectly encoded';
+                        break;
+                    default:
+                        echo ' - Unknown error';
+                        break;
+                }
+           }
         });
-//        }
+
+        foreach(self::$componentSettings as $conf){
+            if(array_key_exists('listeners', $conf)){
+                foreach($conf['listeners'] as $en=>$eh){
+                    Event\Configuration::addListener($en, $eh);
+                }
+            }
+        }
     }
 
     protected function start()
@@ -112,7 +149,7 @@ class Application
         $this->finish();
     }
 
-    public static function singleton()
+    static public function singleton()
     {
         if (is_null(self::$_instance)) {
             self::$_instance = new self();
@@ -120,7 +157,7 @@ class Application
         return self::$_instance;
     }
 
-    public static function run()
+    static public function run()
     {
         self::singleton()->initialize()->start()->route()->handle()->render()->finish();
     }

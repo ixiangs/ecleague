@@ -96,7 +96,7 @@ class Runner
         }
     }
 
-    public static function run(array $settings)
+    static public function run(array $settings)
     {
         $me = new self($settings);
         $me->findAllTestCases();

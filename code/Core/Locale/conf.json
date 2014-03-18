@@ -1,0 +1,13 @@
+{
+    "name":"Locale",
+    "version":"0.0.0.1",
+    "author":"IXiangs Studio",
+    "website":"ixiangs.com",
+    "listeners":{
+        "applicationOnStart":"\\Core\\Locale\\Listener::applicationOnStart"
+    },
+    "settings":{
+        "directory":"<@ROOT_PATH>locale",
+        "defaultLanguage": "zh-CN"
+    }
+}

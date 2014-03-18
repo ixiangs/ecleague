@@ -1,52 +1,42 @@
 <?php
 namespace Toy;
 
+use Toy\Platform\PathUtil;
+
 class Autoload
 {
 
     public function autoload($className)
     {
-        $subPath = str_replace('\\', ' ', $className);
-        $subPath = str_replace('_', ' ', $className);
-        $subPath = str_replace(' ', DIRECTORY_SEPARATOR, ucwords(trim($subPath))) . '.php';
-
-        $fn = explode('\\', $className)[0];
-        if (!is_null(self::$ignoreNamespaces)) {
-            foreach (self::$ignoreNamespaces as $in) {
-                if ($fn == $in) {
-                    return include_once $subPath;
-                }
-            }
+//        print_r($className.'<br/>');
+        if (array_key_exists($className, self::$_classes)) {
+            $b = include_once self::$_classes[$className].'.php';
+            class_alias(self::$_classes[$className], $className);
+            return $b;
+        } else {
+            $subPath = str_replace(array('\\', '_'), ' ', $className);
+            $subPath = str_replace(' ', DIRECTORY_SEPARATOR, ucwords(trim($subPath))) . '.php';
+            return include_once $subPath;
         }
 
-        if (!is_null(self::$codeNamespaces)) {
-            foreach (self::$codeNamespaces as $cn) {
-                if($cn == $fn){
-                    $fp = self::$codePath.DIRECTORY_SEPARATOR.$subPath;
-                    $b = include_once $fp;
-                    return $b;
-                }
-            }
-
-            foreach (self::$codeNamespaces as $cn) {
-                $fp = self::$codePath.$cn.DIRECTORY_SEPARATOR.$subPath;
-                if(file_exists($fp)){
-                    $b = include_once $fp;
-                    class_alias($cn.'\\'.$className, $className, false);
-                    return $b;
-                }
-            }
-        }
-
-        return include_once $subPath;
     }
 
-    static public $ignoreNamespaces = null;
-    static public $codeNamespaces = null;
     static public $codePath = null;
+    static private $_classes = null;
 
     static public function register()
     {
+        PathUtil::scanCurrent(self::$codePath, function ($first, $finfo) {
+            PathUtil::scanRecursive($first, function ($second, $sinfo) use ($first, $finfo) {
+                if ($sinfo['extension'] == 'php') {
+                    $path = str_replace(self::$codePath, '', $second);
+                    $an = str_replace(array($finfo['filename'] . '\\', '.php'), '', $path);
+                    $sn = str_replace('.php', '', $path);
+                    self::$_classes[$an] = $sn;
+                }
+            });
+        });
+
         spl_autoload_register(array(self::singleton(), 'autoload'));
     }
 

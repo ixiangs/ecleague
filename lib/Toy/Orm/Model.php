@@ -158,12 +158,12 @@ abstract class Model{
         return $this;
     }
 
-    public static function merge($id, $data)
+    static public function merge($id, $data)
     {
         return self::load($id)->fillArray($data);
     }
 
-    public static function load($value)
+    static public function load($value)
     {
         $f = self::find();
         return $f->eq($f->getEntity()->getIdProperty()->getName(), $value)
@@ -171,7 +171,7 @@ abstract class Model{
                 ->getFirstModel();
     }
 
-    public static function find()
+    static public function find()
     {
         $inst = new static();
         return $inst->_entity->find();
@@ -181,7 +181,7 @@ abstract class Model{
 //        return $f;
     }
 
-    public static function create($data = array())
+    static public function create($data = array())
     {
         return new static($data);
     }

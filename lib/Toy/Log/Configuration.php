@@ -2,7 +2,7 @@
 namespace Toy\Log;
 
 class Configuration{
-	public static $level = Logger::LEVEL_VERBOSE;
-	public static $appender = '\Toy\Log\ConsoleAppender';
-	public static $settings = array();
+	static public $level = Logger::LEVEL_VERBOSE;
+	static public $appender = '\Toy\Log\ConsoleAppender';
+	static public $settings = array();
 }

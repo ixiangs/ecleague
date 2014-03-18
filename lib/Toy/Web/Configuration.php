@@ -3,19 +3,19 @@ namespace Toy\Web;
 
 class Configuration {
 
-	public static $domains = array();
-    public static $seoUrl = true;
-    public static $seoParameter = true;
-	public static $templateExtensions = array('.php');
-	public static $templateDirectories = null;
-	public static $templateFunctions = array();
-	public static $templateTheme = 'default';
-	public static $codeDirectory = '';
-//    public static $codeNamespaces = array('Core');
-    public static $logger = null;
-	public static $trace = false;
+	static public $domains = array();
+    static public $seoUrl = true;
+    static public $seoParameter = true;
+	static public $templateExtensions = array('.php');
+	static public $templateDirectories = null;
+	static public $templateFunctions = array();
+	static public $templateTheme = 'default';
+	static public $codeDirectory = '';
+//    static public $codeNamespaces = array('Core');
+    static public $logger = null;
+	static public $trace = false;
 
-	public static function addDomain($name, $namespace, $startUrl, $default = false) {
+	static public function addDomain($name, $namespace, $startUrl, $default = false) {
 		$d = new Domain($name, $namespace, $startUrl, $default);
 		self::$domains[$name] = $d;
 	}

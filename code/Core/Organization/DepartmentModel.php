@@ -31,7 +31,7 @@ class DepartmentModel extends Orm\ModelBase{
 		);
 	}
 	
-	public static function getDepartmentOptionGroups(){
+	static public function getDepartmentOptionGroups(){
 		$companies = CompanyModel::find()->execute()->getModelArray();
 		$departments = DepartmentModel::find()->execute()->getModelArray();
 		$result = array();

@@ -3,7 +3,7 @@ namespace Toy\Platform;
 
 class PathUtil {
 
-	public static function combines() {
+	static public function combines() {
 		$result = '';
 		$args = func_get_args();
 		foreach ($args as $v) {
@@ -21,7 +21,7 @@ class PathUtil {
 		return $result;
 	}
 
-	public static function scanCurrent($dir, \Closure $callback) {
+	static public function scanCurrent($dir, \Closure $callback) {
 		if ($handle = opendir($dir)) {
 			while (false !== ($file = readdir($handle))) {
 				if ($file != '.' && $file != '..') {
@@ -33,7 +33,7 @@ class PathUtil {
 		}
 	}
 
-	public static function scanRecursive($dir, \Closure $callback) {
+	static public function scanRecursive($dir, \Closure $callback) {
 		if ($handle = opendir($dir)) {
 			while (false !== ($file = readdir($handle))) {
 				if ($file != '.' && $file != '..') {

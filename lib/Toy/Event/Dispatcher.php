@@ -4,7 +4,7 @@ namespace Toy\Event;
 class Dispatcher
 {
 
-    public static function dispatch($event, $source, &$argument = null)
+    static public function dispatch($event, $source, &$argument = null)
     {
         if (!in_array($event, Configuration::$events)) {
             throw new Exception('not found event [' . $event . ']');

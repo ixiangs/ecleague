@@ -4,17 +4,17 @@ namespace Toy\Platform;
 class FileUtil
 {
 
-    public static function writeFile($filename, $data)
+    static public function writeFile($filename, $data)
     {
         file_put_contents($filename, $data);
     }
 
-    public static function readFile($filename)
+    static public function readFile($filename)
     {
         return file_get_contents($filename);
     }
 
-    public static function readCsv($filename)
+    static public function readCsv($filename)
     {
         $result = array();
         if (($handle = fopen($filename, "r")) !== false) {
@@ -26,7 +26,7 @@ class FileUtil
         return $result;
     }
 
-    public static function readJson($filename)
+    static public function readJson($filename)
     {
         $content = file_get_contents($filename);
         $result = json_decode($content, true);
@@ -55,7 +55,7 @@ class FileUtil
         return null;
     }
 
-    public static function getDirectories($dir)
+    static public function getDirectories($dir)
     {
         $result = array();
         if ($handle = opendir($dir)) {
@@ -72,7 +72,7 @@ class FileUtil
         return $result;
     }
 
-    // public static function walkDirectory($dir, \Closure $callback) {
+    // static public function walkDirectory($dir, \Closure $callback) {
     // $result = array();
     // if ($handle = opendir($dir)) {
     // while (false !== ($file = readdir($handle))) {
@@ -87,12 +87,12 @@ class FileUtil
     // return $result;
     // }
 
-    public static function checkExists($filename)
+    static public function checkExists($filename)
     {
         return file_exists($filename);
     }
 
-    public static function isDirectory($filename)
+    static public function isDirectory($filename)
     {
         return is_dir($filename);
     }

@@ -14,11 +14,11 @@ if (preg_match('/\.(?:png|jpg|jpeg|gif|css|js|ico|html)$/', $_SERVER["REQUEST_UR
     define('TEMP_PATH', PRI_PATH . 'temp' . DS);
     set_include_path(get_include_path() . PATH_SEPARATOR . LIB_PATH . PATH_SEPARATOR . CODE_PATH);
 
+    include_once 'Toy\Platform\FileUtil.php';
+    include_once 'Toy\Platform\PathUtil.php';
     include_once 'Toy\Autoload.php';
 
     \Toy\Autoload::$codePath = CODE_PATH;
-    \Toy\Autoload::$codeNamespaces = array('Core');
-    \Toy\Autoload::$ignoreNamespaces = array('Toy');
     \Toy\Autoload::register();
 
 //	include_once 'tmplfunc.php';

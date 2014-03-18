@@ -3,27 +3,27 @@ namespace Toy\Util;
 
 class DateUtil{
 	
-	public static function now($format = 'Y-m-d H:i:s'){
+	static public function now($format = 'Y-m-d H:i:s'){
 		return date($format);
 	}
     
-    public static function dbNow(){
+    static public function dbNow(){
         return date('Y-m-d H:i:s');
     }
 	
-	public static function getDayStartTime($date){
+	static public function getDayStartTime($date){
 		$datetime = ctype_digit($date)? $date: strtotime($date);
 		list($y, $m, $d) = explode('-', date('Y-m-d', $datetime));
 		return date('Y-m-d H:i:s', mktime(0, 0, 0, $m, $d, $y));
 	}
 	
-	public static function getDayEndTime($date){
+	static public function getDayEndTime($date){
 		$datetime = ctype_digit($date)? $date: strtotime($date);
 		list($y, $m, $d) = explode('-', date('Y-m-d', $datetime));
 		return date('Y-m-d H:i:s', mktime(23, 59, 59, $m, $d, $y));
 	}
 	
-	public static function getMonthStartTime($month = NULL, $format = 'l'){
+	static public function getMonthStartTime($month = NULL, $format = 'l'){
 		if(empty($month)){
 			$month = date('n');
 		}
@@ -31,7 +31,7 @@ class DateUtil{
 		return Soul_Locale_Factory::getCulture()->formatDate($time, $format);
 	}
 	
-	public static function getMonthEndTime($month = NULL, $format = 'l'){
+	static public function getMonthEndTime($month = NULL, $format = 'l'){
 		if(empty($month)){
 			$month = date('n');
 		}		
@@ -39,7 +39,7 @@ class DateUtil{
 		return Soul_Locale_Factory::getCulture()->formatDate($time, $format);		
 	}
 	
-	public static function add($date, $diff, $dateFormat = 'l'){
+	static public function add($date, $diff, $dateFormat = 'l'){
 		$datetime = ctype_digit($date)? $date: strtotime($date);
 		list($y,$M,$d,$h,$m,$s) = explode('-', date('Y-m-d-H-i-s', $datetime));
 		$format = substr($diff, -1);
@@ -72,7 +72,7 @@ class DateUtil{
 		return Soul_Locale_Factory::getCulture()->formatDate($result, $dateFormat);
 	}
 	
-	public static function sub($date, $diff, $dateFormat = 'l'){
+	static public function sub($date, $diff, $dateFormat = 'l'){
 		$datetime = ctype_digit($date)? $date: strtotime($date);
 		list($y,$M,$d,$h,$m,$s) = explode('-', date('Y-m-d-H-i-s', $datetime));
 		$format = substr($diff, -1);
@@ -105,7 +105,7 @@ class DateUtil{
 		return Soul_Locale_Factory::getCulture()->formatDate($result, $dateFormat);
 	}	
 
-	public static function diff($first, $second, $format = 's'){
+	static public function diff($first, $second, $format = 's'){
 		$a = ctype_digit($first)? $first: strtotime($first);
 		$b = ctype_digit($second)? $second: strtotime($second);
 		$di = $a - $b;

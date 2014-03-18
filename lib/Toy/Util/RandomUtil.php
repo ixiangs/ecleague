@@ -5,15 +5,15 @@ class RandomUtil {
     
     private static $_characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
 
-    public static function randomMd5($str) {
+    static public function randomMd5($str) {
         return md5($str);
     }  
     
-    public static function randomNumeric($min = 0, $max = 99999999){
+    static public function randomNumeric($min = 0, $max = 99999999){
 		return mt_rand($min, $max);
     }
     
-    public static function randomCharacters($size = 6, $characters = NULL){
+    static public function randomCharacters($size = 6, $characters = NULL){
         if(is_null($characters)){
             $characters = self::$_characters;
         }

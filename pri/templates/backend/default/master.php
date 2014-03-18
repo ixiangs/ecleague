@@ -2,14 +2,14 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>{% block title %}Comex OA{% end %}</title>
+    <title><?php echo $this->renderBlock('title', $this->locale->_('website_title')); ?></title>
     <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="{{ static_url("css/bootstrap.min.css") }}">
-    <link rel="stylesheet" type="text/css" href="{{ static_url("css/font-awesome.css") }}">
-    <link rel="stylesheet" type="text/css" href="{{ static_url("css/sb-admin.css") }}">
-    <link rel="stylesheet" type="text/css" href="{{ static_url("css/admin.css") }}">
-    {% block headcss %}{% end %}
+    <link rel="stylesheet" type="text/css" href="/pub/assets/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="/pub/assets/css/font-awesome.css">
+    <link rel="stylesheet" type="text/css" href="/pub/assets/css/sb-admin.css">
+    <link rel="stylesheet" type="text/css" href="/pub/assets/css/admin.css">
+    <?php echo $this->renderBlock('headcss'); ?>
     <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
     <!--[if lt IE 9]>
     <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
@@ -26,7 +26,7 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
     </button>
-    <a class="navbar-brand" href="index.html">SB Admin v2.0</a>
+    <a class="navbar-brand" href="index.html"><?php echo $this->locale->_('website_title'); ?></a>
 </div>
 <!-- /.navbar-header -->
 
@@ -247,11 +247,11 @@
     <div class="sidebar-collapse">
         <ul class="nav" id="side-menu">
             <li>
-                <a href="#" data-toggle="collapse">{{ _("auth_manage")}}<span class="fa arrow"></span></a>
+                <a href="#" data-toggle="collapse"><?php echo $this->locale->_("auth_manage"); ?><span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level">
-                    <li><a href="/admin/auth/account/list">{{ _("auth_account_list")}}</a></li>
-                    <li><a href="/admin/auth/role/list">{{ _("auth_role_list")}}</a></li>
-                    <li><a href="/admin/auth/behavior/list">{{ _("auth_behavior_list")}}</a></li>
+                    <li><a href="<?php echo $this->router->buildUrl('auth/account/list'); ?>"><?php echo $this->locale->_("auth_account_list"); ?></a></li>
+                    <li><a href="<?php echo $this->router->buildUrl('auth/role/list'); ?>"><?php echo $this->locale->_("auth_role_list"); ?></a></li>
+                    <li><a href="<?php echo $this->router->buildUrl('auth/behavior/list'); ?>"><?php echo $this->locale->_("auth_behavior_list"); ?></a></li>
                 </ul>
             </li>
         </ul>
@@ -264,7 +264,7 @@
 <div id="page-wrapper">
     <div class="row">
         <div class="col-lg-12">
-            {% block content %}{% end %}
+            <?php echo $this->renderBlock('content'); ?>
         </div>
         <!-- /.col-lg-12 -->
     </div>
@@ -275,14 +275,14 @@
 </div>
 <!-- /#wrapper -->
 
-<script src="{{ static_url("js/libs.js") }}"></script>
-<script src="{{ static_url("js/bootstrap.js") }}"></script>
-<script src="{{ static_url("js/common.js") }}"></script>
-<script src="{{ static_url("js/toys/core.js") }}"></script>
-<script src="{{ static_url("js/toys/html.js") }}"></script>
-<script src="{{ static_url("js/toys/locale.js") }}"></script>
-<script src="{{ static_url("js/plugins/metisMenu/jquery.metisMenu.js") }}"></script>
-<script src="{{ static_url("js/sb-admin.js") }}"></script>
-{% block footerjs %}{% end %}
+<script src="/pub/assets/js/libs.js"></script>
+<script src="/pub/assets/js/bootstrap.js"></script>
+<script src="/pub/assets/js/common.js"></script>
+<script src="/pub/assets/js/toys/core.js"></script>
+<script src="/pub/assets/js/toys/html.js"></script>
+<script src="/pub/assets/js/toys/locale.js"></script>
+<script src="/pub/assets/js/plugins/metisMenu/jquery.metisMenu.js"></script>
+<script src="/pub/assets/js/sb-admin.js"></script>
+<?php echo $this->renderBlock('footerjs'); ?>
 </body>
 </html>

@@ -8,7 +8,7 @@ class Helper
 
     private static $_dbs = array();
 
-    public static function createDb($name = null)
+    static public function createDb($name = null)
     {
         if (is_null($name)) {
             $name = Configuration::$defaultConnection;
@@ -17,7 +17,7 @@ class Helper
         return new $s['provider']($s['settings']);
     }
 
-    public static function openDb($name = null)
+    static public function openDb($name = null)
     {
         if (is_null($name)) {
             $name = Configuration::$defaultConnection;
@@ -29,7 +29,7 @@ class Helper
         return $_dbs[$name];
     }
 
-    public static function withDb(\Closure $callback, $name = null)
+    static public function withDb(\Closure $callback, $name = null)
     {
         try {
             $db = self::createDb($name);
@@ -40,7 +40,7 @@ class Helper
         }
     }
 
-    public static function withTx(\Closure $callback, $name = null)
+    static public function withTx(\Closure $callback, $name = null)
     {
         try {
             $db = self::createDb($name);

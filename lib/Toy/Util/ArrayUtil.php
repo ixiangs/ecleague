@@ -4,7 +4,7 @@ namespace Toy\Util;
 final class ArrayUtil
 {
 
-    public static function count(array $arr, $function)
+    static public function count(array $arr, $function)
     {
         $result = 0;
         foreach ($arr as $index => $item) {
@@ -15,7 +15,7 @@ final class ArrayUtil
         return $result;
     }
 
-    public static function join($seq, array $arr, $function)
+    static public function join($seq, array $arr, $function)
     {
         $result = '';
         foreach ($arr as $key => $item) {
@@ -24,14 +24,14 @@ final class ArrayUtil
         return $result;
     }
 
-    public static function each(array &$arr, $function)
+    static public function each(array &$arr, $function)
     {
         foreach ($arr as $index => $item) {
             $function($item, $index);
         }
     }
 
-    public static function find(array $arr, $function)
+    static public function find(array $arr, $function)
     {
         foreach ($arr as $index => $item) {
             if ($function($item, $index)) {
@@ -40,7 +40,7 @@ final class ArrayUtil
         }
     }
 
-    public static function filter(array $arr, $function)
+    static public function filter(array $arr, $function)
     {
         $result = array();
         foreach ($arr as $index => $item) {
@@ -51,7 +51,7 @@ final class ArrayUtil
         return $result;
     }
 
-    public static function extract(array $arr, $key)
+    static public function extract(array $arr, $key)
     {
         $result = array();
         foreach ($arr as $item) {
@@ -62,7 +62,7 @@ final class ArrayUtil
         return $result;
     }
 
-    public static function contains(array $arr, $function)
+    static public function contains(array $arr, $function)
     {
         foreach ($arr as $item) {
             if ($function($item, $index)) {
@@ -72,7 +72,7 @@ final class ArrayUtil
         return false;
     }
 
-    public static function toArray(array $arr, $function)
+    static public function toArray(array $arr, $function)
     {
         $result = array();
         foreach ($arr as $index => $item) {
@@ -81,7 +81,7 @@ final class ArrayUtil
         return $result;
     }
 
-    public static function get(array $arr, $key, $default = NULL)
+    static public function get(array $arr, $key, $default = NULL)
     {
         if (array_key_exists($key, $arr)) {
             return $arr[$key];
@@ -89,14 +89,14 @@ final class ArrayUtil
         return $default;
     }
 
-    // public static function getNotEmpty(array $arr, $key, $default = NULL) {
+    // static public function getNotEmpty(array $arr, $key, $default = NULL) {
     // if (array_key_exists($key, $arr) && !empty($arr[$key])) {
     // return $arr[$key];
     // }
     // return $default;
     // }
 
-    public static function removeEmpty(array &$arr)
+    static public function removeEmpty(array &$arr)
     {
         foreach ($arr as $key => $item) {
             if (empty($item)) {
@@ -108,7 +108,7 @@ final class ArrayUtil
         return $arr;
     }
 
-    public static function compare(array $arr1, array $arr2)
+    static public function compare(array $arr1, array $arr2)
     {
         if (count($arr1) != count($arr2)) {
             return false;
@@ -133,7 +133,7 @@ final class ArrayUtil
         return TRUE;
     }
 
-    public static function hasAllKeys($arr, array $keys)
+    static public function hasAllKeys($arr, array $keys)
     {
         foreach ($keys as $v) {
             if (!array_key_exists($v, $arr)) {
@@ -144,7 +144,7 @@ final class ArrayUtil
         return true;
     }
 
-    public static function hasAnyKeys($arr, array $keys)
+    static public function hasAnyKeys($arr, array $keys)
     {
         foreach ($keys as $v) {
             if (array_key_exists($v, $arr)) {
@@ -155,7 +155,7 @@ final class ArrayUtil
         return false;
     }
 
-    public static function pack($value)
+    static public function pack($value)
     {
         if (is_array($value)) {
             return $value;

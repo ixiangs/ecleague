@@ -28,12 +28,15 @@ class Template
 
     public function __get($name)
     {
+        if (array_key_exists($name, self::$_helpers)) {
+            return self::$_helpers[$name];
+        }
         return $this->get($name);
     }
 
 	public function __call($name, $args) {
-		if (array_key_exists($name, self::$_functions)) {
-			return call_user_func_array(self::$_functions[$name], $args);
+		if (array_key_exists($name, self::$_helpers)) {
+			return call_user_func_array(self::$_helpers[$name], $args);
 		}
 	}
 
@@ -104,14 +107,14 @@ class Template
         return $this;
     }
 
-    protected function renderBlock($name = 'default')
+    protected function renderBlock($name = 'default', $default = '')
     {
         foreach (self::$_blocks as $n => $v) {
             if ($name == $n) {
                 return $v;
             }
         }
-        return '';
+        return $default;
     }
 
     protected function hasBlock($name)
@@ -176,98 +179,9 @@ class Template
         return null;
     }
 
-    private static $_functions = array();
-    public static function addFunction($name, $func){
-        self::$_functions[$name] = $func;
+    private static $_helpers = array();
+    static public function addHelper($name, $func){
+        self::$_helpers[$name] = $func;
     }
 }
 
-Template::addFunction('htmlInput', function($type, $id, $name, $class, $value, array $attrs = array()){
-	$attrs['type'] = $type;
-	$attrs['id'] = $id;
-	$attrs['name'] = $name;
-	$attrs['value'] = $value;
-	$attrs['class'] = $class;
-	$arr = array();
-	foreach($attrs as $k=>$v){
-		$arr[] = "$k=\"$v\"";
-	}
-	return '<input '.implode(' ', $arr).'/>';
-});
-
-Template::addFunction('htmlSelect', function($caption, $items, $id, $name, $class, $value, array $attrs = array()){
-	$attrs['id'] = $id;
-	$attrs['name'] = $name;
-	$attrs['class'] = $class;
-	$arr = array();
-	foreach($attrs as $k=>$v){
-		$arr[] = "$k=\"$v\"";
-	}
-	$html = array('<select '.implode(' ', $arr).'/>');
-	if(!empty($caption)){
-		if(is_string($caption)){
-			$html[] = '<option value="">'.$caption.'</option>';
-		}elseif(is_array($caption)){
-			$ks = array_keys($caption);
-			$vs = array_values($caption);
-			$html[] = '<option value="'.$ks[0].'">'.$vs[0].'</option>';
-		}
-	}
-
-	foreach($items as $option=>$text){
-		if($value == $option){
-			$html[] = "<option value=\"$option\" selected>$text</option>";
-		}else{
-			$html[] = "<option value=\"$option\">$text</option>";
-		}
-	}
-	$html[] = '</select>';
-	return implode('', $html);
-});
-
-Template::addFunction('htmlGroupSelect', function($caption, $items, $id, $name, $class, $value, array $attrs = array()){
-	$attrs['id'] = $id;
-	$attrs['name'] = $name;
-	$attrs['class'] = $class;
-	$arr = array();
-	foreach($attrs as $k=>$v){
-		$arr[] = "$k=\"$v\"";
-	}
-	$html = array('<select '.implode(' ', $arr).'/>');
-	if(!empty($caption)){
-		if(is_string($caption)){
-			$html[] = '<option value="">'.$caption.'</option>';
-		}elseif(is_array($caption)){
-			$ks = array_keys($caption);
-			$vs = array_values($caption);
-			$html[] = '<option value="'.$ks[0].'">'.$vs[0].'</option>';
-		}
-	}
-
-	foreach($items as $item){
-		$html[] = '<optgroup label="'.$item['label'].'">';
-		foreach($item['options'] as $option=>$text){
-			if($value == $option){
-				$html[] = "<option value=\"$option\" selected>$text</option>";
-			}else{
-				$html[] = "<option value=\"$option\">$text</option>";
-			}
-		}
-		$html[] = '</optgroup>';
-	}
-	$html[] = '</select>';
-	return implode('', $html);
-});
-
-Template::addFunction('htmlCheckboxes', function($items, $name, $class, array $values = array(), array $attrs = array()){
-	$html = array();
-	foreach($items as $option=>$text){
-		if(in_array($option, $values)){
-			$html[] = "<label class=\"checkbox-inline\"><input type=\"checkbox\" name=\"$name\" value=\"$option\" checked=\"true\">$text</label>";
-		}else{
-			$html[] = "<label class=\"checkbox-inline\"><input type=\"checkbox\" name=\"$name\" value=\"$option\">$text</label>";
-		}
-	}
-	$html[] = '</select>';
-	return implode('', $html);
-});

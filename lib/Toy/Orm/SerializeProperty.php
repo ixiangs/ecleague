@@ -14,7 +14,7 @@ class SerizlizeProperty extends BaseProperty
         return unserialize($value);
     }
 
-    // public static function create($name){
+    // static public function create($name){
     //     return new self($name);
     // }
 }

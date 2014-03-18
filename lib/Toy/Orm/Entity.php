@@ -123,7 +123,7 @@ class Entity
         return new $this->_modelClass();
     }
 
-    public static function get($class)
+    static public function get($class)
     {
         if (array_key_exists($class, self::$_entitys)) {
             return self::$_entitys[$class];
@@ -131,7 +131,7 @@ class Entity
         return null;
     }
 
-    public static function register($class, $metadata)
+    static public function register($class, $metadata)
     {
         $r = new self($class, $metadata['table']);
         foreach ($metadata['properties'] as $p) {

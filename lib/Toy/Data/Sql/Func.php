@@ -12,15 +12,15 @@ class Func{
         $this->arguments = $args;
     }
 
-    public static function count($field = '*'){
+    static public function count($field = '*'){
         return new self('count', array('field'=>$field));
     }
 
-    public static function max($field = '*'){
+    static public function max($field = '*'){
         return new self('max', array('field'=>$field));
     }
 
-    public static function min($field = '*'){
+    static public function min($field = '*'){
         return new self('min', array('field'=>$field));
     }
 }

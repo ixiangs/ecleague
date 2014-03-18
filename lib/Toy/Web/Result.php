@@ -33,23 +33,23 @@ class Result{
         return $this->_type;
     }
 
-    public static function textResult($content){
+    static public function textResult($content){
         return new self('text', $content);
     }
 
-    public static function templateResult($data = array(), $path = null){
+    static public function templateResult($data = array(), $path = null){
         return new self('template', array('path'=>$path, 'data'=>$data));
     }
 
-    public static function downloadResult($filename, $content){
+    static public function downloadResult($filename, $content){
         return new self('download', array('filename'=>$filename, 'content'=>$content));
     }
 
-    public static function jsonResult($data){
+    static public function jsonResult($data){
         return new self('json', array('data'=>$data));
     }
 
-    public static function redirectResult($url, $status = 302){
+    static public function redirectResult($url, $status = 302){
         return new self('redirect', array('url'=>$url, 'status'=>$status));
     }
 }

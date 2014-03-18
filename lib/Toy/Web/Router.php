@@ -26,32 +26,31 @@ class Router
     public function buildUrl($url = "", $params = NULL)
     {
         list($len, $domain, $component, $controller, $action) = array(0, null, null, null, null);
-        $ctx = Application::singleton()->getContext();
         if (!empty($url)) {
             $arr = explode('/', $url);
             $len = count($arr);
         }
         switch ($len) {
             case 0 :
-                $domain = $ctx->domain;
-                $component = $this->_component;
-                $controller = $this->_controller;
-                $action = $this->_action;
+                $domain = $this->domain;
+                $component = $this->component;
+                $controller = $this->controller;
+                $action = $this->action;
                 break;
             case 1 :
-                $domain = $ctx->domain;
-                $component = $this->_component;
-                $controller = $this->_controller;
+                $domain = $this->domain;
+                $component = $this->component;
+                $controller = $this->controller;
                 $action = $arr[0];
                 break;
             case 2 :
-                $domain = $ctx->domain;
-                $component = $this->_component;
+                $domain = $this->domain;
+                $component = $this->component;
                 $controller = $arr[0];
                 $action = $arr[1];
                 break;
             case 3 :
-                $domain = $ctx->domain;
+                $domain = $this->domain;
                 $component = $arr[0];
                 $controller = $arr[1];
                 $action = $arr[2];

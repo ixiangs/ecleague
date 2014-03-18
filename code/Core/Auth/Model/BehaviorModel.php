@@ -8,7 +8,7 @@ class BehaviorModel extends Orm\Model
 
     const TABLE_NAME = '{t}auth_behavior';
 
-    public static function checkCode($code)
+    static public function checkCode($code)
     {
         $m = self::find(array('code =' => $code))->selectCount()->execute()->getFirstValue();
         return $m > 0;

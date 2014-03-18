@@ -34,7 +34,7 @@ class Horde_Yaml
      *
      * @var callback
      */
-    public static $loadfunc = 'syck_load';
+    static public $loadfunc = 'syck_load';
 
     /**
      * Whitelist of classes that can be instantiated automatically
@@ -42,7 +42,7 @@ class Horde_Yaml
      *
      * @var array
      */
-    public static $allowedClasses = array('ArrayObject');
+    static public $allowedClasses = array('ArrayObject');
 
     /**
      * Load a string containing YAML and parse it into a PHP array.
@@ -51,7 +51,7 @@ class Horde_Yaml
      * @param  string  $yaml   String containing YAML
      * @return array           PHP array representation of YAML content
      */
-    public static function load($yaml)
+    static public function load($yaml)
     {
         if (!is_string($yaml) || !strlen($yaml)) {
             $msg = 'YAML to parse must be a string and cannot be empty.';
@@ -87,7 +87,7 @@ class Horde_Yaml
      * @throws IllegalArgumentException  If $filename is invalid
      * @throws Horde_Yaml_Exception  If the file cannot be opened.
      */
-    public static function loadFile($filename)
+    static public function loadFile($filename)
     {
         if (!is_string($filename) || !strlen($filename)) {
             $msg = 'Filename must be a string and cannot be empty';
@@ -108,7 +108,7 @@ class Horde_Yaml
      * @param  resource  $stream     PHP stream resource
      * @return array                 PHP array representation of YAML content
      */
-    public static function loadStream($stream)
+    static public function loadStream($stream)
     {
         if (! is_resource($stream) || get_resource_type($stream) != 'stream') {
             throw new InvalidArgumentException('Stream must be a stream resource');
@@ -137,7 +137,7 @@ class Horde_Yaml
      * @param  integer            $options   Options to pass to dumper
      * @return string                        YAML representation of $value
      */
-    public static function dump($value, $options = array())
+    static public function dump($value, $options = array())
     {
         $dumper = new Horde_Yaml_Dumper;
         return $dumper->dump($value, $options);

@@ -276,7 +276,7 @@
 <!-- /#wrapper -->
 
 <script src="/pub/assets/js/libs.js"></script>
-<script src="/pub/assets/js/bootstrap.js"></script>
+<script src="/pub/assets/js/bootstrap.min.js"></script>
 <script src="/pub/assets/js/common.js"></script>
 <script src="/pub/assets/js/toys/core.js"></script>
 <script src="/pub/assets/js/toys/html.js"></script>

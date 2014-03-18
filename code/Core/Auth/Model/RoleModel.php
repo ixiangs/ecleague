@@ -3,29 +3,22 @@ namespace Core\Auth\Model;
 
 use Toy\Orm;
 
-class RoleModel extends Orm\ModelBase{
+class RoleModel extends Orm\Model{
 
-	const TABLE_NAME = '{t}user_role';
-	
-	static public function checkCode($code){
-		$m = self::find(array('code =' => $code))->count() -> execute() -> getFirstValue();
-		return $m > 0;			
-	}	
-
-	protected function getMetadata(){
-		return array(
-			'table'=>RoleModel::TABLE_NAME,
-			'properties'=>array(
-		    Orm\IntegerProperty::create('id')->setPrimaryKey(true)->setAutoIncrement(true),
-		    Orm\StringProperty::create('code')->setUnique(true),
-		    Orm\StringProperty::create('label'),
-		    Orm\ArrayProperty::create('behavior_ids'),
-		    Orm\BooleanProperty::create('enabled')->setDefaultValue(true)
-			)
-		);
-	}
+	const TABLE_NAME = '{t}auth_role';
 
 	public function getBehaviors(){
-		return BehaviorModel::find()->andFilter('id in', $this->getBehaviorIds());
+		return BehaviorModel::find()->in('id', $this->getBehaviorIds());
 	}
 }
+
+Orm\Entity::register('Core\Auth\Model\RoleModel', array(
+    'table'=>RoleModel::TABLE_NAME,
+    'properties'=>array(
+        Orm\IntegerProperty::create('id')->setPrimaryKey(true)->setAutoIncrement(true),
+        Orm\StringProperty::create('code')->setUnique(true),
+        Orm\StringProperty::create('name'),
+        Orm\ArrayProperty::create('behavior_ids'),
+        Orm\BooleanProperty::create('enabled')->setDefaultValue(true)
+    )
+));

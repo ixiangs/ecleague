@@ -1,6 +1,8 @@
 <?php
 namespace Core\Html;
 
+use Toy\Web\Application;
+
 class Helper
 {
 
@@ -8,9 +10,12 @@ class Helper
     {
     }
 
-    public function beginForm()
-    {
-        return new Form();
+    public function beginForm($id){
+        return "<form id=\"$id\" method=\"post\"><table>";
+    }
+
+    public function endForm(){
+        return "</table></form>";
     }
 
     public function input($type, $id, $name, $class, $value, array $attrs = array())
@@ -107,6 +112,68 @@ class Helper
         return implode('', $html);
     }
 
+    public function field($label, $input)
+    {
+        $html = array('<div class="form-group">');
+        $html[] = '<label class="control-label">'.$label.'</label>';
+        $html[] = $input;
+        $html[] = '</div>';
+
+        return implode('', $html);
+    }
+
+    public function pagination($total, $ps, $pr){
+        $router = Application::singleton()->getContext()->router;
+        $request = Application::singleton()->getContext()->request;
+        $pageIndex = $request->getParameter('pageindex', 1);
+        $pc = ceil($total / $ps);
+        $start = 0;
+        $end = 0;
+        if($pc < $pr){
+            $start = 1;
+            $end = $pc;
+        } else if($pageIndex == $pc){
+            $start = $pc - $pr - 1;
+            $end = $pc;
+        } else {
+            $pr = floor($pageIndex / $pr);
+            $start = $pr <= 0? 1: $pr*$pr - 1;
+            $end = $start + $pr + 1;
+            if($end > $pc) {
+                $start = $pc - $pr - 1;
+                $end = $pc;
+            }
+            if($start < 1){
+                $start = 1;
+                $end = $start + $pr;
+            }
+        }
+
+        $pargs = $request->getAllParameters();
+        $pargs['pageindex'] = 1;
+        $html = array(
+            "<ul class=\"pagination  pull-right\">",
+        );
+        if($pageIndex > $pr) {
+            $html[] = sprintf("<li><a href=\"%s\">&larr; %s</a></li>", $router->buildUrl().'?'.http_build_query($pargs) , 1);
+        }
+
+        for($i = $start; $i <= $end; $i++){
+            if($i == $pageIndex) {
+                $html[] = sprintf("<li class=\"active\"><span>%s</span></li>", $i);
+            } else {
+                $pargs['pageindex'] = $i;
+                $html[] = sprintf("<li><a href=\"%s\">%s</a></li>", $router->buildUrl().'?'.http_build_query($pargs), $i);
+            }
+        }
+
+        if($pageIndex < $pc-$pr) {
+            $pargs['pageindex'] = $pc;
+            $html[] = sprintf("<li><a href=\"%s\">%s &rarr;</a></li>", $router->buildUrl().'?'.http_build_query($pargs), $pc);
+        }
+        $html[] = '</url>';
+        return implode('', $html);
+    }
 
     private static $_instance = NULL;
 

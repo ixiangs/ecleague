@@ -1,11 +1,12 @@
 <?php
-namespace Html;
-use Toy\Util\StringUtil;
+namespace Core\Html;
+
+use Toy\Web\Template;
 
 class Listener{
 	
 	static public function applicationOnStart($app, $argument){
-		$app->getContext()->setItem('html', Helper::singleton());
+        Template::addHelper('html', Helper::singleton());
 	}
 	
 }

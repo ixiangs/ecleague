@@ -3,7 +3,8 @@ namespace Toy\Orm;
 
 use Toy\Data\Helper;
 
-abstract class Model{
+abstract class Model
+{
 
     private static $_camelCaseToUnderline = array();
 
@@ -158,17 +159,27 @@ abstract class Model{
         return $this;
     }
 
+    static public function checkUnique($field, $value)
+    {
+        $m = static::find()
+            ->selectCount()
+            ->eq($field, $value)
+            ->execute()
+            ->getFirstValue();
+        return $m > 0;
+    }
+
     static public function merge($id, $data)
     {
-        return self::load($id)->fillArray($data);
+        return static::load($id)->fillArray($data);
     }
 
     static public function load($value)
     {
-        $f = self::find();
+        $f = static::find();
         return $f->eq($f->getEntity()->getIdProperty()->getName(), $value)
-                ->execute()
-                ->getFirstModel();
+            ->execute()
+            ->getFirstModel();
     }
 
     static public function find()

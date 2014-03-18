@@ -1,31 +1,71 @@
-.breadcrumb{margin-top:10px;margin-bottom:10px;}
-.pagination{margin:2px;}
-.pagination-panel{}
-.pagination-panel .pagination{margin-top:-6px;}
+.breadcrumb {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
 
+.pagination {
+    margin: 2px;
+}
+
+.pagination-panel {
+}
+
+.pagination-panel .pagination {
+    margin-top: -6px;
+}
+
+table.table th.index, table.table td.index{width:40px;text-align: center;}
+table.table th.small, table.table td.small{width:60px;text-align: center;}
+table.table th.middle, table.table td.middle{width:120px;text-align: center;}
+table.table th.large, table.table td.large{width:240px;text-align: center;}
+.pagination-text{padding-top: 8px;}
 .has-error .form-control {
-	border-color: #a94442;
-	-webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
-	box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
-	margin-bottom: 0;
+    border-color: #a94442;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+    margin-bottom: 0;
 }
+
 .has-error .help-block, .has-error .control-label, .has-error .radio, .has-error .checkbox, .has-error .radio-inline, .has-error .checkbox-inline {
-color: #a94442;
-}
-.has-error .alert-error{
-	margin-top:0;
-	border: none;
-	background:none;
-	color:#a94442;
-	margin-bottom: 0;
-  clear:both;
+    color: #a94442;
 }
 
+.has-error .alert-error {
+    margin-top: 0;
+    border: none;
+    background: none;
+    color: #a94442;
+    margin-bottom: 0;
+    clear: both;
+}
 
-tr.form-group{}
-td.control-label{padding-right:10px;text-align:right;vertical-align:middle;}
-td.control-group{margin-bottom:0;}
-td.control-group .checkbox-inline{float:left;margin-right:5px;margin-top:2px;}
-td.control-group .checkbox-inline input{margin-top:-2px;}
-tr.has-error .control-label{vertical-align:top;}
-tr.checkboxes td.control-label{vertical-align:top;}
+tr.form-group {
+}
+
+td.control-label {
+    padding-right: 10px;
+    text-align: right;
+    vertical-align: middle;
+}
+
+td.control-group {
+    margin-bottom: 0;
+}
+
+td.control-group .checkbox-inline {
+    float: left;
+    margin-right: 5px;
+    margin-top: 2px;
+}
+
+td.control-group .checkbox-inline input {
+    margin-top: -2px;
+}
+
+tr.has-error .control-label {
+    vertical-align: top;
+}
+
+tr.checkboxes td.control-label {
+    vertical-align: top;
+}

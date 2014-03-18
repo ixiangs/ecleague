@@ -1,40 +1,36 @@
-{% extends "../../master.html" %}
-{% block content %}
+<?php $this->beginBlock('content'); ?>
 <ul class="breadcrumb">
     <li>
-        <a href="#">{{ _("auth_manage") }}</a>
+        <a href="#"><?php echo $this->locale->_("auth_manage"); ?></a>
     </li>
     <li>
-        <a href="{{ controller_url }}/list">{{ _("auth_behavior_list") }}</a>
+        <a href="<?php echo $this->router->buildUrl('list'); ?>"><?php echo $this->locale->_("auth_behavior_list") ;?></a>
     </li>
     <li class="active">
-        {% if handler.request_action is "add" %}
-        {{ _("add") }}
-        {% else %}
-        {{ _("edit") }}
-        {% end %}
+        <?php echo $this->locale->_($this->router->action == 'add'? "add":"edit") ;?>
     </li>
 </ul>
 
 <div class="col-md-4">
-    <form id="form1" method="post">
-        {% raw begin_form() %}
-        {% raw field_text(_("code"), "@code#code%required|letter", model.code) %}
-        {% raw field_text(_("name"), "@name#name%required", model.name) %}
-        {% raw field_text(_("url"), "@url#url", model.url) %}
-        {% raw field_boolean(_("enable"), "@enabled#enabled", model.enabled) %}
+    <?php echo $this->html->beginForm('form1'); ?>
+        <?php echo $this->html->field($this->locale->_('code'), $this->html->Input('text', 'code', 'code', 'form-control', $this->model->getCode(), array('data-validate-required'=>'true', 'data-validate-character'=>'true')));?>
+    <?php echo $this->html->field($this->locale->_('name'), $this->html->Input('text', 'name', 'name', 'form-control', $this->model->getName(), array('data-validate-required'=>'true')));?>
+    <?php echo $this->html->field($this->locale->_('url'), $this->html->Input('text', 'url', 'url', 'form-control', $this->model->getUrl()));?>
+    <?php echo $this->html->field($this->locale->_('enable'), $this->html->select('', array(
+        0=>$this->locale->no,
+        1=>$this->locale->yes
+    ), 'enable', 'enable', 'form-control', $this->model->getEnabled(), array('data-validate-required'=>'true', 'data-validate-character'=>'true')));?>
         <div class="form-group">
-            <button type="submit" class="btn btn-default btn-primary">{{ _("save") }}</button>
-            <a href="{{ handler.referer_url }}" class="btn btn-default">{{ _("back") }}</a>
+            <button type="submit" class="btn btn-default btn-primary"><?php echo $this->locale->_("save") ;?></button>
+            <a href="" class="btn btn-default"><?php echo $this->locale->_("back") ;?></a>
         </div>
-        {% raw end_form() %}
-        <input type="hidden" id="id" name="id" value="{{ model.id or '' }}"/>
-        {% raw referer_hidden() %}
-    </form>
+        <input type="hidden" id="id" name="id" value="<?php echo $this->model->getId(); ?>"/>
+    <?php echo $this->html->endForm(); ?>
 </div>
-{% end %}
-{% block footerjs %}
+<?php $this->nextBlock('footerjs'); ?>
 <script type="text/javascript">
     var validator = new Toys.Html.Validation.Validator('#form1');
 </script>
-{% end %}
+<?php
+$this->endBlock();
+echo $this->includeTemplate('master');

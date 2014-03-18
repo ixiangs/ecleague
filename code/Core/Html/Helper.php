@@ -1,6 +1,7 @@
 <?php
 namespace Core\Html;
 
+use Core\Html\Widget\DataTable;
 use Toy\Web\Application;
 
 class Helper
@@ -10,12 +11,8 @@ class Helper
     {
     }
 
-    public function beginForm($id){
-        return "<form id=\"$id\" method=\"post\"><table>";
-    }
-
-    public function endForm(){
-        return "</table></form>";
+    public function dataTable($id, $dataSource = null){
+        return new DataTable($id, $dataSource);
     }
 
     public function input($type, $id, $name, $class, $value, array $attrs = array())

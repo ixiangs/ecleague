@@ -11,6 +11,7 @@ abstract class BaseColumn{
     private $_headText = null;
     private $_cellText = null;
     private $_footerText = null;
+    private $_defaultText = '';
 
     public function __construct(){
         $this->_head = new Element('th');
@@ -33,6 +34,15 @@ abstract class BaseColumn{
 
     public function setCellText($value){
         $this->_cellText = $value;
+        return $this;
+    }
+
+    public function getDefaultText(){
+        return $this->_defaultText;
+    }
+
+    public function setDefaultText($value){
+        $this->_defaultText = $value;
         return $this;
     }
 
@@ -102,5 +112,17 @@ abstract class BaseColumn{
         return $this;
     }
 
+    public function getHeadHtml(){
+        $res = $this->_head->getStartHtml();
+        $res .= $this->_headText;
+        $res .= $this->_head->getEndHtml();
+        return $res;
+    }
+
+    public function getFooterHtml(){
+        return '';
+    }
+
+    abstract public function getCellHtml($row, $index);
     abstract public function getType();
 }

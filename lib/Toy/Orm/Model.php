@@ -3,7 +3,7 @@ namespace Toy\Orm;
 
 use Toy\Data\Helper;
 
-abstract class Model
+abstract class Model implements \ArrayAccess
 {
 
     private static $_camelCaseToUnderline = array();
@@ -40,6 +40,22 @@ abstract class Model
             $pn = self::getUnderlineName(substr($name, 3));
             return $this->setData($pn, $arguments[0]);
         }
+    }
+
+    public function offsetExists($offset) {
+        return array_key_exists($offset, $this->_data);
+    }
+
+    public function offsetGet($offset) {
+        return $this->_data[$offset];
+    }
+
+    public function offsetSet($offset, $value) {
+        $this->_data[$offset] = $value;
+    }
+
+    public function offsetUnset($offset) {
+        unset($this->_data[$offset]);
     }
 
     public function getAllData()

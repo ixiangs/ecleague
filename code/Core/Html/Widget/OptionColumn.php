@@ -3,15 +3,19 @@ namespace Core\Html\Widget;
 
 use Toy\Util\StringUtil;
 
-class LabelColumn extends BaseColumn{
+class OptionColumn extends BaseColumn{
+
+    private $_options = array();
+
+    public function setOptions($value){
+        $this->_options = $value;
+        return $this;
+    }
 
     public function getCellHtml($row, $index){
-        $val = StringUtil::substitute($this->getCellText(), $row);
-        if(empty($val)){
-            $val = $this->getDefaultText();
-        }
+        $op = StringUtil::substitute($this->getCellText(), $row);
         $res = $this->getCell()->getStartHtml();
-        $res .= $val;
+        $res .= $this->_options[$op];
         $res .= $this->getCell()->getEndHtml();
         return $res;
     }

@@ -11,8 +11,8 @@ class Helper
     {
     }
 
-    public function dataTable($id, $dataSource = null){
-        return new DataTable($id, $dataSource);
+    public function dataTable($dataSource = null, $id = null){
+        return new DataTable($dataSource, $id);
     }
 
     public function input($type, $id, $name, $class, $value, array $attrs = array())

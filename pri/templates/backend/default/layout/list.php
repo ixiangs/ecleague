@@ -26,9 +26,15 @@
             <?php endif; ?>
         </div>
         <div class="panel-body">
-            <?php echo $this->renderBlock('list'); ?>
+            <?php
+            if($this->hasBlock('list')):
+                echo $this->renderBlock('list');
+            elseif($this->datatable):
+                echo $this->datatable->render();
+            endif;
+            ?>
         </div>
     </div>
 <?php
 $this->endBlock();
-echo $this->includeTemplate('master');
+echo $this->includeTemplate('layout\base');

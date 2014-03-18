@@ -99,6 +99,10 @@ class Element{
         return '<'.$this->_tag.' '.$this->getAttributeHtml().'/>';
     }
 
+    public function getInnerHtml(){
+        return '';
+    }
+
     public function getStartHtml(){
         return '<'.$this->_tag.' '.$this->getAttributeHtml().'>';
     }

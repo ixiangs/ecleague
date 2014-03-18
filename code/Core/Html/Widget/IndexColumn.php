@@ -3,15 +3,11 @@ namespace Core\Html\Widget;
 
 use Toy\Util\StringUtil;
 
-class LabelColumn extends BaseColumn{
+class IndexColumn extends BaseColumn{
 
     public function getCellHtml($row, $index){
-        $val = StringUtil::substitute($this->getCellText(), $row);
-        if(empty($val)){
-            $val = $this->getDefaultText();
-        }
         $res = $this->getCell()->getStartHtml();
-        $res .= $val;
+        $res .= $index + 1;
         $res .= $this->getCell()->getEndHtml();
         return $res;
     }

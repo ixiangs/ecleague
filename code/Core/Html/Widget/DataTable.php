@@ -11,8 +11,7 @@ class DataTable extends Element{
 
     public function __construct($dataSource = null, $id = null){
         parent::__construct('table');
-        $this->setId($id);
-        $this->_dataSource = $dataSource;
+        $this->setId($id)->setCss('table table-striped table-bordered table-hover')->setDataSource($dataSource);
     }
 
     public function setDataSource($value){
@@ -24,9 +23,30 @@ class DataTable extends Element{
         return $this->_columns;
     }
 
+    public function addIndexColumn($headText, $headCss = null, $cellCss = null){
+        $col = new IndexColumn();
+        $col->setHeadText($headText)->setHeadCss($headCss)->setCellCss($cellCss);
+        $this->_columns[] = $col;
+        return $col;
+    }
+
     public function addLabelColumn($headText, $cellText, $headCss = null, $cellCss = null){
         $col = new LabelColumn();
         $col->setHeadText($headText)->setCellText($cellText)->setHeadCss($headCss)->setCellCss($cellCss);
+        $this->_columns[] = $col;
+        return $col;
+    }
+
+    public function addOptionColumn($headText, $cellText, $options, $headCss = null, $cellCss = null){
+        $col = new OptionColumn();
+        $col->setOptions($options)->setHeadText($headText)->setCellText($cellText)->setHeadCss($headCss)->setCellCss($cellCss);
+        $this->_columns[] = $col;
+        return $col;
+    }
+
+    public function addLinkColumn($headText, $cellText, $link, $headCss = null, $cellCss = null){
+        $col = new LinkColumn();
+        $col->setLink($link)->setHeadText($headText)->setCellText($cellText)->setHeadCss($headCss)->setCellCss($cellCss);
         $this->_columns[] = $col;
         return $col;
     }
@@ -36,14 +56,14 @@ class DataTable extends Element{
         $body = array();
         $footer = array();
         foreach($this->_columns as $col){
-            $head[] = $this->getHeadHtml($col);
+            $head[] = $col->getHeadHtml();
         }
-        foreach($this->_dataSource as $row){
-            $row = array();
+        foreach($this->_dataSource as $index=>$dataRow){
+            $cells = array();
             foreach($this->_columns as $col){
-                $row[] = $this->getCellHtml($col, $row);
+                $cells[] = $col->getCellHtml($dataRow, $index);
             }
-            $body[] = $row;
+            $body[] = $cells;
         }
 
         $result = array($this->getStartHtml());
@@ -57,25 +77,18 @@ class DataTable extends Element{
         return implode('', $result);
     }
 
-    protected function getHeadHtml($column){
-        $res = $column->getHead()->getStartHtml();
-        $res .= $column->getHeadText();
-        $res .= $column->getHead()->getEndHtml();
-        return $res;
-    }
+//    protected function getCellHtml($column, $row){
+//        $res = $column->getCell()->getStartHtml();
+//        switch($column->getType()){
+//            case 'label':
+//                $res .= StringUtil::substitute($column->getCellText(), $row);
+//                break;
+//        }
+//        $res .= $column->getCell()->getEndHtml();
+//        return $res;
+//    }
 
-    protected function getCellHtml($column, $row){
-        $res = $column->getCell()->getStartHtml();
-        switch($column->getType()){
-            case 'label':
-                $res .= StringUtil::substitute($column->getCellText(), $row);
-                break;
-        }
-        $res .= $column->getCell()->getEndHtml();
-        return $res;
-    }
-
-    protected function renderFooter($column){
-
-    }
+//    protected function renderFooter($column){
+//
+//    }
 }

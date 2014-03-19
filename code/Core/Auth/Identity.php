@@ -1,7 +1,7 @@
 <?php
-namespace User;
+namespace Core\Auth;
 
-class OnlineAccount{
+class Identity{
 
 	private $_id = null;
 	private $_username = null;

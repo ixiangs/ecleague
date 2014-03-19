@@ -13,4 +13,15 @@ class Context {
     public $items = array();
 
 	public function __construct() {}
+
+    public function __get($name){
+        if(array_key_exists($name, $this->items)){
+            return $this->items[$name];
+        }
+        return null;
+    }
+
+    public function __set($name, $value){
+        $this->items[$name] = $value;
+    }
 }

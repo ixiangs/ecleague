@@ -1,10 +1,10 @@
 <?php
 namespace Core\Auth\Model;
 
+use Auth\Identity;
 use Toy\Data\Helper, Toy\Data\Sql\UpdateStatement;
 use Toy\Orm;
 use Toy\Util\EncryptUtil;
-use User\OnlineAccount;
 use Toy\Data\Db;
 
 class AccountModel extends Orm\Model
@@ -74,6 +74,7 @@ class AccountModel extends Orm\Model
     static public function login($username, $password)
     {
         $m = self::find()->eq('username', $username)->execute()->getFirstModel();
+
         if (empty($m)) {
             return array(self::ERROR_NOT_FOUND, null);
         }
@@ -109,7 +110,7 @@ class AccountModel extends Orm\Model
             }
         }
 
-        return array(true, new OnlineAccount($m->id, $m->username, $m->level, $roleCodes, $behaviorCodes));
+        return array(true, new Identity($m->id, $m->username, $m->level, $roleCodes, $behaviorCodes));
     }
 
     static public function activate($id)

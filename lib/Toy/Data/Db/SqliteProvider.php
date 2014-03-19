@@ -143,14 +143,14 @@ class SqliteProvider extends PdoProvider
                     case 'in':
                         $arr = array();
                         foreach ($v[2] as $item) {
-                            $arr[] = "'" . $this->escape($item) . "'";
+                            $arr[] = $this->escape($item);
                         }
                         $result[] = $v[1] . " IN(" . implode(',', $arr) . ")";
                         break;
                     case 'notin':
                         $arr = array();
                         foreach ($v[2] as $item) {
-                            $arr[] = "'" . $this->escape($item) . "'";
+                            $arr[] = $this->escape($item);
                         }
                         $result[] = $v[1] . " NOT IN(" . implode(',', $arr) . ")";
                         break;

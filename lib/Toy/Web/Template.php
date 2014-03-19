@@ -58,7 +58,7 @@ class Template
         if (array_key_exists($name, self::$_data)) {
             $result = self::$_data[$name];
         } elseif (array_key_exists($name, $this->applicationContext->items)) {
-            $result = $this->applicationContext->items($name);
+            $result = $this->applicationContext->items[$name];
         }
 
         if (is_string($result)) {

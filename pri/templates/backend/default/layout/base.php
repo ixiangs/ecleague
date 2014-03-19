@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="/pub/assets/css/font-awesome.css">
     <link rel="stylesheet" type="text/css" href="/pub/assets/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="/pub/assets/css/fonts.css">
     <link rel="stylesheet" type="text/css" href="/pub/assets/css/sb-admin.css">
     <link rel="stylesheet" type="text/css" href="/pub/assets/css/admin.css">
     <?php echo $this->renderBlock('headcss'); ?>
@@ -34,7 +35,26 @@
             <div class="logoxs"><img id="logo" src="pub/assets/img/logo_sm.png"></div>
             <div class="nav">
                 <div class="hov">
-
+                    <?php if($this->identity):?>
+                    <div class="btn-group">
+                        <a class="con" href="#" data-toggle="dropdown">
+                            <?php echo $this->identity->getUsername(); ?></a>
+                        <div class="dropdown-backdrop"></div>
+                        <ul class="dropdown-menu pull-right" role="menu">
+                            <li class="profile">
+                                <div class="pic"></div>
+                                <div class="profile-info">
+                                    <?php echo $this->identity->getUsername(); ?>
+<!--                                    <br><a href="#">Profile</a> - <a href="#">Settings</a>-->
+                                </div>
+                            </li>
+<!--                            <li class="linked"><a href="#"><span class="fa fa-envelope-o"></span>Messages</a></li>-->
+<!--                            <li class="linked"><a href="#"><span class="fa fa-bell-o"></span>Notifications</a></li>-->
+<!--                            <li class="linked"><a href="#"><span class="fa fa-calendar"></span>Tasks/Events</a></li>-->
+                            <li class="linked bottom"><a href="#"><span class="fa fa-reply"></span><?php echo $this->locale->_('logout'); ?></a></li>
+                        </ul>
+                    </div>
+                    <?php endif; ?>
                 </div>
             </div>
         </div>

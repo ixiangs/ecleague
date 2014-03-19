@@ -1,4 +1,5 @@
 <?php $this->beginBlock('content'); ?>
+    <?php echo $this->includeTemplate('alert'); ?>
     <div id="bread" class="col-md-12">
         <div class="crumbs">
             <ol class="breadcrumb">

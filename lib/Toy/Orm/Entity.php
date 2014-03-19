@@ -57,7 +57,6 @@ class Entity
 
     public function insert(Model $model, $db)
     {
-        
         $values = array();
         foreach ($this->_properties as $n => $p) {
             if ($p->getInsertable()) {

@@ -1,0 +1,16 @@
+auth_manage,权限管理
+auth_behavior_list,操作列表
+auth_role_list,角色列表
+auth_account_list,账号列表
+auth_err_account_exists,帐号 [%s] 已存在
+auth_err_code_exists,%s [%s] 已存在
+auth_err_account_nonactivated,账号未激活
+auth_err_account_disabled,账号已禁用
+auth_level_admin,管理员
+auth_level_normal,普通用户
+auth_status_activated,已激活
+auth_status_nonactivated,未激活
+auth_status_freezed,已冻结
+auth_status_disabled,已禁用
+auth_err_password,用户名与密码不匹配
+auth_err_username,用户名不存在

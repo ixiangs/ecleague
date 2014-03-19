@@ -8,23 +8,23 @@ abstract class Model implements \ArrayAccess
 
     private static $_camelCaseToUnderline = array();
 
-    private $_data = array();
+    protected $data = array();
     private $_entity = null;
 
     public function __construct($data = array())
     {
         $this->_entity = Entity::get(get_class($this));
-        $this->_data = $data;
+        $this->data = $data;
     }
 
     public function __get($name)
     {
-        return $this->_data[$name];
+        return $this->data[$name];
     }
 
     public function __set($name, $value)
     {
-        $this->_data[$name] = $value;
+        $this->data[$name] = $value;
     }
 
     public function __call($name, $arguments)
@@ -43,37 +43,37 @@ abstract class Model implements \ArrayAccess
     }
 
     public function offsetExists($offset) {
-        return array_key_exists($offset, $this->_data);
+        return array_key_exists($offset, $this->data);
     }
 
     public function offsetGet($offset) {
-        return $this->_data[$offset];
+        return $this->data[$offset];
     }
 
     public function offsetSet($offset, $value) {
-        $this->_data[$offset] = $value;
+        $this->data[$offset] = $value;
     }
 
     public function offsetUnset($offset) {
-        unset($this->_data[$offset]);
+        unset($this->data[$offset]);
     }
 
     public function getAllData()
     {
-        return $this->_data;
+        return $this->data;
     }
 
     public function getData($name, $default = null)
     {
-        if (array_key_exists($name, $this->_data)) {
-            return $this->_data[$name];
+        if (array_key_exists($name, $this->data)) {
+            return $this->data[$name];
         }
         return $default;
     }
 
     public function setData($name, $value)
     {
-        $this->_data[$name] = $value;
+        $this->data[$name] = $value;
         return $this;
     }
 
@@ -167,9 +167,9 @@ abstract class Model implements \ArrayAccess
         $props = $this->_entity->getProperties();
         foreach ($row as $field => $value) {
             if (array_key_exists($field, $props)) {
-                $this->_data[$field] = $props[$field]->fromDbValue($value);
+                $this->data[$field] = $props[$field]->fromDbValue($value);
             } else {
-                $this->_data[$field] = $value;
+                $this->data[$field] = $value;
             }
         }
         return $this;

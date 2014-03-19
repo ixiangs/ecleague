@@ -15,7 +15,11 @@ class OptionColumn extends BaseColumn{
     public function renderCell($row, $index){
         $op = StringUtil::substitute($this->getCellText(), $row);
         $res = $this->getCell()->renderBegin();
-        $res .= $this->_options[$op];
+        if(array_key_exists($op, $this->_options)){
+            $res .= $this->_options[$op];
+        }else{
+            $res .= $this->getDefaultText();
+        }
         $res .= $this->getCell()->renderEnd();
         return $res;
     }

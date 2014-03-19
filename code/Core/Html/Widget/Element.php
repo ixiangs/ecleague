@@ -1,5 +1,5 @@
 <?php
-namespace Core\Html;
+namespace Core\Html\Widget;
 
 class Element{
 
@@ -59,6 +59,10 @@ class Element{
         return $this;
     }
 
+    public function getAttribute($name){
+        return $this->_attributes[$name];
+    }
+
     public function getAttributes(){
         return $this->_attributes;
     }
@@ -70,6 +74,11 @@ class Element{
 
     public function addAttribute($name, $value){
         $this->_attributes[$name] = $value;
+        return $this;
+    }
+
+    public function removeAttribute($name){
+        unset($this->_attributes[$name]);
         return $this;
     }
 
@@ -95,19 +104,23 @@ class Element{
         return implode(' ', $arr);
     }
 
-    public function getCloseHtml(){
+    public function renderClose(){
         return '<'.$this->_tag.' '.$this->getAttributeHtml().'/>';
     }
 
-    public function getInnerHtml(){
+    public function renderInner(){
         return '';
     }
 
-    public function getStartHtml(){
+    public function renderBegin(){
         return '<'.$this->_tag.' '.$this->getAttributeHtml().'>';
     }
 
-    public function getEndHtml(){
+    public function renderEnd(){
         return '</'.$this->_tag.'>';
+    }
+
+    public function render(){
+        return $this->renderBegin().$this->renderInner().$this->renderEnd();
     }
 }

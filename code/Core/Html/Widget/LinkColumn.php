@@ -26,15 +26,15 @@ class LinkColumn extends BaseColumn{
         return $this->_target;
     }
 
-    public function getCellHtml($row, $index){
+    public function renderCell($row, $index){
         $text = StringUtil::substitute($this->getCellText(), $row);
         if(empty($text)){
             $text = $this->getDefaultText();
         }
         $url = StringUtil::substitute(urldecode($this->_link), $row);
-        $res = $this->getCell()->getStartHtml();
+        $res = $this->getCell()->renderBegin();
         $res .= '<a href="'.$url.'" target="'.$this->_target.'">'.$text.'</a>';
-        $res .= $this->getCell()->getEndHtml();
+        $res .= $this->getCell()->renderEnd();
         return $res;
     }
 

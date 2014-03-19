@@ -1,8 +1,6 @@
 <?php
 namespace Core\Html\Widget;
 
-use Core\Html\Element;
-
 abstract class BaseColumn{
 
     private $_head = null;
@@ -112,17 +110,17 @@ abstract class BaseColumn{
         return $this;
     }
 
-    public function getHeadHtml(){
-        $res = $this->_head->getStartHtml();
+    public function renderHead(){
+        $res = $this->_head->renderBegin();
         $res .= $this->_headText;
-        $res .= $this->_head->getEndHtml();
+        $res .= $this->_head->renderEnd();
         return $res;
     }
 
-    public function getFooterHtml(){
+    public function renderFooter(){
         return '';
     }
 
-    abstract public function getCellHtml($row, $index);
+    abstract public function renderCell($row, $index);
     abstract public function getType();
 }

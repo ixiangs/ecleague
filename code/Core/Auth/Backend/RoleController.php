@@ -57,7 +57,7 @@ class RoleController extends Web\Controller
     {
         $lang = $this->context->locale;
         $m = RoleModel::merge($this->request->getParameter('id'), $this->request->getAllParameters());
-        $m->setRoleIds($this->request->getParameter('behavior_ids', array()));
+        $m->setBehaviorIds($this->request->getParameter('behavior_ids', array()));
         $vr = $m->validate();
         if ($vr !== true) {
             $this->session->set('errors', $lang->_('err_input_invalid'));
@@ -69,7 +69,7 @@ class RoleController extends Web\Controller
             return $this->getEditTemplateReult($m);
         }
 
-        return Web\Result::redirectResult($this->router->buildUrl('index'));
+        return Web\Result::redirectResult($this->router->buildUrl('list'));
     }
 
     public function deleteAction($id)
@@ -93,7 +93,7 @@ class RoleController extends Web\Controller
         return Web\Result::templateResult(
             array(
                 'model' => $model,
-                'behaviors' => BehaviorModel::find()->asc('code')->execute()->combineColumns('id', 'label')),
+                'behaviors' => BehaviorModel::find()->asc('code')->execute()->combineColumns('id', 'name')),
             'auth/role/edit'
         );
     }

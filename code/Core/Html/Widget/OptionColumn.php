@@ -12,11 +12,11 @@ class OptionColumn extends BaseColumn{
         return $this;
     }
 
-    public function getCellHtml($row, $index){
+    public function renderCell($row, $index){
         $op = StringUtil::substitute($this->getCellText(), $row);
-        $res = $this->getCell()->getStartHtml();
+        $res = $this->getCell()->renderBegin();
         $res .= $this->_options[$op];
-        $res .= $this->getCell()->getEndHtml();
+        $res .= $this->getCell()->renderEnd();
         return $res;
     }
 

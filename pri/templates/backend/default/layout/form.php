@@ -21,16 +21,13 @@
 
     <div class="col-md-12">
         <div class="wdgt">
-            <div class="wdgt-body wdgt-table">
+            <div class="wdgt-body">
                 <?php
-                if ($this->hasBlock('list')):
-                    echo $this->renderBlock('list');
+                if ($this->hasBlock('form')):
+                    echo $this->renderBlock('form');
                 else:
-                    if ($this->datatable):
-                        echo $this->datatable->render();
-                    endif;
-                    if($this->pagination):
-                        echo $this->pagination->render();
+                    if ($this->form):
+                        echo $this->form->render();
                     endif;
                 endif;
                 ?>

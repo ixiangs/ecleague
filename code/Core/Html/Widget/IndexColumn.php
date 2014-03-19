@@ -1,14 +1,12 @@
 <?php
 namespace Core\Html\Widget;
 
-use Toy\Util\StringUtil;
-
 class IndexColumn extends BaseColumn{
 
-    public function getCellHtml($row, $index){
-        $res = $this->getCell()->getStartHtml();
+    public function renderCell($row, $index){
+        $res = $this->getCell()->renderBegin();
         $res .= $index + 1;
-        $res .= $this->getCell()->getEndHtml();
+        $res .= $this->getCell()->renderEnd();
         return $res;
     }
 

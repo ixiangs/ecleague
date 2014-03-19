@@ -61,6 +61,8 @@ level,等级
 status,状态
 code,编号
 label,文本
+enabled,已启用
+disabled,已禁用
 organisation,公司架构
 company,公司
 department,部门

@@ -56,6 +56,14 @@ class Table extends Element
         return $col;
     }
 
+    public function addButtonColumn($headText, $cellText, $script, $headCss = null, $cellCss = null)
+    {
+        $col = new ButtonColumn();
+        $col->setClickScript($script)->setHeadText($headText)->setCellText($cellText)->setHeadCss($headCss)->setCellCss($cellCss);
+        $this->_columns[] = $col;
+        return $col;
+    }
+
     public function render()
     {
         $head = array();

@@ -21,6 +21,6 @@ class OptionColumn extends BaseColumn{
     }
 
     public function getType(){
-        return 'label';
+        return 'option';
     }
 }

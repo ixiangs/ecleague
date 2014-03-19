@@ -43,10 +43,22 @@ class Form extends Element{
         return $b;
     }
 
+    public function renderBegin(){
+        foreach($this->_fields as $f){
+            if(count($f->getValidateRules()) > 0){
+                $this->addAttribute('data-validate', 'true');
+                break;
+            }
+        }
+        return parent::renderBegin();
+    }
+
     public function renderInner(){
         $res = array();
         foreach($this->_fields as $f){
             $res[] = $f->render();
+            if(count($f->getValidateRules()) > 0){
+            }
         }
         $res[] = '<div class="form-group"><div class="col-lg-10 col-lg-offset-2">';
         foreach($this->_buttons as $b){

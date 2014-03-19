@@ -11,6 +11,6 @@ class IndexColumn extends BaseColumn{
     }
 
     public function getType(){
-        return 'label';
+        return 'index';
     }
 }

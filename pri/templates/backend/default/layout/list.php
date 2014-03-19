@@ -19,6 +19,35 @@
         </div>
     </div>
 
+    <?php if($this->hasBlock('toolbar')): ?>
+    <div class="col-md-12">
+        <div class="wdgt wdgt-default">
+            <div class="wdgt-body">
+                <?php echo $this->renderBlock('toolbar'); ?>
+            </div>
+        </div>
+    </div>
+    <?php else: ?>
+    <div class="col-md-12">
+        <div class="wdgt wdgt-default">
+            <div class="wdgt-body">
+                <div class="align-right">
+                    <?php
+                    if ($this->buttons):
+                        foreach ($this->buttons as $btn):
+                            ?>
+                            <a class="btn btn-default"
+                               href="<?php echo array_key_exists('url', $btn) ? $btn['url'] : '#' ?>"><?php echo $btn['text']; ?></a>
+                        <?php
+                        endforeach;
+                    endif;
+                    ?>
+                </div>
+            </div>
+        </div>
+    </div>
+    <?php endif; ?>
+
     <div class="col-md-12">
         <div class="wdgt">
             <div class="wdgt-body wdgt-table">
@@ -29,7 +58,7 @@
                     if ($this->datatable):
                         echo $this->datatable->render();
                     endif;
-                    if($this->pagination):
+                    if ($this->pagination):
                         echo $this->pagination->render();
                     endif;
                 endif;

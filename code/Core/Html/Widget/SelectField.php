@@ -38,7 +38,9 @@ class SelectField extends BaseField
     {
         $input = new Element('select');
         $input->setAttributes($this->getInputAttributes())
-            ->setCss('form-control');
+            ->setCss('form-control')
+            ->setName($this->getInputName())
+            ->setId($this->getInputId());
 
         foreach ($this->getValidateRules() as $n => $v) {
             $input->addAttribute('data-validate-' . $n, $v);

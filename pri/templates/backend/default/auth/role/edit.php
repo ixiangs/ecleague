@@ -5,6 +5,10 @@ $this->assign('breadcrumb', array(
     array('text' => $this->locale->_($this->router->action == 'add' ? "add" : "edit"), 'active' => true)
 ));
 
+$this->assign('buttons', array(
+    array('text'=>$this->locale->_('back'), 'url'=>$this->router->buildUrl('list'))
+));
+
 $f = $this->html->form();
 $f->addInputField('text', $this->locale->_('code'), 'code', 'code', $this->model->getCode())
     ->addValidateRule('required', true);

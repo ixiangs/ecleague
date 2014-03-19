@@ -28,7 +28,7 @@ class RoleController extends Web\Controller
     {
         $lang = $this->context->locale;
         $m = RoleModel::create($this->request->getAllParameters());
-        if (RoleModel::checkCode($m->getCode())) {
+        if (RoleModel::checkUnique('code', $m->getCode())) {
             $this->session->set('errors', $lang->_('err_code_exists', $m->getCode()));
             return $this->getEditTemplateReult($m);
         }
@@ -44,7 +44,7 @@ class RoleController extends Web\Controller
             return $this->getEditTemplateReult($m);;
         }
 
-        return Web\Result::redirectResult($this->router->buildUrl('index'));
+        return Web\Result::redirectResult($this->router->buildUrl('list'));
     }
 
     public function editAction($id)

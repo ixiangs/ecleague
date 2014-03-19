@@ -32,10 +32,10 @@ class CheckboxesField extends BaseField
 
         $html = array();
         foreach ($this->_options as $option => $text) {
-            if (in_array($option, $this->getValue())) {
-                $html[] = sprintf('<input type="checkbox" name="%s" value="%s" checked="true" %s>%s', $this->getInputName(), $option, $vattrs, $text);
+            if (is_array($this->getValue()) && in_array($option, $this->getValue())) {
+                $html[] = sprintf('<label class="checkbox-inline"><input type="checkbox" name="%s" value="%s" checked="true" %s/>%s</label>', $this->getInputName(), $option, $vattrs, $text);
             } else {
-                $html[] = sprintf('<input type="checkbox" name="%s" value="%s" %s>%s', $this->getInputName(), $option, $vattrs, $text);
+                $html[] = sprintf('<label class="checkbox-inline"><input type="checkbox" name="%s" value="%s" %s/>%s</label>', $this->getInputName(), $option, $vattrs, $text);
             }
         }
         return implode('', $html);

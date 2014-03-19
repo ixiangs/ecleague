@@ -39,6 +39,6 @@ class LinkColumn extends BaseColumn{
     }
 
     public function getType(){
-        return 'label';
+        return 'link';
     }
 }

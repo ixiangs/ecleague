@@ -1,7 +1,7 @@
-Toys.Html = {};
-Toys.Html.Validation = {};
+Toy = {};
+Toy.Validation = {};
 
-Toys.Html.Validation.Validator = new Class({
+Toy.Validation.Validator = new Class({
 	Implements : [Options, Events],
 	form : null,
 	options : {
@@ -20,7 +20,7 @@ Toys.Html.Validation.Validator = new Class({
 		this.fields = {};
 		
 		inputs = {};
-		Toys.Html.Validation.selectors.each( function(selector) {
+		Toy.Validation.selectors.each( function(selector) {
 			selector(this).each( function(item) {
 				var n = $(item).attr('name');
 				if (n) {
@@ -33,11 +33,11 @@ Toys.Html.Validation.Validator = new Class({
 		}.bind(this));
 
 		Object.each(inputs, function(item, name) {
-			this.fields[name] = new Toys.Html.Validation.Field(this, name, item);
+			this.fields[name] = new Toy.Validation.Field(this, name, item);
 		}.bind(this));
 
 		Object.each(this.fields, function(field, fieldName) {
-			Object.each(Toys.Html.Validation.rules, function(rule, ruleName) {
+			Object.each(Toy.Validation.rules, function(rule, ruleName) {
 				var r = rule.match(field);
 				if (r) {
 					field.rules[ruleName] = r;
@@ -69,7 +69,7 @@ Toys.Html.Validation.Validator = new Class({
 	}
 });
 
-Toys.Html.Validation.Field = new Class({
+Toy.Validation.Field = new Class({
 	validator : null,
 	name : null,
 	inputs : null,
@@ -85,7 +85,7 @@ Toys.Html.Validation.Field = new Class({
 	test : function() {
 		result = true;
 		Object.each(this.rules, function(ruleParams, ruleName) {
-			var rule = Toys.Html.Validation.rules[ruleName];
+			var rule = Toy.Validation.rules[ruleName];
 			if (!rule.check(this, ruleParams)) {
 				result = false;
 			}
@@ -96,7 +96,7 @@ Toys.Html.Validation.Field = new Class({
 	check : function() {
 		msgs = {};
 		Object.each(this.rules, function(ruleParams, ruleName) {
-			var rule = Toys.Html.Validation.rules[ruleName];
+			var rule = Toy.Validation.rules[ruleName];
 			if (!rule.check(this, ruleParams)) {
 				msgs[ruleName] = rule.message(this, ruleParams);
 			}
@@ -107,28 +107,28 @@ Toys.Html.Validation.Field = new Class({
 	},
 
 	render : function(msgs) {
-		for (var i = 0; i < Toys.Html.Validation.renderers.length; i++) {
-			if (Toys.Html.Validation.renderers[i](this, msgs)){
+		for (var i = 0; i < Toy.Validation.renderers.length; i++) {
+			if (Toy.Validation.renderers[i](this, msgs)){
 				break;
 			}
 		}
 	}
 });
 
-Toys.Html.Validation.selectors = [
+Toy.Validation.selectors = [
 	function(validator) {
 		return validator.form.find('input[type="text"],input[type="checkbox"],input[type="raido"],input[type="email"],input[type="password"],input[type="file"],select,textarea').get();
 	}
 ];
 
-Toys.Html.Validation.renderers = [
+Toy.Validation.renderers = [
 	function(field, errors) {
 		var $input = $(field.inputs[0]);
 		var newErrorElement = function(rule) {
 			var eid = $input.attr('name') + '_' + rule;
 			var result = $('#' + eid);
 			if (result.length == 0) {
-				result = $('<div class="alert ' + field.validator.options.errorClass + '" id="' + eid + '"></div>');
+                result = $('<small class="help-block col-lg-offset-2 col-lg-10" id="' + eid + '"></small>');
 				$input.parents(field.validator.options.inputContainer).append(result);
 			}
 			return result;
@@ -159,7 +159,7 @@ Toys.Html.Validation.renderers = [
 	}
 ];
 
-Toys.Html.Validation.rules = {
+Toy.Validation.rules = {
 	'required':new (new Class({
 		match: function(field) {
 			return field.inputs.some(function(item) {
@@ -199,7 +199,7 @@ Toys.Html.Validation.rules = {
 		},
 		message: function(field, params) {
 			var msg = $(field.inputs[0]).attr('date-validate-required-msg');
-			return msg ? msg : Toys.Locale.get('Validate.required');
+			return msg ? msg : Toy.Locale.get('Validate.required');
 		}
 	}))(),
 
@@ -213,7 +213,7 @@ Toys.Html.Validation.rules = {
 		},
 		message: function(field, params) {
 			var msg = $(field.inputs[0]).get('date-validate-integer-msg');
-			return msg ? msg : Toys.Locale.get('Validate.integer');
+			return msg ? msg : Toy.Locale.get('Validate.integer');
 		}
 	}))(),
 
@@ -228,7 +228,7 @@ Toys.Html.Validation.rules = {
 		},
 		message: function(field, params) {
 			var msg = $(field.inputs[0]).attr('date-validate-number-msg');
-			return msg ? msg : Toys.Locale.get('Validate.number');
+			return msg ? msg : Toy.Locale.get('Validate.number');
 		}
 	}))(),
 
@@ -242,7 +242,7 @@ Toys.Html.Validation.rules = {
 		},
 		message: function(field, params) {
 			var msg = $(field.inputs[0]).get('date-validate-digits-msg');
-			return msg ? msg : Toys.Locale.get('Validate.digits');
+			return msg ? msg : Toy.Locale.get('Validate.digits');
 		}
 	}))(),
 
@@ -258,7 +258,7 @@ Toys.Html.Validation.rules = {
 		message: function(field, params) {
 			var $input = $(field.inputs[0]);
 			var msg = $input.attr('date-validate-email-msg');
-			return msg ? msg : Toys.Locale.get('Validate.email');
+			return msg ? msg : Toy.Locale.get('Validate.email');
 		}
 	}))(),
 
@@ -273,7 +273,7 @@ Toys.Html.Validation.rules = {
 		},
 		message: function(field, params) {
 			var msg = input[0].get('date-validate-letter-msg');
-			return msg ? msg : Toys.Locale.get('Validate.letter');
+			return msg ? msg : Toy.Locale.get('Validate.letter');
 		}
 	}))(),
 
@@ -292,7 +292,7 @@ Toys.Html.Validation.rules = {
 			var msg = $input.attr('date-validate-minlength-msg');
 			return msg ?
 				msg.substitute({"len": params}) :
-				Toys.Locale.get('Validate.minlength').substitute({"len": params});
+				Toy.Locale.get('Validate.minlength').substitute({"len": params});
 		}
 	}))(),
 
@@ -310,7 +310,7 @@ Toys.Html.Validation.rules = {
 			var msg = input[0].get('date-validate-maxlength-msg');
 			return msg ?
 				msg.substitute({"len": params}) :
-				Toys.Locale.get('Validate.maxlength').substitute({"len": params});
+				Toy.Locale.get('Validate.maxlength').substitute({"len": params});
 		}
 	}))(),
 
@@ -332,7 +332,7 @@ Toys.Html.Validation.rules = {
 			var msg = $input.attr('date-validate-minvalue-msg');
 			return msg ?
 				msg.substitute({"val": params}) :
-				Toys.Locale.get('Validate.minvalue').substitute({"val": params});
+				Toy.Locale.get('Validate.minvalue').substitute({"val": params});
 		}
 	}))(),
 
@@ -354,7 +354,7 @@ Toys.Html.Validation.rules = {
 			var msg = $input.attr('date-validate-maxvalue-msg');
 			return msg ?
 				msg.substitute({"val": params}) :
-				Toys.Locale.get('Validate.maxvalue').substitute({"val": params});
+				Toy.Locale.get('Validate.maxvalue').substitute({"val": params});
 		}
 	}))(),
 
@@ -371,7 +371,7 @@ Toys.Html.Validation.rules = {
 		message: function(field, params) {
 			var $input = $(field.inputs[0]);
 			var msg = $input.attr('date-validate-regexp-msg');
-			return msg ? msg: Toys.Locale.get('Validate.regexp');
+			return msg ? msg: Toy.Locale.get('Validate.regexp');
 		}
 	}))(),
 
@@ -388,7 +388,7 @@ Toys.Html.Validation.rules = {
 		message: function(field, params) {
 			var $input = $(field.inputs[0]);
 			var msg = $input.attr('date-validate-equalto-msg');
-			return msg ? msg: Toys.Locale.get('Validate.equalto');
+			return msg ? msg: Toy.Locale.get('Validate.equalto');
 		}
 	}))()
 };

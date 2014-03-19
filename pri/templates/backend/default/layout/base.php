@@ -12,10 +12,10 @@
     <?php echo $this->renderBlock('headcss'); ?>
     <script src="/pub/assets/js/libs.js"></script>
     <script src="/pub/assets/js/bootstrap.min.js"></script>
+    <script src="/pub/assets/js/toy/core.js"></script>
+    <script src="/pub/assets/js/toy/html.js"></script>
+    <script src="/pub/assets/js/toy/locale.js"></script>
     <script src="/pub/assets/js/common.js"></script>
-    <script src="/pub/assets/js/toys/core.js"></script>
-    <script src="/pub/assets/js/toys/html.js"></script>
-    <script src="/pub/assets/js/toys/locale.js"></script>
     <?php echo $this->renderBlock('headjs'); ?>
     <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
     <!--[if lt IE 9]>

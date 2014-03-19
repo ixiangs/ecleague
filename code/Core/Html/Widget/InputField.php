@@ -29,12 +29,14 @@ class InputField extends BaseField
         $input->setAttributes($this->getInputAttributes())
             ->setCss('form-control')
             ->addAttribute('type', $this->_type)
-            ->addAttribute('value', $this->getValue());
+            ->addAttribute('value', $this->getValue())
+            ->setName($this->getInputName())
+            ->setId($this->getInputId());
 
         foreach ($this->getValidateRules() as $n => $v) {
             $input->addAttribute('data-validate-' . $n, $v);
         }
 
-        return $input->renderClose();
+        return $input->render();
     }
 }

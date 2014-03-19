@@ -104,10 +104,6 @@ class Element{
         return implode(' ', $arr);
     }
 
-    public function renderClose(){
-        return '<'.$this->_tag.' '.$this->getAttributeHtml().'/>';
-    }
-
     public function renderInner(){
         return '';
     }
@@ -121,6 +117,11 @@ class Element{
     }
 
     public function render(){
-        return $this->renderBegin().$this->renderInner().$this->renderEnd();
+        switch($this->_tag){
+            case 'input':
+                return '<'.$this->_tag.' '.$this->getAttributeHtml().'/>';
+            default:
+                return $this->renderBegin().$this->renderInner().$this->renderEnd();
+        }
     }
 }

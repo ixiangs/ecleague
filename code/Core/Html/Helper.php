@@ -1,6 +1,7 @@
 <?php
 namespace Core\Html;
 
+use Core\Html\Widget\Element;
 use Core\Html\Widget\Table, Core\Html\Widget\Form;
 use Core\Html\Widget\Pagination;
 
@@ -11,7 +12,12 @@ class Helper
     {
     }
 
-    public function dataTable($dataSource = null, $id = null){
+    public function button($type, $text, $css){
+        $res = new Element('button');
+        return $res->addAttribute('type', $type)->setCss($css)->setInner($text);
+    }
+
+    public function table($dataSource = null, $id = null){
         return new Table($dataSource, $id);
     }
 

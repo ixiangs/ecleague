@@ -34,7 +34,7 @@ class InputField extends BaseField
             ->setId($this->getInputId());
 
         foreach ($this->getValidateRules() as $n => $v) {
-            $input->addAttribute('data-validate-' . $n, $v);
+            $input->addAttribute('data-validate-' . $n, $v === true? 'true': $v);
         }
 
         return $input->render();

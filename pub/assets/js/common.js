@@ -1,5 +1,5 @@
-function deleteConfirm(callback){
-	var html = '<div id="deleteComfirmModal" class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">';
+function deleteConfirm(callback) {
+    var html = '<div id="deleteComfirmModal" class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">';
     html += '<div class="modal-dialog">';
     html += '<div class="modal-content">';
     html += '<div class="modal-header modal-info">';
@@ -16,23 +16,26 @@ function deleteConfirm(callback){
     html += '<button class="btn" data-dismiss="modal" aria-hidden="true">' + Toy.Locale.get('Default.cancel') + '</button>';
     html += '<button id="deleteConfirmOk" class="btn btn-danger" data-dismiss="modal">' + Toy.Locale.get('Default.delete') + '</button>';
     html += '</div></div></div></div>';
-    	
-    if($('#deleteComfirmModal').length == 0){
-    	$('body').append(html);
+
+    if ($('#deleteComfirmModal').length == 0) {
+        $('body').append(html);
     }
-    if(typeOf(callback) == 'function'){
-    	$('#deleteConfirmOk').click(callback);
-    }else if(typeOf(callback) == 'string'){
-    	$('#deleteConfirmOk').click(function(){
-    		window.location.href = callback;
-    	});
+    if (typeOf(callback) == 'function') {
+        $('#deleteConfirmOk').click(callback);
+    } else if (typeOf(callback) == 'string') {
+        $('#deleteConfirmOk').click(function () {
+            window.location.href = callback;
+        });
     }
-	$('#deleteComfirmModal').modal('show');
+    $('#deleteComfirmModal').modal('show');
 }
 
-$(function(){
-   $('form[data-validate]').each(function(){
-       new Toy.Validation.Validator($(this));
-   });
+$(function () {
+    $('form[data-validate]').each(function () {
+        new Toy.Validation.Validator($(this));
+    });
+    $('button[data-submit]').click(function(){
+        $('#' + $(this).attr('data-submit')).submit();
+    });
 });
 

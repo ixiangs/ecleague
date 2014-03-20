@@ -8,7 +8,7 @@ $this->assign('buttons', array(
     array('text'=>$this->locale->_('add'), 'url'=>$this->router->buildUrl('add'))
 ));
 
-$dt = $this->html->dataTable($this->models);
+$dt = $this->html->table($this->models);
 $dt->addIndexColumn('#', 'index', 'index');
 $dt->addLabelColumn($this->locale->_('code'), '{code}');
 $dt->addLabelColumn($this->locale->_('name'), '{name}');

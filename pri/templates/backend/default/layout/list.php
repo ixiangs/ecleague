@@ -21,20 +21,22 @@
             </div>
             <div class="widget-content">
                 <div class="pull-right">
-                    <?php if ($this->hasBlock('toolbar')): ?>
-                        <?php echo $this->renderBlock('toolbar'); ?>
-                    <?php else: ?>
-                        <?php
+                    <?php
+                    if ($this->hasBlock('toolbar')):
+                        echo $this->renderBlock('toolbar');
+                    else:
                         if ($this->buttons):
                             foreach ($this->buttons as $btn):
-                                ?>
-                                <a class="btn btn-default"
-                                   href="<?php echo array_key_exists('url', $btn) ? $btn['url'] : '#' ?>"><?php echo $btn['text']; ?></a>
-                            <?php
+                                if(is_array($btn)):
+                                    echo '<a class="btn btn-default" href="'.(array_key_exists('url', $btn) ? $btn['url'] : '#').'">'.$btn['text'].'</a>';
+                                else:
+                                    echo $btn->render();
+                                endif;
+                                echo '&nbsp;&nbsp;';
                             endforeach;
                         endif;
-                        ?>
-                    <?php endif; ?>
+                    endif;
+                    ?>
                 </div>
             </div>
         </div>

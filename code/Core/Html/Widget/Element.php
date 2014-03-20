@@ -9,6 +9,7 @@ class Element{
     private $_style = null;
     private $_css = null;
     private $_attributes = array();
+    private $_inner = null;
 
     public function __construct($tag){
         $this->_tag = $tag;
@@ -82,6 +83,15 @@ class Element{
         return $this;
     }
 
+    public function getInner(){
+        return $this->_inner;
+    }
+
+    public function setInner($value){
+        $this->_inner = $value;
+        return $this;
+    }
+
     public function getAttributeHtml(){
         $attrs = $this->_attributes;
         if(!empty($this->_id)){
@@ -105,7 +115,7 @@ class Element{
     }
 
     public function renderInner(){
-        return '';
+        return $this->_inner;
     }
 
     public function renderBegin(){

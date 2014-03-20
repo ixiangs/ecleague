@@ -150,36 +150,4 @@ abstract class BaseProperty
     {
         return new static($name);
     }
-
-    // public function equal($value){
-    //     return new Sql\ConditionExpression(Sql\ConditionExpression::EQUAL, new Sql\ColumnExpression($this->_name), new Sql\ParameterExpression($value));
-    // }
-
-    // public function great($value){
-    //     return new Sql\ConditionExpression(Sql\ConditionExpression::GREAT, new Sql\ColumnExpression($this->_name), new Sql\ParameterExpression($value));
-    // }
-
-    // public function less($value){
-    //     return new Sql\ConditionExpression(Sql\ConditionExpression::LESS, new Sql\ColumnExpression($this->_name), new Sql\ParameterExpression($value));
-    // }
-
-    // public function greatEqual($value){
-    //     return new Sql\ConditionExpression(Sql\ConditionExpression::GREAT_EQUAL, new Sql\ColumnExpression($this->_name), new Sql\ParameterExpression($value));
-    // }
-
-    // public function lessEqual($value){
-    //     return new Sql\ConditionExpression(Sql\ConditionExpression::LESS_EQUAL, new Sql\ColumnExpression($this->_name), new Sql\ParameterExpression($value));
-    // }
-
-    // public function notEqual($value){
-    //     return new Sql\ConditionExpression(Sql\ConditionExpression::NOT_EQUAL, new Sql\ColumnExpression($this->_name), new Sql\ParameterExpression($value));
-    // }
-
-    // public function equalNull(){
-    //     return new Sql\ConditionExpression(Sql\ConditionExpression::IS_NULL, new Sql\ColumnExpression($this->_name));
-    // }
-
-    // public function equalNotNull(){
-    //     return new Sql\ConditionExpression(Sql\ConditionExpression::NOT_NULL, new Sql\ColumnExpression($this->_name));
-    // }
 }

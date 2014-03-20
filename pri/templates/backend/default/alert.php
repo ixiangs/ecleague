@@ -1,4 +1,4 @@
-<div class="col-md-12">
+<div class="row">
 <?php
 $errMsgs = $this->session->pop('errors');
 if(!empty($errMsgs)){

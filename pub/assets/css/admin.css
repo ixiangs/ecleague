@@ -1,8 +1,25 @@
-.breadcrumb {
-    margin-top: 10px;
-    margin-bottom: 10px;
+.widget-header .breadcrumb {
+    padding: 0 0 0 10px;
+    margin-bottom: 0;
+    list-style: none;
+    background:none;
+}
+.stacked:after,
+.stacked:before {
+    border: none;
 }
 
+.subnavbar .subnavbar-inner, .subnavbar .mainnav, .subnavbar .mainnav > li{
+    height: 40px;
+}
+.subnavbar .mainnav > li > a{
+    padding: 8px 20px 0px 20px;
+}
+.subnavbar .mainnav > li > a > span{
+    color: #ffffff;
+    font-size: 120%;
+    font-weight:normal;
+}
 .pagination {
     margin: 2px;
 }
@@ -18,34 +35,3 @@ table.table th.index, table.table td.index{width:40px;text-align: center;}
 table.table th.small, table.table td.small{width:60px;text-align: center;}
 table.table th.middle, table.table td.middle{width:120px;text-align: center;}
 table.table th.large, table.table td.large{width:240px;text-align: center;}
-
-tr.form-group {
-}
-
-td.control-label {
-    padding-right: 10px;
-    text-align: right;
-    vertical-align: middle;
-}
-
-td.control-group {
-    margin-bottom: 0;
-}
-
-td.control-group .checkbox-inline {
-    float: left;
-    margin-right: 5px;
-    margin-top: 2px;
-}
-
-td.control-group .checkbox-inline input {
-    margin-top: -2px;
-}
-
-tr.has-error .control-label {
-    vertical-align: top;
-}
-
-tr.checkboxes td.control-label {
-    vertical-align: top;
-}

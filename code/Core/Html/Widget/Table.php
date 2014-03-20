@@ -10,7 +10,7 @@ class Table extends Element
     public function __construct($dataSource = null, $id = null)
     {
         parent::__construct('table');
-        $this->setId($id)->setCss('table table-bordered table-hover')->setDataSource($dataSource);
+        $this->setId($id)->setCss('table table-striped table-bordered')->setDataSource($dataSource);
     }
 
     public function setDataSource($value)

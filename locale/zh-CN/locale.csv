@@ -1,0 +1,9 @@
+locale_manage,本地化管理
+locale_language_list,语言列表
+locale_language_code,语言区域
+locale_timezone,时区
+locale_short_date_format,短日期格式
+locale_long_date_format,长日期格式
+locale_dictionary,字典
+locale_dictionary_code,编号
+locale_dictionary_label,文本

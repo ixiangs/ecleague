@@ -1,72 +1,73 @@
 <?php $this->beginBlock('content'); ?>
-    <?php echo $this->includeTemplate('alert'); ?>
-    <div id="bread" class="col-md-12">
-        <div class="crumbs">
-            <ol class="breadcrumb">
-                <?php
-                foreach ($this->breadcrumb as $item):
-                    if (array_key_exists('active', $item)):
-                        ?>
-                        <li class="active"><?php echo $item['text']; ?></li>
-                    <?php else: ?>
-                        <li>
-                            <a href="<?php echo array_key_exists('url', $item) ? $item['url'] : '#' ?>"><?php echo $item['text']; ?></a>
-                        </li>
+<?php echo $this->includeTemplate('alert'); ?>
+    <div class="row">
+        <div class="widget stacked">
+            <div class="widget-header">
+                <ol class="breadcrumb">
                     <?php
-                    endif;
-                endforeach;
-                ?>
-            </ol>
-        </div>
-    </div>
-
-    <?php if($this->hasBlock('toolbar')): ?>
-    <div class="col-md-12">
-        <div class="wdgt wdgt-default">
-            <div class="wdgt-body">
-                <?php echo $this->renderBlock('toolbar'); ?>
-            </div>
-        </div>
-    </div>
-    <?php else: ?>
-    <div class="col-md-12">
-        <div class="wdgt wdgt-default">
-            <div class="wdgt-body">
-                <div class="align-right">
-                    <?php
-                    if ($this->buttons):
-                        foreach ($this->buttons as $btn):
+                    foreach ($this->breadcrumb as $item):
+                        if (array_key_exists('active', $item)):
                             ?>
-                            <a class="btn btn-default"
-                               href="<?php echo array_key_exists('url', $btn) ? $btn['url'] : '#' ?>"><?php echo $btn['text']; ?></a>
+                            <li class="active"><?php echo $item['text']; ?></li>
+                        <?php else: ?>
+                            <li>
+                                <a href="<?php echo array_key_exists('url', $item) ? $item['url'] : '#' ?>"><?php echo $item['text']; ?></a>
+                            </li>
                         <?php
-                        endforeach;
-                    endif;
+                        endif;
+                    endforeach;
                     ?>
+                </ol>
+            </div>
+            <div class="widget-content">
+                <div class="pull-right">
+                    <?php if ($this->hasBlock('toolbar')): ?>
+                        <?php echo $this->renderBlock('toolbar'); ?>
+                    <?php else: ?>
+                        <?php
+                        if ($this->buttons):
+                            foreach ($this->buttons as $btn):
+                                ?>
+                                <a class="btn btn-default"
+                                   href="<?php echo array_key_exists('url', $btn) ? $btn['url'] : '#' ?>"><?php echo $btn['text']; ?></a>
+                            <?php
+                            endforeach;
+                        endif;
+                        ?>
+                    <?php endif; ?>
                 </div>
             </div>
         </div>
     </div>
-    <?php endif; ?>
 
-    <div class="col-md-12">
-        <div class="wdgt">
-            <div class="wdgt-body wdgt-table">
-                <?php
-                if ($this->hasBlock('list')):
-                    echo $this->renderBlock('list');
-                else:
-                    if ($this->datatable):
-                        echo $this->datatable->render();
-                    endif;
-                    if ($this->pagination):
-                        echo $this->pagination->render();
-                    endif;
-                endif;
-                ?>
+<?php if ($this->hasBlock('list')): ?>
+    <div class="row">
+    <div class="widget stacked widget-table action-table">
+    <div class="widget-content">
+    <?php echo $this->renderBlock('list'); ?>
+    </div>
+    </div>
+    </div>
+    <?php
+    else:
+    if ($this->datatable):
+        ?>
+        <div class="row">
+            <div class="widget stacked widget-table action-table">
+                <div class="widget-content">
+                    <?php echo $this->datatable->render(); ?>
+                </div>
             </div>
         </div>
+    <?php
+    endif;
+if ($this->pagination):?>
+    <div class="row">
+        <?php echo $this->pagination->render(); ?>
     </div>
+<?php endif;
+endif;
+?>
 <?php
 $this->endBlock();
 echo $this->includeTemplate('layout\base');

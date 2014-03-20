@@ -19,8 +19,8 @@ class Listener{
 		$oa = $app->getContext()->identity;
         $router = $app->getContext()->router;
 		$resp = $app->getContext()->response;
-		if($router->domain->getName() == 'admin'){
-			if($router->getComponent() != 'index'){
+		if($router->domain->getName() == 'backend'){
+			if($router->component != 'index'){
 				if(empty($oa)){
 					$resp->redirect($router->buildUrl('index/index/index'));
 					$app->quit();

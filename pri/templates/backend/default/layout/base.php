@@ -5,11 +5,16 @@
     <title><?php echo $this->renderBlock('title', $this->locale->_('website_title')); ?></title>
     <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="/pub/assets/css/font-awesome.css">
-    <link rel="stylesheet" type="text/css" href="/pub/assets/css/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="/pub/assets/css/fonts.css">
-    <link rel="stylesheet" type="text/css" href="/pub/assets/css/sb-admin.css">
-    <link rel="stylesheet" type="text/css" href="/pub/assets/css/admin.css">
+
+    <link href="/pub/assets/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/pub/assets/css/bootstrap-responsive.min.css" rel="stylesheet">
+<!--    <link href="http://fonts.googleapis.com/css?family=Open+Sans:400italic,600italic,400,600" rel="stylesheet">-->
+    <link href="/pub/assets/css/font-awesome.css" rel="stylesheet">
+    <link href="/pub/assets/css/jquery-ui.css" rel="stylesheet">
+    <link href="/pub/assets/css/base-admin.css" rel="stylesheet">
+    <link href="/pub/assets/css/base-admin-responsive.css" rel="stylesheet">
+    <link href="/pub/assets/css/admin.css" rel="stylesheet">
+
     <?php echo $this->renderBlock('headcss'); ?>
     <script src="/pub/assets/js/libs.js"></script>
     <script src="/pub/assets/js/bootstrap.min.js"></script>
@@ -24,50 +29,33 @@
     <![endif]-->
 </head>
 <body>
-<div class="contain">
+<?php echo $this->includeTemplate('topmenu'); ?>
+<?php echo $this->includeTemplate('navmenu'); ?>
 
-    <?php echo $this->includeTemplate('sidemenu'); ?>
-
-    <div class="right">
-
-        <div class="col-md-12">
-            <div class="logo"><img id="logo" src="pub/assets/img/logo3.png"></div>
-            <div class="logoxs"><img id="logo" src="pub/assets/img/logo_sm.png"></div>
-            <div class="nav">
-                <div class="hov">
-                    <?php if($this->identity):?>
-                    <div class="btn-group">
-                        <a class="con" href="#" data-toggle="dropdown">
-                            <?php echo $this->identity->getUsername(); ?></a>
-                        <div class="dropdown-backdrop"></div>
-                        <ul class="dropdown-menu pull-right" role="menu">
-                            <li class="profile">
-                                <div class="pic"></div>
-                                <div class="profile-info">
-                                    <?php echo $this->identity->getUsername(); ?>
-<!--                                    <br><a href="#">Profile</a> - <a href="#">Settings</a>-->
-                                </div>
-                            </li>
-<!--                            <li class="linked"><a href="#"><span class="fa fa-envelope-o"></span>Messages</a></li>-->
-<!--                            <li class="linked"><a href="#"><span class="fa fa-bell-o"></span>Notifications</a></li>-->
-<!--                            <li class="linked"><a href="#"><span class="fa fa-calendar"></span>Tasks/Events</a></li>-->
-                            <li class="linked bottom"><a href="#"><span class="fa fa-reply"></span><?php echo $this->locale->_('logout'); ?></a></li>
-                        </ul>
-                    </div>
-                    <?php endif; ?>
-                </div>
-            </div>
-        </div>
-
-        <!-- BEGIN PAGE CONTENT -->
-        <div class="content">
-            <?php echo $this->renderBlock('content'); ?>
-            <!-- END PAGE CONTENT -->
-        </div>
+<div class="main">
+    <div class="container">
+        <?php echo $this->renderBlock('content'); ?>
     </div>
 </div>
+<div class="footer">
 
+    <div class="container">
 
+        <div class="row">
+
+            <div id="footer-copyright" class="col-md-6">
+
+            </div> <!-- /span6 -->
+
+            <div id="footer-terms" class="col-md-6">
+
+            </div> <!-- /.span6 -->
+
+        </div> <!-- /row -->
+
+    </div> <!-- /container -->
+
+</div>
 <?php echo $this->renderBlock('footerjs'); ?>
 </body>
 </html>

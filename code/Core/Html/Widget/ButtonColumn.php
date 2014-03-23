@@ -7,17 +7,23 @@ class ButtonColumn extends BaseColumn{
 
     private $_clickScript = null;
 
-    public function setClickScript($value){
-        $this->_clickScript = $value;
-        return $this;
+    private $_button = null;
+
+    public function getButton(){
+        return $this->_button;
     }
 
-    public function getClickScript(){
-        return $this->_clickScript;
-    }
+//    public function setClickScript($value){
+//        $this->_clickScript = $value;
+//        return $this;
+//    }
+//
+//    public function getClickScript(){
+//        return $this->_clickScript;
+//    }
 
     public function renderCell($row, $index){
-        $text = StringUtil::substitute($this->getCellText(), $row);
+        $text = StringUtil::substitute($this->_button->getAttribute('text'), $row);
         if(empty($text)){
             $text = $this->getDefaultText();
         }

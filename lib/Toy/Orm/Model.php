@@ -92,9 +92,14 @@ abstract class Model implements \ArrayAccess
         return $this->setData($this->_entity->getIdProperty()->getName(), $value);
     }
 
-    public function validate()
+    public function validateProperties()
     {
-        return $this->_entity->validate($this);
+        return $this->_entity->validateProperties($this);
+    }
+
+    public function validateUnique($db = null){
+        $cdb = $db ? $db : Helper::openDb();
+        return $this->_entity->validateUnique($cdb, $this);
     }
 
     protected function beforeInsert($db)
@@ -202,10 +207,6 @@ abstract class Model implements \ArrayAccess
     {
         $inst = new static();
         return $inst->_entity->find();
-//        foreach ($conditions as $cond => $value) {
-//            $f->andFilter($cond, $value);
-//        }
-//        return $f;
     }
 
     static public function create($data = array())

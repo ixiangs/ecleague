@@ -4,15 +4,16 @@ namespace Core\Html\Widget;
 class Element{
 
     private $_tag = null;
-    private $_id = null;
-    private $_name = null;
-    private $_style = null;
-    private $_css = null;
+//    private $_id = null;
+//    private $_name = null;
+//    private $_style = null;
+//    private $_css = null;
     private $_attributes = array();
     private $_inner = null;
 
-    public function __construct($tag){
+    public function __construct($tag, $attrs = array()){
         $this->_tag = $tag;
+        $this->_attributes = $attrs;
     }
 
     public function getTag(){
@@ -24,41 +25,41 @@ class Element{
         return $this;
     }
 
-    public function getId(){
-        return $this->_id;
-    }
+//    public function getId(){
+//        return $this->_attributes['id'];
+//    }
+//
+//    public function setId($value){
+//        $this->_attributes['id'] = $value;
+//        return $this;
+//    }
+//
+//    public function getName(){
+//        return $this->_attributes['name'];
+//    }
+//
+//    public function setName($value){
+//        $this->_attributes['name'] = $value;
+//        return $this;
+//    }
+//
+//    public function getStyle(){
+//        return $this->_attributes['style'];
+//    }
+//
+//    public function setStyle($value){
+//        $this->_attributes['style'] = $value;
+//        return $this;
+//    }
 
-    public function setId($value){
-        $this->_id = $value;
-        return $this;
-    }
-
-    public function getName(){
-        return $this->_name;
-    }
-
-    public function setName($value){
-        $this->_name = $value;
-        return $this;
-    }
-
-    public function getStyle(){
-        return $this->_styles;
-    }
-
-    public function setStyle($value){
-        $this->_id = $value;
-        return $this;
-    }
-
-    public function getCss(){
-        return $this->_css;
-    }
-
-    public function setCss($value){
-        $this->_css = $value;
-        return $this;
-    }
+//    public function getCss(){
+//        return $this->_attributes['class'];
+//    }
+//
+//    public function setCss($value){
+//        $this->_attributes['class'] = $value;
+//        return $this;
+//    }
 
     public function getAttribute($name){
         return $this->_attributes[$name];
@@ -93,28 +94,32 @@ class Element{
     }
 
     public function getAttributeHtml(){
-        $attrs = $this->_attributes;
-        if(!empty($this->_id)){
-            $attrs['id'] = $this->_id;
-        }
-        if(!empty($this->_name)){
-            $attrs['name'] = $this->_name;
-        }
-        if(!empty($this->_style)){
-            $attrs['style'] = $this->_style;
-        }
-        if(!empty($this->_css)){
-            $attrs['class'] = $this->_css;
-        }
+//        $attrs = $this->_attributes;
+//        if(!empty($this->_id)){
+//            $attrs['id'] = $this->_id;
+//        }
+//        if(!empty($this->_name)){
+//            $attrs['name'] = $this->_name;
+//        }
+//        if(!empty($this->_style)){
+//            $attrs['style'] = $this->_style;
+//        }
+//        if(!empty($this->_css)){
+//            $attrs['class'] = $this->_css;
+//        }
 
         $arr = array();
-        foreach($attrs as $k=>$v){
+        foreach($this->_attributes as $k=>$v){
             $arr[] = $k.'="'.$v.'"';
         }
         return implode(' ', $arr);
     }
 
     public function renderInner(){
+        if($this->_inner instanceof Element){
+            return $this->_inner->render();
+        }
+
         return $this->_inner;
     }
 

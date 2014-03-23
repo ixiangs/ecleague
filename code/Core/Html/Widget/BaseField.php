@@ -12,8 +12,9 @@ abstract class BaseField extends Element
 
     public function __construct($label, $inputId, $inputName, $value = null)
     {
-        parent::__construct('div');
-        $this->setCss('form-group');
+        parent::__construct('div', array(
+            'class'=>'form-group'
+        ));
         $this->_label = $label;
         $this->_inputId = $inputId;
         $this->_inputName = $inputName;

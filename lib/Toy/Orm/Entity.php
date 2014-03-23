@@ -94,13 +94,31 @@ class Entity
         return $db->delete($ds);
     }
 
-    public function validate(Model $model)
+    public function validateProperties(Model $model)
     {
         $result = array();
         foreach ($this->_properties as $n => $p) {
             if (!$p->getAutoIncrement()) {
                 $r = $p->validate($model->getData($n));
                 if ($r !== true) {
+                    $result[] = $n;
+                }
+            }
+        }
+        return empty($result) ? true : $result;
+    }
+
+    public function validateUnique($db, Model $model)
+    {
+        $result = array();
+        foreach ($this->_properties as $n => $p) {
+            if (!$p->getAutoIncrement() && $p->getUnique()) {
+                $c = $this->find()
+                        ->selectCount()
+                        ->eq($n, $p->toDbValue($model->getData($n)))
+                        ->execute($db)
+                        ->getFirstValue();
+                if ($c > 0) {
                     $result[] = $n;
                 }
             }

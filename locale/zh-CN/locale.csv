@@ -1,6 +1,5 @@
 locale_manage,本地化管理
 locale_language_list,语言列表
-locale_label,显示文本
 locale_code,地区代码
 locale_currency_code,货币代码
 locale_currency_symbol,货币符号
@@ -10,4 +9,4 @@ locale_long_date_format,长日期格式
 locale_dictionary,字典
 locale_dictionary_code,编号
 locale_dictionary_label,文本
-locale_err_code_exists,地区代码 [%s] 已存在
+locale_err_code_exists,代码 [%s] 已存在

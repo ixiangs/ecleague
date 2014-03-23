@@ -1,7 +1,6 @@
 <?php
 namespace Core\Locale\Backend;
 
-use Toy\Data\Exception;
 use Toy\Data\Helper;
 use Toy\Web;
 use Locale\Model\DictionaryModel;
@@ -42,34 +41,43 @@ class DictionaryController extends Web\Controller
     public function addPostAction()
     {
         $lang = $this->context->locale;
-        $codes = $this->request->getParameter('code');
-        $texts = $this->request->getParameter('text');
+        $codes = $this->request->getParameter('codes');
+        $labels = $this->request->getParameter('labels');
         $lid = $this->request->getParameter('languageid');
         $models = array();
+
+        $tmplFunc = function($models, $lid){
+            return Web\Result::templateResult(
+                array('models' => $models,
+                    'language' => LanguageModel::load($lid)),
+                'locale/dictionary/add'
+            );
+        };
+
+
         foreach($codes as $index=>$code){
             $models[] = DictionaryModel::create(array(
                 'code' => $code,
-                'text' => $texts[$index],
+                'label' => $labels[$index],
                 'language_id' => $lid
             ));
         }
-        print_r($models);
-        die();
+
         foreach ($models as $m) {
-            $vr = $m->validate();
+            $vr = $m->validateProperties();
             if ($vr !== true) {
                 $this->session->set('errors', $lang->_('err_input_invalid'));
-                return Web\Result::templateResult(
-                    array('models' => $models,
-                        'language' => LanguageModel::load($lid)),
-                    'locale/dictionary/add'
-                );
+                return $tmplFunc($models, $lid);
+            }
+            $ur= $m->validateUnique();
+            if ($ur !== true) {
+                $this->session->set('errors', $lang->_('locale_err_code_exists', $m->getCode()));
+                return $tmplFunc($models, $lid);
             }
         }
 
         try {
             Helper::withTx(function ($db) use ($models) {
-
                 foreach ($models as $m) {
                     if (!$m->insert()) {
                         throw new \Exception();
@@ -78,14 +86,10 @@ class DictionaryController extends Web\Controller
             });
         } catch (\Exception $ex) {
             $this->session->set('errors', $lang->_('err_system'));
-            return Web\Result::templateResult(
-                array('models' => $models,
-                    'language' => LanguageModel::load($lid)),
-                'locale/dictionary/add'
-            );
+            return $tmplFunc($models, $lid);
         }
 
-        return Web\Result::redirectResult($this->router->buildUrl('list'));
+        return Web\Result::redirectResult($this->router->buildUrl('list', array('languageid'=>$lid)));
     }
 
     public function editAction($id)

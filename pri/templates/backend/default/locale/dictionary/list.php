@@ -10,9 +10,10 @@ $this->assign('buttons', array(
 ));
 
 $dt = $this->html->table($this->models);
+$dt->addCheckboxColumn(null, 'ids', '{id}[]', 'index', 'index');
 $dt->addIndexColumn('#', 'index', 'index');
 $dt->addLabelColumn($this->locale->_('code'), '{code}', 'middle', 'middle');
-$dt->addLabelColumn($this->locale->_('locale_label'), '{name}');
+$dt->addLabelColumn($this->locale->_('text'), '{label}');
 $dt->addButtonColumn('', $this->locale->_('delete'), "deleteConfirm('".urldecode($this->router->buildUrl('delete', array('id'=>'{id}')))."')", 'small', 'small');
 $this->assign('datatable', $dt);
 

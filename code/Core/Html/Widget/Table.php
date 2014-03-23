@@ -56,6 +56,15 @@ class Table extends Element
         return $col;
     }
 
+    public function addCheckboxColumn($cid, $cname, $value, $headCss = null, $cellCss = null)
+    {
+        $col = new CheckboxColumn();
+        $col->setCheckboxId($cid)->setCheckboxName($cname)->setCheckboxValue($value)
+            ->setHeadCss($headCss)->setCellCss($cellCss);
+        $this->_columns[] = $col;
+        return $col;
+    }
+
     public function addButtonColumn($headText, $cellText, $script, $headCss = null, $cellCss = null)
     {
         $col = new ButtonColumn();

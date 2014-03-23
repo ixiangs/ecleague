@@ -40,7 +40,7 @@ class Helper
         }
     }
 
-    static public function withTx(\Closure $callback, $name = null)
+    static public function withTx(\Closure $callback,  $name = null)
     {
         try {
             $db = self::createDb($name);

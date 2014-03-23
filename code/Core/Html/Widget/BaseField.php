@@ -1,9 +1,8 @@
 <?php
 namespace Core\Html\Widget;
 
-abstract class BaseField
+abstract class BaseField extends Element
 {
-
     private $_label = null;
     private $_inputId = null;
     private $_inputName = null;
@@ -13,6 +12,8 @@ abstract class BaseField
 
     public function __construct($label, $inputId, $inputName, $value = null)
     {
+        parent::__construct('div');
+        $this->setCss('form-group');
         $this->_label = $label;
         $this->_inputId = $inputId;
         $this->_inputName = $inputName;
@@ -52,6 +53,42 @@ abstract class BaseField
         return $this;
     }
 
+//    public function getFieldId(){
+//        return $this->_fieldId;
+//    }
+//
+//    public function setFieldId($value){
+//        $this->_fieldId = $value;
+//        return $this;
+//    }
+//
+//    public function getFieldIdFormat(){
+//        return $this->_fieldIdFormat;
+//    }
+//
+//    public function setFieldIdFormat($value){
+//        $this->_fieldIdFormat = $value;
+//        return $this;
+//    }
+//
+//    public function getFieldCss(){
+//        return $this->_fieldCss;
+//    }
+//
+//    public function setFieldCss($value){
+//        $this->_fieldCss = $value;
+//        return $this;
+//    }
+//
+//    public function getFieldCssFormat(){
+//        return $this->_fieldCssFormat;
+//    }
+//
+//    public function setFieldCssFormat($value){
+//        $this->_fieldCssFormat = $value;
+//        return $this;
+//    }
+
     public function getValue()
     {
         return $this->_value;
@@ -87,10 +124,10 @@ abstract class BaseField
 
     public function render()
     {
-        $html = array('<div class="form-group">');
+        $html = array($this->renderBegin());
         $html[] = '<label class="col-lg-2 control-label" for="' . $this->_inputId . '">' . $this->_label . '</label>';
         $html[] = '<div class="col-lg-10">'.$this->renderInput().'</div>';
-        $html[] = '</div>';
+        $html[] = $this->renderEnd();
 
         return implode('', $html);
     }

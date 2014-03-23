@@ -1,6 +1,8 @@
 <?php
 namespace Core\Locale\Backend;
 
+use Toy\Data\Exception;
+use Toy\Data\Helper;
 use Toy\Web;
 use Locale\Model\DictionaryModel;
 use Locale\Model\LanguageModel;
@@ -15,13 +17,13 @@ class DictionaryController extends Web\Controller
         $lang = LanguageModel::load($lid);
         $count = DictionaryModel::find()->selectCount()->execute()->getFirstValue();
         $models = DictionaryModel::find()
-                        ->eq('language_id', $lid)
-                        ->limit(PAGINATION_SIZE, ($pi - 1) * PAGINATION_SIZE)
-                        ->execute()
-                        ->getModelArray();
+            ->eq('language_id', $lid)
+            ->limit(PAGINATION_SIZE, ($pi - 1) * PAGINATION_SIZE)
+            ->execute()
+            ->getModelArray();
         return Web\Result::templateResult(array(
                 'models' => $models,
-                'language'=>$lang,
+                'language' => $lang,
                 'total' => $count,
                 'pageIndex' => $pi)
         );
@@ -29,27 +31,58 @@ class DictionaryController extends Web\Controller
 
     public function addAction()
     {
-        return $this->getEditTemplateResult(DictionaryModel::create());
+        $lid = $this->request->getParameter('languageid');
+        return Web\Result::templateResult(
+            array('models' => array(DictionaryModel::create()),
+                'language' => LanguageModel::load($lid)),
+            'locale/dictionary/add'
+        );
     }
 
     public function addPostAction()
     {
         $lang = $this->context->locale;
-        $m = DictionaryModel::create($this->request->getAllParameters());
-        if (DictionaryModel::checkUnique('code', $m->getCode())) {
-            $this->session->set('errors', $lang->_('err_code_exists', $m->getCode()));
-            return $this->getEditTemplateResult($m);
+        $codes = $this->request->getParameter('code');
+        $texts = $this->request->getParameter('text');
+        $lid = $this->request->getParameter('languageid');
+        $models = array();
+        foreach($codes as $index=>$code){
+            $models[] = DictionaryModel::create(array(
+                'code' => $code,
+                'text' => $texts[$index],
+                'language_id' => $lid
+            ));
+        }
+        print_r($models);
+        die();
+        foreach ($models as $m) {
+            $vr = $m->validate();
+            if ($vr !== true) {
+                $this->session->set('errors', $lang->_('err_input_invalid'));
+                return Web\Result::templateResult(
+                    array('models' => $models,
+                        'language' => LanguageModel::load($lid)),
+                    'locale/dictionary/add'
+                );
+            }
         }
 
-        $vr = $m->validate();
-        if ($vr !== true) {
-            $this->session->set('errors', $lang->_('err_input_invalid'));
-            return $this->getEditTemplateResult($m);
-        }
+        try {
+            Helper::withTx(function ($db) use ($models) {
 
-        if (!$m->insert()) {
+                foreach ($models as $m) {
+                    if (!$m->insert()) {
+                        throw new \Exception();
+                    }
+                }
+            });
+        } catch (\Exception $ex) {
             $this->session->set('errors', $lang->_('err_system'));
-            return $this->getEditTemplateResult($m);
+            return Web\Result::templateResult(
+                array('models' => $models,
+                    'language' => LanguageModel::load($lid)),
+                'locale/dictionary/add'
+            );
         }
 
         return Web\Result::redirectResult($this->router->buildUrl('list'));
@@ -100,7 +133,7 @@ class DictionaryController extends Web\Controller
         $lid = $this->request->getParameter('languageid');
         return Web\Result::templateResult(
             array('model' => $model,
-                  'language'=>LanguageModel::load($lid)),
+                'language' => LanguageModel::load($lid)),
             'locale/dictionary/edit'
         );
     }

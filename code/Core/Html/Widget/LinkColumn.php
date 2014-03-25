@@ -6,34 +6,24 @@ use Toy\Util\StringUtil;
 class LinkColumn extends BaseColumn{
 
     private $_link = null;
-    private $_target = null;
 
-    public function setLink($value){
-        $this->_link = $value;
-        return $this;
+    public function __construct(){
+        parent::__construct();
+        $this->_link = new Element('a');
+        $this->_link->addBindableAttribute('href', 'text');
     }
 
     public function getLink(){
         return $this->_link;
     }
 
-    public function setTarget($value){
-        $this->_target = $value;
-        return $this;
-    }
-
-    public function getTarget(){
-        return $this->_target;
-    }
-
     public function renderCell($row, $index){
-        $text = StringUtil::substitute($this->getCellText(), $row);
-        if(empty($text)){
-            $text = $this->getDefaultText();
+        $this->_link->bindAttribute($row);
+        if(empty($this->_link->getAttribute('text'))){
+            $this->_link->setAttribute('text', $this->getDefaultText());
         }
-        $url = StringUtil::substitute(urldecode($this->_link), $row);
         $res = $this->getCell()->renderBegin();
-        $res .= '<a href="'.$url.'" target="'.$this->_target.'">'.$text.'</a>';
+        $res .= $this->_link->render();
         $res .= $this->getCell()->renderEnd();
         return $res;
     }

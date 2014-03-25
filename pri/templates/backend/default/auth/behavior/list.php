@@ -18,7 +18,7 @@ $dt->addOptionColumn('', '{enabled}', array(
         0=>'<span class="label label-danger">'.$this->locale->_('disabled').'</span>',
         1=>'<span class="label label-success">'.$this->locale->_('enabled').'</span>'),
     'small', 'small');
-$dt->addLinkColumn('', $this->locale->_('edit'), $this->router->buildUrl('edit', array('id'=>'{id}')), 'small', 'small');
+$dt->addLinkColumn('', $this->locale->_('edit'), urldecode($this->router->buildUrl('edit', array('id'=>'{id}'))), 'small', 'small');
 $dt->addButtonColumn('', $this->locale->_('delete'), "deleteConfirm('".urldecode($this->router->buildUrl('delete', array('id'=>'{id}')))."')", 'small', 'small');
 $this->assign('datatable', $dt);
 

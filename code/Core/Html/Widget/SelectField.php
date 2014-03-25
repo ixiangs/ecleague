@@ -4,63 +4,20 @@ namespace Core\Html\Widget;
 class SelectField extends BaseField
 {
 
-    private $_caption = null;
-    private $_options = array();
+    private $_select = null;
 
-    public function __construct($label, $id, $name, $value = null)
+    public function __construct($label)
     {
-        parent::__construct($label, $id, $name, $value);
+        parent::__construct($label);
+        $this->_select = new Select(array('class'=>'form-control'));
     }
 
-    public function setCaption($value)
-    {
-        $this->_caption  = $value;
-        return $this;
-    }
-
-    public function getCaption()
-    {
-        return $this->_caption ;
-    }
-
-    public function setOptions($value)
-    {
-        $this->_options  = $value;
-        return $this;
-    }
-
-    public function getOptions()
-    {
-        return $this->_options ;
+    public function getSelect(){
+        return $this->_select;
     }
 
     protected function renderInput()
     {
-        $input = new Element('select');
-        $input->setAttributes($this->getInputAttributes())
-            ->setCss('form-control')
-            ->setName($this->getInputName())
-            ->setId($this->getInputId());
-
-        foreach ($this->getValidateRules() as $n => $v) {
-            $input->addAttribute('data-validate-' . $n, $v);
-        }
-
-        $html = array($input->renderBegin());
-        if (!empty($caption)) {
-            if (is_string($caption)) {
-                $html[] = '<option value="">' . $caption . '</option>';
-            }
-        }
-
-        foreach ($this->_options as $option => $text) {
-            if ($this->getValue() == $option) {
-                $html[] = "<option value=\"$option\" selected>$text</option>";
-            } else {
-                $html[] = "<option value=\"$option\">$text</option>";
-            }
-        }
-        $html[] = $input->renderEnd();
-        return implode('', $html);
+        return $this->_select->render();
     }
 }

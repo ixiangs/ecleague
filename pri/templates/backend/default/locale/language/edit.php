@@ -7,13 +7,13 @@ $this->assign('breadcrumb', array(
 
 $this->assign('buttons', array(
     array('text'=>$this->locale->_('back'), 'url'=>$this->router->buildUrl('list')),
-    $this->html->button('button', $this->locale->_('save'), 'btn btn-primary')->addAttribute('data-submit', 'form1')
+    $this->html->button('button', $this->locale->_('save'), 'btn btn-primary')->setAttribute('data-submit', 'form1')
 ));
 
 $f = $this->html->form();
-$f->addInputField('text', $this->locale->_('locale_code'), 'code', 'code', $this->model->getCode())
+$f->addInputField('text', $this->locale->_('code'), 'code', 'code', $this->model->getCode())
     ->addValidateRule('required', true);
-$f->addInputField('text', $this->locale->_('locale_label'), 'name', 'name', $this->model->getName())
+$f->addInputField('text', $this->locale->_('name'), 'name', 'name', $this->model->getName())
     ->addValidateRule('required', true);
 $f->addInputField('text', $this->locale->_('locale_timezone'), 'timezone', 'timezone', $this->model->getTimezone())
     ->addValidateRule('required', true);
@@ -25,10 +25,7 @@ $f->addInputField('text', $this->locale->_('locale_short_date_format'), 'short_d
     ->addValidateRule('required', true);
 $f->addInputField('text', $this->locale->_('locale_long_date_format'), 'long_date_format', 'long_date_format', $this->model->getLongDateFormat())
     ->addValidateRule('required', true);
-$f->addSelectField(array(
-        '1'=>$this->locale->_('yes'),
-        '0'=>$this->locale->_('no')
-    ),
+$f->addSelectField(array('1'=>$this->locale->_('yes'), '0'=>$this->locale->_('no')),
     $this->locale->_('enable'), 'enabled', 'enabled', $this->model->getEnabled());
 $this->assign('form', $f);
 echo $this->includeTemplate('layout\form');

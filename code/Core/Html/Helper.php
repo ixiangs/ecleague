@@ -13,8 +13,9 @@ class Helper
     }
 
     public function button($type, $text, $css){
-        $res = new Element('button');
-        return $res->addAttribute('type', $type)->setCss($css)->setInner($text);
+        $res = new Element('button', array('type'=>$type, 'class'=>$css));
+        $res->setText($text);
+        return $res;
     }
 
     public function table($dataSource = null, $id = null){

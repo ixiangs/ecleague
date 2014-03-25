@@ -5,38 +5,27 @@ class InputField extends BaseField
 {
 
     private $_type = 'text';
+    private $_input = null;
 
-    public function __construct($type, $label, $id, $name, $value = null)
+    public function __construct($type, $label)
     {
-        parent::__construct($label, $id, $name, $value);
-        $this->_type = $type;
+        parent::__construct($label);
+        $this->_input = new Element('input', array(
+           'type'=>$type,
+           'class'=>'form-control'
+        ));
     }
 
-    public function setType($value)
-    {
-        $this->_type = $value;
-        return $this;
-    }
-
-    public function getType()
-    {
-        return $this->_type;
+    public function getInput(){
+        return $this->_input;
     }
 
     protected function renderInput()
     {
-        $input = new Element('input');
-        $input->setAttributes($this->getInputAttributes())
-            ->setCss('form-control')
-            ->addAttribute('type', $this->_type)
-            ->addAttribute('value', $this->getValue())
-            ->setName($this->getInputName())
-            ->setId($this->getInputId());
-
         foreach ($this->getValidateRules() as $n => $v) {
-            $input->addAttribute('data-validate-' . $n, $v === true? 'true': $v);
+            $this->_input->setAttribute('data-validate-' . $n, $v === true? 'true': $v);
         }
 
-        return $input->render();
+        return $this->_input->render();
     }
 }

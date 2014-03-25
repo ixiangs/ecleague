@@ -10,8 +10,7 @@ class Form extends Element
 
     public function __construct($id = 'form1', $method = 'post')
     {
-        parent::__construct('form');
-        $this->setCss('form-horizontal')->setId($id)->addAttribute('method', $method);
+        parent::__construct('form', array('class'=>'form-horizontal', 'id'=>$id, 'method'=>$method));
     }
 
     public function addField($field)
@@ -22,39 +21,42 @@ class Form extends Element
 
     public function addInputField($type, $label, $id, $name, $value)
     {
-        $f = new InputField($type, $label, $id, $name, $value);
+        $f = new InputField($type, $label);
+        $f->getInput()->setAttribute(array('id'=>$id, 'name'=>$name, 'value'=>$value));
         $this->addField($f);
         return $f;
     }
 
     public function addSelectField($options, $label, $id, $name, $value)
     {
-        $f = new SelectField($label, $id, $name, $value);
-        $f->setOptions($options);
+        $f = new SelectField($label);
+        $f->getSelect()
+            ->setAttribute(array('id'=>$id, 'name'=>$name,'value'=>$value))
+            ->setOptions($options);
         $this->addField($f);
         return $f;
     }
 
-    public function addCheckboxesField($options, $label, $id, $name, $value)
+    public function addCheckboxListField($options, $label, $id, $name, $value)
     {
-        $f = new CheckboxesField($label, $id, $name, $value);
-        $f->setOptions($options);
+        $f = new CheckboxListField($label);
+        $f->getCheckboxes()
+            ->setAttribute(array('id'=>$id, 'name'=>$name,'value'=>$value))
+            ->setOptions($options);
         $this->addField($f);
         return $f;
     }
 
     public function addHiddenField($id, $name, $value)
     {
-        $f = new Element('input');
-        $f->addAttribute('type', 'hidden')->setId($id)->setName($name)->addAttribute('value', $value);
+        $f = new Element('input', array('type'=>'hidden', 'id'=>$id, 'name'=>$name, 'value'=>$value));
         $this->_hiddens[] = $f;
         return $f;
     }
 
-    public function addButton($type, $text, $css = 'btn', $attrs = array())
+    public function addButton($type, $text, $css = 'btn')
     {
-        $b = new Element('button');
-        $b->setCss($css)->setAttributes($attrs)->addAttribute('type', $type)->addAttribute('text', $text);
+        $b = new Element('button', array('type'=>$type, 'text'=>$text, 'class'=>$css));
         $this->_buttons[] = $b;
         return $b;
     }
@@ -63,7 +65,7 @@ class Form extends Element
     {
         foreach ($this->_fields as $f) {
             if (count($f->getValidateRules()) > 0) {
-                $this->addAttribute('data-validate', 'true');
+                $this->setAttribute('data-validate', 'true');
                 break;
             }
         }

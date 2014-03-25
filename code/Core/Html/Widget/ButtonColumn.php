@@ -5,30 +5,25 @@ use Toy\Util\StringUtil;
 
 class ButtonColumn extends BaseColumn{
 
-    private $_clickScript = null;
-
     private $_button = null;
+
+    public function __construct(){
+        parent::__construct();
+        $this->_button = new Element('button');
+        $this->_button->setAttribute('type', 'button')->addBindableAttribute('onclick', 'text');
+    }
 
     public function getButton(){
         return $this->_button;
     }
 
-//    public function setClickScript($value){
-//        $this->_clickScript = $value;
-//        return $this;
-//    }
-//
-//    public function getClickScript(){
-//        return $this->_clickScript;
-//    }
-
     public function renderCell($row, $index){
-        $text = StringUtil::substitute($this->_button->getAttribute('text'), $row);
-        if(empty($text)){
-            $text = $this->getDefaultText();
+        $this->_button->bindAttribute($row);
+        if(empty($this->_button->getAttribute('text'))){
+            $this->_button->setAttribute('text', $this->getDefaultText());
         }
         $res = $this->getCell()->renderBegin();
-        $res .= '<a href="javascript:void(0);" onclick="javascript:'.StringUtil::substitute($this->_clickScript, $row).'">'.$text.'</a>';
+        $res .= $this->_button->render();
         $res .= $this->getCell()->renderEnd();
         return $res;
     }

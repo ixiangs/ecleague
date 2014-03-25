@@ -9,8 +9,8 @@ class Table extends Element
 
     public function __construct($dataSource = null, $id = null)
     {
-        parent::__construct('table');
-        $this->setId($id)->setCss('table table-striped table-bordered')->setDataSource($dataSource);
+        parent::__construct('table', array('id'=>$id, 'class'=>'table table-striped table-bordered'));
+        $this->setDataSource($dataSource);
     }
 
     public function setDataSource($value)
@@ -24,52 +24,70 @@ class Table extends Element
         return $this->_columns;
     }
 
+    public function addColumn($col){
+        $this->_columns[] = $col;
+        return $this;
+    }
+
     public function addIndexColumn($headText, $headCss = null, $cellCss = null)
     {
         $col = new IndexColumn();
-        $col->setHeadText($headText)->setHeadCss($headCss)->setCellCss($cellCss);
-        $this->_columns[] = $col;
+        $col->getHead()->setAttribute(array('class'=>$headCss, 'text'=>$headText));
+        $col->getCell()->setAttribute('class', $cellCss);
+        $this->addColumn($col);
         return $col;
     }
 
     public function addLabelColumn($headText, $cellText, $headCss = null, $cellCss = null)
     {
         $col = new LabelColumn();
-        $col->setHeadText($headText)->setCellText($cellText)->setHeadCss($headCss)->setCellCss($cellCss);
-        $this->_columns[] = $col;
+        $col->getHead()->setAttribute(array('class'=>$headCss, 'text'=>$headText));
+        $col->getCell()->setAttribute('class', $cellCss);
+        $col->getLabel()->setAttribute(array('text'=>$cellText));
+        $this->addColumn($col);
         return $col;
     }
 
     public function addOptionColumn($headText, $cellText, $options, $headCss = null, $cellCss = null)
     {
         $col = new OptionColumn();
-        $col->setOptions($options)->setHeadText($headText)->setCellText($cellText)->setHeadCss($headCss)->setCellCss($cellCss);
-        $this->_columns[] = $col;
+        $col->setOptions($options);
+        $col->getHead()->setAttribute(array('class'=>$headCss, 'text'=>$headText));
+        $col->getCell()->setAttribute('class', $cellCss);
+        $this->addColumn($col);
         return $col;
     }
 
     public function addLinkColumn($headText, $cellText, $link, $headCss = null, $cellCss = null)
     {
         $col = new LinkColumn();
-        $col->setLink($link)->setHeadText($headText)->setCellText($cellText)->setHeadCss($headCss)->setCellCss($cellCss);
-        $this->_columns[] = $col;
+        $col->getHead()->setAttribute(array('class'=>$headCss, 'text'=>$headText));
+        $col->getCell()->setAttribute('class', $cellCss);
+        $col->getLink()->setAttribute(array('text'=>$cellText, 'href'=>$link));
+        $this->addColumn($col);
         return $col;
     }
 
-    public function addCheckboxColumn($cid, $cname, $value, $headCss = null, $cellCss = null)
+    public function addCheckboxColumn($checkboxName, $checkboxValue, $checkboxId, $headCss = null, $cellCss = null)
     {
         $col = new CheckboxColumn();
-        $col->setCheckboxId($cid)->setCheckboxName($cname)->setCheckboxValue($value)
-            ->setHeadCss($headCss)->setCellCss($cellCss);
-        $this->_columns[] = $col;
+        $col->getHead()->setAttribute('class', $headCss);
+        $col->getCell()->setAttribute('class', $cellCss);
+        $col->getCheckbox()->setAttribute(array(
+            'name'=>$checkboxName,
+            'value'=>$checkboxValue,
+            'id'=>$checkboxId));
+        $this->addColumn($col);
         return $col;
     }
 
     public function addButtonColumn($headText, $cellText, $script, $headCss = null, $cellCss = null)
     {
         $col = new ButtonColumn();
-        $col->setClickScript($script)->setHeadText($headText)->setCellText($cellText)->setHeadCss($headCss)->setCellCss($cellCss);
-        $this->_columns[] = $col;
+        $col->getHead()->setAttribute(array('class'=>$headCss, 'text'=>$headText));
+        $col->getCell()->setAttribute('class', $cellCss);
+        $col->getButton()->setAttribute(array('text'=>$cellText, 'onclick'=>$script));
+        $this->addColumn($col);
         return $col;
     }
 
@@ -81,6 +99,7 @@ class Table extends Element
         foreach ($this->_columns as $col) {
             $head[] = $col->renderHead();
         }
+
         foreach ($this->_dataSource as $index => $dataRow) {
             $cells = array();
             foreach ($this->_columns as $col) {

@@ -1,9 +1,10 @@
 <?php
 namespace Toy\Orm;
 
+use Iterator;
 use Toy\Data\Helper;
 
-abstract class Model implements \ArrayAccess
+abstract class Model implements \ArrayAccess, Iterator
 {
 
     private static $_camelCaseToUnderline = array();
@@ -56,6 +57,26 @@ abstract class Model implements \ArrayAccess
 
     public function offsetUnset($offset) {
         unset($this->data[$offset]);
+    }
+
+    public function current(){
+        return current($this->data);
+    }
+
+    public function key(){
+        return key($this->data);
+    }
+
+    public function next(){
+        return next($this->data);
+    }
+
+    public function rewind(){
+        return reset($this->data);
+    }
+
+    public function valid(){
+        return key($this->data) !== null;
     }
 
     public function getAllData()

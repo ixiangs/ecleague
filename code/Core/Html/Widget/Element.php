@@ -1,142 +1,175 @@
 <?php
 namespace Core\Html\Widget;
 
-class Element{
+use Toy\Util\StringUtil;
+
+class Element
+{
 
     private $_tag = null;
-//    private $_id = null;
-//    private $_name = null;
-//    private $_style = null;
-//    private $_css = null;
-    private $_attributes = array();
-    private $_inner = null;
+    private $_children = array();
+    private $_bindableAttributes = array();
+    private $_boundAttributes = array();
+    protected $attributes = array();
 
-    public function __construct($tag, $attrs = array()){
+    public function __construct($tag, $attrs = array())
+    {
         $this->_tag = $tag;
-        $this->_attributes = $attrs;
+        $this->attributes = $attrs;
     }
 
-    public function getTag(){
+    public function getTag()
+    {
         return $this->_tag;
     }
 
-    public function setTag($value){
+    public function setTag($value)
+    {
         $this->_tag = $value;
         return $this;
     }
 
-//    public function getId(){
-//        return $this->_attributes['id'];
-//    }
-//
-//    public function setId($value){
-//        $this->_attributes['id'] = $value;
-//        return $this;
-//    }
-//
-//    public function getName(){
-//        return $this->_attributes['name'];
-//    }
-//
-//    public function setName($value){
-//        $this->_attributes['name'] = $value;
-//        return $this;
-//    }
-//
-//    public function getStyle(){
-//        return $this->_attributes['style'];
-//    }
-//
-//    public function setStyle($value){
-//        $this->_attributes['style'] = $value;
-//        return $this;
-//    }
 
-//    public function getCss(){
-//        return $this->_attributes['class'];
-//    }
-//
-//    public function setCss($value){
-//        $this->_attributes['class'] = $value;
-//        return $this;
-//    }
-
-    public function getAttribute($name){
-        return $this->_attributes[$name];
+    public function getChildren()
+    {
+        return $this->_children;
     }
 
-    public function getAttributes(){
-        return $this->_attributes;
-    }
-
-    public function setAttributes($value){
-        $this->_attributes = $value;
+    public function setChildren($value)
+    {
+        $this->_children = $value;
         return $this;
     }
 
-    public function addAttribute($name, $value){
-        $this->_attributes[$name] = $value;
+    public function addBindableAttribute()
+    {
+        $args = func_get_args();
+        $this->_bindableAttributes = array_merge($this->_bindableAttributes, $args);
         return $this;
     }
 
-    public function removeAttribute($name){
-        unset($this->_attributes[$name]);
+    public function removeBindableAttribute()
+    {
+        $args = func_get_args();
+        foreach ($args as $arg) {
+            $k = array_search($arg, $this->_bindableAttributes);
+            unset($this->_bindableAttributes[$k]);
+        }
         return $this;
     }
 
-    public function getInner(){
-        return $this->_inner;
+    public function getBindableAttribute()
+    {
+        return $this->_bindableAttributes;
     }
 
-    public function setInner($value){
-        $this->_inner = $value;
+    public function getAttribute()
+    {
+        $args = func_get_args();
+        $nums = func_num_args();
+        if ($nums > 1) {
+            $res = array();
+            foreach ($args as $arg) {
+                if (array_key_exists($arg, $this->attributes)) {
+                    $res[] = $this->attributes[$arg];
+                }
+            }
+            return $res;
+        } elseif ($nums == 1) {
+            if (array_key_exists($args[0], $this->attributes)) {
+                return $this->attributes[$args[0]];
+            }
+            return null;
+        } else {
+            return $this->attributes;
+        }
+    }
+
+    public function setAttribute()
+    {
+        $args = func_get_args();
+        $nums = func_num_args();
+        if ($nums == 2) {
+            $this->attributes[$args[0]] = $args[1];
+        } elseif ($nums == 1 && is_array($args[0])) {
+            $this->attributes = array_merge($this->attributes, $args[0]);
+        }
         return $this;
     }
 
-    public function getAttributeHtml(){
-//        $attrs = $this->_attributes;
-//        if(!empty($this->_id)){
-//            $attrs['id'] = $this->_id;
-//        }
-//        if(!empty($this->_name)){
-//            $attrs['name'] = $this->_name;
-//        }
-//        if(!empty($this->_style)){
-//            $attrs['style'] = $this->_style;
-//        }
-//        if(!empty($this->_css)){
-//            $attrs['class'] = $this->_css;
-//        }
+    public function removeAttribute()
+    {
+        $args = func_get_args();
+        $nums = func_num_args();
+        if ($nums > 1) {
+            foreach ($args as $arg) {
+                if (array_key_exists($arg, $this->attributes)) {
+                    unset($this->attributes[$arg]);
+                }
+            }
+        } elseif ($nums == 1) {
+            unset($this->attributes[$args[0]]);
+        } else {
+            $this->attributes = array();
+        }
 
+        return $this;
+    }
+
+    public function bindAttribute($data)
+    {
+        foreach ($this->attributes as $k => $v) {
+            if (in_array($k, $this->_bindableAttributes)) {
+                $nv = $v;
+                foreach ($data as $dk => $dv) {
+                    $nv = str_replace('{' . $dk . '}', $dv, $nv);
+                }
+                $this->attributes[$k] = $nv;
+            }
+        }
+        return $this;
+    }
+
+    public function renderAttribute()
+    {
         $arr = array();
-        foreach($this->_attributes as $k=>$v){
-            $arr[] = $k.'="'.$v.'"';
+        foreach ($this->attributes as $k => $v) {
+            if ($k != 'text') {
+                $arr[] = $k . '="' . $v . '"';
+            }
         }
         return implode(' ', $arr);
     }
 
-    public function renderInner(){
-        if($this->_inner instanceof Element){
-            return $this->_inner->render();
+    public function renderBegin()
+    {
+        return '<' . $this->_tag . ' ' . $this->renderAttribute() . '>';
+    }
+
+    public function renderEnd()
+    {
+        return '</' . $this->_tag . '>';
+    }
+
+    public function renderInner()
+    {
+        $res = '';
+        if (array_key_exists('text', $this->attributes)) {
+            $res = $this->attributes['text'];
         }
-
-        return $this->_inner;
+        foreach ($this->_children as $child) {
+            $res .= $child->render();
+        }
+        return $res;
     }
 
-    public function renderBegin(){
-        return '<'.$this->_tag.' '.$this->getAttributeHtml().'>';
-    }
-
-    public function renderEnd(){
-        return '</'.$this->_tag.'>';
-    }
-
-    public function render(){
-        switch($this->_tag){
+    public function render()
+    {
+        switch ($this->_tag) {
             case 'input':
-                return '<'.$this->_tag.' '.$this->getAttributeHtml().'/>';
+                return '<' . $this->_tag . ' ' . $this->renderAttribute() . '/>';
             default:
-                return $this->renderBegin().$this->renderInner().$this->renderEnd();
+                return $this->renderBegin() . $this->renderInner() . $this->renderEnd();
         }
     }
 }

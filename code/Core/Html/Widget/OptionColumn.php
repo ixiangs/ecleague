@@ -3,7 +3,7 @@ namespace Core\Html\Widget;
 
 use Toy\Util\StringUtil;
 
-class OptionColumn extends BaseColumn{
+class OptionColumn extends LabelColumn{
 
     private $_options = array();
 
@@ -13,15 +13,13 @@ class OptionColumn extends BaseColumn{
     }
 
     public function renderCell($row, $index){
-        $op = StringUtil::substitute($this->getCellText(), $row);
-        $res = $this->getCell()->renderBegin();
+        $op = StringUtil::substitute($this->getLabel()->getAttribute('text'), $row);
         if(array_key_exists($op, $this->_options)){
-            $res .= $this->_options[$op];
+            $this->getLabel()->setAttribute('text', $this->_options[$op]);
         }else{
-            $res .= $this->getDefaultText();
+            $this->getLabel()->setAttribute('text', $this->getDefaultText());
         }
-        $res .= $this->getCell()->renderEnd();
-        return $res;
+        return parent::renderCell($row, $index);
     }
 
     public function getType(){

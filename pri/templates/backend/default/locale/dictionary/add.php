@@ -7,8 +7,8 @@ $this->assign('breadcrumb', array(
 
 $this->assign('buttons', array(
     array('text' => $this->locale->_('back'), 'url' => $this->router->buildUrl('list', array('languageid'=>$this->language->getId()))),
-    $this->html->button('button', $this->locale->_('new'), 'btn btn-success')->setId('new'),
-    $this->html->button('button', $this->locale->_('save'), 'btn btn-primary')->addAttribute('data-submit', 'form1')
+    $this->html->button('button', $this->locale->_('new'), 'btn btn-success')->setAttribute('id', 'new'),
+    $this->html->button('button', $this->locale->_('save'), 'btn btn-primary')->setAttribute('data-submit', 'form1')
 ));
 
 $f = $this->html->form();

@@ -13,8 +13,7 @@ class Helper
     }
 
     public function button($type, $text, $css){
-        $res = new Element('button', array('type'=>$type, 'class'=>$css));
-        $res->setText($text);
+        $res = new Element('button', array('type'=>$type, 'class'=>$css, 'text'=>$text));
         return $res;
     }
 

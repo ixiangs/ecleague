@@ -29,7 +29,6 @@ class Element
         return $this;
     }
 
-
     public function getChildren()
     {
         return $this->_children;
@@ -61,6 +60,10 @@ class Element
     public function getBindableAttribute()
     {
         return $this->_bindableAttributes;
+    }
+
+    public function getBoundAttribute(){
+        return $this->_boundAttributes;
     }
 
     public function getAttribute()
@@ -118,13 +121,10 @@ class Element
 
     public function bindAttribute($data)
     {
-        foreach ($this->attributes as $k => $v) {
-            if (in_array($k, $this->_bindableAttributes)) {
-                $nv = $v;
-                foreach ($data as $dk => $dv) {
-                    $nv = str_replace('{' . $dk . '}', $dv, $nv);
-                }
-                $this->attributes[$k] = $nv;
+        $this->_boundAttributes = array();
+        foreach($this->_bindableAttributes as $k){
+            if(array_key_exists($k, $this->attributes)){
+                $this->_boundAttributes[$k] = StringUtil::substitute($this->attributes[$k], $data);
             }
         }
         return $this;
@@ -133,11 +133,18 @@ class Element
     public function renderAttribute()
     {
         $arr = array();
-        foreach ($this->attributes as $k => $v) {
+        foreach($this->_boundAttributes as $k=>$v){
             if ($k != 'text') {
                 $arr[] = $k . '="' . $v . '"';
             }
         }
+
+        foreach ($this->attributes as $k => $v) {
+            if ($k != 'text' && !array_key_exists($k, $this->_boundAttributes)) {
+                $arr[] = $k . '="' . $v . '"';
+            }
+        }
+
         return implode(' ', $arr);
     }
 
@@ -154,7 +161,9 @@ class Element
     public function renderInner()
     {
         $res = '';
-        if (array_key_exists('text', $this->attributes)) {
+        if (array_key_exists('text', $this->_boundAttributes)) {
+            $res = $this->_boundAttributes['text'];
+        }elseif (array_key_exists('text', $this->attributes)) {
             $res = $this->attributes['text'];
         }
         foreach ($this->_children as $child) {

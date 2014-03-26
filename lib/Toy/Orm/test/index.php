@@ -10,6 +10,8 @@ include_once Toy_PATH . 'Log' . DS . 'BaseAppender.php';
 include_once Toy_PATH . 'Log' . DS . 'ConsoleAppender.php';
 include_once Toy_PATH . 'Log' . DS . 'Logger.php';
 
+include_once Toy_PATH . 'Util' . DS . 'ArrayUtil.php';
+
 include_once Toy_PATH . 'Data' . DS . 'Configuration.php';
 include_once Toy_PATH . 'Data' . DS . 'Result.php';
 include_once Toy_PATH . 'Data' . DS . 'Exception.php';
@@ -39,6 +41,8 @@ include_once Toy_PATH . 'Orm' . DS . 'Query.php';
 include_once Toy_PATH . 'Orm' . DS . 'Entity.php';
 include_once Toy_PATH . 'Orm' . DS . 'Model.php';
 include_once Toy_PATH . 'Orm' . DS . 'Result.php';
+include_once Toy_PATH . 'Orm' . DS . 'Versioning' . DS . 'Entity.php';
+include_once Toy_PATH . 'Orm' . DS . 'Versioning' . DS . 'Model.php';
 
 include_once Toy_PATH . 'Unit' . DS . 'TestCase.php';
 include_once Toy_PATH . 'Unit' . DS . 'AssertException.php';
@@ -53,5 +57,6 @@ include_once Toy_PATH . 'Unit' . DS . 'Runner.php';
 
 \Toy\Unit\Runner::run(array(
         'directory' => Toy_PATH . 'Orm' . DS . 'test',
-        'output' => 'console')
+        'output' => 'console',
+        'ignores' => array('OrmTestCase'))
 );

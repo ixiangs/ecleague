@@ -218,7 +218,7 @@ class Entity
         $result = array();
         foreach ($this->_properties as $n => $p) {
             if (!$p->getAutoIncrement() && $p->getUnique()) {
-                $c = $this->find()
+                $c = $this->findMain()
                     ->selectCount()
                     ->eq($n, $p->toDbValue($model->getData($n)))
                     ->execute($db)

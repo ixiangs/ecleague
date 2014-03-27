@@ -307,20 +307,33 @@ abstract class Model implements \ArrayAccess, Iterator
         return static::load($id)->fillArray($data);
     }
 
-    static public function loadMain($value)
+    static public function loadById($value)
     {
         $inst = new static();
         return $inst->_entity->findMain()
                 ->eq($inst->getEntity()->getMainIdProperty()->getName(), $value)
+                ->limit(1)
                 ->execute()
                 ->getFirstModel();
     }
 
-    static public function loadVersion($value)
+    static public function loadByVersionId($value)
     {
         $inst = new static();
         return $inst->_entity->findVersion()
             ->eq($inst->getEntity()->getVersionIdProperty()->getName(), $value)
+            ->limit(1)
+            ->execute()
+            ->getFirstModel();
+    }
+
+    static public function loadByVersionKey($mid, $key)
+    {
+        $inst = new static();
+        return $inst->_entity->findVersion()
+            ->eq($inst->getEntity()->getVersionKeyProperty()->getName(), $key)
+            ->eq($inst->getEntity()->getMainIdProperty()->getName(), $mid)
+            ->limit(1)
             ->execute()
             ->getFirstModel();
     }

@@ -10,6 +10,7 @@ class Pagination extends Element
     private $_pageRange = null;
 
     public function __construct($rowCount, $pageSize, $pageRange){
+        parent::__construct('ul', array('class'=>'pagination'));
         $this->_rowCount = $rowCount;
         $this->_pageSize = $pageSize;
         $this->_pageRange = $pageRange;
@@ -45,7 +46,7 @@ class Pagination extends Element
         $pargs = $request->getAllParameters();
         $pargs['pageindex'] = 1;
         $html = array(
-            "<div class=\"pull-right\"><div class=\"dataTables_paginate paging_bs_normal\"><ul class=\"pagination\">",
+            $this->renderBegin()
         );
         if($pageIndex > $this->_pageRange) {
             $html[] = sprintf("<li><a href=\"%s\">&larr; %s</a></li>", $router->buildUrl().'?'.http_build_query($pargs) , 1);
@@ -53,7 +54,7 @@ class Pagination extends Element
 
         for($i = $start; $i <= $end; $i++){
             if($i == $pageIndex) {
-                $html[] = sprintf("<li class=\"active\"><span>%s</span></li>", $i);
+                $html[] = sprintf("<li class=\"active\"><a href=\"#\">%s</a></li>", $i);
             } else {
                 $pargs['pageindex'] = $i;
                 $html[] = sprintf("<li><a href=\"%s\">%s</a></li>", $router->buildUrl().'?'.http_build_query($pargs), $i);
@@ -64,7 +65,7 @@ class Pagination extends Element
             $pargs['pageindex'] = $pc;
             $html[] = sprintf("<li><a href=\"%s\">%s &rarr;</a></li>", $router->buildUrl().'?'.http_build_query($pargs), $pc);
         }
-        $html[] = '</ul></div></div>';
+        $html[] = $this->renderEnd();
         return implode('', $html);
     }
 

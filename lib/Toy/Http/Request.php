@@ -162,13 +162,6 @@ class Request implements \ArrayAccess
         return false;
     }
 
-    // public function parameterIsEmpty($name){
-    // 	if($this->exists($name)){
-    // 		return empty($_REQUEST[$name]);
-    // 	}
-    // 	return false;
-    // }
-
     public function getAllParameters()
     {
         return $_REQUEST;
@@ -194,9 +187,19 @@ class Request implements \ArrayAccess
         return array_key_exists($name, $_GET) ? $_REQUEST[$name] : $default;
     }
 
+    public function getAllQuery()
+    {
+        return $_GET;
+    }
+
     public function getPost($name, $default = '')
     {
         return array_key_exists($name, $_POST) ? $_REQUEST[$name] : $default;
+    }
+
+    public function getAllPost()
+    {
+        return $_POST;
     }
 
     public function getFile($name)

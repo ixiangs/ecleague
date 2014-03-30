@@ -1,12 +1,14 @@
 <?php
 $this->assign('breadcrumb', array(
-    array('text'=>$this->locale->_('locale_manage')),
-    array('text'=>$this->locale->_('locale_language_list'), 'url'=>$this->router->buildUrl('list')),
-    array('text'=>$this->locale->_($this->router->action == 'add' ? "add" : "edit"), 'active'=>true)
+    $this->html->anchor($this->locale->_('locale_manage')),
+    $this->html->anchor($this->locale->_($this->router->action == 'add' ? "locale_add_language" : "locale_edit_language"))
 ));
 
-$this->assign('buttons', array(
-    array('text'=>$this->locale->_('back'), 'url'=>$this->router->buildUrl('list')),
+$this->assign('navigationBar', array(
+    $this->html->anchor($this->locale->_('back'), $this->router->buildUrl('list'))
+));
+
+$this->assign('toolbar', array(
     $this->html->button('button', $this->locale->_('save'), 'btn btn-primary')->setAttribute('data-submit', 'form1')
 ));
 

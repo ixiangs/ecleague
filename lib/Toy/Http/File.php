@@ -87,9 +87,10 @@ class File
         return $this->_size;
     }
 
-    public function checkExtension($exs)
+    public function checkExtension()
     {
-        return in_array($this->_extension, $exs);
+        $args = func_get_args();
+        return in_array($this->_extension, $args);
     }
 
     public function isImage()

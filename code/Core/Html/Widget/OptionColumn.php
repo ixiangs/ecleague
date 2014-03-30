@@ -13,13 +13,16 @@ class OptionColumn extends LabelColumn{
     }
 
     public function renderCell($row, $index){
-        $op = StringUtil::substitute($this->getLabel()->getAttribute('text'), $row);
+        $st = $this->getLabel()->getAttribute('text');
+        $op = StringUtil::substitute($st, $row);
         if(array_key_exists($op, $this->_options)){
             $this->getLabel()->setAttribute('text', $this->_options[$op]);
         }else{
             $this->getLabel()->setAttribute('text', $this->getDefaultText());
         }
-        return parent::renderCell($row, $index);
+        $res = parent::renderCell($row, $index);
+        $this->getLabel()->setAttribute('text', $st);
+        return $res;
     }
 
     public function getType(){

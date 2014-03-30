@@ -12,12 +12,15 @@ class Helper
     {
     }
 
-    public function button($type, $text, $css){
-        $res = new Element('button', array('type'=>$type, 'class'=>$css, 'text'=>$text));
-        return $res;
+    public function anchor($text, $href = '#', $target=null){
+        return new Element('a', array('href'=>$href, 'text'=>$text, 'target'=>$target));
     }
 
-    public function table($dataSource = null, $id = null){
+    public function button($type, $text, $css = 'btn btn-default'){
+        return new Element('button', array('type'=>$type, 'class'=>$css, 'text'=>$text));
+    }
+
+    public function table($dataSource = null, $id = 'table1'){
         return new Table($dataSource, $id);
     }
 

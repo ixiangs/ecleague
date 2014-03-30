@@ -42,6 +42,7 @@ Toy.Locale.define('zh-CN', 'Validate', {
 Toy.Locale.define('zh-CN', 'Default', {
 	delete_confirm: '确认删除',
 	delete_confirm_msg: '数据删除后不能恢复，确定删除吗？',
+    please_select_row: '请选择要操作的数据',
 	cancel: '取消',
 	'delete': '删除'
 });

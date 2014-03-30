@@ -12,19 +12,10 @@ abstract class Controller
     protected $response = null;
     protected $session = null;
     protected $router = null;
-//    protected $dispatcher = null;
 
     public function __construct()
     {
     }
-
-//    public function __get($name)
-//    {
-//        if ($this->context->hasItem($name)) {
-//            return $this->context->getItem($name);
-//        }
-//        return null;
-//    }
 
     public function initialize($ctx)
     {
@@ -33,49 +24,7 @@ abstract class Controller
         $this->response = $ctx->response;
         $this->session = $ctx->session;
         $this->router = $ctx->router;
-//		$this->dispatcher = $ctx->getDispatcher();
     }
-
-    // public function setContext($value) {
-    // $this -> _context = $value;
-    // return $this;
-    // }
-
-    // public function getContext() {
-    // return $this -> _context;
-    // }
-// 
-    // public function getRequest() {
-    // return $this -> _context -> getRequest();
-    // }
-// 
-    // public function getResponse() {
-    // return $this -> _context -> getResponse();
-    // }
-// 
-    // public function getSession() {
-    // return $this -> _context -> getSession();
-    // }
-// 
-    // public function getRouter() {
-    // return $this -> _context -> getRouter();
-    // }
-// 
-    // public function getDispatcher() {
-    // return $this -> _context -> getLanguage();
-    // }
-// 
-    // public function getLocalize() {
-    // return $this -> _context -> getLocalize();
-    // }
-// 	
-    // public function getLanguage(){
-    // return $this->_context->getLanguage();
-    // }
-// 	
-    // public function getHistory() {
-    // return $this -> _context -> getHistory();
-    // }
 
     public function execute($action)
     {

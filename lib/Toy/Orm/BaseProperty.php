@@ -13,6 +13,7 @@ abstract class BaseProperty
     private $_defaultValue = null;
     private $_insertable = true;
     private $_updateable = true;
+    private $_settings = array();
 
     public function __construct($name)
     {
@@ -125,6 +126,18 @@ abstract class BaseProperty
     public function setUpdateable($value)
     {
         $this->_updateable = $value;
+        return $this;
+    }
+
+    public function getSetting($name, $d = null){
+        if(array_key_exists($name, $this->_settings)){
+            return $this->_settings[$name];
+        }
+        return $d;
+    }
+
+    public function setSetting($name, $value){
+        $this->_settings[$name] = $value;
         return $this;
     }
 

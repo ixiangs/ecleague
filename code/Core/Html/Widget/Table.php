@@ -6,11 +6,17 @@ class Table extends Element
 
     private $_columns = array();
     private $_dataSource = null;
+    private $_rowSelectable = false;
 
-    public function __construct($dataSource = null, $id = null)
+    public function __construct($dataSource = null, $id = 'table1')
     {
-        parent::__construct('table', array('id'=>$id, 'class'=>'table table-striped table-bordered'));
+        parent::__construct('table', array('id' => $id, 'class' => 'table table-striped table-bordered'));
         $this->setDataSource($dataSource);
+    }
+
+    public function getRowSelectable()
+    {
+        return $this->_rowSelectable;
     }
 
     public function setDataSource($value)
@@ -24,7 +30,8 @@ class Table extends Element
         return $this->_columns;
     }
 
-    public function addColumn($col){
+    public function addColumn($col)
+    {
         $this->_columns[] = $col;
         return $this;
     }
@@ -32,7 +39,7 @@ class Table extends Element
     public function addIndexColumn($headText, $headCss = null, $cellCss = null)
     {
         $col = new IndexColumn();
-        $col->getHead()->setAttribute(array('class'=>$headCss, 'text'=>$headText));
+        $col->getHead()->setAttribute(array('class' => $headCss, 'text' => $headText));
         $col->getCell()->setAttribute('class', $cellCss);
         $this->addColumn($col);
         return $col;
@@ -41,9 +48,9 @@ class Table extends Element
     public function addLabelColumn($headText, $cellText, $headCss = null, $cellCss = null)
     {
         $col = new LabelColumn();
-        $col->getHead()->setAttribute(array('class'=>$headCss, 'text'=>$headText));
+        $col->getHead()->setAttribute(array('class' => $headCss, 'text' => $headText));
         $col->getCell()->setAttribute('class', $cellCss);
-        $col->getLabel()->setAttribute(array('text'=>$cellText));
+        $col->getLabel()->setAttribute(array('text' => $cellText));
         $this->addColumn($col);
         return $col;
     }
@@ -52,8 +59,9 @@ class Table extends Element
     {
         $col = new OptionColumn();
         $col->setOptions($options);
-        $col->getHead()->setAttribute(array('class'=>$headCss, 'text'=>$headText));
+        $col->getHead()->setAttribute(array('class' => $headCss, 'text' => $headText));
         $col->getCell()->setAttribute('class', $cellCss);
+        $col->getLabel()->setAttribute('text', $cellText);
         $this->addColumn($col);
         return $col;
     }
@@ -61,9 +69,9 @@ class Table extends Element
     public function addLinkColumn($headText, $cellText, $link, $headCss = null, $cellCss = null)
     {
         $col = new LinkColumn();
-        $col->getHead()->setAttribute(array('class'=>$headCss, 'text'=>$headText));
+        $col->getHead()->setAttribute(array('class' => $headCss, 'text' => $headText));
         $col->getCell()->setAttribute('class', $cellCss);
-        $col->getLink()->setAttribute(array('text'=>$cellText, 'href'=>$link));
+        $col->getLink()->setAttribute(array('text' => $cellText, 'href' => $link));
         $this->addColumn($col);
         return $col;
     }
@@ -74,9 +82,23 @@ class Table extends Element
         $col->getHead()->setAttribute('class', $headCss);
         $col->getCell()->setAttribute('class', $cellCss);
         $col->getCheckbox()->setAttribute(array(
-            'name'=>$checkboxName,
-            'value'=>$checkboxValue,
-            'id'=>$checkboxId));
+            'name' => $checkboxName,
+            'value' => $checkboxValue,
+            'id' => $checkboxId));
+        $this->addColumn($col);
+        return $col;
+    }
+
+    public function addSelectableColumn($checkboxName, $checkboxValue, $checkboxId, $headCss = null, $cellCss = null)
+    {
+        $this->_rowSelectable = true;
+        $col = new SelectableColumn();
+        $col->getHead()->setAttribute('class', $headCss);
+        $col->getCell()->setAttribute('class', $cellCss);
+        $col->getCheckbox()->setAttribute(array(
+            'name' => $checkboxName,
+            'value' => $checkboxValue,
+            'id' => $checkboxId));
         $this->addColumn($col);
         return $col;
     }
@@ -84,9 +106,9 @@ class Table extends Element
     public function addButtonColumn($headText, $cellText, $script, $headCss = null, $cellCss = null)
     {
         $col = new ButtonColumn();
-        $col->getHead()->setAttribute(array('class'=>$headCss, 'text'=>$headText));
+        $col->getHead()->setAttribute(array('class' => $headCss, 'text' => $headText));
         $col->getCell()->setAttribute('class', $cellCss);
-        $col->getButton()->setAttribute(array('text'=>$cellText, 'onclick'=>$script));
+        $col->getButton()->setAttribute(array('text' => $cellText, 'onclick' => $script));
         $this->addColumn($col);
         return $col;
     }

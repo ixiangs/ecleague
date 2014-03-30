@@ -1,12 +1,16 @@
 <?php
 $this->assign('breadcrumb', array(
-    array('text' => $this->locale->_('locale_manage')),
-    array('text' => $this->locale->_('locale_language_list'), 'url' => $this->router->buildUrl('language/list')),
-    array('text' => $this->language->getName(), 'url' => $this->router->buildUrl('list', array('languageid'=>$this->language->getId())))
+    $this->html->anchor($this->locale->_('locale_manage')),
+    $this->html->anchor($this->language->getName()),
+    $this->html->anchor($this->locale->_('locale_dictionary')),
+    $this->html->anchor($this->locale->_('add')),
 ));
 
-$this->assign('buttons', array(
-    array('text' => $this->locale->_('back'), 'url' => $this->router->buildUrl('list', array('languageid'=>$this->language->getId()))),
+$this->assign('navigationBar', array(
+    $this->html->anchor($this->locale->_('back'), $this->router->buildUrl('list', array('languageid'=>$this->language->getId()))),
+));
+
+$this->assign('toolbar', array(
     $this->html->button('button', $this->locale->_('new'), 'btn btn-success')->setAttribute('id', 'new'),
     $this->html->button('button', $this->locale->_('save'), 'btn btn-primary')->setAttribute('data-submit', 'form1')
 ));
@@ -34,7 +38,7 @@ $this->beginBlock('footerjs');
             '<div class="col-lg-10"><input type="text" value="" data-validate-required="true" id="labels_{index}" name="labels[{index}]" class="form-control">' +
             '</div></div>'+
             '<div class="form-group"><div class="col-lg-2"></div><div class="col-lg-10">' +
-            '<button type="button" id="delete_{index}" onclick="javascript:deleteField({index});"><?php echo $this->locale->_('delete'); ?></button>' +
+            '<button type="button" class="btn btn-default" id="delete_{index}" onclick="javascript:deleteField({index});"><?php echo $this->locale->_('delete'); ?></button>' +
             '</div></div>';
 
         $('#new').click(function () {

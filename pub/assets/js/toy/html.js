@@ -194,6 +194,8 @@ Toy.Validation.rules = {
                                 }
                             }
                             return false;
+                        case 'file':
+                            return $input.val().length > 0;
                     }
                     break;
                 case 'SELECT':

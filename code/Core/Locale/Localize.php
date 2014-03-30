@@ -1,6 +1,7 @@
 <?php
 namespace Core\Locale;
 
+use Core\Locale\Model\LanguageModel;
 use Toy\Platform\PathUtil;
 use Toy\Platform\FileUtil;
 use Toy\Web\Application;
@@ -9,8 +10,10 @@ class Localize implements \ArrayAccess
 {
 
     private $_texts = array();
-    private $_longDateFormat = "";
-    private $_shortDateFormat = "";
+    private $_languages = array();
+    private $_currentLanguage = null;
+//    private $_longDateFormat = "";
+//    private $_shortDateFormat = "";
 
     private function __construct()
     {
@@ -42,14 +45,8 @@ class Localize implements \ArrayAccess
         return '';
     }
 
-    public function getLongDateFormat()
-    {
-        return $this->_longDateFormat;
-    }
-
-    public function getShortDateFormat()
-    {
-        return $this->_shortDateFormat;
+    public function getLanguages(){
+        return $this->_languages;
     }
 
     public function formatDate($format, $time = null)
@@ -57,9 +54,13 @@ class Localize implements \ArrayAccess
         $nt = $time ? $time : time();
         switch ($format) {
             case 'L':
-                return date($this->_longDateFormat, $nt);
+                return date($this->_currentLanguage['long_date_formate'], $nt);
             case 'S':
-                return date($this->_shortDateFormat, $nt);
+                return date($this->_currentLanguage['long_short_formate'], $nt);
+            case 'LF':
+                return date($this->_currentLanguage['long_date_formate'].' H:i:s', $nt);
+            case 'SF':
+                return date($this->_currentLanguage['long_short_formate'].' H:i:s', $nt);
             default:
                 return date($format, $nt);
         }
@@ -87,25 +88,31 @@ class Localize implements \ArrayAccess
 
     public function initialize($lang)
     {
+        $rows = LanguageModel::find()->execute()->rows;
+        foreach($rows as $row){
+            $this->_languages[strtolower($row['code'])] = $row;
+        }
+        $this->_currentLanguage = $this->_languages[$lang];
+
         $settings = Application::$componentSettings['Locale']['settings'];
         $path = PathUtil::combines($settings['directory'], $lang);
         PathUtil::scanCurrent($path, function ($file, $info) use (&$files) {
             if ($info['basename'] == 'culture.csv') {
-                $lines = FileUtil::readCsv($file);
-                for ($i = 0; $i < count($lines); $i++) {
-                    switch ($lines[$i][0]) {
-                        case 'longDate' :
-                        {
-                            $this->_longDateFormat = $lines[$i][1];
-                            break;
-                        }
-                        case 'shortDate' :
-                        {
-                            $this->_shortDateFormat = $lines[$i][1];
-                            break;
-                        }
-                    }
-                }
+//                $lines = FileUtil::readCsv($file);
+//                for ($i = 0; $i < count($lines); $i++) {
+//                    switch ($lines[$i][0]) {
+//                        case 'longDate' :
+//                        {
+//                            $this->_longDateFormat = $lines[$i][1];
+//                            break;
+//                        }
+//                        case 'shortDate' :
+//                        {
+//                            $this->_shortDateFormat = $lines[$i][1];
+//                            break;
+//                        }
+//                    }
+//                }
             } elseif ($info['extension'] == 'csv') {
                 $lines = FileUtil::readCsv($file);
                 for ($i = 0; $i < count($lines); $i++) {

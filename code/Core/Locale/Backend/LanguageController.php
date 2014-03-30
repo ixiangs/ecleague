@@ -1,8 +1,10 @@
 <?php
 namespace Core\Locale\Backend;
 
+use Toy\Platform\FileUtil;
 use Toy\Web;
 use Locale\Model\LanguageModel;
+use Locale\Model\DictionaryModel;
 
 class LanguageController extends Web\Controller
 {
@@ -85,6 +87,32 @@ class LanguageController extends Web\Controller
             return Web\Result::redirectResult($this->router->buildUrl('list'));
         }
         return Web\Result::redirectResult($this->router->buildUrl('list'));
+    }
+
+    public function importAction(){
+        return Web\Result::templateResult();
+    }
+
+    public function importPostAction(){
+        $lang = $this->context->locale;
+        $up = $this->request->getFile('upload');
+        if(!$up->checkExtension('csv')){
+            $this->session->set('errors', $lang->_('locale_err_import'));
+            return Web\Result::templateResult();
+        }
+        $langs = $this->context->locale->getLanguages();
+        $lines = FileUtil::readCsv($up->getTmpName());
+        $titles = array_shift($lines);
+        foreach($lines as $line){
+            for($i = 1; $i < count($titles); $i++){
+                DictionaryModel::create(array(
+                    'code'=>$line[0],
+                    'label'=>$line[$i],
+                    'language_id'=>$langs[strtolower($titles[$i])]['id']
+                ))->insert();
+            }
+        }
+        die();
     }
 
     private function getEditTemplateResult($model)

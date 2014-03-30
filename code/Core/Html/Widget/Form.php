@@ -19,11 +19,21 @@ class Form extends Element
         return $this;
     }
 
-    public function addInputField($type, $label, $id, $name, $value)
+    public function addLabelField($label, $value)
+    {
+        $f = new LabelField($label);
+        $f->getInput()->setAttribute(array('text'=>$value));
+        $this->addField($f);
+    }
+
+        public function addInputField($type, $label, $id, $name, $value)
     {
         $f = new InputField($type, $label);
         $f->getInput()->setAttribute(array('id'=>$id, 'name'=>$name, 'value'=>$value));
         $this->addField($f);
+        if($type == 'file'){
+            $this->setAttribute('enctype', 'multipart/form-data');
+        }
         return $f;
     }
 

@@ -1,5 +1,5 @@
 <?php
-const PAGINATION_SIZE = 50;
+const PAGINATION_SIZE = 20;
 const PAGINATION_RANGE = 10;
 
 if (preg_match('/\.(?:png|jpg|jpeg|gif|css|js|ico|html)$/', $_SERVER["REQUEST_URI"])) {

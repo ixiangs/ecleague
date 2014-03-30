@@ -1,8 +1,6 @@
 <?php
 namespace Core\Html\Widget;
 
-use Toy\Util\StringUtil;
-
 class ButtonColumn extends BaseColumn{
 
     private $_button = null;
@@ -10,7 +8,7 @@ class ButtonColumn extends BaseColumn{
     public function __construct(){
         parent::__construct();
         $this->_button = new Element('button');
-        $this->_button->setAttribute('type', 'button')->addBindableAttribute('onclick', 'text');
+        $this->_button->setAttribute(array('type'=>'button', 'class'=>'btn btn-default'))->addBindableAttribute('onclick', 'text');
     }
 
     public function getButton(){

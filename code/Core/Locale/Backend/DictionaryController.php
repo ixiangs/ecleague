@@ -97,11 +97,11 @@ class DictionaryController extends Web\Controller
         return $this->getEditTemplateResult(DictionaryModel::load($id));
     }
 
-    public function editPostAction()
+    public function editPostAction($languageid)
     {
         $lang = $this->context->locale;
-        $m = DictionaryModel::merge($this->request->getParameter('id'), $this->request->getAllParameters());
-        $vr = $m->validate();
+        $m = DictionaryModel::merge($this->request->getParameter('id'), $this->request->getAllPost());
+        $vr = $m->validateProperties();
         if ($vr !== true) {
             $this->session->set('errors', $lang->_('err_input_invalid'));
             return $this->getEditTemplateResult($m);
@@ -112,7 +112,7 @@ class DictionaryController extends Web\Controller
             return $this->getEditTemplateResult($m);
         }
 
-        return Web\Result::redirectResult($this->router->buildUrl('list'));
+        return Web\Result::redirectResult($this->router->buildUrl('list', array('languageid'=>$languageid)));
     }
 
     public function deleteAction($id)

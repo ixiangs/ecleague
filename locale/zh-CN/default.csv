@@ -85,3 +85,8 @@ system_manage,系统管理
 new,新建
 label,标签
 text,文本
+import,导入
+upload,上传
+select_file,选择文件
+select_all,全选
+unselect_all,全不选

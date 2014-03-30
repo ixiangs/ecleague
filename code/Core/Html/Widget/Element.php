@@ -62,7 +62,8 @@ class Element
         return $this->_bindableAttributes;
     }
 
-    public function getBoundAttribute(){
+    public function getBoundAttribute()
+    {
         return $this->_boundAttributes;
     }
 
@@ -119,11 +120,24 @@ class Element
         return $this;
     }
 
+    public function setEvent(){
+        $args = func_get_args();
+        $nums = func_num_args();
+        if ($nums == 2) {
+            $this->attributes['on'.$args[0]] = 'javascript:'.$args[1];
+        } elseif ($nums == 1 && is_array($args[0])) {
+            foreach($args as $k=>$v){
+                $this->attributes['on'.$k] = 'javascript:'.$v;
+            }
+        }
+        return $this;
+    }
+
     public function bindAttribute($data)
     {
         $this->_boundAttributes = array();
-        foreach($this->_bindableAttributes as $k){
-            if(array_key_exists($k, $this->attributes)){
+        foreach ($this->_bindableAttributes as $k) {
+            if (array_key_exists($k, $this->attributes)) {
                 $this->_boundAttributes[$k] = StringUtil::substitute($this->attributes[$k], $data);
             }
         }
@@ -133,19 +147,30 @@ class Element
     public function renderAttribute()
     {
         $arr = array();
-        foreach($this->_boundAttributes as $k=>$v){
+        foreach ($this->_boundAttributes as $k => $v) {
             if ($k != 'text') {
-                $arr[] = $k . '="' . $v . '"';
+                if (!empty($v)) {
+                    $arr[] = $k . '="' . $v . '"';
+                }
             }
         }
 
         foreach ($this->attributes as $k => $v) {
             if ($k != 'text' && !array_key_exists($k, $this->_boundAttributes)) {
-                $arr[] = $k . '="' . $v . '"';
+                if (!empty($v)) {
+                    $arr[] = $k . '="' . $v . '"';
+                }
             }
         }
 
         return implode(' ', $arr);
+    }
+
+    public function addChild()
+    {
+        $args = func_get_args();
+        $this->_children = array_merge($this->_children, $args);
+        return $this;
     }
 
     public function renderBegin()
@@ -163,7 +188,7 @@ class Element
         $res = '';
         if (array_key_exists('text', $this->_boundAttributes)) {
             $res = $this->_boundAttributes['text'];
-        }elseif (array_key_exists('text', $this->attributes)) {
+        } elseif (array_key_exists('text', $this->attributes)) {
             $res = $this->attributes['text'];
         }
         foreach ($this->_children as $child) {

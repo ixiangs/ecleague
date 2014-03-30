@@ -97,14 +97,27 @@ class Entity
     public function validateProperties(Model $model)
     {
         $result = array();
-        foreach ($this->_properties as $n => $p) {
-            if (!$p->getAutoIncrement()) {
-                $r = $p->validate($model->getData($n));
-                if ($r !== true) {
-                    $result[] = $n;
+        $isUpdate = $model->getIdValue();
+        if($isUpdate){
+            foreach ($this->_properties as $n => $p) {
+                if ($p->getUpdateable()) {
+                    $r = $p->validate($model->getData($n));
+                    if ($r !== true) {
+                        $result[] = $n;
+                    }
+                }
+            }
+        }else{
+            foreach ($this->_properties as $n => $p) {
+                if ($p->getInsertable()) {
+                    $r = $p->validate($model->getData($n));
+                    if ($r !== true) {
+                        $result[] = $n;
+                    }
                 }
             }
         }
+
         return empty($result) ? true : $result;
     }
 

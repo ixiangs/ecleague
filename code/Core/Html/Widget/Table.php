@@ -103,6 +103,16 @@ class Table extends Element
         return $col;
     }
 
+    public function addBooleanColumn($headText, $value, $headCss = null, $cellCss = null)
+    {
+        $col = new BooleanColumn();
+        $col->getHead()->setAttribute(array('class' => $headCss, 'text' => $headText));
+        $col->getCell()->setAttribute('class', $cellCss);
+        $col->setValue($value);
+        $this->addColumn($col);
+        return $col;
+    }
+
     public function addButtonColumn($headText, $cellText, $script, $headCss = null, $cellCss = null)
     {
         $col = new ButtonColumn();

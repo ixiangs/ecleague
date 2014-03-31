@@ -8,21 +8,40 @@ class AttributeModel extends Versioning\Model{
 
     const TABLE_NAME = '{t}dass_attribute';
 
+    const INPUT_TYPE_TEXTBOX = 'textbox';
+    const INPUT_TYPE_TEXTAREA = 'textarea';
+    const INPUT_TYPE_DROPDOWN = 'dropdown';
+    const INPUT_TYPE_LISTBOX = 'listbox';
+    const INPUT_TYPE_CHECKBOX_LIST = 'checkbox_list';
+    const INPUT_TYPE_RADIO_LIST = 'radio_list';
+    const INPUT_TYPE_DATE_PICKER = 'date_picker';
+
+    const DATA_TYPE_STRING = 'string';
+    const DATA_TYPE_INTEGER = 'integer';
+    const DATA_TYPE_BOOLEAN = 'boolean';
+    const DATA_TYPE_NUMBER = 'number';
+    const DATA_TYPE_ARRAY = 'array';
+    const DATA_TYPE_EMAIL = 'email';
+    const DATA_TYPE_DATE = 'date';
+
 }
 
 Versioning\Entity::register('Core\Dass\Model\AttributeModel', array(
-    'table'=>AttributeSetModel::TABLE_NAME,
+    'table'=>AttributeModel::TABLE_NAME,
     'properties'=>array(
         Orm\IntegerProperty::create('id')->setPrimaryKey(true)->setAutoIncrement(true),
-        Orm\StringProperty::create('code')->setNullable(false),
+        Orm\StringProperty::create('code')->setUnique(true)->setNullable(false),
         Orm\StringProperty::create('data_type')->setNullable(false),
         Orm\StringProperty::create('input_type')->setNullable(false),
-        Orm\BooleanProperty::create('indexable')->setNullable(false),
-        Orm\BooleanProperty::create('required')->setNullable(false),
+        Orm\BooleanProperty::create('indexable')->setDefaultValue(false)->setNullable(false),
+        Orm\BooleanProperty::create('required')->setDefaultValue(false)->setNullable(false),
+        Orm\BooleanProperty::create('enabled')->setDefaultValue(false)->setNullable(false),
+        Orm\SerializeProperty::create('form_setting'),
+        Orm\SerializeProperty::create('validate_setting'),
         Orm\StringProperty::create('name')->setNullable(false),
         Orm\StringProperty::create('display_label')->setNullable(false),
         Orm\StringProperty::create('form_label')->setNullable(false)
     ),
-    'mainProperties'=>array('code', 'data_type', 'input_type', 'indexable', 'required'),
+    'mainProperties'=>array('code', 'data_type', 'input_type', 'indexable', 'enabled', 'required', 'form_setting', 'validate_setting'),
     'versionProperties'=>array('name', 'display_label', 'form_label')
 ));

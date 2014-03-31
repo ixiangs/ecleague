@@ -1,11 +1,14 @@
 <?php
 $this->assign('breadcrumb', array(
-    array('text'=>$this->locale->_('locale_manage')),
-    array('text'=>$this->locale->_('locale_import_dictionary'), 'url'=>$this->router->buildUrl('list'))
+    $this->html->anchor($this->locale->_('locale_manage')),
+    $this->html->anchor($this->locale->_('locale_import_dictionary'))
 ));
 
-$this->assign('buttons', array(
-    array('text'=>$this->locale->_('back'), 'url'=>$this->router->buildUrl('list')),
+$this->assign('navigationBar', array(
+    $this->html->anchor($this->locale->_('back'), $this->router->buildUrl('list'))
+));
+
+$this->assign('toolbar', array(
     $this->html->button('button', $this->locale->_('upload'), 'btn btn-primary')->setAttribute('data-submit', 'form1')
 ));
 

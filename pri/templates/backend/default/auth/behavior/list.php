@@ -13,11 +13,12 @@ $dt->addIndexColumn('#', 'index', 'index');
 $dt->addLabelColumn($this->locale->_('code'), '{code}', 'middle', 'middle');
 $dt->addLabelColumn($this->locale->_('name'), '{name}', 'middle', 'middle');
 $dt->addLabelColumn($this->locale->_('url'), '{url}');
-$dt->addOptionColumn('', '{enabled}', array(
-        ''=>'<span class="label label-danger">'.$this->locale->_('disabled').'</span>',
-        false=>'<span class="label label-danger">'.$this->locale->_('disabled').'</span>',
-        true=>'<span class="label label-success">'.$this->locale->_('enabled').'</span>'),
-    'small', 'small text-center');
+$dt->addBooleanColumn($this->locale->_('enabled'), '{enabled}', 'small', 'small text-center');
+//$dt->addOptionColumn('', '{enabled}', array(
+//        ''=>'<span class="label label-danger">'.$this->locale->_('disabled').'</span>',
+//        false=>'<span class="label label-danger">'.$this->locale->_('disabled').'</span>',
+//        true=>'<span class="label label-success">'.$this->locale->_('enabled').'</span>'),
+//    'small', 'small text-center');
 $dt->addLinkColumn('', $this->locale->_('edit'), urldecode($this->router->buildUrl('edit', array('id'=>'{id}'))), 'edit', 'edit')
         ->getLink()->setAttribute('class', 'btn btn-default btn-sm');
 $dt->addButtonColumn('', $this->locale->_('delete'), "deleteConfirm('".urldecode($this->router->buildUrl('delete', array('id'=>'{id}')))."')", 'small', 'small')

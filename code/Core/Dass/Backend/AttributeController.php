@@ -1,19 +1,21 @@
 <?php
-namespace Core\Locale\Backend;
+namespace Core\Dass\Backend;
 
-use Toy\Platform\FileUtil;
 use Toy\Web;
-use Locale\Model\LanguageModel;
-use Locale\Model\DictionaryModel;
+use Dass\Model\AttributeModel;
 
-class LanguageController extends Web\Controller
+class AttributeController extends Web\Controller
 {
 
     public function listAction()
     {
         $pi = $this->request->getParameter("pageindex", 1);
-        $count = LanguageModel::find()->selectCount()->execute()->getFirstValue();
-        $models = LanguageModel::find()->limit(PAGINATION_SIZE, ($pi - 1) * PAGINATION_SIZE)->execute()->getModelArray();
+        $count = AttributeModel::findMain()->selectCount()->execute()->getFirstValue();
+        $models = AttributeModel::findMain()
+                    ->asc('code')
+                    ->limit(PAGINATION_SIZE, ($pi - 1) * PAGINATION_SIZE)
+                    ->execute()
+                    ->getModelArray();
         return Web\Result::templateResult(array(
                 'models' => $models,
                 'total' => $count,

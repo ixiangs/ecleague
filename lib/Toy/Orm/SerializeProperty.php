@@ -1,7 +1,7 @@
 <?php
 namespace Toy\Orm;
 
-class SerizlizeProperty extends BaseProperty
+class SerializeProperty extends BaseProperty
 {
 
     public function toDbValue($value)

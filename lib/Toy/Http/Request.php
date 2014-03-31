@@ -74,7 +74,14 @@ class Request implements \ArrayAccess
 
     public function getBrowserLanguage()
     {
+        $others = array(
+            'zh-Hans-CN'=>'zh-CN',
+            'zh-Hans'=>'zh-CN'
+        );
         $arr = explode(",", $_SERVER["HTTP_ACCEPT_LANGUAGE"]);
+        if(array_key_exists($arr[0], $others)){
+            return strtolower($others[$arr[0]]);
+        }
         return strtolower($arr[0]);
     }
 

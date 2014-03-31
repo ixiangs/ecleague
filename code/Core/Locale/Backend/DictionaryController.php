@@ -17,6 +17,7 @@ class DictionaryController extends Web\Controller
         $count = DictionaryModel::find()->selectCount()->execute()->getFirstValue();
         $models = DictionaryModel::find()
             ->eq('language_id', $lid)
+            ->desc('id')
             ->limit(PAGINATION_SIZE, ($pi - 1) * PAGINATION_SIZE)
             ->execute()
             ->getModelArray();

@@ -1,17 +1,25 @@
 <?php
 $this->assign('breadcrumb', array(
-    array('text'=>$this->locale->_('auth_manage')),
-    array('text'=>$this->locale->_('auth_account_list'), 'url'=>$this->router->buildUrl('list')),
-    array('text'=>$this->locale->_($this->router->action == 'add' ? "add" : "edit"), 'active'=>true)
+    $this->html->anchor($this->locale->_('auth_manage')),
+    $this->html->anchor($this->locale->_('auth_account_list'), $this->router->buildUrl('list')),
+    $this->html->anchor($this->locale->_($this->router->action == 'add' ? "add" : "edit"))
 ));
 
-$this->assign('buttons', array(
-    array('text'=>$this->locale->_('back'), 'url'=>$this->router->buildUrl('list'))
+$this->assign('navigationBar', array(
+    $this->html->anchor($this->locale->_('back'), $this->router->buildUrl('list'))
+));
+
+$this->assign('toolbar', array(
+    $this->html->button('button', $this->locale->_('save'), 'btn btn-primary')->setAttribute('data-submit', 'form1')
 ));
 
 $f = $this->html->form();
+if($this->router->action == 'add'):
 $f->addInputField('text', $this->locale->_('username'), 'username', 'username', $this->model->getUsername())
     ->addValidateRule('required', true);
+else:
+$f->addLabelField($this->locale->_('username'), $this->model->getUsername());
+endif;
 $f->addInputField('email', $this->locale->_('email'), 'email', 'email', $this->model->getEmail())
     ->addValidateRule('required', true);
 if($this->router->action == 'add'):
@@ -27,8 +35,7 @@ $f->addSelectField(array(
         \Core\Auth\Model\AccountModel::STATUS_NONACTIVATED=>$this->locale->_('auth_status_nonactivated'),
         \Core\Auth\Model\AccountModel::STATUS_DISABLED=>$this->locale->_('disabled')
 ), $this->locale->_('status'), 'status', 'status', $this->model->getStatus());
-$f->addCheckboxesField($this->roles, $this->locale->_('auth_role_list'), 'role_ids', 'role_ids[]', $this->model->getRoleIds());
+$f->addCheckboxListField($this->roles, $this->locale->_('auth_role_list'), 'role_ids', 'role_ids[]', $this->model->getRoleIds());
 $f->addHiddenField('id', 'id', $this->model->getId());
-$f->addButton('submit', $this->locale->_('save'), 'btn btn-primary');
 $this->assign('form', $f);
 echo $this->includeTemplate('layout\form');

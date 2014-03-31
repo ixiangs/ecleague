@@ -31,13 +31,15 @@ class AccountController extends Web\Controller{
         $lang = $this->context->locale;
 		$m = AccountModel::create($this->request->getAllParameters());
 
-        $vr = $m->validate();
-        if($vr === false){
+        $vr = $m->validateProperties();
+        if ($vr !== true) {
             $this->session->set('errors', $lang->_('err_input_invalid'));
             return $this->getEditTemplateResult($m);
         }
-        if($vr === AccountModel::ERROR_REPEATED){
-            $this->session->set('errors', $lang->_('auth_err_account_exists', $m->getUsername()));
+
+        $vr = $m->validateUnique();
+        if ($vr !== true) {
+            $this->session->set('errors', $lang->_('auth_err_account_exists', $m->getCode()));
             return $this->getEditTemplateResult($m);
         }
 
@@ -47,18 +49,6 @@ class AccountController extends Web\Controller{
         }
 
         return Web\Result::RedirectResult($this->router->buildUrl('list'));
-//        if($m->validate())
-//        $m->insert();
-//
-//		switch($r){
-//			case AccountModel::ERROR_ACCOUNT_REPEATED:
-//				$this->session->set('errors', $lang->_('err_account_exists', $m->getUsername()));
-//				break;
-//			case AccountModel::ERROR_UNKNOW:
-//				$this->session->set('errors', $lang->_('err_system'));
-//				break;
-//		}
-//		return $this->getEditTemplateResult($m);
 	}	
 
 	public function editAction($id){
@@ -70,7 +60,7 @@ class AccountController extends Web\Controller{
         $lang = $this->context->locale;
 		$m = AccountModel::merge($this->request->getParameter('id'), $this->request->getAllParameters());
 		$m->setRoleIds($this->request->getParameter('role_ids', array()));
-		$vr = $m->validate();
+        $vr = $m->validateProperties();
 		if($vr !== true){
 			$this->session->set('errors', $lang->_('err_input_invalid'));
 			return $this->getEditTemplateResult($m);

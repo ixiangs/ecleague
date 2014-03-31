@@ -33,22 +33,19 @@ class CheckboxList extends Element
 
     public function renderInner()
     {
-        $vattrs = [];
-        foreach ($this->getValidateRules() as $n => $v) {
-            $vattrs[] = array('data-validate-' . $n . '="' . $v . '"');
-        }
-        $vattrs = implode(' ', $vattrs);
-
-        list($name, $id) = $this->getAttribute('name', 'id');
         $val = $this->getAttribute('value');
-
+        $this->removeAttribute('value');
+        $this->setAttribute('type', 'checkbox');
         $html = array();
         foreach ($this->_options as $option => $text) {
+            $this->setAttribute('value', $option);
             if (is_array($val) && in_array($option, $val)) {
-                $html[] = sprintf('<label class="checkbox-inline"><input type="checkbox" name="%s" value="%s" checked="true" %s/>%s</label>', $name, $option, $vattrs, $text);
+                $this->setAttribute('checked', 'checked');
+                $html[] = sprintf('<label class="checkbox-inline"><input %s/>%s</label>', $this->renderAttribute(), $text);
             } else {
-                $html[] = sprintf('<label class="checkbox-inline"><input type="checkbox" name="%s" value="%s" %s/>%s</label>', $name, $option, $vattrs, $text);
+                $html[] = sprintf('<label class="checkbox-inline"><input %s/>%s</label>', $this->renderAttribute(), $text);
             }
+            $this->removeAttribute('checked');
         }
         return implode('', $html);
     }

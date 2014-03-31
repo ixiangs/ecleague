@@ -28,22 +28,28 @@ class Pagination extends Element
             $end = $pc;
         } else if($pageIndex == $pc){
             $start = $pc - $this->_pageRange - 1;
+            if($start <= 1){
+                $start = 1;
+            }
             $end = $pc;
         } else {
-            $this->_pageRange = floor($pageIndex / $this->_pageRange);
-            $start = $this->_pageRange <= 0? 1: $this->_pageRange*$this->_pageRange - 1;
+            $cpr = floor($pageIndex / $this->_pageRange);
+            $start = $cpr <= 0? 1: $cpr*$this->_pageRange - 1;
+            if($start <= 1){
+                $start = 1;
+            }
+
             $end = $start + $this->_pageRange + 1;
             if($end > $pc) {
                 $start = $pc - $this->_pageRange - 1;
+                if($start < 1){
+                    $start = 1;
+                }
                 $end = $pc;
-            }
-            if($start < 1){
-                $start = 1;
-                $end = $start + $this->_pageRange;
             }
         }
 
-        $pargs = $request->getAllParameters();
+        $pargs = $request->getAllQuery();
         $pargs['pageindex'] = 1;
         $html = array(
             $this->renderBegin()

@@ -28,14 +28,15 @@ class BehaviorController extends Web\Controller
     {
         $lang = $this->context->locale;
         $m = BehaviorModel::create($this->request->getAllParameters());
-        if (BehaviorModel::checkUnique('code', $m->getCode())) {
-            $this->session->set('errors', $lang->_('err_code_exists', $m->getCode()));
+        $vr = $m->validateProperties();
+        if ($vr !== true) {
+            $this->session->set('errors', $lang->_('err_input_invalid'));
             return $this->getEditTemplateResult($m);
         }
 
-        $vr = $m->validate();
+        $vr = $m->validateUnique();
         if ($vr !== true) {
-            $this->session->set('errors', $lang->_('err_input_invalid'));
+            $this->session->set('errors', $lang->_('err_code_exists', $m->getCode()));
             return $this->getEditTemplateResult($m);
         }
 
@@ -56,7 +57,7 @@ class BehaviorController extends Web\Controller
     {
         $lang = $this->context->locale;
         $m = BehaviorModel::merge($this->request->getParameter('id'), $this->request->getAllParameters());
-        $vr = $m->validate();
+        $vr = $m->validateProperties();
         if ($vr !== true) {
             $this->session->set('errors', $lang->_('err_input_invalid'));
             return $this->getEditTemplateResult($m);

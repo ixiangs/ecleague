@@ -28,14 +28,16 @@ class RoleController extends Web\Controller
     {
         $lang = $this->context->locale;
         $m = RoleModel::create($this->request->getAllParameters());
-        if (RoleModel::checkUnique('code', $m->getCode())) {
-            $this->session->set('errors', $lang->_('err_code_exists', $m->getCode()));
+
+        $vr = $m->validateProperties();
+        if ($vr !== true) {
+            $this->session->set('errors', $this->_('err_input_invalid'));
             return $this->getEditTemplateReult($m);
         }
 
-        $vr = $m->validate();
+        $vr = $m->validateUnique();
         if ($vr !== true) {
-            $this->session->set('errors', $this->_('err_input_invalid'));
+            $this->session->set('errors', $lang->_('err_code_exists', $m->getCode()));
             return $this->getEditTemplateReult($m);
         }
 
@@ -58,7 +60,7 @@ class RoleController extends Web\Controller
         $lang = $this->context->locale;
         $m = RoleModel::merge($this->request->getParameter('id'), $this->request->getAllParameters());
         $m->setBehaviorIds($this->request->getParameter('behavior_ids', array()));
-        $vr = $m->validate();
+        $vr = $m->validateProperties();
         if ($vr !== true) {
             $this->session->set('errors', $lang->_('err_input_invalid'));
             return $this->getEditTemplateReult($m);

@@ -1,12 +1,16 @@
 <?php
 $this->assign('breadcrumb', array(
-    array('text'=>$this->locale->_('auth_manage')),
-    array('text'=>$this->locale->_('auth_behavior_list'), 'url'=>$this->router->buildUrl('list')),
-    array('text'=>$this->locale->_($this->router->action == 'add' ? "add" : "edit"), 'active'=>true)
+    $this->html->anchor($this->locale->_('auth_manage')),
+    $this->html->anchor($this->locale->_('auth_behavior_list'), $this->router->buildUrl('list')),
+    $this->html->anchor($this->locale->_($this->router->action == 'add' ? "add" : "edit"))
 ));
 
-$this->assign('buttons', array(
-    array('text'=>$this->locale->_('back'), 'url'=>$this->router->buildUrl('list'))
+$this->assign('navigationBar', array(
+        $this->html->anchor($this->locale->_('back'), $this->router->buildUrl('list'))
+));
+
+$this->assign('toolbar', array(
+    $this->html->button('button', $this->locale->_('save'), 'btn btn-primary')->setAttribute('data-submit', 'form1')
 ));
 
 $f = $this->html->form();
@@ -20,6 +24,5 @@ $f->addSelectField(array(
         '1'=>$this->locale->_('yes')
     ),
     $this->locale->_('enable'), 'enabled', 'enabled', $this->model->getEnabled());
-$f->addButton('submit', $this->locale->_('save'), 'btn btn-primary');
 $this->assign('form', $f);
 echo $this->includeTemplate('layout\form');

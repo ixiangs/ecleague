@@ -1,6 +1,7 @@
 <?php
 namespace Core\Locale;
 
+use Core\Locale\Model\DictionaryModel;
 use Core\Locale\Model\LanguageModel;
 use Toy\Platform\PathUtil;
 use Toy\Platform\FileUtil;
@@ -94,32 +95,10 @@ class Localize implements \ArrayAccess
         }
         $this->_currentLanguage = $this->_languages[$lang];
 
-        $settings = Application::$componentSettings['Locale']['settings'];
-        $path = PathUtil::combines($settings['directory'], $lang);
-        PathUtil::scanCurrent($path, function ($file, $info) use (&$files) {
-            if ($info['basename'] == 'culture.csv') {
-//                $lines = FileUtil::readCsv($file);
-//                for ($i = 0; $i < count($lines); $i++) {
-//                    switch ($lines[$i][0]) {
-//                        case 'longDate' :
-//                        {
-//                            $this->_longDateFormat = $lines[$i][1];
-//                            break;
-//                        }
-//                        case 'shortDate' :
-//                        {
-//                            $this->_shortDateFormat = $lines[$i][1];
-//                            break;
-//                        }
-//                    }
-//                }
-            } elseif ($info['extension'] == 'csv') {
-                $lines = FileUtil::readCsv($file);
-                for ($i = 0; $i < count($lines); $i++) {
-                    $this->_texts[$lines[$i][0]] = $lines[$i][1];
-                }
-            }
-        });
+        $this->_texts = DictionaryModel::find()
+                            ->eq('language_id', $this->_currentLanguage['id'])
+                            ->execute()
+                            ->combineColumns('code', 'label');
     }
 
     private static $_instance = NULL;

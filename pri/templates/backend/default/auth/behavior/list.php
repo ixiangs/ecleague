@@ -13,16 +13,11 @@ $dt->addIndexColumn('#', 'index', 'index');
 $dt->addLabelColumn($this->locale->_('code'), '{code}', 'middle', 'middle');
 $dt->addLabelColumn($this->locale->_('name'), '{name}', 'middle', 'middle');
 $dt->addLabelColumn($this->locale->_('url'), '{url}');
-$dt->addBooleanColumn($this->locale->_('enabled'), '{enabled}', 'small', 'small text-center');
-//$dt->addOptionColumn('', '{enabled}', array(
-//        ''=>'<span class="label label-danger">'.$this->locale->_('disabled').'</span>',
-//        false=>'<span class="label label-danger">'.$this->locale->_('disabled').'</span>',
-//        true=>'<span class="label label-success">'.$this->locale->_('enabled').'</span>'),
-//    'small', 'small text-center');
-$dt->addLinkColumn('', $this->locale->_('edit'), urldecode($this->router->buildUrl('edit', array('id'=>'{id}'))), 'edit', 'edit')
-        ->getLink()->setAttribute('class', 'btn btn-default btn-sm');
-$dt->addButtonColumn('', $this->locale->_('delete'), "deleteConfirm('".urldecode($this->router->buildUrl('delete', array('id'=>'{id}')))."')", 'small', 'small')
-        ->getButton()->setAttribute('class', 'btn btn-default btn-sm');
+$dt->addBooleanColumn($this->locale->_('enable'), '{enabled}', 'small', 'small text-center');
+$dt->addLinkColumn('', '<i class="fa fa-edit fa-2x"></i>', urldecode($this->router->buildUrl('edit', array('id'=>'{id}'))), 'edit', 'edit')
+        ->getLink()->setAttribute('title', $this->locale->_('edit'));
+$dt->addLinkColumn('', '<i class="fa fa-times fa-2x"></i>', "javascript:deleteConfirm('".urldecode($this->router->buildUrl('delete', array('id'=>'{id}')))."')", 'edit', 'edit')
+        ->getLink()->setAttribute('title', $this->locale->_('delete'));
 $this->assign('datatable', $dt);
 
 $p = $this->html->pagination($this->total, PAGINATION_SIZE, PAGINATION_RANGE);

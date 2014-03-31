@@ -10,7 +10,7 @@ class Table extends Element
 
     public function __construct($dataSource = null, $id = 'table1')
     {
-        parent::__construct('table', array('id' => $id, 'class' => 'table table-striped table-bordered'));
+        parent::__construct('table', array('id' => $id, 'class' => 'table table-striped table-bordered table-hover'));
         $this->setDataSource($dataSource);
     }
 

@@ -22,9 +22,11 @@ class BooleanColumn extends BaseColumn{
 
     public function renderCell($row, $index){
         $val = StringUtil::substitute($this->_value, $row);
-        $res = $this->getCell()->renderBegin();
-        $res .= $val? '<i class="fa fa-check"></i>': '<i class="fa fa-check"></i>';
+        $class = $this->getCell()->getAttribute('class');
+        $res = $this->getCell()->setAttribute('class', $val? 'true '.$class:'false '.$class)->renderBegin();
+        $res .= $val? '<i class="fa fa-check-circle fa-2x"></i>': '<i class="fa fa-times-circle fa-2x"></i>';
         $res .= $this->getCell()->renderEnd();
+        $this->getCell()->setAttribute('class', $class);
         return $res;
     }
 

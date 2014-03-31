@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <meta charset="utf-8">
     <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?php echo $this->renderBlock('title', $this->locale->_('website_title')); ?></title>
 
+    <link href="/pub/assets/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/pub/assets/css/bootstrap-responsive.min.css" rel="stylesheet">
     <link href="/pub/assets/css/font-awesome.css" rel="stylesheet">
-    <link href="/pub/assets/css/bootstrap.css" rel="stylesheet">
-<!--    <link href="/pub/assets/css/bootstrap-responsive.min.css" rel="stylesheet">-->
-
 <!--    <link href="/pub/assets/css/jquery-ui.css" rel="stylesheet">-->
     <link href="/pub/assets/css/base-admin.css" rel="stylesheet">
     <link href="/pub/assets/css/base-admin-responsive.css" rel="stylesheet">

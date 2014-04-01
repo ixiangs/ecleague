@@ -1,14 +1,14 @@
 <?php
 namespace Core\Html\Widget;
 
-class ButtonColumn extends BaseColumn{
+class LinkButtonColumn extends BaseColumn{
 
     private $_button = null;
 
     public function __construct(){
         parent::__construct();
         $this->_button = new Element('button');
-        $this->_button->setAttribute(array('type'=>'button', 'class'=>'btn btn-default'))
+        $this->_button->setAttribute(array('type'=>'button', 'class'=>'btn btn-link'))
             ->addBindableAttribute('onclick', 'text');
     }
 

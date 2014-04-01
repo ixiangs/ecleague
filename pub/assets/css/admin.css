@@ -34,9 +34,9 @@
 .breadcrumb-row{background:none; margin-bottom: 10px; border: none; -webkit-box-shadow: none; box-shadow: none;}
 .breadcrumb-row .breadcrumb{font-size:120%;height:34px; vertical-align:middle; margin: 0;padding: 8px 0 0 0;background: none;}
 table.table th{text-align: center;font-weight:bold;}
-table.table tbody tr td{vertical-align: middle;}
+table.table tbody tr td{vertical-align: middle;text-align: center;}
 table.table th.index, table.table tbody tr td.index{width:40px; text-align: center;}
-table.table th.edit, table.table tbody tr td.edit{width:40px;text-align: center; vertical-align: middle;}
+table.table th.edit, table.table tbody tr td.edit{width:60px;text-align: center; vertical-align: middle;}
 table.table th.small, table.table tbody tr td.small{width:80px;}
 table.table th.middle, table.table tbody tr td.middle{width:120px;}
 table.table th.large, table.table tbody tr td.large{width:240px;}

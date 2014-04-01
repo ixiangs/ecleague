@@ -12,15 +12,20 @@ class AttributeController extends Web\Controller
         $pi = $this->request->getParameter("pageindex", 1);
         $count = AttributeModel::findMain()->selectCount()->execute()->getFirstValue();
         $models = AttributeModel::findMain()
-                    ->asc('code')
-                    ->limit(PAGINATION_SIZE, ($pi - 1) * PAGINATION_SIZE)
-                    ->execute()
-                    ->getModelArray();
+            ->asc('code')
+            ->limit(PAGINATION_SIZE, ($pi - 1) * PAGINATION_SIZE)
+            ->execute()
+            ->getModelArray();
         return Web\Result::templateResult(array(
                 'models' => $models,
                 'total' => $count,
                 'pageIndex' => $pi)
         );
+    }
+
+    public function typeAction()
+    {
+        return Web\Result::templateResult();
     }
 
     public function addAction()
@@ -91,26 +96,28 @@ class AttributeController extends Web\Controller
         return Web\Result::redirectResult($this->router->buildUrl('list'));
     }
 
-    public function importAction(){
+    public function importAction()
+    {
         return Web\Result::templateResult();
     }
 
-    public function importPostAction(){
+    public function importPostAction()
+    {
         $lang = $this->context->locale;
         $up = $this->request->getFile('upload');
-        if(!$up->checkExtension('csv')){
+        if (!$up->checkExtension('csv')) {
             $this->session->set('errors', $lang->_('locale_err_import'));
             return Web\Result::templateResult();
         }
         $langs = $this->context->locale->getLanguages();
         $lines = FileUtil::readCsv($up->getTmpName());
         $titles = array_shift($lines);
-        foreach($lines as $line){
-            for($i = 1; $i < count($titles); $i++){
+        foreach ($lines as $line) {
+            for ($i = 1; $i < count($titles); $i++) {
                 DictionaryModel::create(array(
-                    'code'=>$line[0],
-                    'label'=>$line[$i],
-                    'language_id'=>$langs[strtolower($titles[$i])]['id']
+                    'code' => $line[0],
+                    'label' => $line[$i],
+                    'language_id' => $langs[strtolower($titles[$i])]['id']
                 ))->insert();
             }
         }

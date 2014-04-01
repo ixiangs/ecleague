@@ -21,10 +21,8 @@ $dt->addOptionColumn($this->locale->_('status'), '{status}', array(
         \Core\Auth\Model\AccountModel::STATUS_NONACTIVATED=>'<span class="label label-waring">'.$this->locale->_('auth_status_nonactivated').'</span>',
         \Core\Auth\Model\AccountModel::STATUS_DISABLED=>'<span class="label label-danger">'.$this->locale->_('disabled').'</span>'),
     'small', 'small text-center');
-$dt->addLinkColumn('', $this->locale->_('edit'), urldecode($this->router->buildUrl('edit', array('id'=>'{id}'))), 'edit', 'edit')
-    ->getLink()->setAttribute('class', 'btn btn-default btn-sm');
-$dt->addButtonColumn('', $this->locale->_('delete'), "deleteConfirm('".urldecode($this->router->buildUrl('delete', array('id'=>'{id}')))."')", 'edit', 'edit')
-    ->getButton()->setAttribute('class', 'btn btn-default btn-sm');
+$dt->addLinkColumn('', $this->locale->_('edit'), urldecode($this->router->buildUrl('edit', array('id'=>'{id}'))), 'edit', 'edit');
+$dt->addLinkButtonColumn('', $this->locale->_('delete'), "deleteConfirm('".urldecode($this->router->buildUrl('delete', array('id'=>'{id}')))."')", 'edit', 'edit');
 $this->assign('datatable', $dt);
 
 $p = $this->html->pagination($this->total, PAGINATION_SIZE, PAGINATION_RANGE);

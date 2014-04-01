@@ -123,6 +123,16 @@ class Table extends Element
         return $col;
     }
 
+    public function addLinkButtonColumn($headText, $cellText, $script, $headCss = null, $cellCss = null)
+    {
+        $col = new LinkButtonColumn();
+        $col->getHead()->setAttribute(array('class' => $headCss, 'text' => $headText));
+        $col->getCell()->setAttribute('class', $cellCss);
+        $col->getButton()->setAttribute(array('text' => $cellText, 'onclick' => $script));
+        $this->addColumn($col);
+        return $col;
+    }
+
     public function render()
     {
         $head = array();

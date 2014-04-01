@@ -5,7 +5,7 @@ $this->assign('breadcrumb', array(
 ));
 
 $this->assign('navigationBar', array(
-    $this->html->anchor($this->locale->_('add'), $this->router->buildUrl('add'))
+    $this->html->anchor($this->locale->_('add'), $this->router->buildUrl('type'))
 ));
 
 $dt = $this->html->table($this->models);
@@ -34,7 +34,7 @@ $dt->addLabelColumn($this->locale->_('dass_display_label'), '{display_label}', '
 $dt->addLabelColumn($this->locale->_('dass_form_label'), '{form_label}', '', '');
 $dt->addLabelColumn($this->locale->_('dass_indexable'), '{indexable}', 'small', 'small text-center');
 $dt->addLabelColumn($this->locale->_('dass_required'), '{required}', 'small', 'small text-center');
-$dt->addLabelColumn($this->locale->_('enable'), '{enabled}', 'small', 'small text-center');
+$dt->addLabelColumn($this->locale->_('status'), '{enabled}', 'small', 'small text-center');
 $dt->addLinkColumn('', $this->locale->_('edit'), urldecode($this->router->buildUrl('edit', array('id' => '{id}'))), 'small', 'small edit');
 $this->assign('datatable', $dt);
 

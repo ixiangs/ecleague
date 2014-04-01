@@ -9,8 +9,8 @@ class LinkColumn extends BaseColumn{
 
     public function __construct(){
         parent::__construct();
-        $this->_link = new Element('a');
-        $this->_link->addBindableAttribute('href', 'text');
+        $this->_link = new Element('a', array('class'=>'btn btn-link'));
+        $this->_link->addBindableAttribute('href', 'text', 'onclick');
     }
 
     public function getLink(){

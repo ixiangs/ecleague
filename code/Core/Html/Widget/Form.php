@@ -10,7 +10,7 @@ class Form extends Element
 
     public function __construct($id = 'form1', $method = 'post')
     {
-        parent::__construct('form', array('class'=>'form-horizontal', 'id'=>$id, 'method'=>$method));
+        parent::__construct('form', array('class' => 'form-horizontal', 'id' => $id, 'method' => $method));
     }
 
     public function addField($field)
@@ -19,54 +19,54 @@ class Form extends Element
         return $this;
     }
 
-    public function addLabelField($label, $value)
+    public function addLabelField($label, $value = null)
     {
         $f = new LabelField($label);
-        $f->getInput()->setAttribute(array('text'=>$value));
+        $f->getInput()->setAttribute(array('text' => $value));
         $this->addField($f);
     }
 
-        public function addInputField($type, $label, $id, $name, $value)
+    public function addInputField($type, $label, $id, $name, $value = null)
     {
         $f = new InputField($type, $label);
-        $f->getInput()->setAttribute(array('id'=>$id, 'name'=>$name, 'value'=>$value));
+        $f->getInput()->setAttribute(array('id' => $id, 'name' => $name, 'value' => $value));
         $this->addField($f);
-        if($type == 'file'){
+        if ($type == 'file') {
             $this->setAttribute('enctype', 'multipart/form-data');
         }
         return $f;
     }
 
-    public function addSelectField($options, $label, $id, $name, $value)
+    public function addSelectField($options, $label, $id, $name, $value = null)
     {
         $f = new SelectField($label);
         $f->getSelect()
-            ->setAttribute(array('id'=>$id, 'name'=>$name,'value'=>$value))
+            ->setAttribute(array('id' => $id, 'name' => $name, 'value' => $value))
             ->setOptions($options);
         $this->addField($f);
         return $f;
     }
 
-    public function addCheckboxListField($options, $label, $id, $name, $value)
+    public function addCheckboxListField($options, $label, $id, $name, $value = null)
     {
         $f = new CheckboxListField($label);
         $f->getCheckboxes()
-            ->setAttribute(array('id'=>$id, 'name'=>$name,'value'=>$value))
+            ->setAttribute(array('id' => $id, 'name' => $name, 'value' => $value))
             ->setOptions($options);
         $this->addField($f);
         return $f;
     }
 
-    public function addHiddenField($id, $name, $value)
+    public function addHiddenField($id, $name, $value = null)
     {
-        $f = new Element('input', array('type'=>'hidden', 'id'=>$id, 'name'=>$name, 'value'=>$value));
+        $f = new Element('input', array('type' => 'hidden', 'id' => $id, 'name' => $name, 'value' => $value));
         $this->_hiddens[] = $f;
         return $f;
     }
 
     public function addButton($type, $text, $css = 'btn')
     {
-        $b = new Element('button', array('type'=>$type, 'text'=>$text, 'class'=>$css));
+        $b = new Element('button', array('type' => $type, 'text' => $text, 'class' => $css));
         $this->_buttons[] = $b;
         return $b;
     }

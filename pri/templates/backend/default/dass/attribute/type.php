@@ -12,7 +12,10 @@ $this->assign('toolbar', array(
     $this->html->button('button', $this->locale->_('next_step'), 'btn btn-primary')->setAttribute('data-submit', 'form1')
 ));
 
-$f = $this->html->form()->setAttribute('action', $this->router->buildUrl('add'));
+$f = $this->html->form()->setAttribute(array(
+    'action'=>$this->router->buildUrl('add'),
+    'method'=>'get')
+);
 $f->addSelectField(array(
     \Core\Dass\Model\AttributeModel::DATA_TYPE_STRING=>$this->locale->_('dass_data_type_string'),
     \Core\Dass\Model\AttributeModel::DATA_TYPE_INTEGER=>$this->locale->_('dass_data_type_integer'),

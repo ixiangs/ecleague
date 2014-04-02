@@ -30,7 +30,11 @@ class AttributeController extends Web\Controller
 
     public function addAction()
     {
-        return $this->getEditTemplateResult(LanguageModel::create());
+        $models = array();
+        foreach($this->context->locale->getLanguages() as $l){
+            $models[] = AttributeModel::create(array('version_key'=>$l['code']));
+        }
+        return $this->getEditTemplateResult($models);
     }
 
     public function addPostAction()
@@ -128,8 +132,8 @@ class AttributeController extends Web\Controller
     private function getEditTemplateResult($model)
     {
         return Web\Result::templateResult(
-            array('model' => $model),
-            'locale/language/edit'
+            array('models' => $model),
+            'dass/attribute/edit'
         );
     }
 }

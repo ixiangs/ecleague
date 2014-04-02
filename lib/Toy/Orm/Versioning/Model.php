@@ -8,7 +8,7 @@ abstract class Model implements \ArrayAccess, Iterator
 {
 
     private static $_camelCaseToUnderline = array();
-
+    protected $changedProperties = array();
     protected $data = array();
     private $_entity = null;
 
@@ -103,6 +103,16 @@ abstract class Model implements \ArrayAccess, Iterator
 
     public function setData($name, $value)
     {
+        if ($this->_entity->hasProperty($name)) {
+            if (!array_key_exists($name, $this->data)) {
+
+                $this->changedProperties[$name] = $name;
+            } elseif ($this->data[$name] != $value) {
+                $this->changedProperties[$name] = $name;
+
+            }
+        }
+
         $this->data[$name] = $value;
         return $this;
     }
@@ -182,7 +192,6 @@ abstract class Model implements \ArrayAccess, Iterator
 
     public function update($db = null)
     {
-
         $cdb = $db ? $db : Helper::openDb();
         $this->beforeUpdate($cdb);
         $result = 0;
@@ -289,6 +298,7 @@ abstract class Model implements \ArrayAccess, Iterator
                 $this->data[$field] = $value;
             }
         }
+        $this->originalData = $this->data;
         return $this;
     }
 
@@ -302,22 +312,23 @@ abstract class Model implements \ArrayAccess, Iterator
         return $m > 0;
     }
 
-    static public function merge($id, $data)
-    {
-        return static::load($id)->fillArray($data);
-    }
+//    static public function merge($id, $data)
+//    {
+//        return static::load($id)->fillArray($data);
+//    }
 
-    static public function loadById($value)
+    static public function loadMain($value)
     {
         $inst = new static();
-        return $inst->_entity->findMain()
-                ->eq($inst->getEntity()->getMainIdProperty()->getName(), $value)
-                ->limit(1)
-                ->execute()
-                ->getFirstModel();
+        $res = $inst->_entity->findMain()
+            ->eq($inst->getEntity()->getMainIdProperty()->getName(), $value)
+            ->limit(1)
+            ->execute()
+            ->getFirstModel();
+
     }
 
-    static public function loadByVersionId($value)
+    static public function loadVersion($value)
     {
         $inst = new static();
         return $inst->_entity->findVersion()

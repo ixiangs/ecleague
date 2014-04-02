@@ -66,6 +66,11 @@ class Entity
         return $this->_versionForeignProperty;
     }
 
+    public function hasProperty($name)
+    {
+        return array_key_exists($name, $this->_properties);
+    }
+
     public function getProperty($name)
     {
         if (array_key_exists($name, $this->_properties)) {

@@ -13,10 +13,7 @@ $dt->addIndexColumn('#', 'index', 'index');
 $dt->addLabelColumn($this->locale->_('code'), '{code}', 'middle', 'middle');
 $dt->addLabelColumn($this->locale->_('name'), '{name}', 'middle', 'middle');
 $dt->addLabelColumn($this->locale->_('url'), '{url}');
-$dt->addOptionColumn($this->locale->_('status'), '{enabled}', array(
-        ''=>'<span class="label label-danger">'.$this->locale->_('disabled').'</span>',
-        0=>'<span class="label label-danger">'.$this->locale->_('disabled').'</span>',
-        1=>'<span class="label label-success">'.$this->locale->_('enabled').'</span>'),
+$dt->addBooleanColumn($this->locale->_('status'), 'enabled', $this->locale->_('enabled'), $this->locale->_('disabled').'</span>',
     'small', 'small text-center');
 //$dt->addBooleanColumn($this->locale->_('status'), '{enabled}', 'small', 'small text-center');
 $dt->addLinkColumn('', $this->locale->_('edit'), urldecode($this->router->buildUrl('edit', array('id'=>'{id}'))), 'edit', 'edit');

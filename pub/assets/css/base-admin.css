@@ -637,13 +637,13 @@ h6 {
     height: 15px;
     background: url(../img/validation/validation-success.png) no-repeat 0 0;
 }
-.form-horizontal .form-group span.error {
-    margin-left: 1.5em;
-    margin-left: 15px;
-}
-.form-group {
-    margin-bottom: 30px;
-}
+/*.form-horizontal .form-group span.error {*/
+    /*margin-left: 1.5em;*/
+    /*margin-left: 15px;*/
+/*}*/
+/*.form-group {*/
+    /*margin-bottom: 30px;*/
+/*}*/
 /*------------------------------------------------------------------
 [ Widget / .widget ]
 */

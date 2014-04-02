@@ -31,7 +31,8 @@ $f = $this->html->form()->setAttribute();
 //    \Core\Dass\Model\AttributeModel::INPUT_TYPE_CHECKBOX_LIST=>$this->locale->_('dass_input_type_checkboxlist'),
 //    \Core\Dass\Model\AttributeModel::INPUT_TYPE_RADIO_LIST=>$this->locale->_('dass_input_type_raidolist')
 //), $this->locale->_('dass_input_type'), 'input_type', 'input_type');
-$f = $this->html->form();
+$f = $this->html->groupedForm();
+$f->beginGroup('base', '基本设置');
 $f->addInputField('text', $this->locale->_('code'), 'code', 'code', $this->models[0]->getCode())
     ->addValidateRule('required', true);
 $f->addSelectField(array('1'=>$this->locale->_('yes'), '0'=>$this->locale->_('no')),
@@ -40,6 +41,7 @@ $f->addSelectField(array('1'=>$this->locale->_('yes'), '0'=>$this->locale->_('no
     $this->locale->_('dass_required'), 'required', 'required', $this->models[0]->getEnabled());
 $f->addSelectField(array('1'=>$this->locale->_('yes'), '0'=>$this->locale->_('no')),
     $this->locale->_('enable'), 'enabled', 'enabled', $this->models[0]->getEnabled());
+$f->endGroup();
 foreach($this->locale->getLanguages() as $lang):
     $vmodel = null;
     foreach($this->models as $m):
@@ -48,15 +50,14 @@ foreach($this->locale->getLanguages() as $lang):
             break;
         endif;
     endforeach;
+$f->beginGroup('lang_'.$lang['code'], $lang['name']);
 $f->addInputField('text', $this->locale->_('name'), 'version_'.$lang['code'].'_name', 'versions['.$lang['code'].'][name]', $vmodel->getName())
-    ->addValidateRule('required', true)
-    ->setLeftAddon($lang['name']);
+    ->addValidateRule('required', true);
 $f->addInputField('text', $this->locale->_('dass_display_label'), 'version_'.$lang['code'].'_display_label', 'versions['.$lang['code'].'][display_label]', $vmodel->getDisplayLabel())
-    ->addValidateRule('required', true)
-    ->setLeftAddon($lang['name']);
+    ->addValidateRule('required', true);
 $f->addInputField('text', $this->locale->_('dass_form_label'), 'version_'.$lang['code'].'_form_label', 'versions['.$lang['code'].'][form_label]', $vmodel->getFormLabel())
-    ->addValidateRule('required', true)
-    ->setLeftAddon($lang['name']);
+    ->addValidateRule('required', true);
+$f->endGroup();
 $f->addHiddenField('version_'.$lang['code'].'_id', 'versions['.$lang['code'].'][id]', $vmodel->getVersionId());
 endforeach;
 

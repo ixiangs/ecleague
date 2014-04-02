@@ -7,7 +7,7 @@
     <title><?php echo $this->renderBlock('title', $this->locale->_('website_title')); ?></title>
 
     <link href="/pub/assets/css/bootstrap.min.css" rel="stylesheet">
-    <link href="/pub/assets/css/bootstrap-responsive.min.css" rel="stylesheet">
+    <link href="/pub/assets/css/bootstrap-theme.min.css" rel="stylesheet">
     <link href="/pub/assets/css/font-awesome.css" rel="stylesheet">
 <!--    <link href="/pub/assets/css/jquery-ui.css" rel="stylesheet">-->
     <link href="/pub/assets/css/base-admin.css" rel="stylesheet">

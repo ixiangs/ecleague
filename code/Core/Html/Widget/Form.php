@@ -4,9 +4,8 @@ namespace Core\Html\Widget;
 class Form extends Element
 {
 
-    private $_fields = array();
-    private $_buttons = array();
-    private $_hiddens = array();
+    protected $fields = array();
+    protected $hiddens = array();
 
     public function __construct($id = 'form1', $method = 'post')
     {
@@ -15,7 +14,7 @@ class Form extends Element
 
     public function addField($field)
     {
-        $this->_fields[] = $field;
+        $this->fields[] = $field;
         return $this;
     }
 
@@ -60,20 +59,13 @@ class Form extends Element
     public function addHiddenField($id, $name, $value = null)
     {
         $f = new Element('input', array('type' => 'hidden', 'id' => $id, 'name' => $name, 'value' => $value));
-        $this->_hiddens[] = $f;
+        $this->hiddens[] = $f;
         return $f;
-    }
-
-    public function addButton($type, $text, $css = 'btn')
-    {
-        $b = new Element('button', array('type' => $type, 'text' => $text, 'class' => $css));
-        $this->_buttons[] = $b;
-        return $b;
     }
 
     public function renderBegin()
     {
-        foreach ($this->_fields as $f) {
+        foreach ($this->fields as $f) {
             if (count($f->getValidateRules()) > 0) {
                 $this->setAttribute('data-validate', 'true');
                 break;
@@ -85,19 +77,10 @@ class Form extends Element
     public function renderInner()
     {
         $res = array();
-        foreach ($this->_fields as $f) {
+        foreach ($this->fields as $f) {
             $res[] = $f->render();
         }
-        if (count($this->_buttons) > 0) {
-            $res[] = '<div class="form-group"><div class="col-lg-10 col-lg-offset-2">';
-            foreach ($this->_buttons as $b) {
-                $txt = $b->getAttribute('text');
-                $b->removeAttribute('text');
-                $res[] = $b->renderBegin() . $txt . $b->renderEnd();
-            }
-            $res[] = '</div></div>';
-        }
-        foreach ($this->_hiddens as $f) {
+        foreach ($this->hiddens as $f) {
             $res[] = $f->render();
         }
         return implode('', $res);

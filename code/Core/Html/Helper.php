@@ -2,6 +2,7 @@
 namespace Core\Html;
 
 use Core\Html\Widget\Element;
+use Core\Html\Widget\GroupedForm;
 use Core\Html\Widget\Table, Core\Html\Widget\Form;
 use Core\Html\Widget\Pagination;
 
@@ -26,6 +27,10 @@ class Helper
 
     public function form($id = 'form1', $method='post'){
         return new Form($id, $method);
+    }
+
+    public function groupedForm($id = 'form1', $method='post'){
+        return new GroupedForm($id, $method);
     }
 
     public function pagination($total, $ps, $pr){

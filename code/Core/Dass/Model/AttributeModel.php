@@ -2,11 +2,11 @@
 namespace Core\Dass\Model;
 
 use Toy\Orm;
-use Toy\Orm\Versioning;
 
-class AttributeModel extends Versioning\Model{
+class AttributeModel extends Orm\Model
+{
 
-    const TABLE_NAME = '{t}dass_attribute';
+    const TABLE_NAME = '{t}dass_attribute_main';
 
     const INPUT_TYPE_TEXTBOX = 'textbox';
     const INPUT_TYPE_TEXTAREA = 'textarea';
@@ -26,9 +26,9 @@ class AttributeModel extends Versioning\Model{
 
 }
 
-Versioning\Entity::register('Core\Dass\Model\AttributeModel', array(
-    'table'=>AttributeModel::TABLE_NAME,
-    'properties'=>array(
+Orm\Model::register('Core\Dass\Model\AttributeModel', array(
+    'table' => AttributeModel::TABLE_NAME,
+    'properties' => array(
         Orm\IntegerProperty::create('id')->setPrimaryKey(true)->setAutoIncrement(true),
         Orm\StringProperty::create('code')->setUnique(true)->setNullable(false),
         Orm\StringProperty::create('data_type')->setNullable(false),
@@ -37,11 +37,9 @@ Versioning\Entity::register('Core\Dass\Model\AttributeModel', array(
         Orm\BooleanProperty::create('required')->setDefaultValue(false)->setNullable(false),
         Orm\BooleanProperty::create('enabled')->setDefaultValue(false)->setNullable(false),
         Orm\SerializeProperty::create('form_setting'),
-        Orm\SerializeProperty::create('validate_setting'),
-        Orm\StringProperty::create('name')->setNullable(false),
-        Orm\StringProperty::create('display_label')->setNullable(false),
-        Orm\StringProperty::create('form_label')->setNullable(false)
+        Orm\SerializeProperty::create('validate_setting')
     ),
-    'mainProperties'=>array('code', 'data_type', 'input_type', 'indexable', 'enabled', 'required', 'form_setting', 'validate_setting'),
-    'versionProperties'=>array('name', 'display_label', 'form_label')
+    'relations'=>array(
+        array('name'=>'versions', 'model'=>'Core\Dass\Model\AttributeVersionModel', 'parentId'=>'id', 'childId'=>'main_id', 'type'=>'oneToMore')
+    )
 ));

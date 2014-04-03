@@ -125,7 +125,7 @@ class AccountModel extends Orm\Model
 
 }
 
-Orm\Entity::register('Core\Auth\Model\AccountModel', array(
+Orm\Model::register('Core\Auth\Model\AccountModel', array(
         'table' => AccountModel::TABLE_NAME,
         'properties' => array(
             Orm\IntegerProperty::create('id')->setPrimaryKey(true)->setAutoIncrement(true),

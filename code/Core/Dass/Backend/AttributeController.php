@@ -1,8 +1,9 @@
 <?php
 namespace Core\Dass\Backend;
 
+use Core\Dass\Model\AttributeVersionModel;
 use Toy\Web;
-use Dass\Model\AttributeModel;
+use Core\Dass\Model\AttributeModel;
 
 class AttributeController extends Web\Controller
 {
@@ -10,8 +11,8 @@ class AttributeController extends Web\Controller
     public function listAction()
     {
         $pi = $this->request->getParameter("pageindex", 1);
-        $count = AttributeModel::findMain()->selectCount()->execute()->getFirstValue();
-        $models = AttributeModel::findMain()
+        $count = AttributeModel::findVersions()->selectCount()->execute()->getFirstValue();
+        $models = AttributeModel::findVersions()
             ->asc('code')
             ->limit(PAGINATION_SIZE, ($pi - 1) * PAGINATION_SIZE)
             ->execute()
@@ -30,30 +31,48 @@ class AttributeController extends Web\Controller
 
     public function addAction()
     {
-        $models = array();
-        foreach($this->context->locale->getLanguages() as $l){
-            $models[] = AttributeModel::create(array('version_key'=>$l['code']));
+        $model = AttributeModel::create(array(
+           'data_type'=>$this->request->getQuery('data_type'),
+           'input_type'=>$this->request->getQuery('input_type')
+        ));
+        foreach($this->context->locale->getLanguages() as $lang){
+            $model->getVersions()->append(AttributeVersionModel::create(array(
+                'language_id'=>$lang['id'],
+                'data_type'=>$this->request->getQuery('data_type'),
+                'input_type'=>$this->request->getQuery('input_type')
+            )));
         }
-        return $this->getEditTemplateResult($models);
+        return $this->getEditTemplateResult($model);
     }
 
     public function addPostAction()
     {
-        $lang = $this->context->locale;
-        $m = LanguageModel::create($this->request->getAllParameters());
-        if (LanguageModel::checkUnique('code', $m->getCode())) {
-            $this->session->set('errors', $lang->_('err_code_exists', $m->getCode()));
+        $locale = $this->context->locale;
+        $m = AttributeModel::create($this->request->getPost('main'));
+        foreach($this->request->getPost('versions') as $l=>$data){
+            $m->getVersions()->append(AttributeVersionModel::create(
+                $data
+            )->setLanguageId($l));
+        }
+
+        $vr = $m->validateProperties();
+        if ($vr !== true) {
+            $this->session->set('errors', $locale->_('err_input_invalid'));
             return $this->getEditTemplateResult($m);
         }
 
-        $vr = $m->validate();
-        if ($vr !== true) {
-            $this->session->set('errors', $lang->_('err_input_invalid'));
+        if($m->validateUnique()){
+            $this->session->set('errors', $locale->_('err_code_exists', $m->getCode()));
             return $this->getEditTemplateResult($m);
         }
 
         if (!$m->insert()) {
-            $this->session->set('errors', $lang->_('err_system'));
+            $this->session->set('errors', $locale->_('err_system'));
+            return $this->getEditTemplateResult($m);
+        }
+
+        if (!$m->saveChildren()) {
+            $this->session->set('errors', $locale->_('err_system'));
             return $this->getEditTemplateResult($m);
         }
 
@@ -132,7 +151,7 @@ class AttributeController extends Web\Controller
     private function getEditTemplateResult($model)
     {
         return Web\Result::templateResult(
-            array('models' => $model),
+            array('model' => $model),
             'dass/attribute/edit'
         );
     }

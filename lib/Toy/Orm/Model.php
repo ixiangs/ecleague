@@ -2,30 +2,46 @@
 namespace Toy\Orm;
 
 use Iterator;
+use Toy\Collection\ArrayList;
 use Toy\Data\Helper;
+use Toy\Data\Sql\DeleteStatement;
+use Toy\Data\Sql\InsertStatement;
+use Toy\Data\Sql\UpdateStatement;
 
 abstract class Model implements \ArrayAccess, Iterator
 {
 
+    private static $_metadatas = array();
     private static $_camelCaseToUnderline = array();
 
-    protected $data = array();
+    protected $tableName = '';
+    protected $properties = array();
+    protected $relations = array();
+    protected $idProperty = null;
+    protected $propertyData = array();
+    protected $childData = array();
     private $_entity = null;
 
     public function __construct($data = array())
     {
-        $this->_entity = Entity::get(get_class($this));
-        $this->data = $data;
+        $m = self::$_metadatas[get_class($this)];
+        $this->idProperty = $m['idProperty'];
+        $this->properties = $m['properties'];
+        $this->tableName = $m['table'];
+        if (array_key_exists('relations', $m)) {
+            $this->relations = $m['relations'];
+        }
+        $this->propertyData = $data;
     }
 
     public function __get($name)
     {
-        return $this->data[$name];
+        return $this->propertyData[$name];
     }
 
     public function __set($name, $value)
     {
-        $this->data[$name] = $value;
+        $this->propertyData[$name] = $value;
     }
 
     public function __call($name, $arguments)
@@ -43,84 +59,226 @@ abstract class Model implements \ArrayAccess, Iterator
         }
     }
 
-    public function offsetExists($offset) {
-        return array_key_exists($offset, $this->data);
+    public function offsetExists($offset)
+    {
+        return array_key_exists($offset, $this->propertyData);
     }
 
-    public function offsetGet($offset) {
-        return $this->data[$offset];
+    public function offsetGet($offset)
+    {
+        return $this->propertyData[$offset];
     }
 
-    public function offsetSet($offset, $value) {
-        $this->data[$offset] = $value;
+    public function offsetSet($offset, $value)
+    {
+        $this->propertyData[$offset] = $value;
     }
 
-    public function offsetUnset($offset) {
-        unset($this->data[$offset]);
+    public function offsetUnset($offset)
+    {
+        unset($this->propertyData[$offset]);
     }
 
-    public function current(){
-        return current($this->data);
+    public function current()
+    {
+        return current($this->propertyData);
     }
 
-    public function key(){
-        return key($this->data);
+    public function key()
+    {
+        return key($this->propertyData);
     }
 
-    public function next(){
-        return next($this->data);
+    public function next()
+    {
+        return next($this->propertyData);
     }
 
-    public function rewind(){
-        return reset($this->data);
+    public function rewind()
+    {
+        return reset($this->propertyData);
     }
 
-    public function valid(){
-        return key($this->data) !== null;
+    public function valid()
+    {
+        return key($this->propertyData) !== null;
+    }
+
+    public function getTableName()
+    {
+        return $this->tableName;
+    }
+
+    public function getModelClass()
+    {
+        return $this->modelClass;
+    }
+
+    public function getIdProperty()
+    {
+        return $this->idProperty;
+    }
+
+    public function getProperty($name)
+    {
+        return $this->properties[$name];
+    }
+
+    public function getProperties()
+    {
+        return $this->properties;
+    }
+
+    public function addProperty(BaseProperty $value)
+    {
+        $this->properties[$value->getName()] = $value;
+        if ($value->getPrimaryKey()) {
+            $this->idProperty = $value;
+        }
+        return $this;
+    }
+
+    public function hasProperty($name)
+    {
+        return array_key_exists($name, $this->properties);
+    }
+
+    public function getRelations()
+    {
+        return $this->relations;
+    }
+
+    public function hasRelation($name)
+    {
+        return array_key_exists($name, $this->relations);
     }
 
     public function getAllData()
     {
-        return $this->data;
+        return $this->propertyData;
     }
 
     public function getData($name, $default = null)
     {
-        if (array_key_exists($name, $this->data)) {
-            return $this->data[$name];
+        if (array_key_exists($name, $this->propertyData)) {
+            return $this->propertyData[$name];
         }
+
+        if (array_key_exists($name, $this->childData)) {
+            return $this->childData[$name];
+        }
+
+        if (array_key_exists($name, $this->relations)) {
+            $this->childData[$name] = $this->getChildData($name);
+            return $this->childData[$name];
+        }
+
         return $default;
+    }
+
+    protected function getChildData($name)
+    {
+        $relation = $this->relations[$name];
+        if ($this->getData($relation['parentId'])) {
+            $f = Entity::get($relation['model'])
+                ->find()
+                ->eq($relation['childId'], $this->propertyData[$relation['parentId']]);
+            if ($relation['type'] == 'oneToMore') {
+                return $f->execute()->getModelList();
+            } elseif ($relation['type'] == 'oneToOne') {
+                return $f->execute()->getFirstModel();
+            }
+        } else {
+            if ($relation['type'] == 'oneToMore') {
+                return new ArrayList();
+            } elseif ($relation['type'] == 'oneToOne') {
+                return new $relation['model']();
+            }
+        }
     }
 
     public function setData($name, $value)
     {
-        $this->data[$name] = $value;
+        if (array_key_exists($name, $this->relations)) {
+            $this->childData[$name] = $value;
+        } else {
+            $this->propertyData[$name] = $value;
+        }
         return $this;
-    }
-
-    public function getEntity()
-    {
-        return $this->_entity;
     }
 
     public function getIdValue()
     {
-        return $this->getData($this->_entity->getIdProperty()->getName());
+        return $this->getData($this->idProperty->getName());
     }
 
     public function setIdValue($value)
     {
-        return $this->setData($this->_entity->getIdProperty()->getName(), $value);
+        return $this->setData($this->idProperty->getName(), $value);
     }
 
     public function validateProperties()
     {
-        return $this->_entity->validateProperties($this);
+        $result = array();
+        if ($this->getIdValue()) {
+            foreach ($this->properties as $n => $p) {
+                if ($p->getUpdateable()) {
+                    $r = $p->validate($this->getData($n));
+                    if ($r !== true) {
+                        $result[] = $n;
+                    }
+                }
+            }
+        } else {
+            foreach ($this->properties as $n => $p) {
+                if ($p->getInsertable()) {
+                    $r = $p->validate($this->getData($n));
+                    if ($r !== true) {
+                        $result[] = $n;
+                    }
+                }
+            }
+        }
+        return empty($result) ? true : $result;
     }
 
-    public function validateUnique($db = null){
+    public function validateChildren()
+    {
+        $result = array();
+        foreach($this->childData as $children){
+            if($children instanceof Model){
+                $r = $children->validateProperties();
+                if($r !== true){
+                    $result = array_merge($result, $r);
+                }
+            }else{
+                foreach($children as $child){
+                    if($child !== true){
+                        $result = array_merge($result, $r);
+                    }
+                }
+            }
+        }
+        return empty($result) ? true : $result;
+    }
+
+    public function validateUnique($db = null)
+    {
         $cdb = $db ? $db : Helper::openDb();
-        return $this->_entity->validateUnique($cdb, $this);
+        $result = array();
+        foreach ($this->properties as $n => $p) {
+            if (!$p->getAutoIncrement() && $p->getUnique()) {
+                $c = $this->find()
+                    ->selectCount()
+                    ->eq($n, $p->toDbValue($this->getData($n)))
+                    ->execute($db)
+                    ->getFirstValue();
+                if ($c > 0) {
+                    $result[] = $n;
+                }
+            }
+        }
+        return empty($result) ? true : $result;
     }
 
     protected function beforeInsert($db)
@@ -131,10 +289,18 @@ abstract class Model implements \ArrayAccess, Iterator
     {
         $cdb = $db ? $db : Helper::openDb();
         $this->beforeInsert($cdb);
-        $result = $this->_entity->insert($this, $cdb);
-        if ($result) {
-            $this->afterInsert($cdb);
+        $values = array();
+        foreach ($this->properties as $n => $p) {
+            if ($p->getInsertable()) {
+                $values[$n] = $p->toDbValue($this->getData($n));
+            }
         }
+
+        $result = $cdb->insert(new InsertStatement($this->tableName, $values));
+        if ($this->idProperty->getAutoIncrement()) {
+            $this->setIdValue($cdb->getLastInsertId());
+        }
+        $this->afterInsert($cdb);
         return $result;
     }
 
@@ -150,10 +316,19 @@ abstract class Model implements \ArrayAccess, Iterator
     {
         $cdb = $db ? $db : Helper::openDb();
         $this->beforeUpdate($cdb);
-        $result = $this->_entity->update($this, $cdb);
-        if ($result) {
-            $this->afterUpdate($cdb);
+        $values = array();
+        foreach ($this->properties as $n => $p) {
+            if ($p->getUpdateable()) {
+                $values[$n] = $p->toDbValue($this->getData($n));
+            }
         }
+        if (count($values) == 0) {
+            return false;
+        }
+        $us = new UpdateStatement($this->tableName, $values);
+        $us->eq($this->idProperty->getName(), $this->getIdValue());
+        $result = $cdb->update($us);
+        $this->afterUpdate($cdb);
         return $result;
     }
 
@@ -169,15 +344,53 @@ abstract class Model implements \ArrayAccess, Iterator
     {
         $cdb = $db ? $db : Helper::openDb();
         $this->beforeDelete($cdb);
-        $result = $this->_entity->delete($this, $cdb);
-        if ($result) {
-            $this->afterDelete($cdb);
-        }
+        $ds = new DeleteStatement($this->tableName);
+        $ds->eq($this->idProperty->getName(), $this->getIdValue());
+        $result = $cdb->delete($ds);
+        $this->afterDelete($cdb);
         return $result;
     }
 
     protected function afterDelete($db)
     {
+    }
+
+    public function saveChildren($db = null)
+    {
+        $cdb = $db ? $db : Helper::openDb();
+        foreach ($this->_entity->getRelations() as $r) {
+            if (array_key_exists($r['property'], $this->childData)) {
+                $children = $this->childData[$r['property']];
+                if ($children instanceof Model) {
+                    if ($children->getIdValue()) {
+                        $children->update($cdb);
+                    } else {
+                        $children->setData($r['childId'], $this->getIdValue());
+                        $children->insert($cdb);
+                    }
+                } else {
+                    foreach ($children as $child) {
+                        if ($child->getIdValue()) {
+                            $child->update($cdb);
+                        } else {
+                            $child->setData($r['childId'], $this->getIdValue());
+                            $child->insert($cdb);
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    public function deleteChildren($db = null)
+    {
+        $cdb = $db ? $db : Helper::openDb();
+        foreach ($this->_entity->getRelations() as $r) {
+            $re = Entity::get($r['model']);
+            $ds = new DeleteStatement($re->getTableName());
+            $ds->eq($r['childId'], $this->getIdValue());
+            $cdb->delete($ds);
+        }
     }
 
     public function fillArray(array $values)
@@ -190,15 +403,26 @@ abstract class Model implements \ArrayAccess, Iterator
 
     public function fillRow(array $row)
     {
-        $props = $this->_entity->getProperties();
+        $props = $this->getProperties();
         foreach ($row as $field => $value) {
             if (array_key_exists($field, $props)) {
-                $this->data[$field] = $props[$field]->fromDbValue($value);
+                $this->propertyData[$field] = $props[$field]->fromDbValue($value);
             } else {
-                $this->data[$field] = $value;
+                $this->propertyData[$field] = $value;
             }
         }
         return $this;
+    }
+
+    static public function __callStatic($name, $arguments)
+    {
+        if (substr($name, 0, 4) == 'find') {
+            $cn = self::getUnderlineName(substr($name, 4));
+            $m = static::getMetadata();
+            if (array_key_exists($cn, $m['relations'])) {
+                return static::findChildren($cn);
+            }
+        }
     }
 
     static public function checkUnique($field, $value)
@@ -218,16 +442,43 @@ abstract class Model implements \ArrayAccess, Iterator
 
     static public function load($value)
     {
-        $f = static::find();
-        return $f->eq($f->getEntity()->getIdProperty()->getName(), $value)
+        $m = self::$_metadatas[get_called_class()];
+        return static::find()
+            ->eq($m['idProperty']->getName(), $value)
             ->execute()
             ->getFirstModel();
     }
 
     static public function find()
     {
-        $inst = new static();
-        return $inst->_entity->find();
+        $fields = array();
+        $cn = get_called_class();
+        $m = self::$_metadatas[$cn];
+        foreach ($m['properties'] as $prop) {
+            $fields[] = $m['table'] . '.' . $prop->getName();
+        }
+        $result = new Query($cn);
+        return $result->select($fields)->from($m['table']);
+    }
+
+    static protected function findChildren($name)
+    {
+        $pm = static::getMetadata();
+        $rel = $pm['relations'][$name];
+        $cm = self::getMetadata($rel['model']);
+        $fields = array();
+        foreach ($pm['properties'] as $prop) {
+            $fields[] = $pm['table'] . '.' . $prop->getName();
+        }
+        foreach ($cm['properties'] as $prop) {
+            $fields[] = $cm['table'] . '.' . $prop->getName();
+        }
+        $result = new Query(get_called_class());
+        return $result->select($fields)
+            ->from($pm['table'])
+            ->join($cm['table'],
+                $pm['table'] . '.' . $pm['idProperty']->getName(),
+                $cm['table'] . '.' . $cm['properties'][$rel['childId']]->getName());
     }
 
     static public function create($data = array())
@@ -244,4 +495,32 @@ abstract class Model implements \ArrayAccess, Iterator
         return self::$_camelCaseToUnderline[$camelCase];
     }
 
+    static public function getMetadata($class = null)
+    {
+        if(is_null($class)){
+            return self::$_metadatas[get_called_class()];
+        }
+        return self::$_metadatas[$class];
+    }
+
+    static public function register($class, $metadata)
+    {
+        $arr = array(
+            'table' => $metadata['table'],
+            'properties' => array(),
+            'relations' => array()
+        );
+        foreach ($metadata['properties'] as $prop) {
+            $arr['properties'][$prop->getName()] = $prop;
+            if ($prop->getPrimaryKey()) {
+                $arr['idProperty'] = $prop;
+            }
+        }
+        if (array_key_exists('relations', $metadata)) {
+            foreach ($metadata['relations'] as $rel) {
+                $arr['relations'][$rel['name']] = $rel;
+            }
+        }
+        self::$_metadatas[$class] = $arr;
+    }
 }

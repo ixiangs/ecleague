@@ -135,13 +135,18 @@ Toy.Validation.renderers = [
             var eid = $input.attr('name').replace('[', '').replace(']', '') + '_' + rule;
             var result = $('#' + eid);
             if (result.length == 0) {
-                result = $('<small class="help-block col-lg-offset-2 col-lg-10" id="' + eid + '"></small>');
-                $input.parents(field.validator.options.inputContainer).append(result);
+                result = $('<small class="help-block" id="' + eid + '"></small>');
+                $input.parent().append(result);
             }
             return result;
         };
 
         var renderFailure = function () {
+//            $input.parents(field.validator.options.fieldContainer).removeClass(field.validator.options.successClass)
+//                .addClass(field.validator.options.failureClass);
+//            Object.each(errors, function (msg, rule) {
+//                newErrorElement(rule).text(msg).addClass(field.validator.options.errorClass).css('display', '');
+//            });
             $input.parents(field.validator.options.fieldContainer).removeClass(field.validator.options.successClass)
                 .addClass(field.validator.options.failureClass);
             Object.each(errors, function (msg, rule) {

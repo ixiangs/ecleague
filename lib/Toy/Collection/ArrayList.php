@@ -74,7 +74,7 @@ class ArrayList extends Enumerator implements \ArrayAccess, \SeekableIterator, \
         return $this;
     }
 
-    public function find(Closure $function) {
+    public function find(\Closure $function) {
         foreach ($this->source as $index=>$item) {
             if ($function($item, $index)) {
                 return $item;
@@ -83,7 +83,7 @@ class ArrayList extends Enumerator implements \ArrayAccess, \SeekableIterator, \
         return NULL;
     }
 
-    public function filter(Closure $function) {
+    public function filter(\Closure $function) {
         $result = new self();
         foreach ($this->source as $index=>$item) {
             if ($function($item, $index)) {
@@ -93,7 +93,7 @@ class ArrayList extends Enumerator implements \ArrayAccess, \SeekableIterator, \
         return $result;
     }
 
-    public function contains(Closure $function) {
+    public function contains(\Closure $function) {
         foreach ($this->source as $index=>$item) {
             if ($function($item, $index)) {
                 return TRUE;

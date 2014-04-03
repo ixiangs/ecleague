@@ -88,6 +88,12 @@ abstract class Model implements \ArrayAccess, Iterator
         return key($this->data) !== null;
     }
 
+    public function markNoChanged()
+    {
+        $this->changedProperties = [];
+        return $this;
+    }
+
     public function getAllData()
     {
         return $this->data;
@@ -104,12 +110,12 @@ abstract class Model implements \ArrayAccess, Iterator
     public function setData($name, $value)
     {
         if ($this->_entity->hasProperty($name)) {
-            if (!array_key_exists($name, $this->data)) {
-
-                $this->changedProperties[$name] = $name;
-            } elseif ($this->data[$name] != $value) {
-                $this->changedProperties[$name] = $name;
-
+            if (!in_array($name, $this->changedProperties)) {
+                if (!array_key_exists($name, $this->data)) {
+                    $this->changedProperties[] = $name;
+                } elseif ($this->data[$name] != $value) {
+                    $this->changedProperties[] = $name;
+                }
             }
         }
 
@@ -298,7 +304,7 @@ abstract class Model implements \ArrayAccess, Iterator
                 $this->data[$field] = $value;
             }
         }
-        $this->originalData = $this->data;
+        $this->changedProperties = [];
         return $this;
     }
 
@@ -312,15 +318,20 @@ abstract class Model implements \ArrayAccess, Iterator
         return $m > 0;
     }
 
-//    static public function merge($id, $data)
-//    {
-//        return static::load($id)->fillArray($data);
-//    }
+    static public function mergeMain($id, $data)
+    {
+        return static::loadMain($id)->fillArray($data);
+    }
+
+    static public function mergeVersion($id, $data)
+    {
+        return static::loadVersion($id)->fillArray($data);
+    }
 
     static public function loadMain($value)
     {
         $inst = new static();
-        $res = $inst->_entity->findMain()
+        return $inst->_entity->findMain()
             ->eq($inst->getEntity()->getMainIdProperty()->getName(), $value)
             ->limit(1)
             ->execute()

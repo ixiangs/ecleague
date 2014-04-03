@@ -1,29 +1,33 @@
 <?php
 namespace Toy\Orm;
 
+use Toy\Data\Helper;
 use Toy\Data\Sql\SelectStatement;
 
 class Query extends SelectStatement
 {
 
-    private $_entity = null;
+    private $_modelClass = null;
 
-    public function __construct($me)
+    public function __construct($modelClass)
     {
-        if ($me instanceof Model) {
-            $this->_entity = $me->getEntity();
-        }
-        $this->_entity = $me;
+        $this->_modelClass = $modelClass;
     }
 
-    public function getEntity()
+    public function getModelClass()
     {
-        return $this->_entity;
+        return $this->_modelClass;
+    }
+
+    public function setModelClass($value)
+    {
+        $this->_modelClass = $value;
+        return $this;
     }
 
     public function execute($db = null)
     {
-        $cdb = $db ? $db : \Toy\Data\Helper::openDb();
-        return new Result($this->_entity, $cdb->select($this)->rows);
+        $cdb = $db ? $db : Helper::openDb();
+        return new Result($this->_modelClass, $cdb->select($this)->rows);
     }
 }

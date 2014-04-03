@@ -9,7 +9,7 @@ class LanguageModel extends Orm\Model{
 
 }
 
-Orm\Entity::register('Core\Locale\Model\LanguageModel', array(
+Orm\Model::register('Core\Locale\Model\LanguageModel', array(
     'table'=>LanguageModel::TABLE_NAME,
     'properties'=>array(
         Orm\IntegerProperty::create('id')->setPrimaryKey(true)->setAutoIncrement(true),

@@ -58,7 +58,7 @@ class LanguageController extends Web\Controller
     {
         $lang = $this->context->locale;
         $m = LanguageModel::merge($this->request->getParameter('id'), $this->request->getAllParameters());
-        $vr = $m->validate();
+        $vr = $m->validateProperties();
         if ($vr !== true) {
             $this->session->set('errors', $lang->_('err_input_invalid'));
             return $this->getEditTemplateResult($m);

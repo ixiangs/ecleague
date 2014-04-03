@@ -6,19 +6,19 @@ use Toy\Collection\ArrayList;
 class Result extends \Toy\Data\Result
 {
 
-    private $_entity = null;
+    private $_modelClass = null;
 
-    public function __construct($entity, $source)
+    public function __construct($modelClass, $source)
     {
         parent::__construct($source);
-        $this->_entity = $entity;
+        $this->_modelClass  = $modelClass;
     }
 
     public function getFirstModel()
     {
         $row = $this->getFirstRow();
         if ($row) {
-            $result = $this->_entity->newModel();
+            $result = new $this->_modelClass();
             $result->fillRow($row);
             return $result;
         }
@@ -29,7 +29,7 @@ class Result extends \Toy\Data\Result
     {
         $result = array();
         foreach ($this->rows as $row) {
-            $m = $this->_entity->newModel();
+            $m = new $this->_modelClass();
             $m->fillRow($row);
             $result[] = $m;
         }

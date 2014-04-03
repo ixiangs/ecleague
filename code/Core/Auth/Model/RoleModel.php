@@ -12,7 +12,7 @@ class RoleModel extends Orm\Model{
 	}
 }
 
-Orm\Entity::register('Core\Auth\Model\RoleModel', array(
+Orm\Model::register('Core\Auth\Model\RoleModel', array(
     'table'=>RoleModel::TABLE_NAME,
     'properties'=>array(
         Orm\IntegerProperty::create('id')->setPrimaryKey(true)->setAutoIncrement(true),

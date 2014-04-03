@@ -8,7 +8,7 @@ class BehaviorModel extends Orm\Model
     const TABLE_NAME = '{t}auth_behavior';
 }
 
-Orm\Entity::register('Core\Auth\Model\BehaviorModel', array(
+Orm\Model::register('Core\Auth\Model\BehaviorModel', array(
     'table' => BehaviorModel::TABLE_NAME,
     'properties' => array(
         Orm\IntegerProperty::create('id')->setPrimaryKey(true)->setAutoIncrement(true),

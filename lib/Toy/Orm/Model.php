@@ -7,6 +7,7 @@ use Toy\Data\Helper;
 use Toy\Data\Sql\DeleteStatement;
 use Toy\Data\Sql\InsertStatement;
 use Toy\Data\Sql\UpdateStatement;
+use Toy\Util\ArrayUtil;
 
 abstract class Model implements \ArrayAccess, Iterator
 {
@@ -18,9 +19,9 @@ abstract class Model implements \ArrayAccess, Iterator
     protected $properties = array();
     protected $relations = array();
     protected $idProperty = null;
-    protected $propertyData = array();
-    protected $childData = array();
-    private $_entity = null;
+//    protected $data = array();
+//    protected $relationData = array();
+    protected $data = array();
 
     public function __construct($data = array())
     {
@@ -28,20 +29,18 @@ abstract class Model implements \ArrayAccess, Iterator
         $this->idProperty = $m['idProperty'];
         $this->properties = $m['properties'];
         $this->tableName = $m['table'];
-        if (array_key_exists('relations', $m)) {
-            $this->relations = $m['relations'];
-        }
-        $this->propertyData = $data;
+        $this->relations = $m['relations'];
+        $this->data = $data;
     }
 
     public function __get($name)
     {
-        return $this->propertyData[$name];
+        return $this->getData($name);
     }
 
     public function __set($name, $value)
     {
-        $this->propertyData[$name] = $value;
+        $this->data[$name] = $value;
     }
 
     public function __call($name, $arguments)
@@ -61,57 +60,52 @@ abstract class Model implements \ArrayAccess, Iterator
 
     public function offsetExists($offset)
     {
-        return array_key_exists($offset, $this->propertyData);
+        return array_key_exists($offset, $this->data);
     }
 
     public function offsetGet($offset)
     {
-        return $this->propertyData[$offset];
+        return $this->data[$offset];
     }
 
     public function offsetSet($offset, $value)
     {
-        $this->propertyData[$offset] = $value;
+        $this->data[$offset] = $value;
     }
 
     public function offsetUnset($offset)
     {
-        unset($this->propertyData[$offset]);
+        unset($this->data[$offset]);
     }
 
     public function current()
     {
-        return current($this->propertyData);
+        return current($this->data);
     }
 
     public function key()
     {
-        return key($this->propertyData);
+        return key($this->data);
     }
 
     public function next()
     {
-        return next($this->propertyData);
+        return next($this->data);
     }
 
     public function rewind()
     {
-        return reset($this->propertyData);
+        return reset($this->data);
     }
 
     public function valid()
     {
-        return key($this->propertyData) !== null;
+        return key($this->data) !== null;
     }
 
     public function getTableName()
     {
         return $this->tableName;
-    }
-
-    public function getModelClass()
-    {
-        return $this->modelClass;
     }
 
     public function getIdProperty()
@@ -153,56 +147,79 @@ abstract class Model implements \ArrayAccess, Iterator
         return array_key_exists($name, $this->relations);
     }
 
+    public function isEmptyData($name)
+    {
+        if (!array_key_exists($name, $this->data)) {
+            return true;
+        }
+        return empty($this->data[$name]);
+    }
+
     public function getAllData()
     {
-        return $this->propertyData;
+        return $this->data;
     }
 
     public function getData($name, $default = null)
     {
-        if (array_key_exists($name, $this->propertyData)) {
-            return $this->propertyData[$name];
+        if (array_key_exists($name, $this->data)) {
+            return $this->data[$name];
         }
 
-        if (array_key_exists($name, $this->childData)) {
-            return $this->childData[$name];
-        }
+//        if (array_key_exists($name, $this->relationData)) {
+//            return $this->relationData[$name];
+//        }
 
         if (array_key_exists($name, $this->relations)) {
-            $this->childData[$name] = $this->getChildData($name);
-            return $this->childData[$name];
+            $this->data[$name] = $this->getChildData($name);
+            return $this->relationData[$name];
         }
 
         return $default;
     }
 
-    protected function getChildData($name)
+    protected function getRelationData($name)
     {
         $relation = $this->relations[$name];
-        if ($this->getData($relation['parentId'])) {
-            $f = Entity::get($relation['model'])
-                ->find()
-                ->eq($relation['childId'], $this->propertyData[$relation['parentId']]);
-            if ($relation['type'] == 'oneToMore') {
-                return $f->execute()->getModelList();
-            } elseif ($relation['type'] == 'oneToOne') {
-                return $f->execute()->getFirstModel();
+        if ($relation->getType() == Relation::TYPE_PARENT) {
+            if ($this->isEmptyData($relation->getThisProperty())) {
+                return new $relation->getThatModel();
+            } else {
+                $mc = $relation->getThatModel();
+                return $mc::load($this->data[$relation->getThisProperty()]);
             }
-        } else {
-            if ($relation['type'] == 'oneToMore') {
-                return new ArrayList();
-            } elseif ($relation['type'] == 'oneToOne') {
-                return new $relation['model']();
-            }
+        }
+
+        switch ($relation->getType()) {
+            case Relation::TYPE_CHILD:
+                if ($this->isEmptyData($this->idProperty->getName())) {
+                    return new $relation->getThatModel();
+                } else {
+                    $mc = $relation->getThatModel();
+                    $mc::find()
+                        ->eq($relation->getThatProperty(), $this->data[$this->idProperty->getName()])
+                        ->execute()
+                        ->getFirstModel();
+                }
+            case Relation::TYPE_CHILDREN:
+                if ($this->isEmptyData($this->idProperty->getName())) {
+                    return new ArrayList();
+                } else {
+                    $mc = $relation->getThatModel();
+                    $mc::find()
+                        ->eq($relation->getThatProperty(), $this->data[$this->idProperty->getName()])
+                        ->execute()
+                        ->getModelList();
+                }
         }
     }
 
     public function setData($name, $value)
     {
         if (array_key_exists($name, $this->relations)) {
-            $this->childData[$name] = $value;
+            $this->relationData[$name] = $value;
         } else {
-            $this->propertyData[$name] = $value;
+            $this->data[$name] = $value;
         }
         return $this;
     }
@@ -245,15 +262,15 @@ abstract class Model implements \ArrayAccess, Iterator
     public function validateChildren()
     {
         $result = array();
-        foreach($this->childData as $children){
-            if($children instanceof Model){
+        foreach ($this->relationData as $children) {
+            if ($children instanceof Model) {
                 $r = $children->validateProperties();
-                if($r !== true){
+                if ($r !== true) {
                     $result = array_merge($result, $r);
                 }
-            }else{
-                foreach($children as $child){
-                    if($child !== true){
+            } else {
+                foreach ($children as $child) {
+                    if ($child !== true) {
                         $result = array_merge($result, $r);
                     }
                 }
@@ -359,8 +376,8 @@ abstract class Model implements \ArrayAccess, Iterator
     {
         $cdb = $db ? $db : Helper::openDb();
         foreach ($this->_entity->getRelations() as $r) {
-            if (array_key_exists($r['property'], $this->childData)) {
-                $children = $this->childData[$r['property']];
+            if (array_key_exists($r['property'], $this->relationData)) {
+                $children = $this->relationData[$r['property']];
                 if ($children instanceof Model) {
                     if ($children->getIdValue()) {
                         $children->update($cdb);
@@ -406,9 +423,9 @@ abstract class Model implements \ArrayAccess, Iterator
         $props = $this->getProperties();
         foreach ($row as $field => $value) {
             if (array_key_exists($field, $props)) {
-                $this->propertyData[$field] = $props[$field]->fromDbValue($value);
+                $this->data[$field] = $props[$field]->fromDbValue($value);
             } else {
-                $this->propertyData[$field] = $value;
+                $this->data[$field] = $value;
             }
         }
         return $this;
@@ -497,7 +514,7 @@ abstract class Model implements \ArrayAccess, Iterator
 
     static public function getMetadata($class = null)
     {
-        if(is_null($class)){
+        if (is_null($class)) {
             return self::$_metadatas[get_called_class()];
         }
         return self::$_metadatas[$class];

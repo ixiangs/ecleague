@@ -47,20 +47,21 @@ $f->endGroup();
 foreach($this->locale->getLanguages() as $lang):
     $vmodel = null;
     foreach($this->model->getVersions() as $m):
-        if($m->getVersionKey() == $lang['code']):
+        if($m->getLanguageId() == $lang['id']):
             $vmodel = $m;
             break;
         endif;
     endforeach;
-$f->beginGroup('lang_'.$lang['code'], $lang['name']);
-$f->addInputField('text', $this->locale->_('name'), 'version_'.$lang['code'].'_name', 'versions['.$lang['code'].'][name]', $vmodel->getName())
-    ->addValidateRule('required', true);
-$f->addInputField('text', $this->locale->_('dass_display_label'), 'version_'.$lang['code'].'_display_label', 'versions['.$lang['code'].'][display_label]', $vmodel->getDisplayLabel())
-    ->addValidateRule('required', true);
-$f->addInputField('text', $this->locale->_('dass_form_label'), 'version_'.$lang['code'].'_form_label', 'versions['.$lang['code'].'][form_label]', $vmodel->getFormLabel())
-    ->addValidateRule('required', true);
-$f->endGroup();
-$f->addHiddenField('version_'.$lang['code'].'_id', 'versions['.$lang['code'].'][id]', $vmodel->getVersionId());
+    $f->beginGroup('lang_'.$lang['code'], $lang['name']);
+    $f->addInputField('text', $this->locale->_('name'), 'version_'.$lang['id'].'_name', 'versions['.$lang['id'].'][name]', $vmodel->getName())
+        ->addValidateRule('required', true);
+    $f->addInputField('text', $this->locale->_('dass_display_label'), 'version_'.$lang['id'].'_display_label', 'versions['.$lang['id'].'][display_label]', $vmodel->getDisplayLabel())
+        ->addValidateRule('required', true);
+    $f->addInputField('text', $this->locale->_('dass_form_label'), 'version_'.$lang['id'].'_form_label', 'versions['.$lang['id'].'][form_label]', $vmodel->getFormLabel())
+        ->addValidateRule('required', true);
+    $f->endGroup();
+    $f->addHiddenField('version_'.$lang['id'].'_version_id', 'versions['.$lang['id'].'][version_id]', $vmodel->getVersionId());
+//    $f->addHiddenField('version_'.$lang['code'].'_language_id', 'versions['.$lang['code'].'][language_id]', $vmodel->getLanguageId());
 endforeach;
 $f->addHiddenField('main_data_type', 'main[data_type]', $this->model->getDataType());
 $f->addHiddenField('main_input_type', 'main[input_type]', $this->model->getInputType());

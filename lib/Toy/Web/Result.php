@@ -49,7 +49,7 @@ class Result{
         return new self('json', array('data'=>$data));
     }
 
-    static public function redirectResult($url, $status = 302){
-        return new self('redirect', array('url'=>$url, 'status'=>$status));
+    static public function redirectResult($url, $msg = null, $status = 302){
+        return new self('redirect', array('url'=>$url, 'message'=>$msg, 'status'=>$status));
     }
 }

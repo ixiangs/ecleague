@@ -8,7 +8,7 @@ class AreaController extends Controller{
 	public function indexAction(){
 		$pi = $this->request->getParameter("pageindex", 1);
 		$count = AreaModel::find()->count()->execute()->getFirstValue();
-		$areas = AreaModel::find()->asc("level")->asc("id")->limit(PAGINATION_SIZE, ($pi-1)*PAGINATION_SIZE)->execute()->getModelArray();	
+		$areas = AreaModel::find()->asc("level")->asc("id")->limit(PAGINATION_SIZE, ($pi-1)*PAGINATION_SIZE)->load();
 		return new TemplateResult(array(
 			'areas'=>$areas,
 			'total'=>$count,

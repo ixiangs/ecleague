@@ -14,6 +14,7 @@ class Relation
     private $_type = null;
 
     public function __construct($type, $thatModel, $thatProperty, $propertyName, $thisProperty = null){
+        $this->_type = $type;
         $this->_thatModel = $thatModel;
         $this->_thatProperty = $thatProperty;
         $this->_thisProperty = $thisProperty;

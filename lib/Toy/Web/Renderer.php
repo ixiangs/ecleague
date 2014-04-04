@@ -22,6 +22,9 @@ class Renderer
                 $response->write($result->content);
                 break;
             case 'redirect' :
+                if($result->message){
+                    $context->session->set('infos', $result->message);
+                }
                 $response->redirect($result->url);
                 break;
 //            case 'referer' :

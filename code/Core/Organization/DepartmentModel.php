@@ -32,8 +32,8 @@ class DepartmentModel extends Orm\ModelBase{
 	}
 	
 	static public function getDepartmentOptionGroups(){
-		$companies = CompanyModel::find()->execute()->getModelArray();
-		$departments = DepartmentModel::find()->execute()->getModelArray();
+		$companies = CompanyModel::find()->load();
+		$departments = DepartmentModel::find()->load();
 		$result = array();
 		foreach($companies as $c){
 			$item = array('label'=>$c->getName(), 'opitons'=>array());

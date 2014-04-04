@@ -2,6 +2,7 @@
 namespace Core\Dass\Backend;
 
 use Core\Dass\Model\AttributeVersionModel;
+use Toy\Data\Helper;
 use Toy\Web;
 use Core\Dass\Model\AttributeModel;
 
@@ -11,12 +12,11 @@ class AttributeController extends Web\Controller
     public function listAction()
     {
         $pi = $this->request->getParameter("pageindex", 1);
-        $count = AttributeModel::findVersions()->selectCount()->execute()->getFirstValue();
-        $models = AttributeModel::findVersions()
+        $count = AttributeModel::find()->selectCount()->execute()->getFirstValue();
+        $models = AttributeModel::find()
             ->asc('code')
             ->limit(PAGINATION_SIZE, ($pi - 1) * PAGINATION_SIZE)
-            ->execute()
-            ->getModelArray();
+            ->load();
         return Web\Result::templateResult(array(
                 'models' => $models,
                 'total' => $count,
@@ -32,14 +32,13 @@ class AttributeController extends Web\Controller
     public function addAction()
     {
         $model = AttributeModel::create(array(
-           'data_type'=>$this->request->getQuery('data_type'),
-           'input_type'=>$this->request->getQuery('input_type')
+            'data_type' => $this->request->getQuery('data_type'),
+            'input_type' => $this->request->getQuery('input_type')
         ));
-        foreach($this->context->locale->getLanguages() as $lang){
-            $model->getVersions()->append(AttributeVersionModel::create(array(
-                'language_id'=>$lang['id'],
-                'data_type'=>$this->request->getQuery('data_type'),
-                'input_type'=>$this->request->getQuery('input_type')
+        $versions = $model->getVersions();
+        foreach ($this->context->locale->getLanguages() as $lang) {
+            $versions->append(AttributeVersionModel::create(array(
+                'language_id' => $lang['id']
             )));
         }
         return $this->getEditTemplateResult($model);
@@ -49,10 +48,9 @@ class AttributeController extends Web\Controller
     {
         $locale = $this->context->locale;
         $m = AttributeModel::create($this->request->getPost('main'));
-        foreach($this->request->getPost('versions') as $l=>$data){
-            $m->getVersions()->append(AttributeVersionModel::create(
-                $data
-            )->setLanguageId($l));
+        $versions = $m->getVersions();
+        foreach ($this->request->getPost('versions') as $l => $data) {
+            $versions->append(AttributeVersionModel::create($data)->setLanguageId($l));
         }
 
         $vr = $m->validateProperties();
@@ -61,22 +59,36 @@ class AttributeController extends Web\Controller
             return $this->getEditTemplateResult($m);
         }
 
-        if($m->validateUnique()){
-            $this->session->set('errors', $locale->_('err_code_exists', $m->getCode()));
+        if (!$m->validateUnique()) {
+            $this->session->set('errors', $locale->_('dass_err_attribute_exists', $m->getCode()));
             return $this->getEditTemplateResult($m);
         }
 
-        if (!$m->insert()) {
-            $this->session->set('errors', $locale->_('err_system'));
-            return $this->getEditTemplateResult($m);
-        }
+        $result = Helper::withTx(function ($db) use ($m, $versions, $locale) {
+            if (!$m->insert($db)) {
+                $this->session->set('errors', $locale->_('err_system'));
+                return false;
+            }
 
-        if (!$m->saveChildren()) {
-            $this->session->set('errors', $locale->_('err_system'));
-            return $this->getEditTemplateResult($m);
-        }
+            foreach ($versions as $version) {
+                $version->setMainId($m->getId());
+                $vr = $version->validateProperties();
+                if ($vr !== true) {
+                    $this->session->set('errors', $locale->_('err_input_invalid'));
+                    return false;
+                }
+                if (!$version->insert($db)) {
+                    $this->session->set('errors', $locale->_('err_system'));
+                    return false;
+                }
+            }
 
-        return Web\Result::redirectResult($this->router->buildUrl('list'));
+            return true;
+        });
+
+        return $result ?
+            Web\Result::redirectResult($this->router->buildUrl('list')) :
+            $this->getEditTemplateResult($m);
     }
 
     public function editAction($id)

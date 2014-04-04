@@ -24,6 +24,24 @@ class AttributeModel extends Orm\Model
     const DATA_TYPE_EMAIL = 'email';
     const DATA_TYPE_DATE = 'date';
 
+    protected function _find()
+    {
+        $fields = array();
+        foreach ($this->properties as $prop) {
+            $fields[] = $this->tableName . '.' . $prop->getName();
+        }
+        $m = AttributeVersionModel::getMetadata();
+        foreach ($m['properties'] as $prop) {
+            $fields[] = AttributeVersionModel::TABLE_NAME . '.' . $prop->getName();
+        }
+        $result = new Orm\Collection(get_class($this));
+        return $result->select($fields)
+            ->from($this->tableName)
+            ->join(AttributeVersionModel::TABLE_NAME,
+                self::TABLE_NAME.'.id',
+                AttributeVersionModel::TABLE_NAME.'.main_id');
+    }
+
 }
 
 Orm\Model::register('Core\Dass\Model\AttributeModel', array(
@@ -40,6 +58,7 @@ Orm\Model::register('Core\Dass\Model\AttributeModel', array(
         Orm\SerializeProperty::create('validate_setting')
     ),
     'relations'=>array(
-        array('name'=>'versions', 'model'=>'Core\Dass\Model\AttributeVersionModel', 'parentId'=>'id', 'childId'=>'main_id', 'type'=>'oneToMore')
+        Orm\Relation::childrenRelation('versions', 'Core\Dass\Model\AttributeVersionModel', 'main_id')
+//        array('name'=>'versions', 'model'=>'Core\Dass\Model\AttributeVersionModel', 'parentId'=>'id', 'childId'=>'main_id', 'type'=>'oneToMore')
     )
 ));

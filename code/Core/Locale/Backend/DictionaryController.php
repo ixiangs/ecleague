@@ -3,8 +3,8 @@ namespace Core\Locale\Backend;
 
 use Toy\Data\Helper;
 use Toy\Web;
-use Locale\Model\DictionaryModel;
-use Locale\Model\LanguageModel;
+use Core\Locale\Model\DictionaryModel;
+use Core\Locale\Model\LanguageModel;
 
 class DictionaryController extends Web\Controller
 {
@@ -19,8 +19,7 @@ class DictionaryController extends Web\Controller
             ->eq('language_id', $lid)
             ->desc('id')
             ->limit(PAGINATION_SIZE, ($pi - 1) * PAGINATION_SIZE)
-            ->execute()
-            ->getModelArray();
+            ->load();
         return Web\Result::templateResult(array(
                 'models' => $models,
                 'language' => $lang,
@@ -116,21 +115,17 @@ class DictionaryController extends Web\Controller
         return Web\Result::redirectResult($this->router->buildUrl('list', array('languageid'=>$languageid)));
     }
 
-    public function deleteAction($id)
+    public function deletePostAction($languageid)
     {
         $lang = $this->context->locale;
-        $m = BehaviorModel::load($id);
+        $m = DictionaryModel::deleteBatch($this->request->getPost('ids'));
 
         if (!$m) {
             $this->session->set('errors', $lang->_('err_system'));
             return Web\Result::redirectResultt($this->router->buildUrl('list'));
         }
 
-        if (!$m->delete()) {
-            $this->session->set('errors', $lang->_('err_system'));
-            return Web\Result::redirectResult($this->router->buildUrl('list'));
-        }
-        return Web\Result::redirectResult($this->router->buildUrl('list'));
+        return Web\Result::redirectResult($this->router->buildUrl('list', array('languageid'=>$languageid)), $lang->_('operation_success'));
     }
 
     private function getEditTemplateResult($model)

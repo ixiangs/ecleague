@@ -73,7 +73,7 @@ class AccountModel extends Orm\Model
 
     static public function login($username, $password)
     {
-        $m = self::find()->eq('username', $username)->execute()->getFirstModel();
+        $m = self::find()->eq('username', $username)->load()->getFirst();
 
         if (empty($m)) {
             return array(self::ERROR_NOT_FOUND, null);
@@ -93,8 +93,10 @@ class AccountModel extends Orm\Model
         $roleIds = $m->getRoleIds();
         if (count($roleIds) > 0) {
             $roles = RoleModel::find()->in('id', $roleIds)->eq('enabled', 1)
-                ->execute()
-                ->combineColumns('code', 'behavior_ids');
+                ->load()
+                ->toArray(function($arr, $item){
+                    $arr[$item->getCode()] = $item->getBehaviorIds();
+                });
             $roleCodes = array_keys($roles);
             if (count($roleCodes) > 0) {
                 $behaviorIds = array();
@@ -103,10 +105,14 @@ class AccountModel extends Orm\Model
                         $behaviorIds = array_merge($behaviorIds, explode(',', $bidArr));
                     }
                 }
-                $behaviorCodes = BehaviorModel::find()->in('id', $behaviorIds)->eq('enabled', 1)
-                    ->select('code')
-                    ->execute()
-                    ->getColumnValues('code');
+                $behaviorCodes = BehaviorModel::find()
+                                    ->in('id', $behaviorIds)
+                                    ->eq('enabled', 1)
+                                    ->select('code')
+                                    ->load()
+                                    ->toArray(function($arr, $item){
+                                        $arr[] = $item->getCode();
+                                    });
             }
         }
 

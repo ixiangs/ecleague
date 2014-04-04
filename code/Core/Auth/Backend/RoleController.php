@@ -11,7 +11,7 @@ class RoleController extends Web\Controller
     {
         $pi = $this->request->getParameter("pageindex", 1);
         $count = RoleModel::find()->selectCount()->execute()->getFirstValue();
-        $models = RoleModel::find()->limit(PAGINATION_SIZE, ($pi - 1) * PAGINATION_SIZE)->execute()->getModelArray();
+        $models = RoleModel::find()->limit(PAGINATION_SIZE, ($pi - 1) * PAGINATION_SIZE)->load();
         return Web\Result::templateResult(array(
                 'models' => $models,
                 'behaviors' => BehaviorModel::find()->execute()->combineColumns('id', 'code'),

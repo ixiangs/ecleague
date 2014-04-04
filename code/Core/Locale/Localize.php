@@ -3,9 +3,6 @@ namespace Core\Locale;
 
 use Core\Locale\Model\DictionaryModel;
 use Core\Locale\Model\LanguageModel;
-use Toy\Platform\PathUtil;
-use Toy\Platform\FileUtil;
-use Toy\Web\Application;
 
 class Localize implements \ArrayAccess
 {
@@ -13,8 +10,6 @@ class Localize implements \ArrayAccess
     private $_texts = array();
     private $_languages = array();
     private $_currentLanguage = null;
-//    private $_longDateFormat = "";
-//    private $_shortDateFormat = "";
 
     private function __construct()
     {
@@ -89,16 +84,17 @@ class Localize implements \ArrayAccess
 
     public function initialize($lang)
     {
-        $rows = LanguageModel::find()->execute()->rows;
+        $rows = LanguageModel::find()->load();
         foreach($rows as $row){
-            $this->_languages[strtolower($row['code'])] = $row;
+            $this->_languages[strtolower($row->getCode())] = $row->getAllData();
         }
         $this->_currentLanguage = $this->_languages[$lang];
 
         $this->_texts = DictionaryModel::find()
-                            ->eq('language_id', $this->_currentLanguage['id'])
-                            ->execute()
-                            ->combineColumns('code', 'label');
+                            ->eq('language_id', $this->_currentLanguage['id'])->load()
+                            ->toArray(function(&$arr, $item){
+                                $arr[$item->getCode()] = $item->getLabel();
+                            });
     }
 
     private static $_instance = NULL;

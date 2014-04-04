@@ -13,7 +13,7 @@ class LanguageController extends Web\Controller
     {
         $pi = $this->request->getParameter("pageindex", 1);
         $count = LanguageModel::find()->selectCount()->execute()->getFirstValue();
-        $models = LanguageModel::find()->limit(PAGINATION_SIZE, ($pi - 1) * PAGINATION_SIZE)->execute()->getModelArray();
+        $models = LanguageModel::find()->limit(PAGINATION_SIZE, ($pi - 1) * PAGINATION_SIZE)->load();
         return Web\Result::templateResult(array(
                 'models' => $models,
                 'total' => $count,

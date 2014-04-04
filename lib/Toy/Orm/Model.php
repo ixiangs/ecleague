@@ -1,15 +1,12 @@
 <?php
 namespace Toy\Orm;
 
-use Iterator;
-use Toy\Collection\ArrayList;
 use Toy\Data\Helper;
 use Toy\Data\Sql\DeleteStatement;
 use Toy\Data\Sql\InsertStatement;
 use Toy\Data\Sql\UpdateStatement;
-use Toy\Util\ArrayUtil;
 
-abstract class Model implements \ArrayAccess, Iterator
+abstract class Model implements \ArrayAccess, \Iterator
 {
 
     private static $_metadatas = array();
@@ -19,8 +16,6 @@ abstract class Model implements \ArrayAccess, Iterator
     protected $properties = array();
     protected $relations = array();
     protected $idProperty = null;
-//    protected $data = array();
-//    protected $relationData = array();
     protected $data = array();
 
     public function __construct($data = array())
@@ -45,16 +40,40 @@ abstract class Model implements \ArrayAccess, Iterator
 
     public function __call($name, $arguments)
     {
+        $nums = count($arguments);
+        if ($name == 'load') {
+            return $this->_load($arguments[0], $nums > 1 ? $arguments[1] : null);
+        } elseif ($name == 'find') {
+            return $this->_find();
+        } elseif ($name == 'merge') {
+            return $this->_merge($arguments[0], $arguments[1], $nums > 2 ? $arguments[2] : null);
+        }
+
         $st = substr($name, 0, 3);
         if ($st == 'get') {
             $pn = self::getUnderlineName(substr($name, 3));
-            if (count($arguments) == 1) {
+            if ($nums == 1) {
                 return $this->getData($pn, $arguments);
             }
             return $this->getData($pn);
         } elseif ($st == 'set') {
             $pn = self::getUnderlineName(substr($name, 3));
             return $this->setData($pn, $arguments[0]);
+        }
+    }
+
+    static public function __callStatic($name, $arguments)
+    {
+        $nums = count($arguments);
+        if ($name == 'load') {
+            $inst = new static();
+            return $inst->_load($arguments[0], $nums > 1 ? $arguments[1] : null);
+        } elseif ($name == 'find') {
+            $inst = new static();
+            return $inst->_find();
+        } elseif ($name == 'merge') {
+            $inst = new static();
+            return $inst->_merge($arguments[0], $arguments[1], $nums > 2 ? $arguments[2] : null);
         }
     }
 
@@ -166,13 +185,9 @@ abstract class Model implements \ArrayAccess, Iterator
             return $this->data[$name];
         }
 
-//        if (array_key_exists($name, $this->relationData)) {
-//            return $this->relationData[$name];
-//        }
-
         if (array_key_exists($name, $this->relations)) {
-            $this->data[$name] = $this->getChildData($name);
-            return $this->relationData[$name];
+            $this->data[$name] = $this->getRelationData($name);
+            return $this->data[$name];
         }
 
         return $default;
@@ -181,46 +196,35 @@ abstract class Model implements \ArrayAccess, Iterator
     protected function getRelationData($name)
     {
         $relation = $this->relations[$name];
-        if ($relation->getType() == Relation::TYPE_PARENT) {
-            if ($this->isEmptyData($relation->getThisProperty())) {
-                return new $relation->getThatModel();
-            } else {
-                $mc = $relation->getThatModel();
-                return $mc::load($this->data[$relation->getThisProperty()]);
-            }
-        }
 
         switch ($relation->getType()) {
             case Relation::TYPE_CHILD:
-                if ($this->isEmptyData($this->idProperty->getName())) {
-                    return new $relation->getThatModel();
-                } else {
-                    $mc = $relation->getThatModel();
-                    $mc::find()
-                        ->eq($relation->getThatProperty(), $this->data[$this->idProperty->getName()])
-                        ->execute()
-                        ->getFirstModel();
+                $mc = new $relation->getThatModel();
+                if (!$this->isEmptyData($this->idProperty->getName())) {
+                    $mc->setIdValue($this->data[$this->idProperty->getName()]);
                 }
+                return $mc;
             case Relation::TYPE_CHILDREN:
-                if ($this->isEmptyData($this->idProperty->getName())) {
-                    return new ArrayList();
+                $mc = $relation->getThatModel();
+                $res = $mc::find();
+                if (!$this->isEmptyData($this->idProperty->getName())) {
+                    $res->eq($relation->getThatProperty(), $this->data[$this->idProperty->getName()]);
+                }
+                return $res;
+            case Relation::TYPE_PARENT:
+                if ($this->isEmptyData($relation->getThisProperty())) {
+                    return null;
                 } else {
-                    $mc = $relation->getThatModel();
-                    $mc::find()
-                        ->eq($relation->getThatProperty(), $this->data[$this->idProperty->getName()])
-                        ->execute()
-                        ->getModelList();
+                    $mc = new $relation->getThatModel();
+                    $mc->setIdValue($this->data[$relation->getThisProperty()]);
+                    return $mc;
                 }
         }
     }
 
     public function setData($name, $value)
     {
-        if (array_key_exists($name, $this->relations)) {
-            $this->relationData[$name] = $value;
-        } else {
-            $this->data[$name] = $value;
-        }
+        $this->data[$name] = $value;
         return $this;
     }
 
@@ -252,26 +256,6 @@ abstract class Model implements \ArrayAccess, Iterator
                     $r = $p->validate($this->getData($n));
                     if ($r !== true) {
                         $result[] = $n;
-                    }
-                }
-            }
-        }
-        return empty($result) ? true : $result;
-    }
-
-    public function validateChildren()
-    {
-        $result = array();
-        foreach ($this->relationData as $children) {
-            if ($children instanceof Model) {
-                $r = $children->validateProperties();
-                if ($r !== true) {
-                    $result = array_merge($result, $r);
-                }
-            } else {
-                foreach ($children as $child) {
-                    if ($child !== true) {
-                        $result = array_merge($result, $r);
                     }
                 }
             }
@@ -372,44 +356,6 @@ abstract class Model implements \ArrayAccess, Iterator
     {
     }
 
-    public function saveChildren($db = null)
-    {
-        $cdb = $db ? $db : Helper::openDb();
-        foreach ($this->_entity->getRelations() as $r) {
-            if (array_key_exists($r['property'], $this->relationData)) {
-                $children = $this->relationData[$r['property']];
-                if ($children instanceof Model) {
-                    if ($children->getIdValue()) {
-                        $children->update($cdb);
-                    } else {
-                        $children->setData($r['childId'], $this->getIdValue());
-                        $children->insert($cdb);
-                    }
-                } else {
-                    foreach ($children as $child) {
-                        if ($child->getIdValue()) {
-                            $child->update($cdb);
-                        } else {
-                            $child->setData($r['childId'], $this->getIdValue());
-                            $child->insert($cdb);
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-    public function deleteChildren($db = null)
-    {
-        $cdb = $db ? $db : Helper::openDb();
-        foreach ($this->_entity->getRelations() as $r) {
-            $re = Entity::get($r['model']);
-            $ds = new DeleteStatement($re->getTableName());
-            $ds->eq($r['childId'], $this->getIdValue());
-            $cdb->delete($ds);
-        }
-    }
-
     public function fillArray(array $values)
     {
         foreach ($values as $k => $v) {
@@ -431,71 +377,50 @@ abstract class Model implements \ArrayAccess, Iterator
         return $this;
     }
 
-    static public function __callStatic($name, $arguments)
+    protected function _load($id, $db = null)
     {
-        if (substr($name, 0, 4) == 'find') {
-            $cn = self::getUnderlineName(substr($name, 4));
-            $m = static::getMetadata();
-            if (array_key_exists($cn, $m['relations'])) {
-                return static::findChildren($cn);
-            }
+        $fields = array();
+        foreach ($this->properties as $prop) {
+            $fields[] = $this->tableName . '.' . $prop->getName();
         }
+        $q = new Query(get_class($this));
+        $q->select($fields)
+            ->from($this->tableName)
+            ->eq($this->idProperty->getName(), $id)
+            ->limit(1);
+        $row = $q->execute($db)->getFirstRow();
+        if ($row != null) {
+            $this->fillRow($row);
+            return $this;
+        }
+        return false;
     }
 
-    static public function checkUnique($field, $value)
+    protected function _merge($id, $data, $db = null)
     {
-        $m = static::find()
-            ->selectCount()
-            ->eq($field, $value)
-            ->execute()
-            ->getFirstValue();
-        return $m > 0;
+        if ($this->load($id, $db) !== false) {
+            $this->fillArray($data);
+            return $this;
+        }
+        return false;
     }
 
-    static public function merge($id, $data)
+    protected function _find()
     {
-        return static::load($id)->fillArray($data);
+        $fields = array();
+        foreach ($this->properties as $prop) {
+            $fields[] = $this->tableName . '.' . $prop->getName();
+        }
+        $result = new Collection(get_class($this));
+        return $result->select($fields)->from($this->tableName);
     }
 
-    static public function load($value)
-    {
+    static public function deleteBatch(array $ids){
         $m = self::$_metadatas[get_called_class()];
-        return static::find()
-            ->eq($m['idProperty']->getName(), $value)
-            ->execute()
-            ->getFirstModel();
-    }
-
-    static public function find()
-    {
-        $fields = array();
-        $cn = get_called_class();
-        $m = self::$_metadatas[$cn];
-        foreach ($m['properties'] as $prop) {
-            $fields[] = $m['table'] . '.' . $prop->getName();
-        }
-        $result = new Query($cn);
-        return $result->select($fields)->from($m['table']);
-    }
-
-    static protected function findChildren($name)
-    {
-        $pm = static::getMetadata();
-        $rel = $pm['relations'][$name];
-        $cm = self::getMetadata($rel['model']);
-        $fields = array();
-        foreach ($pm['properties'] as $prop) {
-            $fields[] = $pm['table'] . '.' . $prop->getName();
-        }
-        foreach ($cm['properties'] as $prop) {
-            $fields[] = $cm['table'] . '.' . $prop->getName();
-        }
-        $result = new Query(get_called_class());
-        return $result->select($fields)
-            ->from($pm['table'])
-            ->join($cm['table'],
-                $pm['table'] . '.' . $pm['idProperty']->getName(),
-                $cm['table'] . '.' . $cm['properties'][$rel['childId']]->getName());
+        return Helper::withTx(function($db) use($ids, $m){
+            $ds = new DeleteStatement($m['table']);
+            return $db->delete($ds->in($m['idProperty']->getName(), $ids));
+        });
     }
 
     static public function create($data = array())
@@ -535,7 +460,7 @@ abstract class Model implements \ArrayAccess, Iterator
         }
         if (array_key_exists('relations', $metadata)) {
             foreach ($metadata['relations'] as $rel) {
-                $arr['relations'][$rel['name']] = $rel;
+                $arr['relations'][$rel->getPropertyName()] = $rel;
             }
         }
         self::$_metadatas[$class] = $arr;

@@ -32,9 +32,14 @@ $dt->addOptionColumn($this->locale->_('dass_input_type'), '{input_type}',  array
 ), 'middle', 'middle text-center');
 $dt->addLabelColumn($this->locale->_('dass_display_label'), '{display_label}', '', '');
 $dt->addLabelColumn($this->locale->_('dass_form_label'), '{form_label}', '', '');
-$dt->addLabelColumn($this->locale->_('dass_indexable'), '{indexable}', 'small', 'small text-center');
-$dt->addLabelColumn($this->locale->_('dass_required'), '{required}', 'small', 'small text-center');
-$dt->addLabelColumn($this->locale->_('status'), '{enabled}', 'small', 'small text-center');
+$dt->addBooleanColumn($this->locale->_('dass_indexable'), 'indexable', $this->locale->_('yes'), $this->locale->_('no').'</span>',
+    'small', 'small text-center');
+$dt->addBooleanColumn($this->locale->_('dass_required'), 'required', $this->locale->_('yes'), $this->locale->_('no').'</span>',
+    'small', 'small text-center');
+$dt->addBooleanColumn($this->locale->_('dass_indexable'), 'indexable', $this->locale->_('yes'), $this->locale->_('no').'</span>',
+    'small', 'small text-center');
+$dt->addBooleanColumn($this->locale->_('status'), 'enabled', $this->locale->_('enabled'), $this->locale->_('disabled').'</span>',
+    'small', 'small text-center');
 $dt->addLinkColumn('', $this->locale->_('edit'), urldecode($this->router->buildUrl('edit', array('id' => '{id}'))), 'small', 'small edit');
 $this->assign('datatable', $dt);
 

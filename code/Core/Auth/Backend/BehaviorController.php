@@ -11,7 +11,7 @@ class BehaviorController extends Web\Controller
     {
         $pi = $this->request->getParameter("pageindex", 1);
         $count = BehaviorModel::find()->selectCount()->execute()->getFirstValue();
-        $models = BehaviorModel::find()->limit(PAGINATION_SIZE, ($pi - 1) * PAGINATION_SIZE)->execute()->getModelArray();
+        $models = BehaviorModel::find()->limit(PAGINATION_SIZE, ($pi - 1) * PAGINATION_SIZE)->load();
         return Web\Result::templateResult(array(
                 'models' => $models,
                 'total' => $count,

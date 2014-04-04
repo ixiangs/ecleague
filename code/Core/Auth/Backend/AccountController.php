@@ -3,7 +3,7 @@ namespace Core\Auth\Backend;
 
 use Toy\Util\FileUtil;
 use Toy\Web;
-use Auth\Model\AccountModel, Auth\Model\RoleModel, Auth\Model\ProfileModel;
+use Core\Auth\Model\AccountModel, Core\Auth\Model\RoleModel, Core\Auth\Model\ProfileModel;
 
 class AccountController extends Web\Controller{
 
@@ -13,8 +13,7 @@ class AccountController extends Web\Controller{
 		$models = AccountModel::find()
 							->asc('id')
 							->limit(PAGINATION_SIZE, ($pi-1)*PAGINATION_SIZE)
-							->execute()
-                            ->getModelArray();
+							->load();
 		return Web\Result::TemplateResult(array(
 			'models'=>$models,
 			'roles' => RoleModel::find()->execute()->combineColumns('id', 'code'),

@@ -37,7 +37,8 @@ Toy.Locale.define('zh-CN', 'Validate', {
   minvalue: '数值不能少于{val}',
   maxvalue: '数值不能大于{val}',
   regexp: '输入内容格式有误',
-  equalto: '两次输入的内容不一致'
+  equalto: '两次输入的内容不一致',
+  greatto: '{f}必须大于{s}'
 });
 Toy.Locale.define('zh-CN', 'Default', {
 	delete_confirm: '确认删除',

@@ -48,7 +48,7 @@ Orm\Model::register('Core\Dass\Model\AttributeModel', array(
     'table' => AttributeModel::TABLE_NAME,
     'properties' => array(
         Orm\IntegerProperty::create('id')->setPrimaryKey(true)->setAutoIncrement(true),
-        Orm\StringProperty::create('code')->setUnique(true)->setNullable(false),
+        Orm\StringProperty::create('code')->setUnique(true)->setNullable(false)->setUpdateable(false),
         Orm\StringProperty::create('data_type')->setNullable(false),
         Orm\StringProperty::create('input_type')->setNullable(false),
         Orm\BooleanProperty::create('indexable')->setDefaultValue(false)->setNullable(false),

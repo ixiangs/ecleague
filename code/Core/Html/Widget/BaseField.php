@@ -33,9 +33,14 @@ abstract class BaseField extends Element
         return $this->_validateRules;
     }
 
-    public function addValidateRule($name, $value)
+    public function addValidateRule($name, $value, $msg = null)
     {
-        $this->_validateRules[$name] = $value;
+        if(!is_null($msg)){
+            $this->_validateRules[$name] = array('value'=>$value, 'message'=>$msg);
+        }else{
+            $this->_validateRules[$name] = $value;
+        }
+
         return $this;
     }
 

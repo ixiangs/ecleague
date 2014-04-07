@@ -132,7 +132,7 @@ Toy.Validation.renderers = [
     function (field, errors) {
         var $input = $(field.inputs[0]);
         var newErrorElement = function (rule) {
-            var eid = $input.attr('name').replace('[', '').replace(']', '') + '_' + rule;
+            var eid = $input.attr('name').replace(/\[/g, '').replace(/\]/g, '') + '_' + rule;
             var result = $('#' + eid);
             if (result.length == 0) {
                 result = $('<small class="help-block" id="' + eid + '"></small>');
@@ -162,10 +162,9 @@ Toy.Validation.renderers = [
                 });
         };
 
+        renderSuccess();
         if (Object.getLength(errors) > 0) {
             renderFailure();
-        } else {
-            renderSuccess();
         }
         return true;
     }
@@ -403,6 +402,29 @@ Toy.Validation.rules = {
             var $input = $(field.inputs[0]);
             var msg = $input.attr('date-validate-equalto-msg');
             return msg ? msg : Toy.Locale.get('Validate.equalto');
+        }
+    }))(),
+
+    'greatto': new (new Class({
+        match: function (field) {
+            var $input = $(field.inputs[0]);
+            var p = $input.attr('data-validate-greatto');
+            return p ? p : false;
+        },
+        check: function (field, params) {
+            var $input = $(field.inputs[0]);
+            if($input.val().trim().length == 0){
+                return true;
+            }
+            if($(params).val().trim().length == 0){
+                return true;
+            }
+            return $input.val() > $(params).val();
+        },
+        message: function (field, params) {
+            var $input = $(field.inputs[0]);
+            var msg = $input.attr('data-validate-greatto-msg');
+            return msg ? msg : Toy.Locale.get('Validate.greatto');
         }
     }))()
 };

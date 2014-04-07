@@ -9,7 +9,7 @@ $this->assign('navigationBar', array(
 ));
 
 $this->assign('toolbar', array(
-    $this->html->button('button', $this->locale->_('next_step'), 'btn btn-primary')->setAttribute('data-submit', 'form1')
+    $this->html->button('button', $this->locale->_('save'), 'btn btn-primary')->setAttribute('data-submit', 'form1')
 ));
 
 $f = $this->html->form()->setAttribute();
@@ -32,7 +32,8 @@ $inputTypes = array(
     \Core\Dass\Model\AttributeModel::INPUT_TYPE_RADIO_LIST=>$this->locale->_('dass_input_type_raidolist')
 );
 $f = $this->html->groupedForm();
-$f->beginGroup('base', $this->locale->_('base_info'));
+
+$f->beginGroup('tab_base', $this->locale->_('base_info'));
 $f->addLabelField($this->locale->_('dass_data_type'), $dataTypes[$this->model->getDataType()]);
 $f->addLabelField($this->locale->_('dass_input_type'), $inputTypes[$this->model->getInputType()]);
 $f->addInputField('text', $this->locale->_('code'), 'code', 'main[code]', $this->model->getCode())
@@ -44,6 +45,29 @@ $f->addSelectField(array('1'=>$this->locale->_('yes'), '0'=>$this->locale->_('no
 $f->addSelectField(array('1'=>$this->locale->_('yes'), '0'=>$this->locale->_('no')),
     $this->locale->_('enable'), 'enabled', 'main[enabled]', $this->model->getEnabled());
 $f->endGroup();
+
+$vs = $this->model->getValidateSetting();
+switch($this->model->getInputType()):
+    case \Core\Dass\Model\AttributeModel::INPUT_TYPE_TEXTBOX:
+        switch($this->model->getDataType()):
+            case \Core\Dass\Model\AttributeModel::DATA_TYPE_INTEGER:
+                $f->beginGroup('tab_validate', $this->locale->_('dass_validate_setting'));
+                $f->addInputField('text', $this->locale->_('dass_min_value'), 'min_value', 'main[validate_setting][min_value]', $vs['min_value'])
+                    ->addValidateRule('integer', true);
+                $f->addInputField('text', $this->locale->_('dass_max_value'), 'max_value', 'main[validate_setting][max_value]', $vs['max_value'])
+                    ->addValidateRule('integer', true)->addValidateRule('greatto', '#min_value', $this->locale->_('dass_max_great_min'));
+                $f->endGroup();
+            break;
+            case \Core\Dass\Model\AttributeModel::DATA_TYPE_STRING:
+                $f->beginGroup('tab_validate', $this->locale->_('dass_validate_setting'));
+                $f->addInputField('text', $this->locale->_('dass_max_length'), 'max_length', 'main[validate_setting][max_length]', $vs['max_length'])
+                    ->addValidateRule('integer', true);
+                $f->endGroup();
+            break;
+        endswitch;
+        break;
+endswitch;
+
 foreach($this->locale->getLanguages() as $lang):
     $vmodel = null;
     foreach($this->model->getVersions() as $m):
@@ -52,7 +76,7 @@ foreach($this->locale->getLanguages() as $lang):
             break;
         endif;
     endforeach;
-    $f->beginGroup('lang_'.$lang['code'], $lang['name']);
+    $f->beginGroup('tab_lang_'.$lang['code'], $lang['name']);
     $f->addInputField('text', $this->locale->_('name'), 'version_'.$lang['id'].'_name', 'versions['.$lang['id'].'][name]', $vmodel->getName())
         ->addValidateRule('required', true);
     $f->addInputField('text', $this->locale->_('dass_display_label'), 'version_'.$lang['id'].'_display_label', 'versions['.$lang['id'].'][display_label]', $vmodel->getDisplayLabel())
@@ -65,6 +89,7 @@ foreach($this->locale->getLanguages() as $lang):
 endforeach;
 $f->addHiddenField('main_data_type', 'main[data_type]', $this->model->getDataType());
 $f->addHiddenField('main_input_type', 'main[input_type]', $this->model->getInputType());
+$f->addHiddenField('main_input_type', 'main[id]', $this->model->getId());
 
 $this->assign('form', $f);
 $this->assign('form', $f);

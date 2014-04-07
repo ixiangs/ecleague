@@ -3,8 +3,6 @@ namespace Core\Html\Widget;
 
 class InputField extends BaseField
 {
-
-    private $_type = 'text';
     private $_input = null;
 
     public function __construct($type, $label)
@@ -23,7 +21,12 @@ class InputField extends BaseField
     protected function renderInput()
     {
         foreach ($this->getValidateRules() as $n => $v) {
-            $this->_input->setAttribute('data-validate-' . $n, $v === true? 'true': $v);
+            if(is_array($v)){
+                $this->_input->setAttribute('data-validate-' . $n, $v['value'] === true? 'true': $v['value']);
+                $this->_input->setAttribute('data-validate-'.$n.'-msg', $v['message']);
+            }else{
+                $this->_input->setAttribute('data-validate-' . $n, $v === true? 'true': $v);
+            }
         }
 
         return $this->_input->render();

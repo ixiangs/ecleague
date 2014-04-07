@@ -93,25 +93,57 @@ class AttributeController extends Web\Controller
 
     public function editAction($id)
     {
-        return $this->getEditTemplateResult(LanguageModel::load($id));
+        $m = AttributeModel::load($id);
+        $m->getVersions()->load();
+        return $this->getEditTemplateResult($m);
     }
 
     public function editPostAction()
     {
-        $lang = $this->context->locale;
-        $m = LanguageModel::merge($this->request->getParameter('id'), $this->request->getAllParameters());
-        $vr = $m->validate();
+        $locale = $this->context->locale;
+        $mainData = $this->request->getPost('main');
+        $m = AttributeModel::merge($mainData['id'], $mainData);
+        $versions = $m->getVersions()->load();
+        foreach ($this->request->getPost('versions') as $data) {
+            $versions->findById($data['version_id'])->fillArray($data);
+        }
+
+        $vr = $m->validateProperties();
         if ($vr !== true) {
-            $this->session->set('errors', $lang->_('err_input_invalid'));
+            $this->session->set('errors', $locale->_('err_input_invalid'));
             return $this->getEditTemplateResult($m);
         }
 
-        if (!$m->update()) {
-            $this->session->set('errors', $lang->_('err_system'));
-            return $this->getEditTemplateResult($m);
-        }
+//        if (!$m->validateUnique()) {
+//            $this->session->set('errors', $locale->_('dass_err_attribute_exists', $m->getCode()));
+//            return $this->getEditTemplateResult($m);
+//        }
 
-        return Web\Result::redirectResult($this->router->buildUrl('list'));
+        $result = Helper::withTx(function ($db) use ($m, $versions, $locale) {
+            if (!$m->update($db)) {
+                $this->session->set('errors', $locale->_('err_system'));
+                return false;
+            }
+
+            foreach ($versions as $version) {
+                $version->setMainId($m->getId());
+                $vr = $version->validateProperties();
+                if ($vr !== true) {
+                    $this->session->set('errors', $locale->_('err_input_invalid'));
+                    return false;
+                }
+                if (!$version->update($db)) {
+                    $this->session->set('errors', $locale->_('err_system'));
+                    return false;
+                }
+            }
+
+            return true;
+        });
+
+        return $result ?
+            Web\Result::redirectResult($this->router->buildUrl('list')) :
+            $this->getEditTemplateResult($m);
     }
 
     public function deleteAction($id)

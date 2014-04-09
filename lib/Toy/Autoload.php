@@ -8,10 +8,9 @@ class Autoload
 
     public function autoload($className)
     {
-//        print_r($className.'<br/>');
         if (array_key_exists($className, self::$_classes)) {
             $b = include_once self::$_classes[$className].'.php';
-            class_alias(self::$_classes[$className], $className);
+//            class_alias(self::$_classes[$className], $className);
             return $b;
         } else {
             $subPath = str_replace(array('\\', '_'), ' ', $className);
@@ -22,6 +21,7 @@ class Autoload
     }
 
     static public $codePath = null;
+//    static public $topNamespaces = array();
     static private $_classes = null;
 
     static public function register()

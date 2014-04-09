@@ -1,7 +1,5 @@
 <?php
-namespace Toy\Web;
-
-use Toy\Util\StringUtil;
+namespace Core\Framework;
 
 class Domain
 {

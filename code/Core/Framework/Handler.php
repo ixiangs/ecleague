@@ -1,5 +1,5 @@
 <?php
-namespace Toy\Web;
+namespace Core\Framework;
 
 class Handler {
 
@@ -7,6 +7,7 @@ class Handler {
 		$context = Application::singleton() -> getContext();
         $router = $context->router;
 
+//        $ctrlClass = Configuration::$codeNamespaces[0];
         $ctrlClass = str_replace(' ', '', ucwords(str_replace('-', ' ', $router -> component)));
 		$ctrlClass .= '\\'.ucfirst($router->domain->getNamespace());
 		$ctrlClass .= '\\'.str_replace(' ', '', ucwords(str_replace('-', ' ', $router -> controller))).'Controller';

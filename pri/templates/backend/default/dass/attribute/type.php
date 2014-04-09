@@ -24,7 +24,10 @@ $f->addSelectField(array(
     \Core\Dass\Model\AttributeModel::DATA_TYPE_DATE=>$this->locale->_('dass_data_type_date'),
     \Core\Dass\Model\AttributeModel::DATA_TYPE_EMAIL=>$this->locale->_('dass_data_type_email'),
     \Core\Dass\Model\AttributeModel::DATA_TYPE_ARRAY=>$this->locale->_('dass_data_type_array')
-), $this->locale->_('dass_data_type'), 'data_type', 'data_type');
+), $this->locale->_('dass_data_type'), 'data_type', 'data_type')->getSelect()->setRenderer(function($el){
+        print_r($el);
+        die();
+    });
 $f->addSelectField(array(
     \Core\Dass\Model\AttributeModel::INPUT_TYPE_TEXTBOX=>$this->locale->_('dass_input_type_textbox'),
     \Core\Dass\Model\AttributeModel::INPUT_TYPE_TEXTAREA=>$this->locale->_('dass_input_type_textarea'),

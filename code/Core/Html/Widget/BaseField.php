@@ -79,6 +79,10 @@ abstract class BaseField extends Element
 
     public function render()
     {
+        if (!is_null($this->renderer)) {
+            return $this->renderer($this);
+        }
+
         $html = array($this->renderBegin());
         $html[] = '<label class="col-sm-1 control-label">' . $this->_label . '</label>';
         $html[] = '<div class="col-sm-9">';

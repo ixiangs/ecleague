@@ -58,6 +58,14 @@ switch($this->model->getInputType()):
                     ->addValidateRule('integer', true)->addValidateRule('greatto', '#min_value', $this->locale->_('dass_max_great_min'));
                 $f->endGroup();
             break;
+            case \Core\Dass\Model\AttributeModel::DATA_TYPE_NUMBER:
+                $f->beginGroup('tab_validate', $this->locale->_('dass_validate_setting'));
+                $f->addInputField('text', $this->locale->_('dass_min_value'), 'min_value', 'main[validate_setting][min_value]', $vs['min_value'])
+                    ->addValidateRule('number', true);
+                $f->addInputField('text', $this->locale->_('dass_max_value'), 'max_value', 'main[validate_setting][max_value]', $vs['max_value'])
+                    ->addValidateRule('number', true)->addValidateRule('greatto', '#min_value', $this->locale->_('dass_max_great_min'));
+                $f->endGroup();
+                break;
             case \Core\Dass\Model\AttributeModel::DATA_TYPE_STRING:
                 $f->beginGroup('tab_validate', $this->locale->_('dass_validate_setting'));
                 $f->addInputField('text', $this->locale->_('dass_max_length'), 'max_length', 'main[validate_setting][max_length]', $vs['max_length'])

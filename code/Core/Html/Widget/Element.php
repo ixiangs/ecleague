@@ -10,6 +10,7 @@ class Element
     private $_children = array();
     private $_bindableAttributes = array();
     private $_boundAttributes = array();
+    protected $renderer = null;
     protected $attributes = array();
 
     public function __construct($tag, $attrs = array())
@@ -37,6 +38,17 @@ class Element
     public function setChildren($value)
     {
         $this->_children = $value;
+        return $this;
+    }
+
+    public function getRenderer()
+    {
+        return $this->renderer;
+    }
+
+    public function setRenderer(\Closure $value)
+    {
+        $this->renderer = $value;
         return $this;
     }
 
@@ -120,14 +132,15 @@ class Element
         return $this;
     }
 
-    public function setEvent(){
+    public function setEvent()
+    {
         $args = func_get_args();
         $nums = func_num_args();
         if ($nums == 2) {
-            $this->attributes['on'.$args[0]] = 'javascript:'.$args[1];
+            $this->attributes['on' . $args[0]] = 'javascript:' . $args[1];
         } elseif ($nums == 1 && is_array($args[0])) {
-            foreach($args as $k=>$v){
-                $this->attributes['on'.$k] = 'javascript:'.$v;
+            foreach ($args as $k => $v) {
+                $this->attributes['on' . $k] = 'javascript:' . $v;
             }
         }
         return $this;
@@ -199,6 +212,10 @@ class Element
 
     public function render()
     {
+        if (!is_null($this->renderer)) {
+            return call_user_func($this->renderer, $this);
+        }
+
         switch ($this->_tag) {
             case 'input':
                 return '<' . $this->_tag . ' ' . $this->renderAttribute() . '/>';

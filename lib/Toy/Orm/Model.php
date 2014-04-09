@@ -16,6 +16,7 @@ abstract class Model implements \ArrayAccess, \Iterator
     protected $properties = array();
     protected $relations = array();
     protected $idProperty = null;
+    protected $changedProperties = array();
     protected $data = array();
 
     public function __construct($data = array())
@@ -35,7 +36,7 @@ abstract class Model implements \ArrayAccess, \Iterator
 
     public function __set($name, $value)
     {
-        $this->data[$name] = $value;
+        $this->setData($name, $value);
     }
 
     public function __call($name, $arguments)
@@ -224,6 +225,16 @@ abstract class Model implements \ArrayAccess, \Iterator
 
     public function setData($name, $value)
     {
+        if (array_key_exists($name, $this->properties) && !array_key_exists($name, $this->changedProperties)) {
+            if (array_key_exists($name, $this->data)) {
+                if ($this->data[$name] != $value) {
+                    $this->changedProperties[] = $name;
+                }
+            } else {
+                $this->changedProperties[] = $name;
+            }
+        }
+        
         $this->data[$name] = $value;
         return $this;
     }
@@ -415,9 +426,10 @@ abstract class Model implements \ArrayAccess, \Iterator
         return $result->select($fields)->from($this->tableName);
     }
 
-    static public function deleteBatch(array $ids){
+    static public function deleteBatch(array $ids)
+    {
         $m = self::$_metadatas[get_called_class()];
-        return Helper::withTx(function($db) use($ids, $m){
+        return Helper::withTx(function ($db) use ($ids, $m) {
             $ds = new DeleteStatement($m['table']);
             return $db->delete($ds->in($m['idProperty']->getName(), $ids));
         });

@@ -3,8 +3,6 @@ namespace Core\Locale\Backend;
 
 use Toy\Platform\FileUtil;
 use Toy\Web;
-use Locale\Model\LanguageModel;
-use Locale\Model\DictionaryModel;
 
 class LanguageController extends Web\Controller
 {
@@ -12,8 +10,8 @@ class LanguageController extends Web\Controller
     public function listAction()
     {
         $pi = $this->request->getParameter("pageindex", 1);
-        $count = LanguageModel::find()->selectCount()->execute()->getFirstValue();
-        $models = LanguageModel::find()->limit(PAGINATION_SIZE, ($pi - 1) * PAGINATION_SIZE)->load();
+        $count = \Tops::loadModel('locale/language')->find()->selectCount()->execute()->getFirstValue();
+        $models = \Tops::loadModel('locale/language')->find()->limit(PAGINATION_SIZE, ($pi - 1) * PAGINATION_SIZE)->load();
         return Web\Result::templateResult(array(
                 'models' => $models,
                 'total' => $count,
@@ -23,13 +21,13 @@ class LanguageController extends Web\Controller
 
     public function addAction()
     {
-        return $this->getEditTemplateResult(LanguageModel::create());
+        return $this->getEditTemplateResult(\Tops::loadModel('locale/language'));
     }
 
     public function addPostAction()
     {
         $lang = $this->context->locale;
-        $m = LanguageModel::create($this->request->getAllParameters());
+        $m = \Tops::loadModel('locale/language')->fillArray($this->request->getAllParameters());
         if (LanguageModel::checkUnique('code', $m->getCode())) {
             $this->session->set('errors', $lang->_('err_code_exists', $m->getCode()));
             return $this->getEditTemplateResult($m);
@@ -51,13 +49,13 @@ class LanguageController extends Web\Controller
 
     public function editAction($id)
     {
-        return $this->getEditTemplateResult(LanguageModel::load($id));
+        return $this->getEditTemplateResult(\Tops::loadModel('locale/language')->load($id));
     }
 
     public function editPostAction()
     {
         $lang = $this->context->locale;
-        $m = LanguageModel::merge($this->request->getParameter('id'), $this->request->getAllParameters());
+        $m = \Tops::loadModel('locale/language')->merge($this->request->getParameter('id'), $this->request->getAllParameters());
         $vr = $m->validateProperties();
         if ($vr !== true) {
             $this->session->set('errors', $lang->_('err_input_invalid'));
@@ -75,7 +73,7 @@ class LanguageController extends Web\Controller
     public function deleteAction($id)
     {
         $lang = $this->context->locale;
-        $m = BehaviorModel::load($id);
+        $m = \Tops::loadModel('locale/language')->load($id);
 
         if (!$m) {
             $this->session->set('errors', $lang->_('err_system'));
@@ -105,7 +103,7 @@ class LanguageController extends Web\Controller
         $titles = array_shift($lines);
         foreach($lines as $line){
             for($i = 1; $i < count($titles); $i++){
-                DictionaryModel::create(array(
+                \Tops::loadModel('locale/dictionary')->fillArray(array(
                     'code'=>$line[0],
                     'label'=>$line[$i],
                     'language_id'=>$langs[strtolower($titles[$i])]['id']

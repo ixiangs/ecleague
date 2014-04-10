@@ -1,10 +1,8 @@
 <?php
 namespace Core\Dass\Backend;
 
-use Core\Dass\Model\AttributeVersionModel;
 use Toy\Data\Helper;
 use Toy\Web;
-use Core\Dass\Model\AttributeModel;
 
 class AttributeController extends Web\Controller
 {
@@ -12,8 +10,8 @@ class AttributeController extends Web\Controller
     public function listAction()
     {
         $pi = $this->request->getParameter("pageindex", 1);
-        $count = AttributeModel::find()->selectCount()->execute()->getFirstValue();
-        $models = AttributeModel::find()
+        $count = \Tops::loadModel('dass/attribute')->find()->selectCount()->execute()->getFirstValue();
+        $models = \Tops::loadModel('dass/attribute')->find()
             ->asc('code')
             ->limit(PAGINATION_SIZE, ($pi - 1) * PAGINATION_SIZE)
             ->load();
@@ -31,7 +29,7 @@ class AttributeController extends Web\Controller
 
     public function addAction()
     {
-        $model = AttributeModel::create(array(
+        $model = \Tops::loadModel('dass/attribute')->fillArray(array(
             'data_type' => $this->request->getQuery('data_type'),
             'input_type' => $this->request->getQuery('input_type')
         ));
@@ -47,7 +45,7 @@ class AttributeController extends Web\Controller
     public function addPostAction()
     {
         $locale = $this->context->locale;
-        $m = AttributeModel::create($this->request->getPost('main'));
+        $m = \Tops::loadModel('dass/attribute')->fillArray($this->request->getPost('main'));
         $versions = $m->getVersions();
         foreach ($this->request->getPost('versions') as $l => $data) {
             $versions->append(AttributeVersionModel::create($data)->setLanguageId($l));
@@ -93,7 +91,7 @@ class AttributeController extends Web\Controller
 
     public function editAction($id)
     {
-        $m = AttributeModel::load($id);
+        $m = \Tops::loadModel('dass/attribute')->load($id);
         $m->getVersions()->load();
         return $this->getEditTemplateResult($m);
     }
@@ -102,7 +100,7 @@ class AttributeController extends Web\Controller
     {
         $locale = $this->context->locale;
         $mainData = $this->request->getPost('main');
-        $m = AttributeModel::merge($mainData['id'], $mainData);
+        $m = \Tops::loadModel('dass/attribute')->merge($mainData['id'], $mainData);
         $versions = $m->getVersions()->load();
         foreach ($this->request->getPost('versions') as $data) {
             $versions->findById($data['version_id'])->fillArray($data);
@@ -113,11 +111,6 @@ class AttributeController extends Web\Controller
             $this->session->set('errors', $locale->_('err_input_invalid'));
             return $this->getEditTemplateResult($m);
         }
-
-//        if (!$m->validateUnique()) {
-//            $this->session->set('errors', $locale->_('dass_err_attribute_exists', $m->getCode()));
-//            return $this->getEditTemplateResult($m);
-//        }
 
         $result = Helper::withTx(function ($db) use ($m, $versions, $locale) {
             if (!$m->update($db)) {
@@ -149,7 +142,7 @@ class AttributeController extends Web\Controller
     public function deleteAction($id)
     {
         $lang = $this->context->locale;
-        $m = BehaviorModel::load($id);
+        $m = \Tops::loadModel('dass/attribute')->load($id);
 
         if (!$m) {
             $this->session->set('errors', $lang->_('err_system'));
@@ -163,33 +156,13 @@ class AttributeController extends Web\Controller
         return Web\Result::redirectResult($this->router->buildUrl('list'));
     }
 
-    public function importAction()
-    {
-        return Web\Result::templateResult();
-    }
-
-    public function importPostAction()
-    {
-        $lang = $this->context->locale;
-        $up = $this->request->getFile('upload');
-        if (!$up->checkExtension('csv')) {
-            $this->session->set('errors', $lang->_('locale_err_import'));
-            return Web\Result::templateResult();
-        }
-        $langs = $this->context->locale->getLanguages();
-        $lines = FileUtil::readCsv($up->getTmpName());
-        $titles = array_shift($lines);
-        foreach ($lines as $line) {
-            for ($i = 1; $i < count($titles); $i++) {
-                DictionaryModel::create(array(
-                    'code' => $line[0],
-                    'label' => $line[$i],
-                    'language_id' => $langs[strtolower($titles[$i])]['id']
-                ))->insert();
-            }
-        }
-
-        return Web\Result::redirectResult($this->router->buildUrl('list'));
+    public function optionAction($attributeid){
+        $attr = \Tops::loadModel('dass/attribute')->load($attributeid);
+        $options = $attr->getOptions()->asc('attribute_id', 'language_id');
+        return Web\Result::templateResult(array(
+            'attribute'=>$attr,
+            'options'=>$options
+        ));
     }
 
     private function getEditTemplateResult($model)

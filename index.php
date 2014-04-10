@@ -10,6 +10,7 @@ if (preg_match('/^\/pub\//', $_SERVER["REQUEST_URI"])) {
     define('ROOT_PATH', dirname(__FILE__) . DS);
     define('PRI_PATH', ROOT_PATH . 'pri' . DS);
     define('CODE_PATH', ROOT_PATH . 'code' . DS);
+    define('CONF_PATH', ROOT_PATH . 'conf' . DS);
     define('LIB_PATH', ROOT_PATH . 'lib' . DS);
     define('TEMP_PATH', PRI_PATH . 'temp' . DS);
     set_include_path(get_include_path() . PATH_SEPARATOR . LIB_PATH . PATH_SEPARATOR . CODE_PATH);
@@ -17,9 +18,13 @@ if (preg_match('/^\/pub\//', $_SERVER["REQUEST_URI"])) {
     include_once 'Toy\Platform\FileUtil.php';
     include_once 'Toy\Platform\PathUtil.php';
     include_once 'Toy\Autoload.php';
+    include_once 'Toy\Loader.php';
+    include_once CODE_PATH.'Tops.php';
 
-    \Toy\Autoload::$codePath = CODE_PATH;
     \Toy\Autoload::register();
+
+    \Toy\Loader::$path = CODE_PATH;
+    \Toy\Loader::$namespaces = array('Core');
 
 //	include_once 'tmplfunc.php';
 
@@ -33,7 +38,7 @@ if (preg_match('/^\/pub\//', $_SERVER["REQUEST_URI"])) {
     ));
 
     \Toy\Web\Configuration::$trace = true;
-    \Toy\Web\Configuration::$codeDirectory = CODE_PATH;
+    \Toy\Web\Configuration::$configurationPath = CONF_PATH;
     \Toy\Web\Configuration::$templateDirectories = array(PRI_PATH . 'templates');
     \Toy\Web\Configuration::$templateTheme = 'default';
     \Toy\Web\Configuration::$logger = \Toy\Log\Logger::singleton();

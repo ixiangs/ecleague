@@ -213,7 +213,8 @@ class Element
     public function render()
     {
         if (!is_null($this->renderer)) {
-            return call_user_func($this->renderer, $this);
+            $r = call_user_func($this->renderer, $this);
+            return $r;
         }
 
         switch ($this->_tag) {

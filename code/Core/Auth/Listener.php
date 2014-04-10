@@ -1,7 +1,7 @@
 <?php
 namespace Core\Auth;
 
-use Auth\Model\AccountModel;
+use Core\Auth\Model\AccountModel;
 
 class Listener{
 	

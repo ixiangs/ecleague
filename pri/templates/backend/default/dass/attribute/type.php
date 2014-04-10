@@ -23,11 +23,10 @@ $f->addSelectField(array(
     \Core\Dass\Model\AttributeModel::DATA_TYPE_BOOLEAN=>$this->locale->_('dass_data_type_boolean'),
     \Core\Dass\Model\AttributeModel::DATA_TYPE_DATE=>$this->locale->_('dass_data_type_date'),
     \Core\Dass\Model\AttributeModel::DATA_TYPE_EMAIL=>$this->locale->_('dass_data_type_email'),
-    \Core\Dass\Model\AttributeModel::DATA_TYPE_ARRAY=>$this->locale->_('dass_data_type_array')
-), $this->locale->_('dass_data_type'), 'data_type', 'data_type')->getSelect()->setRenderer(function($el){
-        print_r($el);
-        die();
-    });
+    \Core\Dass\Model\AttributeModel::DATA_TYPE_ARRAY=>$this->locale->_('dass_data_type_array')),
+    $this->locale->_('dass_data_type'), 'data_type', 'data_type')
+    ->addValidateRule('required', true)
+    ->getSelect()->setCaption('');
 $f->addSelectField(array(
     \Core\Dass\Model\AttributeModel::INPUT_TYPE_TEXTBOX=>$this->locale->_('dass_input_type_textbox'),
     \Core\Dass\Model\AttributeModel::INPUT_TYPE_TEXTAREA=>$this->locale->_('dass_input_type_textarea'),
@@ -35,7 +34,9 @@ $f->addSelectField(array(
     \Core\Dass\Model\AttributeModel::INPUT_TYPE_LISTBOX=>$this->locale->_('dass_input_type_listbox'),
     \Core\Dass\Model\AttributeModel::INPUT_TYPE_DATE_PICKER=>$this->locale->_('dass_input_type_datepicker'),
     \Core\Dass\Model\AttributeModel::INPUT_TYPE_CHECKBOX_LIST=>$this->locale->_('dass_input_type_checkboxlist'),
-    \Core\Dass\Model\AttributeModel::INPUT_TYPE_RADIO_LIST=>$this->locale->_('dass_input_type_raidolist')
-), $this->locale->_('dass_input_type'), 'input_type', 'input_type');
+    \Core\Dass\Model\AttributeModel::INPUT_TYPE_RADIO_LIST=>$this->locale->_('dass_input_type_raidolist')),
+    $this->locale->_('dass_input_type'), 'input_type', 'input_type')
+    ->addValidateRule('required', true)
+    ->getSelect()->setCaption('');
 $this->assign('form', $f);
 echo $this->includeTemplate('layout\form');

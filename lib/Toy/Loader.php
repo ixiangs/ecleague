@@ -6,38 +6,38 @@ final class Loader
     static public $path = null;
     static public $namespaces = array();
     static private $_singletons = array();
-    static private $_classes = null;
+    static private $_classes = array();
 
     static public function load($className)
     {
-        $names = str_replace(array('\\', '_'), ' ', $className);
-        if(in_array($names[0], self::$namespace)){
+        $names = explode("\\", $className);
+        if (in_array($names[0], self::$namespaces)) {
             return $className;
         }
 
-        if(array_key_exists($className, self::$_classes)){
+        if (array_key_exists($className, self::$_classes)) {
             return self::$_classes[$className];
         }
 
-        $subpath = DIRECTORY_SEPARATOR.implode(DIRECTORY_SEPARATOR, $names);
-        foreach(self::$namespaces as $ns){
-            $fn = self::$path.$ns.DIRECTORY_SEPARATOR.$subpath.'.php';
-            if(file_exists($fn)){
+        $subpath = DIRECTORY_SEPARATOR . join(DIRECTORY_SEPARATOR, $names);
+        foreach (self::$namespaces as $ns) {
+            $fn = self::$path . $ns . $subpath . '.php';
+            if (file_exists($fn)) {
                 include_once $fn;
-                $res = $ns.'\\'.implode('\\', $names);
+                $res = $ns . '\\' . implode('\\', $names);
                 self::$_classes[$className] = $res;
                 return $res;
             }
         }
 
-        throw new \Exception(sprintf("Not found [%s] with [%s] in [%s]", $className, implode(',', self::$namespaces), self::$path);
+        throw new \Exception(sprintf("Not found [%s] with [%s] in [%s]", $className, implode(',', self::$namespaces), self::$path));
     }
 
     static public function create($className, $args = array())
     {
         $cls = self::load($className);
         $cnt = count($args);
-        switch($cnt){
+        switch ($cnt) {
             case 1:
                 return new $cls($args[0]);
             case 2:
@@ -56,7 +56,7 @@ final class Loader
 
     static public function singleton($className, $args = array())
     {
-        if(array_key_exists($className, self::$_singletons)){
+        if (array_key_exists($className, self::$_singletons)) {
             return self::$_singletons[$className];
         }
 

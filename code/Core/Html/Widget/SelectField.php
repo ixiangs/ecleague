@@ -18,6 +18,15 @@ class SelectField extends BaseField
 
     protected function renderInput()
     {
+        foreach ($this->getValidateRules() as $n => $v) {
+            if(is_array($v)){
+                $this->_select->setAttribute('data-validate-' . $n, $v['value'] === true? 'true': $v['value']);
+                $this->_select->setAttribute('data-validate-'.$n.'-msg', $v['message']);
+            }else{
+                $this->_select->setAttribute('data-validate-' . $n, $v === true? 'true': $v);
+            }
+        }
+
         return $this->_select->render();
     }
 }

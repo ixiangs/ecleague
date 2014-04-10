@@ -1,8 +1,9 @@
 <?php
 namespace Core\Auth\Model;
 
-use Auth\Identity;
+use Core\Auth\Identity;
 use Toy\Data\Helper, Toy\Data\Sql\UpdateStatement;
+use Toy\Loader;
 use Toy\Orm;
 use Toy\Util\EncryptUtil;
 use Toy\Data\Db;
@@ -53,7 +54,7 @@ class AccountModel extends Orm\Model
 
     }
 
-    static public function modifyPassword($id, $old, $new, $db = null)
+    public function modifyPassword($id, $old, $new, $db = null)
     {
         $m = self::load($id);
         if (!$m->comparePassword($old)) {
@@ -71,7 +72,7 @@ class AccountModel extends Orm\Model
         return true;
     }
 
-    static public function login($username, $password)
+    public function login($username, $password)
     {
         $m = self::find()->eq('username', $username)->load()->getFirst();
 
@@ -92,7 +93,7 @@ class AccountModel extends Orm\Model
         $roleCodes = array();
         $roleIds = $m->getRoleIds();
         if (count($roleIds) > 0) {
-            $roles = RoleModel::find()->in('id', $roleIds)->eq('enabled', 1)
+            $roles = \Tops::loadModel('auth/role')->find()->in('id', $roleIds)->eq('enabled', 1)
                 ->load()
                 ->toArray(function($arr, $item){
                     $arr[$item->getCode()] = $item->getBehaviorIds();
@@ -105,7 +106,7 @@ class AccountModel extends Orm\Model
                         $behaviorIds = array_merge($behaviorIds, explode(',', $bidArr));
                     }
                 }
-                $behaviorCodes = BehaviorModel::find()
+                $behaviorCodes = \Tops::loadModel('auth/behavior')->find()
                                     ->in('id', $behaviorIds)
                                     ->eq('enabled', 1)
                                     ->select('code')
@@ -119,14 +120,14 @@ class AccountModel extends Orm\Model
         return array(true, new Identity($m->id, $m->username, $m->level, $roleCodes, $behaviorCodes));
     }
 
-    static public function activate($id)
+    public function activate()
     {
-        return static::create(array('id' => $id, 'status' => self::STATUS_ACTIVATED))->update(array('status'));
+        return static::create(array('id' => $this->id, 'status' => self::STATUS_ACTIVATED))->update(array('status'));
     }
 
-    static public function freeze($id)
+    public function freeze()
     {
-        return static::create(array('id' => $id, 'status' => self::STATUS_DISABLED))->update(array('status'));
+        return static::create(array('id' => $this->id, 'status' => self::STATUS_DISABLED))->update(array('status'));
     }
 
 }

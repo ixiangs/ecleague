@@ -2,7 +2,6 @@
 namespace Core\Auth\Backend;
 
 use Toy\Web;
-use Auth\Model\BehaviorModel;
 
 class BehaviorController extends Web\Controller
 {
@@ -10,8 +9,8 @@ class BehaviorController extends Web\Controller
     public function listAction()
     {
         $pi = $this->request->getParameter("pageindex", 1);
-        $count = BehaviorModel::find()->selectCount()->execute()->getFirstValue();
-        $models = BehaviorModel::find()->limit(PAGINATION_SIZE, ($pi - 1) * PAGINATION_SIZE)->load();
+        $count = \Tops::loadModel('auth/behavior')->find()->selectCount()->execute()->getFirstValue();
+        $models = \Tops::loadModel('auth/behavior')->find()->limit(PAGINATION_SIZE, ($pi - 1) * PAGINATION_SIZE)->load();
         return Web\Result::templateResult(array(
                 'models' => $models,
                 'total' => $count,
@@ -21,13 +20,13 @@ class BehaviorController extends Web\Controller
 
     public function addAction()
     {
-        return $this->getEditTemplateResult(BehaviorModel::create());
+        return $this->getEditTemplateResult(\Tops::loadModel('auth/behavior'));
     }
 
     public function addPostAction()
     {
         $lang = $this->context->locale;
-        $m = BehaviorModel::create($this->request->getAllParameters());
+        $m = \Tops::loadModel('auth/behavior', $this->request->getAllParameters());
         $vr = $m->validateProperties();
         if ($vr !== true) {
             $this->session->set('errors', $lang->_('err_input_invalid'));
@@ -56,7 +55,7 @@ class BehaviorController extends Web\Controller
     public function editPostAction()
     {
         $lang = $this->context->locale;
-        $m = BehaviorModel::merge($this->request->getParameter('id'), $this->request->getAllParameters());
+        $m = \Tops::loadModel('auth/behavior')->merge($this->request->getParameter('id'), $this->request->getAllParameters());
         $vr = $m->validateProperties();
         if ($vr !== true) {
             $this->session->set('errors', $lang->_('err_input_invalid'));
@@ -74,7 +73,7 @@ class BehaviorController extends Web\Controller
     public function deleteAction($id)
     {
         $lang = $this->context->locale;
-        $m = BehaviorModel::load($id);
+        $m = \Tops::loadModel('auth/behavior')->load($id);
 
         if (!$m) {
             $this->session->set('errors', $lang->_('err_system'));

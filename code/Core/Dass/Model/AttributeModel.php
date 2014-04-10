@@ -58,7 +58,7 @@ Orm\Model::register('Core\Dass\Model\AttributeModel', array(
         Orm\SerializeProperty::create('validate_setting')
     ),
     'relations'=>array(
-        Orm\Relation::childrenRelation('versions', 'Core\Dass\Model\AttributeVersionModel', 'main_id')
-//        array('name'=>'versions', 'model'=>'Core\Dass\Model\AttributeVersionModel', 'parentId'=>'id', 'childId'=>'main_id', 'type'=>'oneToMore')
+        Orm\Relation::childrenRelation('versions', 'Core\Dass\Model\AttributeVersionModel', 'main_id'),
+        Orm\Relation::childrenRelation('options', 'Core\Dass\Model\AttributeOptionModel', 'attribute_id')
     )
 ));

@@ -10,24 +10,24 @@ class RoleController extends Web\Controller
     public function listAction()
     {
         $pi = $this->request->getParameter("pageindex", 1);
-        $count = RoleModel::find()->selectCount()->execute()->getFirstValue();
-        $models = RoleModel::find()->limit(PAGINATION_SIZE, ($pi - 1) * PAGINATION_SIZE)->load();
+        $count = \Tops::loadModel('auth/role')->find()->selectCount()->execute()->getFirstValue();
+        $models = \Tops::loadModel('auth/role')->find()->limit(PAGINATION_SIZE, ($pi - 1) * PAGINATION_SIZE)->load();
         return Web\Result::templateResult(array(
                 'models' => $models,
-                'behaviors' => BehaviorModel::find()->execute()->combineColumns('id', 'code'),
+                'behaviors' => \Tops::loadModel('auth/behavior')->find()->execute()->combineColumns('id', 'code'),
                 'total' => $count)
         );
     }
 
     public function addAction()
     {
-        return $this->getEditTemplateReult(RoleModel::create());
+        return $this->getEditTemplateReult(\Tops::loadModel('auth/role'));
     }
 
     public function addPostAction()
     {
         $lang = $this->context->locale;
-        $m = RoleModel::create($this->request->getAllParameters());
+        $m = \Tops::loadModel('auth/role', $this->request->getAllParameters());
 
         $vr = $m->validateProperties();
         if ($vr !== true) {
@@ -51,14 +51,14 @@ class RoleController extends Web\Controller
 
     public function editAction($id)
     {
-        $m = RoleModel::load($id);
+        $m = \Tops::loadModel('auth/role')->load($id);
         return $this->getEditTemplateReult($m);
     }
 
     public function editPostAction()
     {
         $lang = $this->context->locale;
-        $m = RoleModel::merge($this->request->getParameter('id'), $this->request->getAllParameters());
+        $m = \Tops::loadModel('auth/role')->merge($this->request->getParameter('id'), $this->request->getAllParameters());
         $m->setBehaviorIds($this->request->getParameter('behavior_ids', array()));
         $vr = $m->validateProperties();
         if ($vr !== true) {
@@ -76,7 +76,7 @@ class RoleController extends Web\Controller
 
     public function deleteAction($id)
     {
-        $m = RoleModel::load($id);
+        $m = \Tops::loadModel('auth/role')->load($id);
 
         if (!$m) {
             $this->session->set('errors', $this->languages->get('err_system'));
@@ -95,7 +95,7 @@ class RoleController extends Web\Controller
         return Web\Result::templateResult(
             array(
                 'model' => $model,
-                'behaviors' => BehaviorModel::find()->asc('code')->execute()->combineColumns('id', 'name')),
+                'behaviors' => \Tops::loadModel('auth/behavior')->find()->asc('code')->execute()->combineColumns('id', 'name')),
             'auth/role/edit'
         );
     }

@@ -1,8 +1,8 @@
 <?php
 namespace Core\Index\Backend;
 
+use Core\Auth\Model\AccountModel;
 use Toy\Web;
-use Auth\Model\AccountModel;
 
 class IndexController extends Web\Controller{
 
@@ -12,7 +12,8 @@ class IndexController extends Web\Controller{
 
     public function indexPostAction(){
         $langs = $this->context->locale;
-        list($r, $ol) = AccountModel::login($this->request->getParameter('username'), $this->request->getParameter('password'));
+        list($r, $ol) = \Tops::loadModel('auth/account')->login($this->request->getParameter('username'), $this->request->getParameter('password'));
+
         if($r === true){
             if($ol->getLevel()!= AccountModel::LEVEL_ADMINISTRATOR){
                 $this->session->set('errors', $this->languages->get('permission_denied'));

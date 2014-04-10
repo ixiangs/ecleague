@@ -1,5 +1,5 @@
 <?php
-namespace Core\Framework;
+namespace Toy\Web;
 
 class Domain
 {

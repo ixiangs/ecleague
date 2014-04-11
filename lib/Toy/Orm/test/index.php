@@ -30,7 +30,7 @@ include_once Toy_PATH . 'Data' . DS . 'Sql' . DS . 'SelectStatement.php';
 
 include_once Toy_PATH . 'Orm' . DS . 'BaseProperty.php';
 include_once Toy_PATH . 'Orm' . DS . 'IntegerProperty.php';
-include_once Toy_PATH . 'Orm' . DS . 'ArrayProperty.php';
+include_once Toy_PATH . 'Orm' . DS . 'ListProperty.php';
 include_once Toy_PATH . 'Orm' . DS . 'StringProperty.php';
 include_once Toy_PATH . 'Orm' . DS . 'BooleanProperty.php';
 include_once Toy_PATH . 'Orm' . DS . 'EmailProperty.php';

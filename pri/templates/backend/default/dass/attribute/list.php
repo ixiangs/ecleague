@@ -42,7 +42,7 @@ $dt->addBooleanColumn($this->locale->_('status'), 'enabled', $this->locale->_('e
     'small', 'small text-center');
 $dt->addLinkColumn('', $this->locale->_('edit'), urldecode($this->router->buildUrl('edit', array('id' => '{id}'))), 'small', 'small edit');
 
-$dt->addLinkColumn('', $this->locale->_('dass_option'), urldecode($this->router->buildUrl('option', array('attributeid' => '{id}'))), 'small', 'small edit');
+$dt->addLinkColumn('', $this->locale->_('dass_option'), urldecode($this->router->buildUrl('options', array('attributeid' => '{id}'))), 'small', 'small edit');
 $this->assign('datatable', $dt);
 
 $p = $this->html->pagination($this->total, PAGINATION_SIZE, PAGINATION_RANGE);

@@ -141,6 +141,6 @@ Orm\Model::register('Core\Auth\Model\AccountModel', array(
             Orm\StringProperty::create('email'),
             Orm\IntegerProperty::create('status'),
             Orm\IntegerProperty::create('level'),
-            Orm\ArrayProperty::create('role_ids')
+            Orm\ListProperty::create('role_ids')
         ))
 );

@@ -6,7 +6,6 @@ use Toy\Orm;
 class AttributeVersionModel extends Orm\Model
 {
     const TABLE_NAME = '{t}dass_attribute_version';
-
 }
 
 Orm\Model::register('Core\Dass\Model\AttributeVersionModel', array(
@@ -16,7 +15,7 @@ Orm\Model::register('Core\Dass\Model\AttributeVersionModel', array(
         Orm\IntegerProperty::create('main_id')->setNullable(false),
         Orm\IntegerProperty::create('language_id')->setNullable(false),
         Orm\StringProperty::create('name')->setNullable(false),
-        Orm\StringProperty::create('display_label')->setNullable(false),
-        Orm\StringProperty::create('form_label')->setNullable(false)
+        Orm\ListProperty::create('display_label')->setNullable(false),
+        Orm\ListProperty::create('form_label')->setNullable(false)
     )
 ));

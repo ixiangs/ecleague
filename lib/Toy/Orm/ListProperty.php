@@ -1,7 +1,7 @@
 <?php
 namespace Toy\Orm;
 
-class ArrayProperty extends BaseProperty
+class ListProperty extends BaseProperty
 {
 
     private $_separator = ',';

@@ -18,7 +18,7 @@ Orm\Model::register('Core\Auth\Model\RoleModel', array(
         Orm\IntegerProperty::create('id')->setPrimaryKey(true)->setAutoIncrement(true),
         Orm\StringProperty::create('code')->setUnique(true),
         Orm\StringProperty::create('name'),
-        Orm\ArrayProperty::create('behavior_ids'),
+        Orm\ListProperty::create('behavior_ids'),
         Orm\BooleanProperty::create('enabled')->setDefaultValue(true)
     )
 ));

@@ -54,7 +54,7 @@ final class ArrayUtil
     static public function extract(array $arr, $key)
     {
         $result = array();
-        foreach ($arr as $item) {
+        foreach ($arr as $index => $item) {
             if (array_key_exists($key, $item)) {
                 $result[] = $item[$key];
             }
@@ -64,7 +64,7 @@ final class ArrayUtil
 
     static public function contains(array $arr, $function)
     {
-        foreach ($arr as $item) {
+        foreach ($arr as $index => $item) {
             if ($function($item, $index)) {
                 return TRUE;
             }
@@ -72,12 +72,20 @@ final class ArrayUtil
         return false;
     }
 
-    static public function toArray(array $arr, $function)
+    static public function toArray()
     {
-        $result = array();
-        foreach ($arr as $index => $item) {
-            $result[] = $function($item, $index);
+        $args = func_get_args();
+        $nums = func_num_args();
+        $arr = $args[0];
+        for($i = 1; $i < $nums; $i++){
+            $result = array();
+            $function = $args[$i];
+            foreach ($arr as $index => $item) {
+                $result[] = $function($item, $index);
+            }
+            $arr = $result;
         }
+
         return $result;
     }
 

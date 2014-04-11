@@ -24,23 +24,23 @@ class AttributeModel extends Orm\Model
     const DATA_TYPE_EMAIL = 'email';
     const DATA_TYPE_DATE = 'date';
 
-    protected function _find()
-    {
-        $fields = array();
-        foreach ($this->properties as $prop) {
-            $fields[] = $this->tableName . '.' . $prop->getName();
-        }
-        $m = AttributeVersionModel::getMetadata();
-        foreach ($m['properties'] as $prop) {
-            $fields[] = AttributeVersionModel::TABLE_NAME . '.' . $prop->getName();
-        }
-        $result = new Orm\Collection(get_class($this));
-        return $result->select($fields)
-            ->from($this->tableName)
-            ->join(AttributeVersionModel::TABLE_NAME,
-                self::TABLE_NAME.'.id',
-                AttributeVersionModel::TABLE_NAME.'.main_id');
-    }
+//    protected function _find()
+//    {
+//        $fields = array();
+//        foreach ($this->properties as $prop) {
+//            $fields[] = $this->tableName . '.' . $prop->getName();
+//        }
+//        $m = AttributeVersionModel::getMetadata();
+//        foreach ($m['properties'] as $prop) {
+//            $fields[] = AttributeVersionModel::TABLE_NAME . '.' . $prop->getName();
+//        }
+//        $result = new Orm\Collection(get_class($this));
+//        return $result->select($fields)
+//            ->from($this->tableName)
+//            ->join(AttributeVersionModel::TABLE_NAME,
+//                self::TABLE_NAME.'.id',
+//                AttributeVersionModel::TABLE_NAME.'.main_id');
+//    }
 
 }
 

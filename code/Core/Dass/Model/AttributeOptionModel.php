@@ -11,12 +11,11 @@ class AttributeOptionModel extends Orm\Model
 }
 
 Orm\Model::register('Core\Dass\Model\AttributeOptionModel', array(
-    'table' => AttributeModel::TABLE_NAME,
+    'table' => AttributeOptionModel::TABLE_NAME,
     'properties' => array(
         Orm\IntegerProperty::create('id')->setPrimaryKey(true)->setAutoIncrement(true),
         Orm\IntegerProperty::create('attribute_id')->setNullable(false),
-        Orm\IntegerProperty::create('language_id')->setNullable(false),
         Orm\StringProperty::create('value')->setNullable(false),
-        Orm\StringProperty::create('label')->setNullable(false)
+        Orm\SerializeProperty::create('labels')->setNullable(false)
     )
 ));

@@ -2,6 +2,7 @@
 namespace Core\Dass\Backend;
 
 use Toy\Data\Helper;
+use Toy\Util\ArrayUtil;
 use Toy\Web;
 
 class AttributeController extends Web\Controller
@@ -156,13 +157,60 @@ class AttributeController extends Web\Controller
         return Web\Result::redirectResult($this->router->buildUrl('list'));
     }
 
-    public function optionAction($attributeid){
+    public function optionsAction($attributeid)
+    {
         $attr = \Tops::loadModel('dass/attribute')->load($attributeid);
-        $options = $attr->getOptions()->asc('attribute_id', 'language_id');
+        $options = $attr->getOptions()->load();
         return Web\Result::templateResult(array(
-            'attribute'=>$attr,
-            'options'=>$options
+            'attribute' => $attr,
+            'options' => $options
         ));
+    }
+
+    public function optionsPostAction($attributeid)
+    {
+        $lang = $this->context->locale;
+        $attr = \Tops::loadModel('dass/attribute')->load($this->request->getPost('attribute_id'));
+        $options = ArrayUtil::toArray($this->request->getPost('options'), function($item) use($attr){
+            return \Tops::loadModel('dass/attributeOption')
+                        ->fillArray($item)
+                        ->setAttributeId($attr->getId());
+        });
+
+        //check unique
+        $values = ArrayUtil::toArray($options, function($item){
+            return $item->getValue();
+        });
+        $repeated = ArrayUtil::contains(array_count_values($values), function($item){
+            return $item > 1;
+        });
+        if($repeated){
+            $this->session->set('errors', $lang->_('dass_err_option_repeated'));
+            return Web\Result::templateResult(array(
+                'attribute' => $attr,
+                'options' => $options
+            ));
+        }
+
+        $res = Helper::withTx(function($db) use($attr, $options, $lang){
+            foreach($options as $option){
+                $b = $option->getId()? $option->update($db): $option->insert($db);
+                if(!$b){
+                    return false;
+                }
+            }
+            return true;
+        });
+
+        if($res){
+            return Web\Result::redirectResult($this->router->buildUrl('list'));
+        }else{
+            $this->session->set('errors', $lang->_('err_system'));
+            return Web\Result::templateResult(array(
+                'attribute' => $attr,
+                'options' => $options
+            ));
+        }
     }
 
     private function getEditTemplateResult($model)

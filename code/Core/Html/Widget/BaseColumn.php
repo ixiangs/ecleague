@@ -3,43 +3,79 @@ namespace Core\Html\Widget;
 
 abstract class BaseColumn{
 
-    private $_head = null;
-    private $_cell = null;
-    private $_footer = null;
-    private $_defaultText = '';
+    protected $head = null;
+    protected $cell = null;
+    protected $footer = null;
+    protected $headRenderer = null;
+    protected $cellRenderer = null;
+    protected $footerRenderer = null;
+    protected $defaultText = '';
 
     public function __construct(){
-        $this->_head = new Element('th');
-        $this->_cell = new Element('td');
-        $this->_footer = new Element('td');
+        $this->head = new Element('th');
+        $this->cell = new Element('td');
+        $this->footer = new Element('td');
     }
 
     public function getDefaultText(){
-        return $this->_defaultText;
+        return $this->defaultText;
     }
 
     public function setDefaultText($value){
-        $this->_defaultText = $value;
+        $this->defaultText = $value;
         return $this;
     }
 
     public function getHead(){
-        return $this->_head;
+        return $this->head;
     }
 
     public function getCell(){
-        return $this->_cell;
+        return $this->cell;
     }
 
     public function getFooter(){
-        return $this->_footer;
+        return $this->footer;
+    }
+
+    public function getHeadRenderer(){
+        return $this->headRenderer;
+    }
+
+    public function setHeadRenderer($value){
+        $this->headRenderer = $value;
+        return $this;
+    }
+
+    public function getCellRenderer(){
+        return $this->cellRenderer;
+    }
+
+    public function setCellRenderer($value){
+        $this->cellRenderer = $value;
+        return $this;
+    }
+
+    public function getFooterRenderer(){
+        return $this->footerRenderer;
+    }
+
+    public function setFooterRenderer($value){
+        $this->footerRenderer = $value;
+        return $this;
     }
 
     public function renderHead(){
-        return $this->_head->render();
+        if(!is_null($this->headRenderer)){
+            return $this->headRenderer($this);
+        }
+        return $this->head->render();
     }
 
     public function renderFooter(){
+        if(!is_null($this->footerRenderer)){
+            return $this->footerRenderer($this);
+        }
         return '';
     }
 

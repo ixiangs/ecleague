@@ -65,6 +65,9 @@ class Element
         foreach ($args as $arg) {
             $k = array_search($arg, $this->_bindableAttributes);
             unset($this->_bindableAttributes[$k]);
+            if(array_key_exists($arg, $this->_boundAttributes)){
+                unset($this->_boundAttributes[$arg]);
+            }
         }
         return $this;
     }

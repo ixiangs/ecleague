@@ -23,7 +23,11 @@ class LabelColumn extends BaseColumn{
             $this->_label->setAttribute('text', $this->getDefaultText());
         }
         $res = $this->getCell()->renderBegin();
-        $res .= $this->_label->render();
+        if (!is_null($this->cellRenderer)) {
+            $res .= call_user_func_array($this->cellRenderer, array($this->_label, $this, $row, $index));
+        } else {
+            $res .= $this->_label->render();
+        }
         $res .= $this->getCell()->renderEnd();
         return $res;
     }

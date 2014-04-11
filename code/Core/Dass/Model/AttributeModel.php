@@ -6,7 +6,7 @@ use Toy\Orm;
 class AttributeModel extends Orm\Model
 {
 
-    const TABLE_NAME = '{t}dass_attribute_main';
+    const TABLE_NAME = '{t}dass_attribute';
 
     const INPUT_TYPE_TEXTBOX = 'textbox';
     const INPUT_TYPE_TEXTAREA = 'textarea';
@@ -24,24 +24,6 @@ class AttributeModel extends Orm\Model
     const DATA_TYPE_EMAIL = 'email';
     const DATA_TYPE_DATE = 'date';
 
-//    protected function _find()
-//    {
-//        $fields = array();
-//        foreach ($this->properties as $prop) {
-//            $fields[] = $this->tableName . '.' . $prop->getName();
-//        }
-//        $m = AttributeVersionModel::getMetadata();
-//        foreach ($m['properties'] as $prop) {
-//            $fields[] = AttributeVersionModel::TABLE_NAME . '.' . $prop->getName();
-//        }
-//        $result = new Orm\Collection(get_class($this));
-//        return $result->select($fields)
-//            ->from($this->tableName)
-//            ->join(AttributeVersionModel::TABLE_NAME,
-//                self::TABLE_NAME.'.id',
-//                AttributeVersionModel::TABLE_NAME.'.main_id');
-//    }
-
 }
 
 Orm\Model::register('Core\Dass\Model\AttributeModel', array(
@@ -54,11 +36,13 @@ Orm\Model::register('Core\Dass\Model\AttributeModel', array(
         Orm\BooleanProperty::create('indexable')->setDefaultValue(false)->setNullable(false),
         Orm\BooleanProperty::create('required')->setDefaultValue(false)->setNullable(false),
         Orm\BooleanProperty::create('enabled')->setDefaultValue(false)->setNullable(false),
+        Orm\SerializeProperty::create('names')->setNullable(false),
+        Orm\SerializeProperty::create('display_labels')->setNullable(false),
+        Orm\SerializeProperty::create('form_labels')->setNullable(false),
         Orm\SerializeProperty::create('form_setting'),
         Orm\SerializeProperty::create('validate_setting')
     ),
     'relations'=>array(
-        Orm\Relation::childrenRelation('versions', 'Core\Dass\Model\AttributeVersionModel', 'main_id'),
         Orm\Relation::childrenRelation('options', 'Core\Dass\Model\AttributeOptionModel', 'attribute_id')
     )
 ));

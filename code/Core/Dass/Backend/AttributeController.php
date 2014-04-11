@@ -34,23 +34,13 @@ class AttributeController extends Web\Controller
             'data_type' => $this->request->getQuery('data_type'),
             'input_type' => $this->request->getQuery('input_type')
         ));
-        $versions = $model->getVersions();
-        foreach ($this->context->locale->getLanguages() as $lang) {
-            $versions->append(AttributeVersionModel::create(array(
-                'language_id' => $lang['id']
-            )));
-        }
         return $this->getEditTemplateResult($model);
     }
 
     public function addPostAction()
     {
         $locale = $this->context->locale;
-        $m = \Tops::loadModel('dass/attribute')->fillArray($this->request->getPost('main'));
-        $versions = $m->getVersions();
-        foreach ($this->request->getPost('versions') as $l => $data) {
-            $versions->append(AttributeVersionModel::create($data)->setLanguageId($l));
-        }
+        $m = \Tops::loadModel('dass/attribute')->fillArray($this->request->getPost('data'));
 
         $vr = $m->validateProperties();
         if ($vr !== true) {
@@ -63,31 +53,13 @@ class AttributeController extends Web\Controller
             return $this->getEditTemplateResult($m);
         }
 
-        $result = Helper::withTx(function ($db) use ($m, $versions, $locale) {
-            if (!$m->insert($db)) {
-                $this->session->set('errors', $locale->_('err_system'));
-                return false;
-            }
 
-            foreach ($versions as $version) {
-                $version->setMainId($m->getId());
-                $vr = $version->validateProperties();
-                if ($vr !== true) {
-                    $this->session->set('errors', $locale->_('err_input_invalid'));
-                    return false;
-                }
-                if (!$version->insert($db)) {
-                    $this->session->set('errors', $locale->_('err_system'));
-                    return false;
-                }
-            }
+        if (!$m->insert()) {
+            $this->session->set('errors', $locale->_('err_system'));
+            return $this->getEditTemplateResult($m);
+        }
 
-            return true;
-        });
-
-        return $result ?
-            Web\Result::redirectResult($this->router->buildUrl('list')) :
-            $this->getEditTemplateResult($m);
+        return Web\Result::redirectResult($this->router->buildUrl('list'));
     }
 
     public function editAction($id)
@@ -171,7 +143,7 @@ class AttributeController extends Web\Controller
     {
         $lang = $this->context->locale;
         $attr = \Tops::loadModel('dass/attribute')->load($this->request->getPost('attribute_id'));
-        $options = ArrayUtil::toArray($this->request->getPost('options'), function($item) use($attr){
+        $options = ArrayUtil::toArray($this->request->getPost('options'), function($item) use($attr, $ao){
             return \Tops::loadModel('dass/attributeOption')
                         ->fillArray($item)
                         ->setAttributeId($attr->getId());
@@ -193,6 +165,10 @@ class AttributeController extends Web\Controller
         }
 
         $res = Helper::withTx(function($db) use($attr, $options, $lang){
+            $dids = $this->request->getPost('delete_ids');
+            if($dids){
+                \Tops::loadModel('dass/attributeOption')->deleteBatch($dids, $db);
+            }
             foreach($options as $option){
                 $b = $option->getId()? $option->update($db): $option->insert($db);
                 if(!$b){

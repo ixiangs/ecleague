@@ -5,6 +5,7 @@ Toy.Validation.Validator = new Class({
     Implements: [Options, Events],
     form: null,
     options: {
+        autoSubmit: true,
         validateOnChange: true,
         validateOnSubmit: true,
         fieldContainer: '.form-group',
@@ -20,16 +21,19 @@ Toy.Validation.Validator = new Class({
 
         this.reload();
 
-        this.form.submit(function (event) {
-            if (!this.validate()) {
-                event.preventDefault();
-            }
-        }.bind(this));
+        if (this.options.autoSubmit) {
+            this.form.submit(function (event) {
+                if (!this.validate()) {
+                    event.preventDefault();
+                }
+            }.bind(this));
+        }
+
 
         this.form.data('validator', this);
     },
 
-    reload: function(){
+    reload: function () {
         this.fields = {};
 
         inputs = {};
@@ -413,10 +417,10 @@ Toy.Validation.rules = {
         },
         check: function (field, params) {
             var $input = $(field.inputs[0]);
-            if($input.val().trim().length == 0){
+            if ($input.val().trim().length == 0) {
                 return true;
             }
-            if($(params).val().trim().length == 0){
+            if ($(params).val().trim().length == 0) {
                 return true;
             }
             return $input.val() > $(params).val();

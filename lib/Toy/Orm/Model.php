@@ -426,13 +426,18 @@ abstract class Model implements \ArrayAccess, \Iterator
         return $result->select($fields)->from($this->tableName);
     }
 
-    static public function deleteBatch(array $ids)
+    public function deleteBatch(array $ids, $db = null)
     {
         $m = self::$_metadatas[get_called_class()];
-        return Helper::withTx(function ($db) use ($ids, $m) {
-            $ds = new DeleteStatement($m['table']);
-            return $db->delete($ds->in($m['idProperty']->getName(), $ids));
-        });
+        if(is_null($db)){
+            return Helper::withTx(function ($db) use ($ids, $m) {
+                $ds = new DeleteStatement($this->tableName);
+                return $db->delete($ds->in($this->idProperty->getName(), $ids));
+            });
+        }else{
+            $ds = new DeleteStatement($this->tableName);
+            return $db->delete($ds->in($this->idProperty->getName(), $ids));
+        }
     }
 
     static public function create($data = array())

@@ -7,7 +7,7 @@ class Element
 {
 
     private $_tag = null;
-    private $_children = array();
+    protected $children = array();
     private $_bindableAttributes = array();
     private $_boundAttributes = array();
     protected $renderer = null;
@@ -32,12 +32,12 @@ class Element
 
     public function getChildren()
     {
-        return $this->_children;
+        return $this->children;
     }
 
     public function setChildren($value)
     {
-        $this->_children = $value;
+        $this->children = $value;
         return $this;
     }
 
@@ -65,7 +65,7 @@ class Element
         foreach ($args as $arg) {
             $k = array_search($arg, $this->_bindableAttributes);
             unset($this->_bindableAttributes[$k]);
-            if(array_key_exists($arg, $this->_boundAttributes)){
+            if (array_key_exists($arg, $this->_boundAttributes)) {
                 unset($this->_boundAttributes[$arg]);
             }
         }
@@ -185,7 +185,7 @@ class Element
     public function addChild()
     {
         $args = func_get_args();
-        $this->_children = array_merge($this->_children, $args);
+        $this->children = array_merge($this->children, $args);
         return $this;
     }
 
@@ -207,7 +207,14 @@ class Element
         } elseif (array_key_exists('text', $this->attributes)) {
             $res = $this->attributes['text'];
         }
-        foreach ($this->_children as $child) {
+        $res .= $this->renderChildren();
+        return $res;
+    }
+
+    protected function renderChildren()
+    {
+        $res = '';
+        foreach ($this->children as $child) {
             $res .= $child->render();
         }
         return $res;

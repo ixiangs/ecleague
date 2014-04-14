@@ -1,6 +1,7 @@
 <?php
 namespace Core\Html;
 
+use Core\Html\Widget\DropdownButton;
 use Core\Html\Widget\Element;
 use Core\Html\Widget\GroupedForm;
 use Core\Html\Widget\Table, Core\Html\Widget\Form;
@@ -35,6 +36,10 @@ class Helper
 
     public function pagination($total, $ps, $pr){
         return new Pagination($total, $ps, $pr);
+    }
+
+    public function dropdownButton($label, $attrs = array('class' => "btn-group")){
+        return new DropdownButton($label, $attrs);
     }
 
     private static $_instance = NULL;

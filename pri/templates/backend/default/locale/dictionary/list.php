@@ -13,7 +13,13 @@ $this->assign('navigationBar', array(
 
 $this->assign('toolbar', array(
     $this->html->button('button', $this->locale->_('delete'), 'btn btn-danger')
-        ->setEvent('click', "deleteSelectedRow('table1', '".$this->router->buildUrl('delete', array('languageid'=>$this->language->getId()))."')")
+        ->setEvent('click', "deleteSelectedRow('table1', '".$this->router->buildUrl('delete', array('languageid'=>$this->language->getId()))."')"),
+    $this->html->dropdownButton('abc')
+        ->addChild(
+            $this->html->anchor($this->locale->_('locale_manage')),
+            $this->html->anchor($this->locale->_('locale_manage')),
+            $this->html->anchor($this->locale->_('locale_manage'))
+        )
 ));
 
 $dt = $this->html->table($this->models);

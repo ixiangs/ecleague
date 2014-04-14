@@ -33,14 +33,15 @@ Orm\Model::register('Core\Dass\Model\AttributeModel', array(
         Orm\StringProperty::create('code')->setUnique(true)->setNullable(false)->setUpdateable(false),
         Orm\StringProperty::create('data_type')->setNullable(false),
         Orm\StringProperty::create('input_type')->setNullable(false),
+        Orm\StringProperty::create('input_id'),
+        Orm\StringProperty::create('input_name'),
         Orm\BooleanProperty::create('indexable')->setDefaultValue(false)->setNullable(false),
         Orm\BooleanProperty::create('required')->setDefaultValue(false)->setNullable(false),
         Orm\BooleanProperty::create('enabled')->setDefaultValue(false)->setNullable(false),
         Orm\SerializeProperty::create('names')->setNullable(false),
         Orm\SerializeProperty::create('display_labels')->setNullable(false),
         Orm\SerializeProperty::create('form_labels')->setNullable(false),
-        Orm\SerializeProperty::create('form_setting'),
-        Orm\SerializeProperty::create('validate_setting')
+        Orm\SerializeProperty::create('input_setting')
     ),
     'relations'=>array(
         Orm\Relation::childrenRelation('options', 'Core\Dass\Model\AttributeOptionModel', 'attribute_id')

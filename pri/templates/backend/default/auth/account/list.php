@@ -17,9 +17,9 @@ $dt->addOptionColumn($this->locale->_('level'), '{level}', array(
         \Core\Auth\Model\AccountModel::LEVEL_NORMAL=>$this->locale->_('auth_level_normal')),
     'small', 'small text-center');
 $dt->addOptionColumn($this->locale->_('status'), '{status}', array(
-        \Core\Auth\Model\AccountModel::STATUS_ACTIVATED=>'<span class="label label-success">'.$this->locale->_('auth_status_activated').'</span>',
-        \Core\Auth\Model\AccountModel::STATUS_NONACTIVATED=>'<span class="label label-waring">'.$this->locale->_('auth_status_nonactivated').'</span>',
-        \Core\Auth\Model\AccountModel::STATUS_DISABLED=>'<span class="label label-danger">'.$this->locale->_('disabled').'</span>'),
+        \Core\Auth\Model\AccountModel::STATUS_ACTIVATED=>'<span class="text-success">'.$this->locale->_('auth_status_activated').'</span>',
+        \Core\Auth\Model\AccountModel::STATUS_NONACTIVATED=>'<span class="text-warning">'.$this->locale->_('auth_status_nonactivated').'</span>',
+        \Core\Auth\Model\AccountModel::STATUS_DISABLED=>'<span class="text-danger">'.$this->locale->_('disabled').'</span>'),
     'small', 'small text-center');
 $dt->addLinkColumn('', $this->locale->_('edit'), urldecode($this->router->buildUrl('edit', array('id'=>'{id}'))), 'edit', 'edit');
 $dt->addLinkButtonColumn('', $this->locale->_('delete'), "deleteConfirm('".urldecode($this->router->buildUrl('delete', array('id'=>'{id}')))."')", 'edit', 'edit');

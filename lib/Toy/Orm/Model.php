@@ -409,7 +409,7 @@ abstract class Model implements \ArrayAccess, \Iterator
 
     protected function _merge($id, $data, $db = null)
     {
-        if ($this->load($id, $db) !== false) {
+        if ($this->_load($id, $db) !== false) {
             $this->fillArray($data);
             return $this;
         }

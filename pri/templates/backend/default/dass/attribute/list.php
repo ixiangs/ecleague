@@ -43,13 +43,13 @@ $dt->addOptionColumn($this->locale->_('dass_input_type'), '{input_type}',  array
     \Core\Dass\Model\AttributeModel::INPUT_TYPE_TEXTBOX=>$this->locale->_('dass_input_type_textbox'),
     \Core\Dass\Model\AttributeModel::INPUT_TYPE_TEXTAREA=>$this->locale->_('dass_input_type_textarea'),
 ), 'middle', 'middle text-center');
-$dt->addBooleanColumn($this->locale->_('dass_indexable'), 'indexable', $this->locale->_('yes'), $this->locale->_('no').'</span>',
+$dt->addBooleanColumn($this->locale->_('dass_indexable'), 'indexable', $this->locale->_('yes'), $this->locale->_('no'),
     'small', 'small text-center');
-$dt->addBooleanColumn($this->locale->_('dass_required'), 'required', $this->locale->_('yes'), $this->locale->_('no').'</span>',
+$dt->addBooleanColumn($this->locale->_('dass_required'), 'required', $this->locale->_('yes'), $this->locale->_('no'),
     'small', 'small text-center');
-$dt->addBooleanColumn($this->locale->_('dass_indexable'), 'indexable', $this->locale->_('yes'), $this->locale->_('no').'</span>',
+$dt->addBooleanColumn($this->locale->_('dass_indexable'), 'indexable', $this->locale->_('yes'), $this->locale->_('no'),
     'small', 'small text-center');
-$dt->addBooleanColumn($this->locale->_('status'), 'enabled', $this->locale->_('enabled'), $this->locale->_('disabled').'</span>',
+$dt->addBooleanColumn($this->locale->_('status'), 'enabled', $this->locale->_('enabled'), $this->locale->_('disabled'),
     'small', 'small text-center');
 $dt->addLinkColumn('', $this->locale->_('edit'), urldecode($this->router->buildUrl('edit', array('id' => '{id}'))), 'small', 'small edit');
 

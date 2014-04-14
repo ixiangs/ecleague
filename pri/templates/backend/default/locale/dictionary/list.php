@@ -19,8 +19,8 @@ $this->assign('toolbar', array(
 $dt = $this->html->table($this->models);
 $dt->addSelectableColumn('ids[]', '{id}', null, 'index', 'index');
 $dt->addIndexColumn('', 'index', 'index');
-$dt->addLabelColumn($this->locale->_('code'), '{code}', 'large text-center', 'large');
-$dt->addLabelColumn($this->locale->_('text'), '{label}', 'text-center');
+$dt->addLabelColumn($this->locale->_('code'), '{code}', 'large', 'left');
+$dt->addLabelColumn($this->locale->_('text'), '{label}', '', 'left');
 $dt->addLinkColumn('', $this->locale->_('edit'), urldecode($this->router->buildUrl('edit', array('languageid'=>$this->language->getId(), 'id'=>'{id}'))), 'small', 'edit text-center');
 $this->assign('datatable', $dt);
 

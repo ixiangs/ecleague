@@ -41,10 +41,10 @@
                                            href="<?php echo $this->router->buildUrl('dass/attribute/list'); ?>"><?php echo $this->locale->_("dass_attribute_list"); ?></a>
                                     </li>
                                     <li><a class="sbtn"
-                                           href="<?php echo $this->router->buildUrl('dass/role/list'); ?>"><?php echo $this->locale->_("auth_role_list"); ?></a>
+                                           href="<?php echo $this->router->buildUrl('dass/attribute-group/list'); ?>"><?php echo $this->locale->_("dass_attribute_group"); ?></a>
                                     </li>
                                     <li><a class="sbtn"
-                                           href="<?php echo $this->router->buildUrl('dass/behavior/list'); ?>"><?php echo $this->locale->_("auth_behavior_list"); ?></a>
+                                           href="<?php echo $this->router->buildUrl('dass/attribute-set/list'); ?>"><?php echo $this->locale->_("dass_attribute_set"); ?></a>
                                     </li>
                                 </ul>
                             </li>

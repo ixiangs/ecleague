@@ -18,11 +18,11 @@ $f->addInputField('text', $this->locale->_('code'), 'code', 'code', $this->model
     ->addValidateRule('required', true);
 $f->addInputField('text', $this->locale->_('name'), 'name', 'name', $this->model->getName())
     ->addValidateRule('required', true);
-$f->addCheckboxListField($this->behaviors, $this->locale->_('auth_behavior_list'), 'behavior_ids', 'behavior_ids[]', $this->model->getBehaviorIds());
 $f->addSelectField(array(
         '0' => $this->locale->_('no'),
         '1' => $this->locale->_('yes')
     ),
     $this->locale->_('enable'), 'enabled', 'enabled', $this->model->getEnabled());
+$f->addCheckboxListField($this->behaviors, $this->locale->_('auth_behavior_list'), 'behavior_ids', 'behavior_ids[]', $this->model->getBehaviorIds());
 $this->assign('form', $f);
 echo $this->includeTemplate('layout\form');

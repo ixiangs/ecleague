@@ -140,7 +140,7 @@ Toy.Validation.renderers = [
             var result = $('#' + eid);
             if (result.length == 0) {
                 result = $('<small class="help-block" id="' + eid + '"></small>');
-                $input.parent().append(result);
+                $input.parents(field.validator.options.inputContainer).append(result);
             }
             return result;
         };

@@ -64,20 +64,15 @@ class AttributeController extends Web\Controller
 
     public function editAction($id)
     {
-        $m = \Tops::loadModel('dass/attribute')->load($id);
-        $m->getVersions()->load();
+        $m = \Tops::loadModel('dass/attribute');
+        $m->load($id);
         return $this->getEditTemplateResult($m);
     }
 
     public function editPostAction()
     {
         $locale = $this->context->locale;
-        $mainData = $this->request->getPost('main');
-        $m = \Tops::loadModel('dass/attribute')->merge($mainData['id'], $mainData);
-        $versions = $m->getVersions()->load();
-        foreach ($this->request->getPost('versions') as $data) {
-            $versions->findById($data['version_id'])->fillArray($data);
-        }
+        $m = \Tops::loadModel('dass/attribute')->fillArray($this->request->getPost('data'));
 
         $vr = $m->validateProperties();
         if ($vr !== true) {
@@ -85,31 +80,12 @@ class AttributeController extends Web\Controller
             return $this->getEditTemplateResult($m);
         }
 
-        $result = Helper::withTx(function ($db) use ($m, $versions, $locale) {
-            if (!$m->update($db)) {
-                $this->session->set('errors', $locale->_('err_system'));
-                return false;
-            }
+        if (!$m->update()) {
+            $this->session->set('errors', $locale->_('err_system'));
+            return $this->getEditTemplateResult($m);
+        }
 
-            foreach ($versions as $version) {
-                $version->setMainId($m->getId());
-                $vr = $version->validateProperties();
-                if ($vr !== true) {
-                    $this->session->set('errors', $locale->_('err_input_invalid'));
-                    return false;
-                }
-                if (!$version->update($db)) {
-                    $this->session->set('errors', $locale->_('err_system'));
-                    return false;
-                }
-            }
-
-            return true;
-        });
-
-        return $result ?
-            Web\Result::redirectResult($this->router->buildUrl('list')) :
-            $this->getEditTemplateResult($m);
+        return Web\Result::redirectResult($this->router->buildUrl('list'));
     }
 
     public function deleteAction($id)

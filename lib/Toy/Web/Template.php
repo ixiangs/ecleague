@@ -134,14 +134,11 @@ class Template
         $extensions = Configuration::$templateExtensions;
         $theme = Configuration::$templateTheme;
         $router = $this->applicationContext->router;
-        $lang = 'zh-cn';//$this->request->getBrowserLanguage();
-//        $objective = $this->applicationContext->getObjective();
+        $lang = $this->request->getBrowserLanguage();
         $action = $router->action;
-        // $package = StringUtil::PascalCasingToDash($objective->getPackage());
         $component = $router->component;
         $controller = $router->controller;
         $domain = strtolower($router->domain->getName());
-//        $subPaths = array();
         if (empty($path)) {
             $subPaths = array(
                 $domain . '/' . $lang . '/' . $theme . '/' . $component . '/' . $controller . '/' . $action,

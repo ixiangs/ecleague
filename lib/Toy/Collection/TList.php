@@ -122,7 +122,12 @@ trait TList
     {
         $result = array();
         foreach ($this->source as $index => $item) {
-            $function($result, $item, $index);
+            list($k, $v) = $function($item, $index);
+            if($k){
+                $result[$k] = $v;
+            }else{
+                $result[] = $v;
+            }
         }
         return $result;
     }

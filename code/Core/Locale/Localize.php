@@ -20,8 +20,9 @@ class Localize implements \ArrayAccess
         return $this->_texts[$name];
     }
 
-    public function getText($name, $default = ''){
-        if(array_key_exists($name, $this->_texts)){
+    public function getText($name, $default = '')
+    {
+        if (array_key_exists($name, $this->_texts)) {
             return $this->_texts[$name];
         }
         return $default;
@@ -30,7 +31,7 @@ class Localize implements \ArrayAccess
     public function _()
     {
         $args = func_get_args();
-        if(array_key_exists($args[0], $this->_texts)){
+        if (array_key_exists($args[0], $this->_texts)) {
             if (count($args) > 1) {
                 $args[0] = $this->_texts[$args[0]];
                 return call_user_func_array('sprintf', $args);
@@ -41,11 +42,23 @@ class Localize implements \ArrayAccess
         return '';
     }
 
-    public function getCurrentLanguage(){
+    public function getCurrentLanguageId()
+    {
+        return $this->_currentLanguage['id'];
+    }
+
+    public function getCurrentLanguageCode()
+    {
+        return $this->_currentLanguage['code'];
+    }
+
+    public function getCurrentLanguage()
+    {
         return $this->_currentLanguage;
     }
 
-    public function getLanguages(){
+    public function getLanguages()
+    {
         return $this->_languages;
     }
 
@@ -58,9 +71,9 @@ class Localize implements \ArrayAccess
             case 'S':
                 return date($this->_currentLanguage['long_short_formate'], $nt);
             case 'LF':
-                return date($this->_currentLanguage['long_date_formate'].' H:i:s', $nt);
+                return date($this->_currentLanguage['long_date_formate'] . ' H:i:s', $nt);
             case 'SF':
-                return date($this->_currentLanguage['long_short_formate'].' H:i:s', $nt);
+                return date($this->_currentLanguage['long_short_formate'] . ' H:i:s', $nt);
             default:
                 return date($format, $nt);
         }
@@ -89,16 +102,16 @@ class Localize implements \ArrayAccess
     public function initialize($lang)
     {
         $rows = LanguageModel::find()->load();
-        foreach($rows as $row){
+        foreach ($rows as $row) {
             $this->_languages[strtolower($row->getCode())] = $row->getAllData();
         }
         $this->_currentLanguage = $this->_languages[$lang];
 
         $this->_texts = DictionaryModel::find()
-                            ->eq('language_id', $this->_currentLanguage['id'])->load()
-                            ->toArray(function(&$arr, $item){
-                                $arr[$item->getCode()] = $item->getLabel();
-                            });
+            ->eq('language_id', $this->_currentLanguage['id'])->load()
+            ->toArray(function ($item) {
+                return array($item->getCode(), $item->getLabel());
+            });
     }
 
     private static $_instance = NULL;

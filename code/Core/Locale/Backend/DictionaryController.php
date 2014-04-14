@@ -15,7 +15,7 @@ class DictionaryController extends Web\Controller
         $count = \Tops::loadModel('locale/dictionary')->find()->selectCount()->execute()->getFirstValue();
         $models = \Tops::loadModel('locale/dictionary')->find()
             ->eq('language_id', $lid)
-            ->desc('id')
+            ->asc('code')
             ->limit(PAGINATION_SIZE, ($pi - 1) * PAGINATION_SIZE)
             ->load();
         return Web\Result::templateResult(array(

@@ -1,7 +1,7 @@
 <?php
 $this->assign('breadcrumb', array(
     $this->html->anchor($this->locale->_('dass_manage')),
-    $this->html->anchor($this->attribute->getName()),
+    $this->html->anchor($this->attribute->names[$this->locale->getCurrentLanguageId()]),
     $this->html->anchor($this->locale->_('dass_option'))
 ));
 
@@ -58,14 +58,15 @@ $this->beginBlock('footerjs');
         $(function () {
             <?php
             if(count($this->options) > 0):
-                foreach($this->options as $index=>$option): ?>
-            var data<?php echo $index; ?> = {'id': '<?php echo $option->getId(); ?>', 'ovalue': '<?php echo $option->getValue(); ?>'};
-            <?php
+                foreach($this->options as $index=>$option):
+                echo 'var data'.$index.'={"id":"'.$option->getId().'",ovalue:"'.$option->getValue().'"};';
                 foreach($option->getLabels() as $lid=>$label):
                     echo 'data'.$index.'["olabel'. $lid.'"] = "'.$label.'";', "\n";
                 endforeach;
                 echo 'newOption(data'.$index.');', "\n";
                 endforeach;
+            else:
+                echo 'newOption({});';
             endif;
             ?>
 
@@ -89,8 +90,9 @@ $this->beginBlock('footerjs');
                        alert('<?php echo $this->locale->_('dass_err_option_repeated'); ?>');
                        event.preventDefault();
                    }
+               }else{
+                   event.preventDefault();
                }
-
             });
         });
 

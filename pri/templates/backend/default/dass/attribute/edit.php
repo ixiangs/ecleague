@@ -41,40 +41,38 @@ $f->addInputField('text', $this->locale->_('code'), 'code', 'data[code]', $this-
 $f->addSelectField(array('1'=>$this->locale->_('yes'), '0'=>$this->locale->_('no')),
     $this->locale->_('dass_indexable'), 'indexable', 'data[indexable]', $this->model->getEnabled());
 $f->addSelectField(array('1'=>$this->locale->_('yes'), '0'=>$this->locale->_('no')),
-    $this->locale->_('dass_required'), 'required', 'data[required]', $this->model->getEnabled());
-$f->addSelectField(array('1'=>$this->locale->_('yes'), '0'=>$this->locale->_('no')),
     $this->locale->_('enable'), 'enabled', 'data[enabled]', $this->model->getEnabled());
 $f->endGroup();
 
-$vs = $this->model->getValidateSetting();
+$f->beginGroup('tab_input', $this->locale->_('dass_input_setting'));
+$f->addSelectField(array('1'=>$this->locale->_('yes'), '0'=>$this->locale->_('no')),
+    $this->locale->_('dass_required'), 'required', 'data[required]', $this->model->getEnabled());
+$f->addInputField('text', $this->locale->_('dass_input_id'), 'input_id', 'data[input_id]', $this->model->getInputId());
+$f->addInputField('text', $this->locale->_('dass_input_name'), 'input_name', 'data[input_name]', $this->model->getInputName());
+$vs = $this->model->getInputSetting();
 switch($this->model->getInputType()):
     case \Core\Dass\Model\AttributeModel::INPUT_TYPE_TEXTBOX:
         switch($this->model->getDataType()):
             case \Core\Dass\Model\AttributeModel::DATA_TYPE_INTEGER:
-                $f->beginGroup('tab_validate', $this->locale->_('dass_validate_setting'));
-                $f->addInputField('text', $this->locale->_('dass_min_value'), 'min_value', 'data[validate_setting][min_value]', $vs['min_value'])
+                $f->addInputField('text', $this->locale->_('dass_min_value'), 'min_value', 'data[input_setting][min_value]', $vs['min_value'])
                     ->addValidateRule('integer', true);
-                $f->addInputField('text', $this->locale->_('dass_max_value'), 'max_value', 'data[validate_setting][max_value]', $vs['max_value'])
+                $f->addInputField('text', $this->locale->_('dass_max_value'), 'max_value', 'data[input_setting][max_value]', $vs['max_value'])
                     ->addValidateRule('integer', true)->addValidateRule('greatto', '#min_value', $this->locale->_('dass_max_great_min'));
-                $f->endGroup();
             break;
             case \Core\Dass\Model\AttributeModel::DATA_TYPE_NUMBER:
-                $f->beginGroup('tab_validate', $this->locale->_('dass_validate_setting'));
-                $f->addInputField('text', $this->locale->_('dass_min_value'), 'min_value', 'data[validate_setting][min_value]', $vs['min_value'])
+                $f->addInputField('text', $this->locale->_('dass_min_value'), 'min_value', 'data[input_setting][min_value]', $vs['min_value'])
                     ->addValidateRule('number', true);
-                $f->addInputField('text', $this->locale->_('dass_max_value'), 'max_value', 'data[validate_setting][max_value]', $vs['max_value'])
+                $f->addInputField('text', $this->locale->_('dass_max_value'), 'max_value', 'data[input_setting][max_value]', $vs['max_value'])
                     ->addValidateRule('number', true)->addValidateRule('greatto', '#min_value', $this->locale->_('dass_max_great_min'));
-                $f->endGroup();
                 break;
             case \Core\Dass\Model\AttributeModel::DATA_TYPE_STRING:
-                $f->beginGroup('tab_validate', $this->locale->_('dass_validate_setting'));
-                $f->addInputField('text', $this->locale->_('dass_max_length'), 'max_length', 'data[validate_setting][max_length]', $vs['max_length'])
+                $f->addInputField('text', $this->locale->_('dass_max_length'), 'max_length', 'data[input_setting][max_length]', $vs['max_length'])
                     ->addValidateRule('integer', true);
-                $f->endGroup();
             break;
         endswitch;
         break;
 endswitch;
+$f->endGroup();
 
 $names = $this->model->getNames(array());
 $dlabels = $this->model->getDisplayLabels(array());
@@ -92,7 +90,6 @@ foreach($this->locale->getLanguages() as $lang):
         array_key_exists($lang['id'], $flabels)? $flabels[$lang['id']]: '')
         ->addValidateRule('required', true);
     $f->endGroup();
-//    $f->addHiddenField('version_'.$lang['code'].'_language_id', 'versions['.$lang['code'].'][language_id]', $vmodel->getLanguageId());
 endforeach;
 $f->addHiddenField('main_data_type', 'data[data_type]', $this->model->getDataType());
 $f->addHiddenField('main_input_type', 'data[input_type]', $this->model->getInputType());

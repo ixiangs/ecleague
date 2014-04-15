@@ -13,17 +13,19 @@ $dt = $this->html->table($this->models);
 $dt->addIndexColumn('#', 'index', 'index');
 $dt->addLabelColumn($this->locale->_('code'), '{code}', 'small', 'small text-center');
 $dt->addLabelColumn($this->locale->_('name'), '{name}', 'middle', 'middle text-center')
-    ->setCellRenderer(function($label, $col, $row) use($clang){
-        $label->removeBindableAttribute('text')->setAttribute('text', $row->names[$clang['id']]);
-        return $label->render();
+    ->setCellRenderer(function($col, $row) use($clang){
+        $col->getCell()->getChild(0)->removeBindableAttribute('text')->setAttribute('text', $row->names[$clang['id']]);
+        return $col->getCell()->renderBegin().$col->getCell()->renderInner().$col->getCell()->renderEnd();
     });
-$dt->addLabelColumn($this->locale->_('dass_display_label'), '{display_label}', '', '')    ->setCellRenderer(function($label, $col, $row) use($clang){
-    $label->removeBindableAttribute('text')->setAttribute('text', $row->display_labels[$clang['id']]);
-    return $label->render();
+$dt->addLabelColumn($this->locale->_('dass_display_label'), '{display_label}', '', '')
+    ->setCellRenderer(function($col, $row) use($clang){
+        $col->getCell()->getChild(0)->removeBindableAttribute('text')->setAttribute('text', $row->display_labels[$clang['id']]);
+        return $col->getCell()->renderBegin().$col->getCell()->renderInner().$col->getCell()->renderEnd();
 });
-$dt->addLabelColumn($this->locale->_('dass_form_label'), '{form_label}', '', '')    ->setCellRenderer(function($label, $col, $row) use($clang){
-    $label->removeBindableAttribute('text')->setAttribute('text', $row->form_labels[$clang['id']]);
-    return $label->render();
+$dt->addLabelColumn($this->locale->_('dass_form_label'), '{form_label}', '', '')
+    ->setCellRenderer(function($col, $row) use($clang){
+        $col->getCell()->getChild(0)->removeBindableAttribute('text')->setAttribute('text', $row->form_labels[$clang['id']]);
+        return $col->getCell()->renderBegin().$col->getCell()->renderInner().$col->getCell()->renderEnd();
 });
 $dt->addOptionColumn($this->locale->_('dass_data_type'), '{data_type}', array(
     \Core\Dass\Model\AttributeModel::DATA_TYPE_ARRAY=>$this->locale->_('dass_data_type_array'),
@@ -54,15 +56,15 @@ $dt->addBooleanColumn($this->locale->_('status'), 'enabled', $this->locale->_('e
 $dt->addLinkColumn('', $this->locale->_('edit'), urldecode($this->router->buildUrl('edit', array('id' => '{id}'))), 'small', 'small edit');
 
 $dt->addLinkColumn('', $this->locale->_('dass_option'), urldecode($this->router->buildUrl('options', array('attributeid' => '{id}'))), 'small', 'small edit')
-    ->setCellRenderer(function($link, $col, $row){
+    ->setCellRenderer(function($col, $row){
         switch($row['input_type']){
             case \Core\Dass\Model\AttributeModel::INPUT_TYPE_DROPDOWN:
             case \Core\Dass\Model\AttributeModel::INPUT_TYPE_LISTBOX:
             case \Core\Dass\Model\AttributeModel::INPUT_TYPE_CHECKBOX_LIST:
             case \Core\Dass\Model\AttributeModel::INPUT_TYPE_RADIO_LIST:
-                return $link->render();
+                return $col->getCell()->renderBegin().$col->getCell()->renderInner().$col->getCell()->renderEnd();
             default:
-                return '';
+                return $col->getCell()->renderBegin().$col->getCell()->renderEnd();
         }
     });
 $this->assign('datatable', $dt);

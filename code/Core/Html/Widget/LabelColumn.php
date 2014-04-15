@@ -1,38 +1,21 @@
 <?php
 namespace Core\Html\Widget;
 
-use Toy\Util\StringUtil;
+class LabelColumn extends TableColumn
+{
 
-class LabelColumn extends BaseColumn{
-
-    private $_label = null;
-
-    public function __construct(){
+    public function __construct()
+    {
         parent::__construct();
-        $this->_label = new Element('span');
-        $this->_label->addBindableAttribute('text');
-    }
-
-    public function getLabel(){
-        return $this->_label;
+        $this->getCell()->addChild(new Element('span'))
+            ->getChild(0)->addBindableAttribute('text');
     }
 
     public function renderCell($row, $index){
-        $this->_label->bindAttribute($row);
-        if(empty($this->_label->getAttribute('text'))){
-            $this->_label->setAttribute('text', $this->getDefaultText());
+        $label = $this->getCell()->getChild(0)->bindAttribute($row);
+        if(empty($label->getAttribute('text'))){
+            $label->setAttribute('text', $this->getDefaultText());
         }
-        $res = $this->getCell()->renderBegin();
-        if (!is_null($this->cellRenderer)) {
-            $res .= call_user_func_array($this->cellRenderer, array($this->_label, $this, $row, $index));
-        } else {
-            $res .= $this->_label->render();
-        }
-        $res .= $this->getCell()->renderEnd();
-        return $res;
-    }
-
-    public function getType(){
-        return 'label';
+        return parent::renderCell($row, $index);
     }
 }

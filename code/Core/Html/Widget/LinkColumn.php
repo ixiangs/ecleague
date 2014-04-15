@@ -1,41 +1,32 @@
 <?php
 namespace Core\Html\Widget;
 
-class LinkColumn extends BaseColumn
+class LinkColumn extends TableColumn
 {
-
-    private $_link = null;
 
     public function __construct()
     {
         parent::__construct();
-        $this->_link = new Element('a', array('class' => 'btn btn-link'));
-        $this->_link->addBindableAttribute('href', 'text', 'onclick');
-    }
-
-    public function getLink()
-    {
-        return $this->_link;
+        $link = new Element('a', array('class' => 'btn btn-link'));
+        $link->addBindableAttribute('href', 'text', 'onclick');
+        $this->getCell()->addChild($link);
     }
 
     public function renderCell($row, $index)
     {
-        $this->_link->bindAttribute($row);
-        if (empty($this->_link->getAttribute('text'))) {
-            $this->_link->setAttribute('text', $this->getDefaultText());
+        $link = $this->getCell()->getChild(0);
+        $link->bindAttribute($row);
+        if (empty($link->getAttribute('text'))) {
+            $link->setAttribute('text', $this->getDefaultText());
         }
-        $res = $this->getCell()->renderBegin();
-        if (!is_null($this->cellRenderer)) {
-            $res .= call_user_func_array($this->cellRenderer, array($this->_link, $this, $row, $index));
-        } else {
-            $res .= $this->_link->render();
-        }
-        $res .= $this->getCell()->renderEnd();
-        return $res;
-    }
-
-    public function getType()
-    {
-        return 'link';
+        return parent::renderCell($row, $index);
+//        $res = $this->getCell()->renderBegin();
+//        if (!is_null($this->cellRenderer)) {
+//            $res .= call_user_func_array($this->cellRenderer, array($link, $this, $row, $index));
+//        } else {
+//            $res .= $link->render();
+//        }
+//        $res .= $this->getCell()->renderEnd();
+//        return $res;
     }
 }

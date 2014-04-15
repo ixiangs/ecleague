@@ -13,9 +13,9 @@ $dt = $this->html->table($this->models);
 $dt->addIndexColumn('#', 'index', 'index');
 $dt->addLabelColumn($this->locale->_('code'), '{code}', 'small', 'small text-center');
 $dt->addLabelColumn($this->locale->_('name'), '{name}', '', '')
-    ->setCellRenderer(function($label, $col, $row) use($clang){
-        $label->removeBindableAttribute('text')->setAttribute('text', $row->names[$clang['id']]);
-        return $label->render();
+    ->setCellRenderer(function($col, $row) use($clang){
+        $col->getCell()->getChild(0)->removeBindableAttribute('text')->setAttribute('text', $row->names[$clang['id']]);
+        return $col->getCell()->renderBegin().$col->getCell()->renderInner().$col->getCell()->renderEnd();
     });
 $dt->addBooleanColumn($this->locale->_('status'), 'enabled', $this->locale->_('enabled'), $this->locale->_('disabled').'</span>',
     'small', 'small text-center');

@@ -49,7 +49,7 @@ class BehaviorController extends Web\Controller
 
     public function editAction($id)
     {
-        return $this->getEditTemplateResult(BehaviorModel::load($id));
+        return $this->getEditTemplateResult(\Tops::loadModel('auth/behavior')->load($id));
     }
 
     public function editPostAction()

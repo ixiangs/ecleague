@@ -1,12 +1,16 @@
 <?php
 namespace Core\Html\Widget;
 
+use Core\Html\Helper;
+
 class Table extends Element
 {
 
     private $_columns = array();
     private $_dataSource = null;
     private $_rowSelectable = false;
+    protected $headVisible = true;
+    protected $footVisible = false;
 
     public function __construct($dataSource = null, $id = 'table1')
     {
@@ -49,8 +53,8 @@ class Table extends Element
     {
         $col = new LabelColumn();
         $col->getHead()->setAttribute(array('class' => $headCss, 'text' => $headText));
-        $col->getCell()->setAttribute('class', $cellCss);
-        $col->getLabel()->setAttribute(array('text' => $cellText));
+        $col->getCell()->setAttribute('class', $cellCss)
+            ->getChild(0)->setAttribute(array('text' => $cellText));
         $this->addColumn($col);
         return $col;
     }
@@ -60,8 +64,8 @@ class Table extends Element
         $col = new OptionColumn();
         $col->setOptions($options);
         $col->getHead()->setAttribute(array('class' => $headCss, 'text' => $headText));
-        $col->getCell()->setAttribute('class', $cellCss);
-        $col->getLabel()->setAttribute('text', $cellText);
+        $col->getCell()->setAttribute('class', $cellCss)
+            ->getChild(0)->setAttribute('text', $cellText);
         $this->addColumn($col);
         return $col;
     }
@@ -70,8 +74,8 @@ class Table extends Element
     {
         $col = new LinkColumn();
         $col->getHead()->setAttribute(array('class' => $headCss, 'text' => $headText));
-        $col->getCell()->setAttribute('class', $cellCss);
-        $col->getLink()->setAttribute(array('text' => $cellText, 'href' => $link));
+        $col->getCell()->setAttribute('class', $cellCss)
+            ->getChild(0)->setAttribute(array('text' => $cellText, 'href' => $link));
         $this->addColumn($col);
         return $col;
     }
@@ -80,8 +84,8 @@ class Table extends Element
     {
         $col = new CheckboxColumn();
         $col->getHead()->setAttribute('class', $headCss);
-        $col->getCell()->setAttribute('class', $cellCss);
-        $col->getCheckbox()->setAttribute(array(
+        $col->getCell()->setAttribute('class', $cellCss)
+            ->getChild(0)->setAttribute(array(
             'name' => $checkboxName,
             'value' => $checkboxValue,
             'id' => $checkboxId));
@@ -94,8 +98,8 @@ class Table extends Element
         $this->_rowSelectable = true;
         $col = new SelectableColumn();
         $col->getHead()->setAttribute('class', $headCss);
-        $col->getCell()->setAttribute('class', $cellCss);
-        $col->getCheckbox()->setAttribute(array(
+        $col->getCell()->setAttribute('class', $cellCss)
+            ->getChild(0)->setAttribute(array(
             'name' => $checkboxName,
             'value' => $checkboxValue,
             'id' => $checkboxId));
@@ -117,8 +121,8 @@ class Table extends Element
     {
         $col = new ButtonColumn();
         $col->getHead()->setAttribute(array('class' => $headCss, 'text' => $headText));
-        $col->getCell()->setAttribute('class', $cellCss);
-        $col->getButton()->setAttribute(array('text' => $cellText, 'onclick' => $script));
+        $col->getCell()->setAttribute('class', $cellCss)
+            ->getChild(0)->setAttribute(array('text' => $cellText, 'onclick' => $script));
         $this->addColumn($col);
         return $col;
     }
@@ -127,8 +131,8 @@ class Table extends Element
     {
         $col = new LinkButtonColumn();
         $col->getHead()->setAttribute(array('class' => $headCss, 'text' => $headText));
-        $col->getCell()->setAttribute('class', $cellCss);
-        $col->getButton()->setAttribute(array('text' => $cellText, 'onclick' => $script));
+        $col->getCell()->setAttribute('class', $cellCss)
+            ->getChild(0)->setAttribute(array('text' => $cellText, 'onclick' => $script));
         $this->addColumn($col);
         return $col;
     }

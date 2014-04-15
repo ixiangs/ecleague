@@ -189,6 +189,10 @@ class Element
         return $this;
     }
 
+    public function getChild($index){
+        return $this->children[$index];
+    }
+
     public function renderBegin()
     {
         return '<' . $this->_tag . ' ' . $this->renderAttribute() . '>';
@@ -230,6 +234,8 @@ class Element
         switch ($this->_tag) {
             case 'input':
                 return '<' . $this->_tag . ' ' . $this->renderAttribute() . '/>';
+            case 'text':
+                return $this->attributes['text'];
             default:
                 return $this->renderBegin() . $this->renderInner() . $this->renderEnd();
         }

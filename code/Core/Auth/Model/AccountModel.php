@@ -92,18 +92,19 @@ class AccountModel extends Orm\Model
         $behaviorCodes = array();
         $roleCodes = array();
         $roleIds = $m->getRoleIds();
+
         if (count($roleIds) > 0) {
             $roles = \Tops::loadModel('auth/role')->find()->in('id', $roleIds)->eq('enabled', 1)
                 ->load()
-                ->toArray(function($arr, $item){
-                    $arr[$item->getCode()] = $item->getBehaviorIds();
+                ->toArray(function($item){
+                    return array($item->getCode(), $item->getBehaviorIds());
                 });
             $roleCodes = array_keys($roles);
             if (count($roleCodes) > 0) {
                 $behaviorIds = array();
                 foreach ($roles as $code => $bidArr) {
                     if (!empty($bidArr)) {
-                        $behaviorIds = array_merge($behaviorIds, explode(',', $bidArr));
+                        $behaviorIds = array_merge($behaviorIds, $bidArr);
                     }
                 }
                 $behaviorCodes = \Tops::loadModel('auth/behavior')->find()
@@ -111,8 +112,8 @@ class AccountModel extends Orm\Model
                                     ->eq('enabled', 1)
                                     ->select('code')
                                     ->load()
-                                    ->toArray(function($arr, $item){
-                                        $arr[] = $item->getCode();
+                                    ->toArray(function($item){
+                                        return array(null, $item->getCode());
                                     });
             }
         }

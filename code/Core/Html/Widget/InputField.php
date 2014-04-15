@@ -9,23 +9,24 @@ class InputField extends BaseField
     {
         parent::__construct($label);
         $this->_input = new Element('input', array(
-           'type'=>$type,
-           'class'=>'form-control'
+            'type' => $type,
+            'class' => 'form-control'
         ));
     }
 
-    public function getInput(){
+    public function getInput()
+    {
         return $this->_input;
     }
 
     protected function renderInput()
     {
         foreach ($this->getValidateRules() as $n => $v) {
-            if(is_array($v)){
-                $this->_input->setAttribute('data-validate-' . $n, $v['value'] === true? 'true': $v['value']);
-                $this->_input->setAttribute('data-validate-'.$n.'-msg', $v['message']);
-            }else{
-                $this->_input->setAttribute('data-validate-' . $n, $v === true? 'true': $v);
+            if (is_array($v)) {
+                $this->_input->setAttribute('data-validate-' . $n, $v['value'] === true ? 'true' : $v['value']);
+                $this->_input->setAttribute('data-validate-' . $n . '-msg', $v['message']);
+            } else {
+                $this->_input->setAttribute('data-validate-' . $n, $v === true ? 'true' : $v);
             }
         }
 

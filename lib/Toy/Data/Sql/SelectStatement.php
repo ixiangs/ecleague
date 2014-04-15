@@ -62,36 +62,6 @@ class SelectStatement extends WhereStatement
         return $this;
     }
 
-//    public function joinLeft($table, $leftField, $rightField)
-//    {
-//        $this->joins[] = array('left', $table, $leftField, $rightField);
-//        return $this;
-//    }
-//
-//    public function joinRight($table, $leftField, $rightField)
-//    {
-//        $this->joins[] = array('right', $table, $leftField, $rightField);
-//        return $this;
-//    }
-
-//    public function andFilter($condition, $value)
-//    {
-//        if (count($this->where) > 0) {
-//            $this->where[] = 'and';
-//        }
-//        $this->where[] = array($condition, $value);
-//        return $this;
-//    }
-//
-//    public function orFilter($condition, $value = NULL)
-//    {
-//        if (count($this->where) > 0) {
-//            $this->where[] = 'or';
-//        }
-//        $this->where[] = array($condition, $value = NULL);
-//        return $this;
-//    }
-
     public function asc()
     {
         $args = func_get_args();
@@ -117,23 +87,36 @@ class SelectStatement extends WhereStatement
         return $this;
     }
 
-//    public function resetSelect()
-//    {
-//        $this->fields = array();
-//        return $this;
-//    }
-//
-//    public function resetJoin()
-//    {
-//        $this->joins = array();
-//        return $this;
-//    }
+    public function resetSelect()
+    {
+        $this->fields = array();
+        return $this;
+    }
 
-//    public function resetWhere()
-//    {
-//        $this->where = array();
-//        return $this;
-//    }
+    public function resetJoin()
+    {
+        $this->joins = array();
+        return $this;
+    }
+
+    public function resetWhere()
+    {
+        $this->conditions = array();
+        return $this;
+    }
+
+    public function resetLimit()
+    {
+        $this->limit = 0;
+        $this->offset = 0;
+        return $this;
+    }
+
+    public function resetOrderby()
+    {
+        $this->orderby = array();
+        return $this;
+    }
 
     public function getFields()
     {
@@ -149,11 +132,6 @@ class SelectStatement extends WhereStatement
     {
         return $this->joins;
     }
-
-//    public function getWhere()
-//    {
-//        return $this->where;
-//    }
 
     public function getOrderBy()
     {

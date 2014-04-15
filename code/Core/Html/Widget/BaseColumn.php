@@ -6,6 +6,8 @@ abstract class BaseColumn{
     protected $head = null;
     protected $cell = null;
     protected $footer = null;
+    protected $filter = null;
+    protected $filterRenderer = null;
     protected $headRenderer = null;
     protected $cellRenderer = null;
     protected $footerRenderer = null;
@@ -65,11 +67,39 @@ abstract class BaseColumn{
         return $this;
     }
 
+    public function getFilter(){
+        return $this->filter;
+    }
+
+    public function setFilter($value){
+        $this->filter = $value;
+        return $this;
+    }
+
+    public function getFilterRenderer(){
+        return $this->filterRenderer;
+    }
+
+    public function setFilterRenderer($value){
+        $this->filterRenderer = $value;
+        return $this;
+    }
+
     public function renderHead(){
         if(!is_null($this->headRenderer)){
             return $this->headRenderer($this);
         }
         return $this->head->render();
+    }
+
+    public function renderFilter(){
+        if(!is_null($this->filterRenderer)){
+            return $this->filterRenderer($this);
+        }
+        if(!is_null($this->filter)){
+            return $this->filter->render();
+        }
+        return '';
     }
 
     public function renderFooter(){

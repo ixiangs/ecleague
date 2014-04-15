@@ -138,7 +138,7 @@ class SqliteProvider extends PdoProvider
                         $result[] = $v[1] . ' IS NOT NULL';
                         break;
                     case 'like':
-                        $result[] = $v[1] . " LIKE '" . $this->escape($v[2]) . "'";
+                        $result[] = $v[1] . " LIKE " . $this->escape($v[2]) . "";
                         break;
                     case 'in':
                         $arr = array();

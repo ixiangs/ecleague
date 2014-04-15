@@ -56,6 +56,14 @@ class Form extends Element
         return $f;
     }
 
+    public function addInputGroupField($type, $label, $id, $name, $value = null)
+    {
+        $f = new InputGroupField($type, $label);
+        $f->getInputGroup()->setAttribute(array('id' => $id, 'name' => $name, 'value' => $value));
+        $this->addField($f);
+        return $f;
+    }
+
     public function addHiddenField($id, $name, $value = null)
     {
         $f = new Element('input', array('type' => 'hidden', 'id' => $id, 'name' => $name, 'value' => $value));

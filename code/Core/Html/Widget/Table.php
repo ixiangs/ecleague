@@ -136,10 +136,21 @@ class Table extends Element
     public function render()
     {
         $head = array();
+        $filters = array();
         $body = array();
         $footer = array();
+        $hasFilter = false;
+
         foreach ($this->_columns as $col) {
             $head[] = $col->renderHead();
+        }
+
+        foreach ($this->_columns as $col) {
+            $s = $col->renderFilter();
+            if(!empty($s)){
+                $hasFilter = true;
+            }
+            $filters[] = '<th>'.$s.'</th>';
         }
 
         foreach ($this->_dataSource as $index => $dataRow) {
@@ -153,7 +164,11 @@ class Table extends Element
         $result = array($this->renderBegin());
         $result[] = '<thead><tr>';
         $result[] = implode('', $head);
-        $result[] = '</tr></thead><tbody>';
+        $result[] = '</tr>';
+        if($hasFilter){
+            $result[] = '<tr class="filter">'.implode('', $filters).'</tr>';
+        }
+        $result[] = '</thead><tbody>';
         foreach ($body as $row) {
             $result[] = '<tr>' . implode('', $row) . '</tr>';
         }

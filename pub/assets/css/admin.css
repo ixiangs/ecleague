@@ -34,6 +34,8 @@
 .breadcrumb-row{background:none; margin-bottom: 10px; border: none; -webkit-box-shadow: none; box-shadow: none;}
 .breadcrumb-row .breadcrumb{font-size:120%;height:34px; vertical-align:middle; margin: 0;padding: 8px 0 0 0;background: none;}
 table.table th{text-align: center;font-weight:bold;}
+table.table thead tr.filter th{padding:0;}
+table.table thead tr.filter th input{width:100%;}
 table.table tbody tr td{vertical-align: middle;text-align: center;}
 table.table th.index, table.table tbody tr td.index{width:40px; text-align: center;}
 table.table th.edit, table.table tbody tr td.edit{width:60px;text-align: center; vertical-align: middle;}

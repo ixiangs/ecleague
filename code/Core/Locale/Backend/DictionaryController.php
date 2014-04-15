@@ -12,12 +12,21 @@ class DictionaryController extends Web\Controller
         $lid = $this->request->getParameter('languageid');
         $pi = $this->request->getParameter("pageindex", 1);
         $lang = \Tops::loadModel('locale/language')->load($lid);
-        $count = \Tops::loadModel('locale/dictionary')->find()->selectCount()->execute()->getFirstValue();
-        $models = \Tops::loadModel('locale/dictionary')->find()
-            ->eq('language_id', $lid)
+        $find = \Tops::loadModel('locale/dictionary')->find()
+                ->eq('language_id', $lid);
+        if($this->request->getParameter('kwcode')){
+            $find->like('code', '%'.$this->request->getParameter('kwcode').'%');
+        }
+        if($this->request->getParameter('kwlabel')){
+            $find->like('label', '%'.$this->request->getParameter('kwlabel').'%');
+        }
+        $models = $find
             ->asc('code')
             ->limit(PAGINATION_SIZE, ($pi - 1) * PAGINATION_SIZE)
             ->load();
+        $count = $find->resetSelect()->resetOrderBy()->resetLimit()
+                        ->selectCount()->execute()->getFirstValue();
+
         return Web\Result::templateResult(array(
                 'models' => $models,
                 'language' => $lang,

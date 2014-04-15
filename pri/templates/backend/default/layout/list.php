@@ -58,6 +58,11 @@ else:
                     echo '</div>';
                 endif;
                 echo $this->datatable->render();
+                if($this->tableHiddens):
+                    foreach($this->tableHiddens as $th):
+                        echo $th->render();
+                    endforeach;
+                endif;
                 ?>
             </div>
         </form>

@@ -3,7 +3,6 @@ namespace Core\Auth\Model;
 
 use Core\Auth\Identity;
 use Toy\Data\Helper, Toy\Data\Sql\UpdateStatement;
-use Toy\Loader;
 use Toy\Orm;
 use Toy\Util\EncryptUtil;
 use Toy\Data\Db;

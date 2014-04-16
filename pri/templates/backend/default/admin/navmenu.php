@@ -35,16 +35,16 @@
                                    href="<?php echo $this->router->buildUrl('locale/language/list'); ?>"><?php echo $this->locale->_('locale_manage'); ?>
 </a>
                             </li>
-                            <li class="dropdown-submenu"><a href="#"><?php echo $this->locale->_('dass_manage'); ?></a>
+                            <li class="dropdown-submenu"><a href="#"><?php echo $this->locale->_('attrs_manage'); ?></a>
                                 <ul class="dropdown-menu">
                                     <li><a class="sbtn"
-                                           href="<?php echo $this->router->buildUrl('dass/attribute/list'); ?>"><?php echo $this->locale->_("dass_attribute_list"); ?></a>
+                                           href="<?php echo $this->router->buildUrl('attrs/attribute/list'); ?>"><?php echo $this->locale->_("attrs_attribute_list"); ?></a>
                                     </li>
                                     <li><a class="sbtn"
-                                           href="<?php echo $this->router->buildUrl('dass/attribute-group/list'); ?>"><?php echo $this->locale->_("dass_attribute_group"); ?></a>
+                                           href="<?php echo $this->router->buildUrl('attrs/attribute-group/list'); ?>"><?php echo $this->locale->_("attrs_attribute_group"); ?></a>
                                     </li>
                                     <li><a class="sbtn"
-                                           href="<?php echo $this->router->buildUrl('dass/attribute-set/list'); ?>"><?php echo $this->locale->_("dass_attribute_set"); ?></a>
+                                           href="<?php echo $this->router->buildUrl('attrs/attribute-set/list'); ?>"><?php echo $this->locale->_("attrs_attribute_set"); ?></a>
                                     </li>
                                 </ul>
                             </li>

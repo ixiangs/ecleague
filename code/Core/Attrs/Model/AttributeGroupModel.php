@@ -1,21 +1,21 @@
 <?php
-namespace Core\Dass\Model;
+namespace Core\Attrs\Model;
 
 use Toy\Orm;
 
-class AttributeSetModel extends Orm\Model{
+class AttributeGroupModel extends Orm\Model{
 
-    const TABLE_NAME = '{t}dass_attribute_set';
+    const TABLE_NAME = '{t}attrs_attribute_group';
 
 }
 
-Orm\Model::register('Core\Dass\Model\AttributeSetModel', array(
-    'table'=>AttributeSetModel::TABLE_NAME,
+Orm\Model::register('Core\Attrs\Model\AttributeGroupModel', array(
+    'table'=>AttributeGroupModel::TABLE_NAME,
     'properties'=>array(
         Orm\IntegerProperty::create('id')->setPrimaryKey(true)->setAutoIncrement(true),
         Orm\StringProperty::create('code')->setNullable(false)->setUnique(true),
         Orm\BooleanProperty::create('enabled')->setNullable(false),
         Orm\SerializeProperty::create('names')->setNullable(false),
-        Orm\ListProperty::create('group_ids')->setNullable(false)
+        Orm\ListProperty::create('attribute_ids')->setNullable(false)
     )
 ));

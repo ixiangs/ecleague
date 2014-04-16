@@ -1,7 +1,7 @@
 <?php
 namespace Core\Html\Widget;
 
-class BooleanColumn extends TableColumn
+class BooleanColumn extends GridColumn
 {
 
     private $_fieldName = '';

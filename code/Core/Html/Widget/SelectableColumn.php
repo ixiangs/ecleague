@@ -1,7 +1,7 @@
 <?php
 namespace Core\Html\Widget;
 
-class SelectableColumn extends TableColumn{
+class SelectableColumn extends GridColumn{
 
     public function __construct(){
         parent::__construct();

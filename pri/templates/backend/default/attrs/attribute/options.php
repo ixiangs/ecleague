@@ -1,8 +1,8 @@
 <?php
 $this->assign('breadcrumb', array(
-    $this->html->anchor($this->locale->_('dass_manage')),
+    $this->html->anchor($this->locale->_('attrs_manage')),
     $this->html->anchor($this->attribute->names[$this->locale->getCurrentLanguageId()]),
-    $this->html->anchor($this->locale->_('dass_option'))
+    $this->html->anchor($this->locale->_('attrs_option'))
 ));
 
 $this->assign('navigationBar', array(
@@ -24,7 +24,7 @@ $this->beginBlock('footerjs');
         var curIndex = 0;
         var optionHtml = '<div class="panel panel-default"><div class="panel-body">' +
             '<div class="form-group">' +
-            '<label class="col-sm-1 control-label" for="options_{index}_value"><?php echo $this->locale->_('dass_option_value'); ?></label>' +
+            '<label class="col-sm-1 control-label" for="options_{index}_value"><?php echo $this->locale->_('attrs_option_value'); ?></label>' +
             '<div class="col-sm-9"><input type="text" value="{ovalue}" data-validate-required="true" id="options_{index}_value" name="options[{index}][value]" class="form-control option-value">' +
             '</div></div>';
         <?php foreach($this->locale->getLanguages() as $lang): ?>
@@ -87,7 +87,7 @@ $this->beginBlock('footerjs');
                        ovalues.push($(this).val());
                    });
                    if(roptions.length > 0){
-                       alert('<?php echo $this->locale->_('dass_err_option_repeated'); ?>');
+                       alert('<?php echo $this->locale->_('attrs_err_option_repeated'); ?>');
                        event.preventDefault();
                    }
                }else{

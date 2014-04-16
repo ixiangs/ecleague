@@ -1,7 +1,7 @@
 <?php
 $this->assign('breadcrumb', array(
-    $this->html->anchor($this->locale->_('dass_manage')),
-    $this->html->anchor($this->locale->_('dass_attribute_set'))
+    $this->html->anchor($this->locale->_('attrs_manage')),
+    $this->html->anchor($this->locale->_('attrs_attribute_group'))
 ));
 
 $this->assign('navigationBar', array(
@@ -9,7 +9,7 @@ $this->assign('navigationBar', array(
 ));
 
 $clang = $this->locale->getCurrentLanguage();
-$dt = $this->html->table($this->models);
+$dt = $this->html->grid($this->models);
 $dt->addIndexColumn('#', 'index', 'index');
 $dt->addLabelColumn($this->locale->_('code'), '{code}', 'small', 'small text-center');
 $dt->addLabelColumn($this->locale->_('name'), '{name}', '', '')

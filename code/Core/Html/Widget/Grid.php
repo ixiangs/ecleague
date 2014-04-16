@@ -1,9 +1,7 @@
 <?php
 namespace Core\Html\Widget;
 
-use Core\Html\Helper;
-
-class Table extends Element
+class Grid extends Element
 {
 
     private $_columns = array();
@@ -129,7 +127,7 @@ class Table extends Element
 
     public function addLinkButtonColumn($headText, $cellText, $script, $headCss = null, $cellCss = null)
     {
-        $col = new LinkButtonColumn();
+        $col = new ButtonColumn('link');
         $col->getHead()->setAttribute(array('class' => $headCss, 'text' => $headText));
         $col->getCell()->setAttribute('class', $cellCss)
             ->getChild(0)->setAttribute(array('text' => $cellText, 'onclick' => $script));

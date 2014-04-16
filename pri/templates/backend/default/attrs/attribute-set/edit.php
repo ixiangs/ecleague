@@ -1,7 +1,7 @@
 <?php
 $this->assign('breadcrumb', array(
-    $this->html->anchor($this->locale->_('dass_manage')),
-    $this->html->anchor($this->locale->_('dass_attribute_group'))
+    $this->html->anchor($this->locale->_('attrs_manage')),
+    $this->html->anchor($this->locale->_('attrs_attribute_set'))
 ));
 
 $this->assign('navigationBar', array(
@@ -18,7 +18,7 @@ $f->addInputField('text', $this->locale->_('code'), 'code', 'data[code]', $this-
     ->addValidateRule('required', true);
 $f->addSelectField(array('1'=>$this->locale->_('yes'), '0'=>$this->locale->_('no')),
     $this->locale->_('enable'), 'enabled', 'data[enabled]', $this->model->getEnabled());
-$f->addCheckboxListField($this->attributes, $this->locale->_('dass_attribute'), '', 'data[attribute_ids][]', $this->model->getAttributeIds())
+$f->addCheckboxListField($this->attributes, $this->locale->_('attrs_attribute_group'), '', 'data[group_ids][]', $this->model->getAttributeIds())
     ->addValidateRule('required', true);
 $f->endGroup();
 

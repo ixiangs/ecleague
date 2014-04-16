@@ -1,7 +1,7 @@
 <?php
 namespace Core\Html\Widget;
 
-class CheckboxColumn extends TableColumn
+class CheckboxColumn extends GridColumn
 {
 
     public function __construct()

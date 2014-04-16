@@ -8,7 +8,7 @@ $this->assign('navigationBar', array(
     $this->html->anchor($this->locale->_('add'), $this->router->buildUrl('add'))
 ));
 
-$dt = $this->html->table($this->models);
+$dt = $this->html->grid($this->models);
 $dt->addIndexColumn('#', 'index', 'index');
 $dt->addLabelColumn($this->locale->_('code'), '{code}', 'large', 'left');
 $dt->addLabelColumn($this->locale->_('name'), '{name}', '', 'left');

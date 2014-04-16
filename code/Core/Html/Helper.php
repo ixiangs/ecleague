@@ -6,10 +6,9 @@ use Core\Html\Widget\InputGroup;
 use Core\Html\Widget\DropdownButton;
 use Core\Html\Widget\Element;
 use Core\Html\Widget\GroupedForm;
-use Core\Html\Widget\Table;
+use Core\Html\Widget\Grid;
 use Core\Html\Widget\Form;
 use Core\Html\Widget\Pagination;
-use Core\Html\Widget\TableForm;
 
 class Helper
 {
@@ -26,8 +25,8 @@ class Helper
         return new Element('button', array('type'=>$type, 'class'=>$css, 'text'=>$text));
     }
 
-    public function table($dataSource = null, $id = 'table1'){
-        return new Table($dataSource, $id);
+    public function grid($dataSource = null, $id = 'table1'){
+        return new Grid($dataSource, $id);
     }
 
     public function form($id = 'form1', $method='post'){

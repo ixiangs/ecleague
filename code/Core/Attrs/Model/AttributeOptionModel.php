@@ -1,16 +1,16 @@
 <?php
-namespace Core\Dass\Model;
+namespace Core\Attrs\Model;
 
 use Toy\Orm;
 
 class AttributeOptionModel extends Orm\Model
 {
 
-    const TABLE_NAME = '{t}dass_attribute_option';
+    const TABLE_NAME = '{t}attrs_attribute_option';
 
 }
 
-Orm\Model::register('Core\Dass\Model\AttributeOptionModel', array(
+Orm\Model::register('Core\Attrs\Model\AttributeOptionModel', array(
     'table' => AttributeOptionModel::TABLE_NAME,
     'properties' => array(
         Orm\IntegerProperty::create('id')->setPrimaryKey(true)->setAutoIncrement(true),

@@ -18,7 +18,7 @@ $this->assign('toolbar', array(
         ->setEvent('click', "deleteSelectedRow('table1', '".$this->router->buildUrl('delete', array('languageid'=>$this->language->getId()))."')")
 ));
 
-$dt = $this->html->table($this->models);
+$dt = $this->html->grid($this->models);
 $dt->addSelectableColumn('ids[]', '{id}', null, 'index', 'index');
 $dt->addIndexColumn('', 'index', 'index');
 $dt->addLabelColumn($this->locale->_('code'), '{code}', 'large', 'left')

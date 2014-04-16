@@ -1,7 +1,7 @@
 <?php
 namespace Core\Html\Widget;
 
-class TableColumn{
+class GridColumn{
 
     protected $head = null;
     protected $cell = null;

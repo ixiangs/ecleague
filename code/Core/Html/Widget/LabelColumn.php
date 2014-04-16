@@ -1,7 +1,7 @@
 <?php
 namespace Core\Html\Widget;
 
-class LabelColumn extends TableColumn
+class LabelColumn extends GridColumn
 {
 
     public function __construct()

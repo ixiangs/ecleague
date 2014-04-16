@@ -1,12 +1,12 @@
 <?php
-namespace Core\Dass\Model;
+namespace Core\Attrs\Model;
 
 use Toy\Orm;
 
 class AttributeModel extends Orm\Model
 {
 
-    const TABLE_NAME = '{t}dass_attribute';
+    const TABLE_NAME = '{t}attrs_attribute';
 
     const INPUT_TYPE_TEXTBOX = 'textbox';
     const INPUT_TYPE_TEXTAREA = 'textarea';
@@ -26,7 +26,7 @@ class AttributeModel extends Orm\Model
 
 }
 
-Orm\Model::register('Core\Dass\Model\AttributeModel', array(
+Orm\Model::register('Core\Attrs\Model\AttributeModel', array(
     'table' => AttributeModel::TABLE_NAME,
     'properties' => array(
         Orm\IntegerProperty::create('id')->setPrimaryKey(true)->setAutoIncrement(true),
@@ -44,6 +44,6 @@ Orm\Model::register('Core\Dass\Model\AttributeModel', array(
         Orm\SerializeProperty::create('input_setting')
     ),
     'relations'=>array(
-        Orm\Relation::childrenRelation('options', 'Core\Dass\Model\AttributeOptionModel', 'attribute_id')
+        Orm\Relation::childrenRelation('options', 'Core\Attrs\Model\AttributeOptionModel', 'attribute_id')
     )
 ));

@@ -1,15 +1,22 @@
 <?php
 namespace Core\Html\Widget;
 
-class ButtonColumn extends TableColumn
+class ButtonColumn extends GridColumn
 {
 
-    public function __construct()
+    public function __construct($type = 'button')
     {
         parent::__construct();
-        $button = new Element('button');
-        $button->setAttribute(array('type' => 'button', 'class' => 'btn btn-default'))
-            ->addBindableAttribute('onclick', 'text');
+        if($type == 'link'){
+            $button = new Element('a');
+            $button->setAttribute(array('class' => 'btn btn-link'))
+                ->addBindableAttribute('onclick', 'text');
+        }else{
+            $button = new Element('button');
+            $button->setAttribute(array('type' => 'button', 'class' => 'btn btn-default'))
+                ->addBindableAttribute('onclick', 'text');
+        }
+
         $this->getCell()->addChild($button);
     }
 

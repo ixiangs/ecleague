@@ -3,89 +3,77 @@ namespace Core\Html\Widget;
 
 abstract class BaseField extends Element
 {
-    private $_label = null;
-    private $_validateRules = array();
-    private $_leftAddon = null;
-    private $_rightAddon = null;
-    private $_description = null;
-    private $_horizontalLayout = true;
+    protected $label = null;
+    protected $input = null;
+    protected $validateRules = array();
+    protected $description = null;
+    protected $horizontalLayout = true;
 
     public function __construct($label)
     {
         parent::__construct('div', array(
             'class' => 'form-group'
         ));
-        $this->_label = $label;
+        $this->label = $label;
     }
 
     public function getLabel()
     {
-        return $this->_label;
+        return $this->label;
+    }
+
+    public function setLabel($value)
+    {
+        $this->label = $value;
+        return $this;
+    }
+
+    public function getInput()
+    {
+        return $this->input;
+    }
+
+    public function setInput($value)
+    {
+        $this->input = $value;
+        return $this;
     }
 
     public function setHorizontalLayout($value)
     {
-        $this->_horizontalLayout = $value;
+        $this->horizontalLayout = $value;
         return $this;
     }
 
     public function getHorizontalLayout()
     {
-        return $this->_horizontalLayout;
-    }
-
-    public function setLabel($value)
-    {
-        $this->_label = $value;
-        return $this;
+        return $this->horizontalLayout;
     }
 
     public function getValidateRules()
     {
-        return $this->_validateRules;
+        return $this->validateRules;
     }
 
     public function addValidateRule($name, $value, $msg = null)
     {
         if (!is_null($msg)) {
-            $this->_validateRules[$name] = array('value' => $value, 'message' => $msg);
+            $this->validateRules[$name] = array('value' => $value, 'message' => $msg);
         } else {
-            $this->_validateRules[$name] = $value;
+            $this->validateRules[$name] = $value;
         }
 
         return $this;
     }
 
-    public function getLeftAddon()
-    {
-        return $this->_leftAddon;
-    }
-
-    public function setLeftAddon($value)
-    {
-        $this->_leftAddon = $value;
-        return $this;
-    }
-
-    public function getRightAddon()
-    {
-        return $this->_rightAddon;
-    }
-
-    public function setRightAddon($value)
-    {
-        $this->_rightAddon = $value;
-        return $this;
-    }
-
     public function getDescription()
     {
-        return $this->_description;
+        return $this->description;
     }
 
     public function setDescription($value)
     {
-        $this->_description = $value;
+        $this->description = $value;
         return $this;
     }
 
@@ -96,38 +84,14 @@ abstract class BaseField extends Element
         }
 
         $html = array($this->renderBegin());
-        if ($this->_horizontalLayout) {
-            $html[] = '<label class="col-sm-1 control-label">' . $this->_label . '</label>';
+        if ($this->horizontalLayout) {
+            $html[] = '<label class="col-sm-1 control-label">' . $this->label . '</label>';
             $html[] = '<div class="col-sm-9">';
-            if (!is_null($this->_leftAddon) || !is_null($this->_rightAddon)) {
-                $html[] = '<div class="input-group">';
-                if (!is_null($this->_leftAddon)) {
-                    $html[] = '<span class="input-group-addon">' . $this->_leftAddon . '</span>';
-                }
-                $html[] = $this->renderInput();
-                if (!is_null($this->_rightAddon)) {
-                    $html[] = '<span class="input-group-addon">' . $this->_rightAddon . '</span>';
-                }
-                $html[] = '</div>';
-            } else {
-                $html[] = $this->renderInput();
-            }
+            $html[] = $this->renderInput();
             $html[] = '</div>';
         } else {
-            $html[] = $this->_label? '<label class="col-sm-1 control-label">' . $this->_label . '</label>': '';
-            if (!is_null($this->_leftAddon) || !is_null($this->_rightAddon)) {
-                $html[] = '<div class="input-group">';
-                if (!is_null($this->_leftAddon)) {
-                    $html[] = '<span class="input-group-addon">' . $this->_leftAddon . '</span>';
-                }
-                $html[] = $this->renderInput();
-                if (!is_null($this->_rightAddon)) {
-                    $html[] = '<span class="input-group-addon">' . $this->_rightAddon . '</span>';
-                }
-                $html[] = '</div>';
-            } else {
-                $html[] = $this->renderInput();
-            }
+            $html[] = $this->label ? '<label class="col-sm-1 control-label">' . $this->label . '</label>' : '';
+            $html[] = $this->renderInput();
         }
         $html[] = $this->renderEnd();
 

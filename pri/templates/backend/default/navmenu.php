@@ -48,6 +48,14 @@
                                     </li>
                                 </ul>
                             </li>
+                            <li><a class="sbtn"
+                                   href="<?php echo $this->router->buildUrl('admin/component/list'); ?>"><?php echo $this->locale->_('admin_component_manage'); ?>
+                                </a>
+                            </li>
+                            <li><a class="sbtn"
+                                   href="<?php echo $this->router->buildUrl('admin/menu/list'); ?>"><?php echo $this->locale->_('admin_menu_manage'); ?>
+                                </a>
+                            </li>
                         </ul>
                     </li>
 

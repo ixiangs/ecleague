@@ -39,7 +39,17 @@ class Form extends Element
     public function addSelectField($options, $label, $id, $name, $value = null)
     {
         $f = new SelectField($label);
-        $f->getSelect()
+        $f->getInput()
+            ->setAttribute(array('id' => $id, 'name' => $name, 'value' => $value))
+            ->setOptions($options);
+        $this->addField($f);
+        return $f;
+    }
+
+    public function addTreeSelectField($options, $label, $id, $name, $value = null)
+    {
+        $f = new TreeSelectField($label);
+        $f->getInput()
             ->setAttribute(array('id' => $id, 'name' => $name, 'value' => $value))
             ->setOptions($options);
         $this->addField($f);
@@ -49,7 +59,7 @@ class Form extends Element
     public function addCheckboxListField($options, $label, $id, $name, $value = null)
     {
         $f = new CheckboxListField($label);
-        $f->getCheckboxes()
+        $f->getInput()
             ->setAttribute(array('id' => $id, 'name' => $name, 'value' => $value))
             ->setOptions($options);
         $this->addField($f);
@@ -59,7 +69,7 @@ class Form extends Element
     public function addInputGroupField($type, $label, $id, $name, $value = null)
     {
         $f = new InputGroupField($type, $label);
-        $f->getInputGroup()->setAttribute(array('id' => $id, 'name' => $name, 'value' => $value));
+        $f->getInput()->setAttribute(array('id' => $id, 'name' => $name, 'value' => $value));
         $this->addField($f);
         return $f;
     }

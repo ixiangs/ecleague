@@ -17,7 +17,7 @@
             <?php
             if ($this->hasBlock('navigationBar')):
                 echo $this->renderBlock('navigationBar');
-            else:
+            elseif($this->navigationBar):
                 $b = $this->navigationBar;
                 foreach($b as $btn){
                     $btn->setAttribute('class', 'btn btn-default');

@@ -4,40 +4,40 @@ namespace Core\Html\Widget;
 class Select extends Element
 {
 
-    private $_caption = null;
-    private $_options = null;
-    private $_value = null;
+    protected $caption = null;
+    protected $options = array();
+    protected $value = null;
 
     public function __construct($attrs = array())
     {
         parent::__construct('select', $attrs);
     }
 
-    public function setCaption($value)
-    {
-        $this->_caption = $value;
-        return $this;
-    }
-
     public function getCaption()
     {
-        return $this->_caption;
+        return $this->caption;
+    }
+
+    public function setCaption($value)
+    {
+        $this->caption = $value;
+        return $this;
     }
 
     public function setOptions($value)
     {
-        $this->_options = $value;
+        $this->options = $value;
         return $this;
     }
 
     public function getOptions()
     {
-        return $this->_options;
+        return $this->options;
     }
 
     public function renderBegin(){
         if(array_key_exists('value', $this->attributes)){
-            $this->_value = $this->attributes['value'];
+            $this->value = $this->attributes['value'];
             $this->removeAttribute('value');
         }
         return parent::renderBegin();
@@ -45,14 +45,14 @@ class Select extends Element
 
     public function renderInner()
     {
-        if (!is_null($this->_caption)) {
-            if (is_string($this->_caption)) {
-                $html[] = '<option value="">' . $this->_caption . '</option>';
+        if (!is_null($this->caption)) {
+            if (is_string($this->caption)) {
+                $html[] = '<option value="">' . $this->caption . '</option>';
             }
         }
 
-        foreach ($this->_options as $option => $text) {
-            if ($this->_value == $option) {
+        foreach ($this->options as $option => $text) {
+            if ($this->value == $option) {
                 $html[] = "<option value=\"$option\" selected>$text</option>";
             } else {
                 $html[] = "<option value=\"$option\">$text</option>";

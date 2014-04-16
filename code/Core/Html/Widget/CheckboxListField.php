@@ -3,24 +3,17 @@ namespace Core\Html\Widget;
 
 class CheckboxListField extends BaseField
 {
-    private $_checkboxes = null;
-
     public function __construct($label)
     {
         parent::__construct($label);
-        $this->_checkboxes = new CheckboxList();
-    }
-
-    public function getCheckboxes()
-    {
-        return $this->_checkboxes;
+        $this->input = new CheckboxList();
     }
 
     protected function renderInput()
     {
         foreach($this->getValidateRules() as $k=>$v){
-            $this->_checkboxes->setAttribute($k, $v);
+            $this->input->setAttribute($k, $v);
         }
-        return $this->_checkboxes->render();
+        return $this->input->render();
     }
 }

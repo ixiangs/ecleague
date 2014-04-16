@@ -54,7 +54,7 @@ class IntegerProperty extends BaseProperty
 
     public function validate($value)
     {
-        $empty = is_null($value);
+        $empty = is_null($value) || strlen($value) == 0;
         if ($empty) {
             return $this->getNullable();
         } else {

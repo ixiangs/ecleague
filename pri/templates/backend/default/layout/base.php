@@ -12,9 +12,8 @@
 <!--    <link href="/pub/assets/css/jquery-ui.css" rel="stylesheet">-->
     <link href="/pub/assets/css/base-admin.css" rel="stylesheet">
     <link href="/pub/assets/css/base-admin-responsive.css" rel="stylesheet">
-    <link href="/pub/assets/css/admin.css" rel="stylesheet">
-
     <?php echo $this->renderBlock('headcss'); ?>
+    <link href="/pub/assets/css/admin.css" rel="stylesheet">
     <script src="/pub/assets/js/libs.js"></script>
     <script src="/pub/assets/js/bootstrap.min.js"></script>
     <script src="/pub/assets/js/toy/core.js"></script>

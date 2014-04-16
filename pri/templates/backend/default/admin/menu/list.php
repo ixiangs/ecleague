@@ -4,61 +4,26 @@ $this->assign('breadcrumb', array(
 ));
 
 $this->assign('navigationBar', array(
-    $this->html->anchor($this->locale->_('add'), $this->router->buildUrl('add'))
+    $this->html->anchor($this->locale->_('add'), $this->router->buildUrl('add')),
+    $this->html->anchor($this->locale->_('sort'), $this->router->buildUrl('sort'))
 ));
 
 $clang = $this->locale->getCurrentLanguage();
-$this->beginBlock('datalist');
-?>
-<div class="row">
-<form id="table_form" method="post">
-<div class="panel panel-default">
-<div class="dd" id="nestable">
-<ol class="dd-list">
-<?php
-$cntMenu = count($this->menus);
+$dt = $this->html->grid($this->models);
+$dt->addIndexColumn('#', 'index', 'index');
+$dt->addLabelColumn($this->locale->_('name'), '{name}', 'large', 'left')
+    ->setCellRenderer(function($col, $row) use($clang){
+        $col->getCell()->getChild(0)->removeBindableAttribute('text')->setAttribute('text', $row->names[$clang['id']]);
+        return $col->getCell()->renderBegin().$col->getCell()->renderInner().$col->getCell()->renderEnd();
+    });
+$dt->addLabelColumn($this->locale->_('url'), '{url}', '', 'left');
+$dt->addBooleanColumn($this->locale->_('status'), 'enabled', $this->locale->_('enabled'), $this->locale->_('disabled').'</span>',
+    'small', 'small text-center');
+$dt->addLinkColumn('', $this->locale->_('edit'), urldecode($this->router->buildUrl('edit', array('id' => '{id}'))), 'small', 'small edit');
 
-for($i = 0; $i < $cntMenu; $i++):
-$cMenu = $this->menus[$i];
-if($i > 0):
-    $pMenu = $this->menus[$i - 1];
-else:
-    $pMenu = null;
-endif;
+$this->assign('datatable', $dt);
 
-if($i + 1 >= $cntMenu):
-    $nMenu = null;
-else:
-    $nMenu = $this->menus[$i + 1];
-endif;
+$p = $this->html->pagination($this->total, PAGINATION_SIZE, PAGINATION_RANGE);
+$this->assign('pagination', $p);
 
-if(!is_null($pMenu) && $cMenu->level > $pMenu->level):
-    echo '<ol class="dd-list">';
-endif;
-echo '<li class="dd-item" data-id="'.$cMenu->id.'"><div class="dd-handle dd3-handle">drag</div><div class="dd3-content">'.$cMenu->names[$clang['id']].'</div></li>';
-if(!is_null($nMenu) && $nMenu->level < $cMenu->level):
-    echo '</ol>';
-endif;
-endfor;
-?>
-</ol>
-</div>
-</div>
-</form>
-</div>
-<?php
-$this->endBlock();
-$this->nextBlock('headcss');
-echo '<link href="/pub/assets/css/nestable.css" rel="stylesheet">';
-$this->nextBlock('headjs');
-echo '<script src="/pub/assets/js/jquery.nestable.js"></script>';
-$this->nextBlock('footerjs');
-?>
-<script>
-$(document).ready(function(){
-    $('#nestable').nestable();
-});
-</script>
-<?php
-$this->endBlock();
 echo $this->includeTemplate('layout\list');

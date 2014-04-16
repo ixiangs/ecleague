@@ -6,29 +6,34 @@ use Toy\Web;
 class MenuController extends Web\Controller
 {
 
-    private $_menus = null;
-    private $_sortedMenus = array();
-
     public function listAction()
     {
-        $this->_menus = \Tops::loadModel('admin/menu')->find()
-            ->asc('parent_id')
+        $pi = $this->request->getParameter("pageindex", 1);
+        $count = \Tops::loadModel('admin/menu')->find()->selectCount()->execute()->getFirstValue();
+        $models = \Tops::loadModel('admin/menu')->find()
+            ->limit(PAGINATION_SIZE, ($pi - 1) * PAGINATION_SIZE)
             ->load();
-        $this->sortMenus();
-        return Web\Result::templateResult(array('menus' => $this->_sortedMenus));
+        return Web\Result::templateResult(array(
+                'models' => $models,
+                'total' => $count,
+                'pageIndex' => $pi)
+        );
     }
 
-    private function sortMenus($parentId = 0, $level = 0)
+    public function sortAction()
     {
-        for($i = 0; $i < count($this->_menus); $i++){
-            $menu = $this->_menus[$i];
-            if($menu->getParentId() == $parentId){
-                $menu->setData('level', $level);
-                $this->_sortedMenus[] = $menu;
-                $this->sortMenus($menu->getId(), ++$level);
-                --$level;
-            }
-        }
+        $menus = \Tops::loadModel('admin/menu')->find()
+            ->asc('parent_id', 'position')
+            ->load();
+        return Web\Result::templateResult(array('menus' => $menus));
+    }
+
+    public function sortPostAction()
+    {
+        $data = $this->request->getPost('data');
+        $sorts = json_decode($data, true);
+        \Tops::loadModel('admin/menu')->updatePosition($sorts);
+        return $this->sortAction();
     }
 
     public function addAction()

@@ -46,3 +46,6 @@ table.table th.left, table.table tbody tr td.left{text-align: left;}
 table.table th.right, table.table tbody tr td.right{text-align: right;}
 table.table tbody tr td.false{color:#ff0000;}
 table.table tbody tr td.true{color:#2b542c;}
+
+.panel #nestable{float:none;max-width:none;width: 100%;}
+.panel #nestable .dd-handle{-webkit-border-radius: 0;border-radius: 0;cursor: move;}

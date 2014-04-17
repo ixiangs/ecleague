@@ -12,21 +12,21 @@ $clang = $this->locale->getCurrentLanguage();
 $dt = $this->html->grid($this->models);
 $dt->addIndexColumn('#', 'index', 'index');
 $dt->addLabelColumn($this->locale->_('code'), '{code}', 'small', 'small text-center');
-$dt->addLabelColumn($this->locale->_('name'), '{name}', 'middle', 'middle text-center')
+$dt->addLabelColumn($this->locale->_('name'), '{name}', '', 'left')
     ->setCellRenderer(function($col, $row) use($clang){
         $col->getCell()->getChild(0)->removeBindableAttribute('text')->setAttribute('text', $row->names[$clang['id']]);
         return $col->getCell()->renderBegin().$col->getCell()->renderInner().$col->getCell()->renderEnd();
     });
-$dt->addLabelColumn($this->locale->_('attrs_display_label'), '{display_label}', '', '')
-    ->setCellRenderer(function($col, $row) use($clang){
-        $col->getCell()->getChild(0)->removeBindableAttribute('text')->setAttribute('text', $row->display_labels[$clang['id']]);
-        return $col->getCell()->renderBegin().$col->getCell()->renderInner().$col->getCell()->renderEnd();
-});
-$dt->addLabelColumn($this->locale->_('attrs_form_label'), '{form_label}', '', '')
-    ->setCellRenderer(function($col, $row) use($clang){
-        $col->getCell()->getChild(0)->removeBindableAttribute('text')->setAttribute('text', $row->form_labels[$clang['id']]);
-        return $col->getCell()->renderBegin().$col->getCell()->renderInner().$col->getCell()->renderEnd();
-});
+//$dt->addLabelColumn($this->locale->_('attrs_display_label'), '{display_label}', '', '')
+//    ->setCellRenderer(function($col, $row) use($clang){
+//        $col->getCell()->getChild(0)->removeBindableAttribute('text')->setAttribute('text', $row->display_labels[$clang['id']]);
+//        return $col->getCell()->renderBegin().$col->getCell()->renderInner().$col->getCell()->renderEnd();
+//});
+//$dt->addLabelColumn($this->locale->_('attrs_form_label'), '{form_label}', '', '')
+//    ->setCellRenderer(function($col, $row) use($clang){
+//        $col->getCell()->getChild(0)->removeBindableAttribute('text')->setAttribute('text', $row->form_labels[$clang['id']]);
+//        return $col->getCell()->renderBegin().$col->getCell()->renderInner().$col->getCell()->renderEnd();
+//});
 $dt->addOptionColumn($this->locale->_('attrs_data_type'), '{data_type}', array(
     \Core\Attrs\Model\AttributeModel::DATA_TYPE_ARRAY=>$this->locale->_('attrs_data_type_array'),
     \Core\Attrs\Model\AttributeModel::DATA_TYPE_BOOLEAN=>$this->locale->_('attrs_data_type_boolean'),

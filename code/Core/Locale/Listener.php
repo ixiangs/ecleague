@@ -1,7 +1,7 @@
 <?php
 namespace Core\Locale;
 
-use Toy\Web\Template;
+use Toy\View\Template;
 
 class Listener
 {

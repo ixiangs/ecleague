@@ -1,6 +1,8 @@
 <?php
 namespace Toy\Web;
 
+use Toy\View;
+
 class Renderer
 {
 
@@ -12,11 +14,31 @@ class Renderer
     {
         $context = Application::singleton()->getContext();
         $result = $context->result;
+        $request = $context->request;
         $response = $context->response;
+        $router = $context->router;
         switch ($result->getType()) {
             case 'template' :
-                $tmpl = new Template($result->data);
-                $response->write($tmpl->render($result->path));
+                $theme = 'default';
+                $lang = $request->getBrowserLanguage();
+                $action = $router->action;
+                $component = $router->component;
+                $controller = $router->controller;
+                $domain = strtolower($router->domain->getName());
+                View\Configuration::$templateDirectories = array(
+                    $domain . '/' . $lang . '/' . $theme . '/',
+                    $domain . '/' . $lang . '/',
+                    $domain . '/' . $theme . '/',
+                    $domain . '/'
+                );
+                $tmpl = new View\Template(array_merge(array(
+                    'router'=>$context->router,
+                    'request'=>$context->request,
+                    'session'=>$context->session,
+                    'applicationContext'=>$context
+                ), $result->data));
+                $path = $result->path? $result->path: $component . '/' . $controller . '/' . $action;
+                $response->write($tmpl->render($path));
                 break;
             case 'content' :
                 $response->write($result->content);
@@ -27,15 +49,7 @@ class Renderer
                 }
                 $response->redirect($result->url);
                 break;
-//            case 'referer' :
-//                $to = array_key_exists('HTTP_REFERER', $_SERVER) ? $_SERVER['HTTP_REFERER'] : $result->getUrl();
-//                $response->redirect($to);
-//                break;
-//            case 'callback' :
-//                call_user_func_array($result->getCallback(), $result->getArguments());
-//                break;
             case 'json' :
-//                $data = $result->getData();
                 $response->setHeader('content-type:application/json; charst=utf-8')
                     ->write(json_encode($result->data));
                 break;

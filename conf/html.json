@@ -1,9 +1,0 @@
-{
-    "name":"Html",
-    "version":"0.0.0.1",
-    "author":"IXiangs Studio",
-    "website":"ixiangs.com",
-    "listeners":{
-        "applicationOnStart":"\\Core\\Html\\Listener::applicationOnStart"
-    }
-}

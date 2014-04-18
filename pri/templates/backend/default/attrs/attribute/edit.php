@@ -36,7 +36,7 @@ $f = $this->html->groupedForm();
 $f->beginGroup('tab_base', $this->locale->_('base_info'));
 $f->addLabelField($this->locale->_('attrs_data_type'), $dataTypes[$this->model->getDataType()]);
 $f->addLabelField($this->locale->_('attrs_input_type'), $inputTypes[$this->model->getInputType()]);
-$f->addInputField('text', $this->locale->_('code'), 'code', 'data[code]', $this->model->getCode())
+$f->addInputField('text', $this->locale->_('name'), 'name', 'data[name]', $this->model->getCode())
     ->addValidateRule('required', true);
 $f->addSelectField(array('1'=>$this->locale->_('yes'), '0'=>$this->locale->_('no')),
     $this->locale->_('attrs_indexable'), 'indexable', 'data[indexable]', $this->model->getEnabled());
@@ -47,8 +47,8 @@ $f->endGroup();
 $f->beginGroup('tab_input', $this->locale->_('attrs_input_setting'));
 $f->addSelectField(array('1'=>$this->locale->_('yes'), '0'=>$this->locale->_('no')),
     $this->locale->_('attrs_required'), 'required', 'data[required]', $this->model->getEnabled());
-$f->addInputField('text', $this->locale->_('attrs_input_id'), 'input_id', 'data[input_id]', $this->model->getInputId());
-$f->addInputField('text', $this->locale->_('attrs_input_name'), 'input_name', 'data[input_name]', $this->model->getInputName());
+//$f->addInputField('text', $this->locale->_('attrs_input_id'), 'input_id', 'data[input_id]', $this->model->getInputId());
+//$f->addInputField('text', $this->locale->_('attrs_input_name'), 'input_name', 'data[input_name]', $this->model->getInputName());
 $vs = $this->model->getInputSetting();
 switch($this->model->getInputType()):
     case \Core\Attrs\Model\AttributeModel::INPUT_TYPE_TEXTBOX:
@@ -80,13 +80,10 @@ $flabels = $this->model->getFormLabels(array());
 foreach($this->locale->getLanguages() as $lang):
 
     $f->beginGroup('tab_lang_'.$lang['code'], $lang['name']);
-    $f->addInputField('text', $this->locale->_('name'), 'name_'.$lang['id'], 'data[names]['.$lang['id'].']',
-        array_key_exists($lang['id'], $names)? $names[$lang['id']]: '')
-        ->addValidateRule('required', true);
-    $f->addInputField('text', $this->locale->_('attrs_display_label'), 'display_label_'.$lang['id'], 'data[display_labels]['.$lang['id'].']',
+    $f->addInputField('text', $this->locale->_('text'), 'display_label_'.$lang['id'], 'data[display_text]['.$lang['id'].']',
         array_key_exists($lang['id'], $dlabels)? $dlabels[$lang['id']]: '')
         ->addValidateRule('required', true);
-    $f->addInputField('text', $this->locale->_('attrs_form_label'), 'form_label_'.$lang['id'], 'data[form_labels]['.$lang['id'].']',
+    $f->addInputField('text', $this->locale->_('memo'), 'memo_'.$lang['id'], 'data[memo]['.$lang['id'].']',
         array_key_exists($lang['id'], $flabels)? $flabels[$lang['id']]: '')
         ->addValidateRule('required', true);
     $f->endGroup();

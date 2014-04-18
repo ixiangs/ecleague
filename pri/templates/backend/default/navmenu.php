@@ -11,7 +11,11 @@
                     for ($_mi = 0; $_mi < count($menus); $_mi++):
                         if ($menus[$_mi]->parent_id == 0):
                             echo '<li class="dropdown">';
-                            echo '<a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown">';
+                            if($menus[$_mi]->url):
+                                echo '<a href="'.$this->router->buildUrl($menus[$_mi]->url).'">';
+                            else:
+                                echo '<a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown">';
+                            endif;
                             echo '<span>'.$menus[$_mi]->names[$_curLangId].'</span>';
                             echo '</a><ul class="dropdown-menu">';
                             echo _renderChildrenMenu($menus, $menus[$_mi]->id, $_curLangId, $this->router);

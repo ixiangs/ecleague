@@ -13,7 +13,7 @@ class AttributeController extends Web\Controller
         $pi = $this->request->getParameter("pageindex", 1);
         $count = \Tops::loadModel('attrs/attribute')->find()->selectCount()->execute()->getFirstValue();
         $models = \Tops::loadModel('attrs/attribute')->find()
-            ->asc('code')
+            ->asc('name')
             ->limit(PAGINATION_SIZE, ($pi - 1) * PAGINATION_SIZE)
             ->load();
         return Web\Result::templateResult(array(

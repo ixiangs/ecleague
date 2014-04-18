@@ -11,8 +11,7 @@ $this->assign('navigationBar', array(
 $clang = $this->locale->getCurrentLanguage();
 $dt = $this->html->grid($this->models);
 $dt->addIndexColumn('#', 'index', 'index');
-$dt->addLabelColumn($this->locale->_('code'), '{code}', 'small', 'small text-center');
-$dt->addLabelColumn($this->locale->_('name'), '{name}', '', 'left')
+$dt->addLabelColumn($this->locale->_('name'), '{name}', 'small', 'left')
     ->setCellRenderer(function($col, $row) use($clang){
         $col->getCell()->getChild(0)->removeBindableAttribute('text')->setAttribute('text', $row->names[$clang['id']]);
         return $col->getCell()->renderBegin().$col->getCell()->renderInner().$col->getCell()->renderEnd();
@@ -53,6 +52,11 @@ $dt->addBooleanColumn($this->locale->_('attrs_indexable'), 'indexable', $this->l
     'small', 'small text-center');
 $dt->addBooleanColumn($this->locale->_('status'), 'enabled', $this->locale->_('enabled'), $this->locale->_('disabled'),
     'small', 'small text-center');
+$dt->addLabelColumn($this->locale->_('memo'), '{memo}', '', 'left')
+    ->setCellRenderer(function($col, $row) use($clang){
+        $col->getCell()->getChild(0)->removeBindableAttribute('text')->setAttribute('text', $row->names[$clang['id']]);
+        return $col->getCell()->renderBegin().$col->getCell()->renderInner().$col->getCell()->renderEnd();
+    });
 $dt->addLinkColumn('', $this->locale->_('edit'), urldecode($this->router->buildUrl('edit', array('id' => '{id}'))), 'small', 'small edit');
 
 $dt->addLinkColumn('', $this->locale->_('attrs_option'), urldecode($this->router->buildUrl('options', array('attributeid' => '{id}'))), 'small', 'small edit')

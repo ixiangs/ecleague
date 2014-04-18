@@ -60,7 +60,7 @@ $this->nextBlock('headjs');
 echo '<script src="/pub/assets/js/jquery.nestable.js"></script>';
 $this->nextBlock('footerjs');
 ?>
-    <script>
+    <script language="javascript">
         $(document).ready(function () {
             $('#nestable').nestable({group: 1});
         });

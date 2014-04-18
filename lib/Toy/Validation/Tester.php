@@ -3,6 +3,8 @@ namespace Toy\Validation;
 
 class Tester {
 
+    private static $_emailRegex = '/^([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})$/';
+
 	static public function testNotEmpty($value) {
 		if (is_null($value)) {
 			return false;
@@ -33,7 +35,7 @@ class Tester {
 	}
 
 	static public function testEmail($value) {
-		return filter_var($value, FILTER_VALIDATE_EMAIL);
+        return preg_match(self::$_emailRegex, $value) > 0;
 	}
 
 	static public function testDateTime($value) {

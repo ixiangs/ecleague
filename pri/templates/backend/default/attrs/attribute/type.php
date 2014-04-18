@@ -26,7 +26,7 @@ $f->addSelectField(array(
     \Core\Attrs\Model\AttributeModel::DATA_TYPE_ARRAY=>$this->locale->_('attrs_data_type_array')),
     $this->locale->_('attrs_data_type'), 'data_type', 'data_type')
     ->addValidateRule('required', true)
-    ->getSelect()->setCaption('');
+    ->getInput()->setCaption('');
 $f->addSelectField(array(
     \Core\Attrs\Model\AttributeModel::INPUT_TYPE_TEXTBOX=>$this->locale->_('attrs_input_type_textbox'),
     \Core\Attrs\Model\AttributeModel::INPUT_TYPE_TEXTAREA=>$this->locale->_('attrs_input_type_textarea'),
@@ -37,6 +37,6 @@ $f->addSelectField(array(
     \Core\Attrs\Model\AttributeModel::INPUT_TYPE_RADIO_LIST=>$this->locale->_('attrs_input_type_raidolist')),
     $this->locale->_('attrs_input_type'), 'input_type', 'input_type')
     ->addValidateRule('required', true)
-    ->getSelect()->setCaption('');
+    ->getInput()->setCaption('');
 $this->assign('form', $f);
 echo $this->includeTemplate('layout\form');

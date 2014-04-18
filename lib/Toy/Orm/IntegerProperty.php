@@ -29,7 +29,7 @@ class IntegerProperty extends BaseProperty
     public function toDbValue($value)
     {
         if (is_null($value)) {
-            return null;
+            return $this->getDefaultValue();
         }
 
         if (!is_int($value)) {

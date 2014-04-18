@@ -30,7 +30,7 @@ Orm\Model::register('Core\Attrs\Model\AttributeModel', array(
     'table' => AttributeModel::TABLE_NAME,
     'properties' => array(
         Orm\IntegerProperty::create('id')->setPrimaryKey(true)->setAutoIncrement(true),
-        Orm\StringProperty::create('code')->setUnique(true)->setNullable(false)->setUpdateable(false),
+        Orm\StringProperty::create('name')->setNullable(false)->setUpdateable(false),
         Orm\StringProperty::create('data_type')->setNullable(false),
         Orm\StringProperty::create('input_type')->setNullable(false),
         Orm\StringProperty::create('input_id'),
@@ -38,9 +38,8 @@ Orm\Model::register('Core\Attrs\Model\AttributeModel', array(
         Orm\BooleanProperty::create('indexable')->setDefaultValue(false)->setNullable(false),
         Orm\BooleanProperty::create('required')->setDefaultValue(false)->setNullable(false),
         Orm\BooleanProperty::create('enabled')->setDefaultValue(false)->setNullable(false),
-        Orm\SerializeProperty::create('names')->setNullable(false),
-        Orm\SerializeProperty::create('display_labels')->setNullable(false),
-        Orm\SerializeProperty::create('form_labels')->setNullable(false),
+        Orm\SerializeProperty::create('display_text')->setNullable(false),
+        Orm\SerializeProperty::create('memo')->setNullable(false),
         Orm\SerializeProperty::create('input_setting')
     ),
     'relations'=>array(

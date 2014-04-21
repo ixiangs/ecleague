@@ -4,7 +4,7 @@
     "author":"IXiangs Studio",
     "website":"ixiangs.com",
     "listeners":{
-        "applicationOnStart":"\\Core\\Locale\\Listener::applicationOnStart"
+        "webOnStart":"\\Core\\Locale\\Listener::webOnStart"
     },
     "settings":{
         "directory":"<@ROOT_PATH>locale",

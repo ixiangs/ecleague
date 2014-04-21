@@ -6,7 +6,7 @@ use Toy\Web\Application;
 
 class Listener{
 
-	static public function applicationOnStart($app, $argument){
+	static public function webOnStart($app, $argument){
 //		$oa =Application::->session->get('identity');
 //		if(!empty($oa)){
 //			$oa = unserialize($oa);
@@ -16,7 +16,7 @@ class Listener{
 //		}
 	}
 
-	static public function applicationPostRoute($app, $argument){
+	static public function webPostRoute($app, $argument){
 //		$oa = $app->getContext()->identity;
 //        $router = $app->getContext()->router;
 //		$resp = $app->getContext()->response;

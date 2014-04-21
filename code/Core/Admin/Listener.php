@@ -5,7 +5,7 @@ use Toy\Web\Application;
 
 class Listener
 {
-    static public function applicationOnStart($app, $argument)
+    static public function webOnStart($app, $argument)
     {
         $oa = Application::$context->session->get('administrator');
         if (!empty($oa)) {
@@ -17,7 +17,7 @@ class Listener
         }
     }
 
-    static public function applicationPostRoute($app, $argument)
+    static public function webPostRoute($app, $argument)
     {
         $oa = Application::$context->administrator;
         $router = Application::$context->router;

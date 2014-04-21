@@ -4,7 +4,7 @@
     "author":"IXiangs Studio",
     "website":"ixiangs.com",
     "listeners":{
-        "applicationOnStart":"\\Core\\Admin\\Listener::applicationOnStart",
-        "applicationPostRoute":"\\Core\\Admin\\Listener::applicationPostRoute"
+        "webOnStart":"\\Core\\Admin\\Listener::webOnStart",
+        "webPostRoute":"\\Core\\Admin\\Listener::webPostRoute"
     }
 }

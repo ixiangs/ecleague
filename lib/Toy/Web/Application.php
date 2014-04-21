@@ -8,28 +8,28 @@ use Toy\Http\Request, Toy\Http\Response, Toy\Http\Session;
 class Application
 {
 
-    const APPLICATION_ON_INITIALIZ = 'applicationOnInitialize';
-    const APPLICATION_ON_START = 'applicationOnStart';
-    const APPLICATION_PRE_ROUTE = 'applicationPreRoute';
-    const APPLICATION_POST_ROUTE = 'applicationPostRoute';
-    const APPLICATION_PRE_HANDLER = 'applicationPreHandler';
-    const APPLICATION_POST_HANDLER = 'applicationPostHandler';
-    const APPLICATION_PRE_RENDER = 'applicationPreRender';
-    const APPLICATION_POST_RENDER = 'applicationPostRender';
-    const APPLICATION_ON_END = 'applicationOnEnd';
+    const WEB_ON_INITIALIZ = 'webOnInitialize';
+    const WEB_ON_START = 'webOnStart';
+    const WEB_PRE_ROUTE = 'webPreRoute';
+    const WEB_POST_ROUTE = 'webPostRoute';
+    const WEB_PRE_HANDLER = 'webPreHandler';
+    const WEB_POST_HANDLER = 'webPostHandler';
+    const WEB_PRE_RENDER = 'webPreRender';
+    const WEB_POST_RENDER = 'webPostRender';
+    const WEB_ON_END = 'webOnEnd';
 
     protected function __construct()
     {
         Event\Configuration::addEvent(
-            Application::APPLICATION_ON_INITIALIZ,
-            Application::APPLICATION_ON_START,
-            Application::APPLICATION_PRE_ROUTE,
-            Application::APPLICATION_POST_ROUTE,
-            Application::APPLICATION_PRE_HANDLER,
-            Application::APPLICATION_POST_HANDLER,
-            Application::APPLICATION_PRE_RENDER,
-            Application::APPLICATION_POST_RENDER,
-            Application::APPLICATION_ON_END);
+            Application::WEB_ON_INITIALIZ,
+            Application::WEB_ON_START,
+            Application::WEB_PRE_ROUTE,
+            Application::WEB_POST_ROUTE,
+            Application::WEB_PRE_HANDLER,
+            Application::WEB_POST_HANDLER,
+            Application::WEB_PRE_RENDER,
+            Application::WEB_POST_RENDER,
+            Application::WEB_ON_END);
     }
 
     protected function initialize()
@@ -37,7 +37,7 @@ class Application
         $cls = Configuration::$initializerClass;
         $initer = new $cls();
         $initer->initialize();
-        Event\Dispatcher::dispatch(Application::APPLICATION_ON_INITIALIZ, $this);
+        Event\Dispatcher::dispatch(Application::WEB_ON_INITIALIZ, $this);
         return $this;
     }
 
@@ -91,38 +91,38 @@ class Application
     protected function start()
     {
         self::$context->session->start();
-        Event\Dispatcher::dispatch(Application::APPLICATION_ON_START, $this);
+        Event\Dispatcher::dispatch(Application::WEB_ON_START, $this);
         return $this;
     }
 
     protected function route()
     {
-        Event\Dispatcher::dispatch(Application::APPLICATION_PRE_ROUTE, $this);
+        Event\Dispatcher::dispatch(Application::WEB_PRE_ROUTE, $this);
         self::$context->router->route();
-        Event\Dispatcher::dispatch(Application::APPLICATION_POST_ROUTE, $this);
+        Event\Dispatcher::dispatch(Application::WEB_POST_ROUTE, $this);
         return $this;
     }
 
     protected function handle()
     {
-        Event\Dispatcher::dispatch(Application::APPLICATION_PRE_HANDLER, $this);
+        Event\Dispatcher::dispatch(Application::WEB_PRE_HANDLER, $this);
         self::$context->result = self::$context->handler->handle();
-        Event\Dispatcher::dispatch(Application::APPLICATION_POST_HANDLER, $this);
+        Event\Dispatcher::dispatch(Application::WEB_POST_HANDLER, $this);
         return $this;
     }
 
     protected function render()
     {
-        Event\Dispatcher::dispatch(Application::APPLICATION_PRE_RENDER, $this);
+        Event\Dispatcher::dispatch(Application::WEB_PRE_RENDER, $this);
         self::$context->renderer->render();
-        Event\Dispatcher::dispatch(Application::APPLICATION_POST_RENDER, $this);
+        Event\Dispatcher::dispatch(Application::WEB_POST_RENDER, $this);
         return $this;
     }
 
     protected function finish()
     {
         self::$context->response->flush();
-        Event\Dispatcher::dispatch(Application::APPLICATION_ON_END, $this);
+        Event\Dispatcher::dispatch(Application::WEB_ON_END, $this);
         exit();
     }
 

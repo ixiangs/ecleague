@@ -7,7 +7,7 @@ use Toy\Web\Application;
 class Listener
 {
 
-    static public function applicationOnStart($app, $argument)
+    static public function webOnStart($app, $argument)
     {
         $ctx = Application::$context;
         $lang = $ctx->request->getBrowserLanguage();

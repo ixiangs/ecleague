@@ -4,7 +4,7 @@ use Toy\Util\StringUtil;
 
 class Listener{
 	
-	static public function applicationOnStart($app, $argument){
+	static public function webOnStart($app, $argument){
 		Recorder::singleton()->load()->add($_SERVER['REQUEST_URI']);
 		$app->getContext()->setItem('history', Recorder::singleton());
 	}

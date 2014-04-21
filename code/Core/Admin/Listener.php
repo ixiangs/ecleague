@@ -2,7 +2,6 @@
 namespace Core\Admin;
 
 use Toy\Web\Application;
-use Toy\Web\Template;
 
 class Listener
 {

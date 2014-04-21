@@ -8,7 +8,7 @@ class Result{
     private $_parameters = null;
 
     public function __construct($type, $parameters = null){
-        $this->_context = Application::singleton()->getContext();
+        $this->_context = Application::$context;
         $this->_type = $type;
         $this->_parameters = $parameters;
     }

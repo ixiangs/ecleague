@@ -1,7 +1,8 @@
 <?php
-namespace Toy\Web;
+namespace Ecleague;
 
 use Toy\View;
+use Toy\Web\Application;
 
 class Renderer
 {
@@ -12,7 +13,7 @@ class Renderer
 
     public function render()
     {
-        $context = Application::singleton()->getContext();
+        $context = Application::$context;
         $result = $context->result;
         $request = $context->request;
         $response = $context->response;

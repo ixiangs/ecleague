@@ -34,7 +34,7 @@ class Recorder{
 	
 	public function load(){
 		if(is_null($this->_session)){
-			$this->_session = \Toy\Web\Application::singleton()->getContext()->getSession();
+			$this->_session = \Toy\Web\Application::$context->getSession();
 		}
 		if(is_null($this->_items)){
 			$h = $this->_session->pop('__history');

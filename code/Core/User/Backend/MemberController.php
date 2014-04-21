@@ -12,8 +12,8 @@ class MemberController extends Web\Controller
     public function listAction()
     {
         $pi = $this->request->getParameter("pageindex", 1);
-        $count = \Tops::loadModel('user/member')->find()->selectCount()->execute()->getFirstValue();
-        $models = \Tops::loadModel('user/member')->find()
+        $count = \Ecleague\Tops::loadModel('user/member')->find()->selectCount()->execute()->getFirstValue();
+        $models = \Ecleague\Tops::loadModel('user/member')->find()
             ->limit(PAGINATION_SIZE, ($pi - 1) * PAGINATION_SIZE)
             ->load();
         return Web\Result::templateResult(array(
@@ -25,14 +25,14 @@ class MemberController extends Web\Controller
 
     public function addAction()
     {
-        return $this->getEditTemplateResult(\Tops::loadModel('user/member'), \Tops::loadModel('auth/account'));
+        return $this->getEditTemplateResult(\Ecleague\Tops::loadModel('user/member'), \Ecleague\Tops::loadModel('auth/account'));
     }
 
     public function addPostAction()
     {
         $locale = $this->context->locale;
-        $member = \Tops::loadModel('user/member')->fillArray($this->request->getPost('member'));
-        $account = \Tops::loadModel('auth/account')
+        $member = \Ecleague\Tops::loadModel('user/member')->fillArray($this->request->getPost('member'));
+        $account = \Ecleague\Tops::loadModel('auth/account')
                     ->fillArray($this->request->getPost('account'))
                     ->setStatus(AccountModel::STATUS_ACTIVATED)
                     ->setLevel(AccountModel::LEVEL_NORMAL);
@@ -78,7 +78,7 @@ class MemberController extends Web\Controller
 
     public function editAction($id)
     {
-        $m = \Tops::loadModel('user/member');
+        $m = \Ecleague\Tops::loadModel('user/member');
         $m->load($id);
         return $this->getEditTemplateResult($m, null);
     }
@@ -86,7 +86,7 @@ class MemberController extends Web\Controller
     public function editPostAction()
     {
         $locale = $this->context->locale;
-        $m = \Tops::loadModel('user/member')->fillArray($this->request->getPost('data'));
+        $m = \Ecleague\Tops::loadModel('user/member')->fillArray($this->request->getPost('data'));
 
         $vr = $m->validateProperties();
         if ($vr !== true) {
@@ -105,7 +105,7 @@ class MemberController extends Web\Controller
     public function deleteAction($id)
     {
         $lang = $this->context->locale;
-        $m = \Tops::loadModel('user/member')->load($id);
+        $m = \Ecleague\Tops::loadModel('user/member')->load($id);
 
         if (!$m) {
             $this->session->set('errors', $lang->_('err_system'));

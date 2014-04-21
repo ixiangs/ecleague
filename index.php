@@ -19,7 +19,6 @@ if (preg_match('/^\/pub\//', $_SERVER["REQUEST_URI"])) {
     include_once 'Toy\Platform\PathUtil.php';
     include_once 'Toy\Autoload.php';
     include_once 'Toy\Loader.php';
-    include_once CODE_PATH . 'Tops.php';
 
     \Toy\Autoload::register();
 
@@ -37,11 +36,15 @@ if (preg_match('/^\/pub\//', $_SERVER["REQUEST_URI"])) {
         'dsn' => 'sqlite:' . ROOT_PATH . 'db.db'
     ));
 
+    \Toy\Web\Configuration::$initializerClass = '\Ecleague\Initializer';
+    \Toy\Web\Configuration::$handlerClass = '\Ecleague\Handler';
+    \Toy\Web\Configuration::$routerClass = '\Ecleague\Router';
+    \Toy\Web\Configuration::$rendererClass = '\Ecleague\Renderer';
     \Toy\Web\Configuration::$trace = true;
-    \Toy\Web\Configuration::$configurationPath = CONF_PATH;
     \Toy\Web\Configuration::$logger = \Toy\Log\Logger::singleton();
-    \Toy\Web\Configuration::addDomain('frontend', 'Frontend', '/', TRUE);
-    \Toy\Web\Configuration::addDomain('backend', 'Backend', '/admin/');
+
+    \Ecleague\Configuration::addDomain('frontend', 'Frontend', '/', TRUE);
+    \Ecleague\Configuration::addDomain('backend', 'Backend', '/admin/');
 
     \Toy\View\Configuration::$trace = true;
     \Toy\View\Configuration::$templateRoot = PRI_PATH . 'templates';

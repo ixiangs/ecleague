@@ -17,8 +17,8 @@ class Pagination extends Element
     }
 
     public function render(){
-        $router = Application::singleton()->getContext()->router;
-        $request = Application::singleton()->getContext()->request;
+        $router = Application::$context->router;
+        $request = Application::$context->request;
         $pageIndex = $request->getParameter('pageindex', 1);
         $pc = ceil($this->_rowCount / $this->_pageSize);
         $start = 0;

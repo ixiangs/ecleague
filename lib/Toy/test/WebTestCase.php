@@ -145,7 +145,7 @@ class WebTestCase extends TestCase {
 // 
 	// public function testTemplate(){
 		// $r = new Router();
-		// $c = Application::singleton()->getContext();
+		// $c = Application::$context;
 		// $c->setObjective($r->parseUrl('/admin/index/index/login'));
 		// $t = new Template();
 		// $this->assertEqual('1', $t->render('index/index/login'));

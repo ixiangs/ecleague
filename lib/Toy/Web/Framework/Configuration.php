@@ -1,16 +1,14 @@
 <?php
-namespace Toy\Web;
+namespace Toy\Web\Framework;
 
 class Configuration {
 
-    static public $initializerClass = null;
-    static public $handlerClass = '\Toy\Web\Framework\Handler';
-    static public $rendererClass = '\Toy\Web\Framework\Renderer';
-    static public $routerClass = '\Toy\Web\Framework\Router';
-    static public $sessionClass = '\Toy\Http\Session';
-    static public $requestClass = '\Toy\Http\Request';
-    static public $responseClass = '\Toy\Http\Response';
-
+    static public $controllerDirectory = null;
+    static public $indexUrl = '/';
+    static public $indexAction = 'index/index';
+//    static public $handlerClass = null;
+//    static public $rendererClass = null;
+//    static public $routerClass = null;
 //	static public $domains = array();
 //    static public $seoUrl = true;
 //    static public $seoParameter = true;
@@ -20,8 +18,8 @@ class Configuration {
 //	static public $templateTheme = 'default';
 //    static public $indexUrl = '/';
 //	static public $configurationPath = '';
-    static public $logger = null;
-	static public $trace = false;
+//    static public $logger = null;
+//	static public $trace = false;
 
 //	static public function addDomain($name, $namespace, $startUrl, $default = false) {
 //		$d = new Domain($name, $namespace, $startUrl, $default);

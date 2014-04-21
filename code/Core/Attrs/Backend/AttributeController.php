@@ -11,8 +11,8 @@ class AttributeController extends Web\Controller
     public function listAction()
     {
         $pi = $this->request->getParameter("pageindex", 1);
-        $count = \Tops::loadModel('attrs/attribute')->find()->selectCount()->execute()->getFirstValue();
-        $models = \Tops::loadModel('attrs/attribute')->find()
+        $count = \Ecleague\Tops::loadModel('attrs/attribute')->find()->selectCount()->execute()->getFirstValue();
+        $models = \Ecleague\Tops::loadModel('attrs/attribute')->find()
             ->asc('name')
             ->limit(PAGINATION_SIZE, ($pi - 1) * PAGINATION_SIZE)
             ->load();
@@ -30,7 +30,7 @@ class AttributeController extends Web\Controller
 
     public function addAction()
     {
-        $model = \Tops::loadModel('attrs/attribute')->fillArray(array(
+        $model = \Ecleague\Tops::loadModel('attrs/attribute')->fillArray(array(
             'data_type' => $this->request->getQuery('data_type'),
             'input_type' => $this->request->getQuery('input_type')
         ));
@@ -40,7 +40,7 @@ class AttributeController extends Web\Controller
     public function addPostAction()
     {
         $locale = $this->context->locale;
-        $m = \Tops::loadModel('attrs/attribute')->fillArray($this->request->getPost('data'));
+        $m = \Ecleague\Tops::loadModel('attrs/attribute')->fillArray($this->request->getPost('data'));
 
         $vr = $m->validateProperties();
         if ($vr !== true) {
@@ -64,7 +64,7 @@ class AttributeController extends Web\Controller
 
     public function editAction($id)
     {
-        $m = \Tops::loadModel('attrs/attribute');
+        $m = \Ecleague\Tops::loadModel('attrs/attribute');
         $m->load($id);
         return $this->getEditTemplateResult($m);
     }
@@ -72,7 +72,7 @@ class AttributeController extends Web\Controller
     public function editPostAction()
     {
         $locale = $this->context->locale;
-        $m = \Tops::loadModel('attrs/attribute')->fillArray($this->request->getPost('data'));
+        $m = \Ecleague\Tops::loadModel('attrs/attribute')->fillArray($this->request->getPost('data'));
 
         $vr = $m->validateProperties();
         if ($vr !== true) {
@@ -91,7 +91,7 @@ class AttributeController extends Web\Controller
     public function deleteAction($id)
     {
         $lang = $this->context->locale;
-        $m = \Tops::loadModel('attrs/attribute')->load($id);
+        $m = \Ecleague\Tops::loadModel('attrs/attribute')->load($id);
 
         if (!$m) {
             $this->session->set('errors', $lang->_('err_system'));
@@ -107,7 +107,7 @@ class AttributeController extends Web\Controller
 
     public function optionsAction($attributeid)
     {
-        $attr = \Tops::loadModel('attrs/attribute')->load($attributeid);
+        $attr = \Ecleague\Tops::loadModel('attrs/attribute')->load($attributeid);
         $options = $attr->getOptions()->load();
         return Web\Result::templateResult(array(
             'attribute' => $attr,
@@ -118,9 +118,9 @@ class AttributeController extends Web\Controller
     public function optionsPostAction($attributeid)
     {
         $lang = $this->context->locale;
-        $attr = \Tops::loadModel('attrs/attribute')->load($this->request->getPost('attribute_id'));
+        $attr = \Ecleague\Tops::loadModel('attrs/attribute')->load($this->request->getPost('attribute_id'));
         $options = ArrayUtil::toArray($this->request->getPost('options'), function($item) use($attr, $ao){
-            return \Tops::loadModel('attrs/attributeOption')
+            return \Ecleague\Tops::loadModel('attrs/attributeOption')
                         ->fillArray($item)
                         ->setAttributeId($attr->getId());
         });
@@ -143,7 +143,7 @@ class AttributeController extends Web\Controller
         $res = Helper::withTx(function($db) use($attr, $options, $lang){
             $dids = $this->request->getPost('delete_ids');
             if($dids){
-                \Tops::loadModel('attrs/attributeOption')->deleteBatch($dids, $db);
+                \Ecleague\Tops::loadModel('attrs/attributeOption')->deleteBatch($dids, $db);
             }
             foreach($options as $option){
                 $b = $option->getId()? $option->update($db): $option->insert($db);

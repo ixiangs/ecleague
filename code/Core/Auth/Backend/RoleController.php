@@ -10,24 +10,24 @@ class RoleController extends Web\Controller
     public function listAction()
     {
         $pi = $this->request->getParameter("pageindex", 1);
-        $count = \Tops::loadModel('auth/role')->find()->selectCount()->execute()->getFirstValue();
-        $models = \Tops::loadModel('auth/role')->find()->limit(PAGINATION_SIZE, ($pi - 1) * PAGINATION_SIZE)->load();
+        $count = \Ecleague\Tops::loadModel('auth/role')->find()->selectCount()->execute()->getFirstValue();
+        $models = \Ecleague\Tops::loadModel('auth/role')->find()->limit(PAGINATION_SIZE, ($pi - 1) * PAGINATION_SIZE)->load();
         return Web\Result::templateResult(array(
                 'models' => $models,
-                'behaviors' => \Tops::loadModel('auth/behavior')->find()->execute()->combineColumns('id', 'code'),
+                'behaviors' => \Ecleague\Tops::loadModel('auth/behavior')->find()->execute()->combineColumns('id', 'code'),
                 'total' => $count)
         );
     }
 
     public function addAction()
     {
-        return $this->getEditTemplateReult(\Tops::loadModel('auth/role'));
+        return $this->getEditTemplateReult(\Ecleague\Tops::loadModel('auth/role'));
     }
 
     public function addPostAction()
     {
         $lang = $this->context->locale;
-        $m = \Tops::loadModel('auth/role', $this->request->getAllParameters());
+        $m = \Ecleague\Tops::loadModel('auth/role', $this->request->getAllParameters());
 
         $vr = $m->validateProperties();
         if ($vr !== true) {
@@ -51,14 +51,14 @@ class RoleController extends Web\Controller
 
     public function editAction($id)
     {
-        $m = \Tops::loadModel('auth/role')->load($id);
+        $m = \Ecleague\Tops::loadModel('auth/role')->load($id);
         return $this->getEditTemplateReult($m);
     }
 
     public function editPostAction()
     {
         $lang = $this->context->locale;
-        $m = \Tops::loadModel('auth/role')->merge($this->request->getParameter('id'), $this->request->getAllParameters());
+        $m = \Ecleague\Tops::loadModel('auth/role')->merge($this->request->getParameter('id'), $this->request->getAllParameters());
         $m->setBehaviorIds($this->request->getParameter('behavior_ids', array()));
         $vr = $m->validateProperties();
         if ($vr !== true) {
@@ -76,7 +76,7 @@ class RoleController extends Web\Controller
 
     public function deleteAction($id)
     {
-        $m = \Tops::loadModel('auth/role')->load($id);
+        $m = \Ecleague\Tops::loadModel('auth/role')->load($id);
 
         if (!$m) {
             $this->session->set('errors', $this->languages->get('err_system'));
@@ -95,7 +95,7 @@ class RoleController extends Web\Controller
         return Web\Result::templateResult(
             array(
                 'model' => $model,
-                'behaviors' => \Tops::loadModel('auth/behavior')->find()->asc('code')->execute()->combineColumns('id', 'name')),
+                'behaviors' => \Ecleague\Tops::loadModel('auth/behavior')->find()->asc('code')->execute()->combineColumns('id', 'name')),
             'auth/role/edit'
         );
     }

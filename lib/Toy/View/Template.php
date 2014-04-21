@@ -132,33 +132,7 @@ class Template
         $root = Configuration::$templateRoot;
         $dirs = Configuration::$templateDirectories;
         $extensions = Configuration::$templateExtensions;
-//        $theme = Configuration::$templateTheme;
-//        $router = $this->applicationContext->router;
-//        $lang = $this->request->getBrowserLanguage();
-//        $action = $router->action;
-//        $component = $router->component;
-//        $controller = $router->controller;
-//        $domain = strtolower($router->domain->getName());
-//        if (empty($path)) {
-//            $subPaths = array(
-//                $domain . '/' . $lang . '/' . $theme . '/' . $component . '/' . $controller . '/' . $action,
-//                $domain . '/' . $lang . '/' . $component . '/' . $controller . '/' . $action,
-//                $domain . '/' . $theme . '/' . $component . '/' . $controller . '/' . $action,
-//                $domain . '/' . $component . '/' . $controller . '/' . $action,
-//                $component . '/' . $controller . '/' . $action
-//            );
-//        } else {
-//            $subPaths = array(
-//                $domain . '/' . $lang . '/' . $theme . '/' . $path,
-//                $domain . '/' . $lang . '/' . $path,
-//                $domain . '/' . $theme . '/' . $path,
-//                $domain . '/' . $path,
-//                $path
-//            );
-//        }
-
         foreach ($dirs as $dir) {
-//            foreach ($subPaths as $s) {
             foreach ($extensions as $ex) {
                 $file = PathUtil::combines($root, $dir, $path, $ex);
                 if (file_exists($file)) {
@@ -170,7 +144,6 @@ class Template
                     return ob_get_clean();
                 }
             }
-//            }
         }
 
         throw new \Exception('Not found template:'.$path);

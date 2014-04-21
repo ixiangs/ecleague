@@ -2,13 +2,14 @@
 namespace Core\Locale;
 
 use Toy\View\Template;
+use Toy\Web\Application;
 
 class Listener
 {
 
     static public function applicationOnStart($app, $argument)
     {
-        $ctx = $app->getContext();
+        $ctx = Application::$context;
         $lang = $ctx->request->getBrowserLanguage();
         $l = Localize::singleton();
         $l->initialize($lang);

@@ -11,8 +11,8 @@ class AttributeGroupController extends Web\Controller
     public function listAction()
     {
         $pi = $this->request->getParameter("pageindex", 1);
-        $count = \Tops::loadModel('attrs/attributeGroup')->find()->selectCount()->execute()->getFirstValue();
-        $models = \Tops::loadModel('attrs/attributeGroup')->find()
+        $count = \Ecleague\Tops::loadModel('attrs/attributeGroup')->find()->selectCount()->execute()->getFirstValue();
+        $models = \Ecleague\Tops::loadModel('attrs/attributeGroup')->find()
             ->asc('code')
             ->limit(PAGINATION_SIZE, ($pi - 1) * PAGINATION_SIZE)
             ->load();
@@ -25,14 +25,14 @@ class AttributeGroupController extends Web\Controller
 
     public function addAction()
     {
-        $model = \Tops::loadModel('attrs/attributeGroup');
+        $model = \Ecleague\Tops::loadModel('attrs/attributeGroup');
         return $this->getEditTemplateResult($model);
     }
 
     public function addPostAction()
     {
         $locale = $this->context->locale;
-        $m = \Tops::loadModel('attrs/attributeGroup')->fillArray($this->request->getPost('data'));
+        $m = \Ecleague\Tops::loadModel('attrs/attributeGroup')->fillArray($this->request->getPost('data'));
 
         $vr = $m->validateProperties();
         if ($vr !== true) {
@@ -55,7 +55,7 @@ class AttributeGroupController extends Web\Controller
 
     public function editAction($id)
     {
-        $m = \Tops::loadModel('attrs/attributeGroup');
+        $m = \Ecleague\Tops::loadModel('attrs/attributeGroup');
         $m->load($id);
         return $this->getEditTemplateResult($m);
     }
@@ -63,7 +63,7 @@ class AttributeGroupController extends Web\Controller
     public function editPostAction()
     {
         $locale = $this->context->locale;
-        $m = \Tops::loadModel('attrs/attributeGroup')
+        $m = \Ecleague\Tops::loadModel('attrs/attributeGroup')
                 ->merge($this->request->getPost('id'), $this->request->getPost('data'));
         $vr = $m->validateProperties();
         if ($vr !== true) {
@@ -82,7 +82,7 @@ class AttributeGroupController extends Web\Controller
     public function deleteAction($id)
     {
         $lang = $this->context->locale;
-        $m = \Tops::loadModel('attrs/attribute')->load($id);
+        $m = \Ecleague\Tops::loadModel('attrs/attribute')->load($id);
 
         if (!$m) {
             $this->session->set('errors', $lang->_('err_system'));
@@ -99,7 +99,7 @@ class AttributeGroupController extends Web\Controller
     private function getEditTemplateResult($model)
     {
         $lid = $this->context->locale->getCurrentLanguageId();
-        $attrs = \Tops::loadModel('attrs/attribute')->find()->load()
+        $attrs = \Ecleague\Tops::loadModel('attrs/attribute')->find()->load()
                     ->toArray(function($item) use($lid){
                         return array($item->getId(), $item->display_labels[$lid]);
                     });

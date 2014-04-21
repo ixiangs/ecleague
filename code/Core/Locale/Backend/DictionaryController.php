@@ -11,8 +11,8 @@ class DictionaryController extends Web\Controller
     {
         $lid = $this->request->getParameter('languageid');
         $pi = $this->request->getParameter("pageindex", 1);
-        $lang = \Tops::loadModel('locale/language')->load($lid);
-        $find = \Tops::loadModel('locale/dictionary')->find()
+        $lang = \Ecleague\Tops::loadModel('locale/language')->load($lid);
+        $find = \Ecleague\Tops::loadModel('locale/dictionary')->find()
                 ->eq('language_id', $lid);
         if($this->request->getParameter('kwcode')){
             $find->like('code', '%'.$this->request->getParameter('kwcode').'%');
@@ -39,8 +39,8 @@ class DictionaryController extends Web\Controller
     {
         $lid = $this->request->getParameter('languageid');
         return Web\Result::templateResult(
-            array('models' => array(\Tops::loadModel('locale/dictionary')),
-                'language' => \Tops::loadModel('locale/language')->load($lid)),
+            array('models' => array(\Ecleague\Tops::loadModel('locale/dictionary')),
+                'language' => \Ecleague\Tops::loadModel('locale/language')->load($lid)),
             'locale/dictionary/add'
         );
     }
@@ -56,14 +56,14 @@ class DictionaryController extends Web\Controller
         $tmplFunc = function($models, $lid){
             return Web\Result::templateResult(
                 array('models' => $models,
-                    'language' => \Tops::loadModel('locale/language')->load($lid)),
+                    'language' => \Ecleague\Tops::loadModel('locale/language')->load($lid)),
                 'locale/dictionary/add'
             );
         };
 
 
         foreach($codes as $index=>$code){
-            $models[] = \Tops::loadModel('locale/dictionary')->fillArray(array(
+            $models[] = \Ecleague\Tops::loadModel('locale/dictionary')->fillArray(array(
                 'code' => $code,
                 'label' => $labels[$index],
                 'language_id' => $lid
@@ -101,13 +101,13 @@ class DictionaryController extends Web\Controller
 
     public function editAction($id)
     {
-        return $this->getEditTemplateResult(\Tops::loadModel('locale/dictionary')->load($id));
+        return $this->getEditTemplateResult(\Ecleague\Tops::loadModel('locale/dictionary')->load($id));
     }
 
     public function editPostAction($languageid)
     {
         $lang = $this->context->locale;
-        $m = \Tops::loadModel('locale/dictionary')->merge($this->request->getParameter('id'), $this->request->getAllPost());
+        $m = \Ecleague\Tops::loadModel('locale/dictionary')->merge($this->request->getParameter('id'), $this->request->getAllPost());
         $vr = $m->validateProperties();
         if ($vr !== true) {
             $this->session->set('errors', $lang->_('err_input_invalid'));
@@ -125,7 +125,7 @@ class DictionaryController extends Web\Controller
     public function deletePostAction($languageid)
     {
         $lang = $this->context->locale;
-        $m = \Tops::loadModel('locale/dictionary')->deleteBatch($this->request->getPost('ids'));
+        $m = \Ecleague\Tops::loadModel('locale/dictionary')->deleteBatch($this->request->getPost('ids'));
 
         if (!$m) {
             $this->session->set('errors', $lang->_('err_system'));
@@ -140,7 +140,7 @@ class DictionaryController extends Web\Controller
         $lid = $this->request->getParameter('languageid');
         return Web\Result::templateResult(
             array('model' => $model,
-                'language' => \Tops::loadModel('locale/language')->load($lid)),
+                'language' => \Ecleague\Tops::loadModel('locale/language')->load($lid)),
             'locale/dictionary/edit'
         );
     }

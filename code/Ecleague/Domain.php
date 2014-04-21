@@ -1,5 +1,5 @@
 <?php
-namespace Toy\Web;
+namespace Ecleague;
 
 class Domain
 {

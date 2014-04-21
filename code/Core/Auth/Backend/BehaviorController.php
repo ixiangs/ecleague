@@ -9,8 +9,8 @@ class BehaviorController extends Web\Controller
     public function listAction()
     {
         $pi = $this->request->getParameter("pageindex", 1);
-        $count = \Tops::loadModel('auth/behavior')->find()->selectCount()->execute()->getFirstValue();
-        $models = \Tops::loadModel('auth/behavior')->find()->limit(PAGINATION_SIZE, ($pi - 1) * PAGINATION_SIZE)->load();
+        $count = \Ecleague\Tops::loadModel('auth/behavior')->find()->selectCount()->execute()->getFirstValue();
+        $models = \Ecleague\Tops::loadModel('auth/behavior')->find()->limit(PAGINATION_SIZE, ($pi - 1) * PAGINATION_SIZE)->load();
         return Web\Result::templateResult(array(
                 'models' => $models,
                 'total' => $count,
@@ -20,13 +20,13 @@ class BehaviorController extends Web\Controller
 
     public function addAction()
     {
-        return $this->getEditTemplateResult(\Tops::loadModel('auth/behavior'));
+        return $this->getEditTemplateResult(\Ecleague\Tops::loadModel('auth/behavior'));
     }
 
     public function addPostAction()
     {
         $lang = $this->context->locale;
-        $m = \Tops::loadModel('auth/behavior', $this->request->getAllParameters());
+        $m = \Ecleague\Tops::loadModel('auth/behavior', $this->request->getAllParameters());
         $vr = $m->validateProperties();
         if ($vr !== true) {
             $this->session->set('errors', $lang->_('err_input_invalid'));
@@ -49,13 +49,13 @@ class BehaviorController extends Web\Controller
 
     public function editAction($id)
     {
-        return $this->getEditTemplateResult(\Tops::loadModel('auth/behavior')->load($id));
+        return $this->getEditTemplateResult(\Ecleague\Tops::loadModel('auth/behavior')->load($id));
     }
 
     public function editPostAction()
     {
         $lang = $this->context->locale;
-        $m = \Tops::loadModel('auth/behavior')->merge($this->request->getParameter('id'), $this->request->getAllParameters());
+        $m = \Ecleague\Tops::loadModel('auth/behavior')->merge($this->request->getParameter('id'), $this->request->getAllParameters());
         $vr = $m->validateProperties();
         if ($vr !== true) {
             $this->session->set('errors', $lang->_('err_input_invalid'));
@@ -73,7 +73,7 @@ class BehaviorController extends Web\Controller
     public function deleteAction($id)
     {
         $lang = $this->context->locale;
-        $m = \Tops::loadModel('auth/behavior')->load($id);
+        $m = \Ecleague\Tops::loadModel('auth/behavior')->load($id);
 
         if (!$m) {
             $this->session->set('errors', $lang->_('err_system'));

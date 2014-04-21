@@ -5,7 +5,7 @@
                 <ul class="mainnav">
                     <?php
                     $_curLangId = $this->locale->getCurrentLanguageId();
-                    $menus = \Tops::loadModel('admin/menu')->find()
+                    $menus = \Ecleague\Tops::loadModel('admin/menu')->find()
                         ->asc('parent_id', 'position')
                         ->load();
                     for ($_mi = 0; $_mi < count($menus); $_mi++):

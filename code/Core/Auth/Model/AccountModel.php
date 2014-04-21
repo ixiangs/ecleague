@@ -93,7 +93,7 @@ class AccountModel extends Orm\Model
         $roleIds = $m->getRoleIds();
 
         if (count($roleIds) > 0) {
-            $roles = \Tops::loadModel('auth/role')->find()->in('id', $roleIds)->eq('enabled', 1)
+            $roles = \Ecleague\Tops::loadModel('auth/role')->find()->in('id', $roleIds)->eq('enabled', 1)
                 ->load()
                 ->toArray(function($item){
                     return array($item->getCode(), $item->getBehaviorIds());
@@ -106,7 +106,7 @@ class AccountModel extends Orm\Model
                         $behaviorIds = array_merge($behaviorIds, $bidArr);
                     }
                 }
-                $behaviorCodes = \Tops::loadModel('auth/behavior')->find()
+                $behaviorCodes = \Ecleague\Tops::loadModel('auth/behavior')->find()
                                     ->in('id', $behaviorIds)
                                     ->eq('enabled', 1)
                                     ->select('code')

@@ -12,6 +12,11 @@ class Form extends Element
         parent::__construct('form', array('class' => 'form-horizontal', 'id' => $id, 'method' => $method));
     }
 
+    public function getHiddens()
+    {
+        return $this->hiddens;
+    }
+
     public function addField($field)
     {
         $this->fields[] = $field;
@@ -33,6 +38,14 @@ class Form extends Element
         if ($type == 'file') {
             $this->setAttribute('enctype', 'multipart/form-data');
         }
+        return $f;
+    }
+
+    public function addTextareaField($label, $id, $name, $value = null)
+    {
+        $f = new TextareaField($label);
+        $f->getInput()->setAttribute(array('id' => $id, 'name' => $name, 'value' => $value));
+        $this->addField($f);
         return $f;
     }
 

@@ -23,6 +23,10 @@ class GroupedForm extends Form
         return $this;
     }
 
+    public function getGroups(){
+        return $this->groups;
+    }
+
     public function addField($field)
     {
         $this->_currentGroup['fields'][] = $field;

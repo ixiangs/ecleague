@@ -34,9 +34,10 @@ class Collection extends Query implements \Iterator, \ArrayAccess, \SeekableIter
         return $this;
     }
 
-    public function findById($value){
-        foreach($this->source as $item){
-            if($item->getIdValue() == $value){
+    public function findById($value)
+    {
+        foreach ($this->source as $item) {
+            if ($item->getIdValue() == $value) {
                 return $item;
             }
         }

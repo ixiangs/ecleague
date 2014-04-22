@@ -14,17 +14,19 @@ $this->assign('toolbar', array(
 
 $f = $this->html->groupedForm();
 $f->beginGroup('tab_base', $this->locale->_('base_info'));
+$f->addSelectField($this->components, $this->locale->_('attrs_owner_component'), 'component_code', 'data[component_code]',
+    $this->model->getComponentCode());
 $f->addInputField('text', $this->locale->_('code'), 'code', 'data[code]', $this->model->getCode())
     ->addValidateRule('required', true);
 $f->addSelectField(array('1'=>$this->locale->_('yes'), '0'=>$this->locale->_('no')),
     $this->locale->_('enable'), 'enabled', 'data[enabled]', $this->model->getEnabled());
-$f->addCheckboxListField($this->attributes, $this->locale->_('attrs_attribute_group'), '', 'data[group_ids][]', $this->model->getAttributeIds())
+$f->addCheckboxListField($this->attributes, $this->locale->_('attrs_attribute_group'), '', 'data[group_ids][]', $this->model->getGroupIds())
     ->addValidateRule('required', true);
 $f->endGroup();
 
 foreach($this->locale->getLanguages() as $lang):
     $f->beginGroup('tab_lang_'.$lang['code'], $lang['name']);
-    $f->addInputField('text', $this->locale->_('name'), 'name_'.$lang['id'], 'data[names]['.$lang['id'].']', $this->model->getCode())
+    $f->addInputField('text', $this->locale->_('name'), 'name_'.$lang['id'], 'data[names]['.$lang['id'].']', $this->model->names[$lang['id']])
         ->addValidateRule('required', true);
     $f->endGroup();
 endforeach;

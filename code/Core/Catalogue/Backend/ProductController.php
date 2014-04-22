@@ -1,19 +1,17 @@
 <?php
-namespace Core\User\Backend;
+namespace Core\Catalogue\Backend;
 
-use Core\Auth\Model\AccountModel;
 use Toy\Data\Helper;
-use Toy\Util\ArrayUtil;
 use Toy\Web;
 
-class MemberController extends Web\Controller
+class ProductController extends Web\Controller
 {
 
     public function listAction()
     {
         $pi = $this->request->getParameter("pageindex", 1);
-        $count = \Ecleague\Tops::loadModel('user/member')->find()->selectCount()->execute()->getFirstValue();
-        $models = \Ecleague\Tops::loadModel('user/member')->find()
+        $count = \Ecleague\Tops::loadModel('catalogue/product')->find()->selectCount()->execute()->getFirstValue();
+        $models = \Ecleague\Tops::loadModel('catalogue/product')->find()
             ->limit(PAGINATION_SIZE, ($pi - 1) * PAGINATION_SIZE)
             ->load();
         return Web\Result::templateResult(array(
@@ -25,13 +23,13 @@ class MemberController extends Web\Controller
 
     public function addAction()
     {
-        return $this->getEditTemplateResult(\Ecleague\Tops::loadModel('user/member'), \Ecleague\Tops::loadModel('auth/account'));
+        return $this->getEditTemplateResult(\Ecleague\Tops::loadModel('catalogue/product'));
     }
 
     public function addPostAction()
     {
         $locale = $this->context->locale;
-        $member = \Ecleague\Tops::loadModel('user/member')->fillArray($this->request->getPost('member'));
+        $member = \Ecleague\Tops::loadModel('catalogue/product')->fillArray($this->request->getPost('member'));
         $account = \Ecleague\Tops::loadModel('auth/account')
                     ->fillArray($this->request->getPost('account'))
                     ->setStatus(AccountModel::STATUS_ACTIVATED)
@@ -78,7 +76,7 @@ class MemberController extends Web\Controller
 
     public function editAction($id)
     {
-        $m = \Ecleague\Tops::loadModel('user/member');
+        $m = \Ecleague\Tops::loadModel('catalogue/product');
         $m->load($id);
         return $this->getEditTemplateResult($m, null);
     }
@@ -86,7 +84,7 @@ class MemberController extends Web\Controller
     public function editPostAction()
     {
         $locale = $this->context->locale;
-        $m = \Ecleague\Tops::loadModel('user/member')->fillArray($this->request->getPost('data'));
+        $m = \Ecleague\Tops::loadModel('catalogue/product')->fillArray($this->request->getPost('data'));
 
         $vr = $m->validateProperties();
         if ($vr !== true) {
@@ -105,7 +103,7 @@ class MemberController extends Web\Controller
     public function deleteAction($id)
     {
         $lang = $this->context->locale;
-        $m = \Ecleague\Tops::loadModel('user/member')->load($id);
+        $m = \Ecleague\Tops::loadModel('catalogue/product')->load($id);
 
         if (!$m) {
             $this->session->set('errors', $lang->_('err_system'));
@@ -119,11 +117,12 @@ class MemberController extends Web\Controller
         return Web\Result::redirectResult($this->router->buildUrl('list'));
     }
 
-    private function getEditTemplateResult($member, $account)
+    private function getEditTemplateResult($model)
     {
+        $attrTree = \Core\Attrs\Helper::getAttributeTree('clothing');
         return Web\Result::templateResult(
-            array('member' => $member, 'account' => $account),
-            'user/member/edit'
+            array('model' => $model, 'attributeSet'=>$attrTree),
+            'catalogue/product/edit'
         );
     }
 }

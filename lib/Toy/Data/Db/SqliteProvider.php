@@ -66,7 +66,7 @@ class SqliteProvider extends PdoProvider
         $params = array();
         if (count($query->getFields()) > 0) {
             $sql = 'SELECT ' . implode(',', ArrayUtil::toArray($query->getFields(), function($item, $index){
-                    return $this->parseFunction($item);
+                    return array($this->parseFunction($item), null);
                 }));
         } else {
             $sql = 'SELECT *';

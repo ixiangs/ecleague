@@ -81,7 +81,12 @@ final class ArrayUtil
             $result = array();
             $function = $args[$i];
             foreach ($arr as $index => $item) {
-                $result[] = $function($item, $index);
+                list($v, $k) = $function($item, $index);
+                if(empty($k)){
+                    $result[] = $v;
+                }else{
+                    $result[$k] = $v;
+                }
             }
             $arr = $result;
         }

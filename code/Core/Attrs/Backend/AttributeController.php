@@ -125,7 +125,7 @@ class AttributeController extends Web\Controller
         //check unique
         $repeated = ArrayUtil::contains(array_count_values(
             ArrayUtil::toArray($options, function ($item) {
-                return $item['value'];
+                return array($item['value'], null);
             })
         ), function ($item) {
             return $item > 1;

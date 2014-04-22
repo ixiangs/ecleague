@@ -1,6 +1,6 @@
 <?php
 $this->assign('breadcrumb', array(
-    $this->html->anchor($this->locale->_('user_manage'))
+    $this->html->anchor($this->locale->_('member_manage'))
 ));
 
 $this->assign('navigationBar', array(
@@ -9,6 +9,7 @@ $this->assign('navigationBar', array(
 
 $dt = $this->html->grid($this->models);
 $dt->addIndexColumn('#', 'index', 'index');
+$dt->addLabelColumn($this->locale->_('username'), '{username}', 'middle', 'left');
 $dt->addLabelColumn($this->locale->_('name'), '{last_name} {first_name}', 'middle');
 $dt->addLabelColumn($this->locale->_('gender'), '{gender}', 'small');
 $dt->addLabelColumn($this->locale->_('email'), '{email}');

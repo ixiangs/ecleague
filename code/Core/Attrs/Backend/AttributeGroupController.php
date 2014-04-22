@@ -101,10 +101,12 @@ class AttributeGroupController extends Web\Controller
         $lid = $this->context->locale->getCurrentLanguageId();
         $attrs = \Ecleague\Tops::loadModel('attrs/attribute')->find()->load()
                     ->toArray(function($item) use($lid){
-                        return array($item->getId(), $item->display_labels[$lid]);
+                        return array($item->getId(), $item->display_text[$lid]);
                     });
+        $coms = \Ecleague\Tops::loadModel('admin/component')
+            ->find()->execute()->combineColumns('code', 'name');
         return Web\Result::templateResult(
-            array('model' => $model, 'attributes'=>$attrs),
+            array('model' => $model, 'attributes'=>$attrs, 'components'=>$coms),
             'attrs/attribute-group/edit'
         );
     }

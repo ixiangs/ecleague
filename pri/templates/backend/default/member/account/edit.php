@@ -1,7 +1,7 @@
 <?php
 $this->assign('breadcrumb', array(
-    $this->html->anchor($this->locale->_('user_manage')),
-    $this->html->anchor($this->locale->_($this->router->action == 'add' ? "user_new_member" : "user_edit_member"))
+    $this->html->anchor($this->locale->_('member_manage')),
+    $this->html->anchor($this->locale->_($this->router->action == 'add' ? "member_new_member" : "member_edit_member"))
 ));
 
 $this->assign('navigationBar', array(
@@ -13,25 +13,23 @@ $this->assign('toolbar', array(
 ));
 
 $f = $this->html->groupedForm();
-$f->beginGroup('account_info', $this->locale->_('user_account_info'));
+$f->beginGroup('account_info', $this->locale->_('member_account_info'));
 if($this->router->action == 'add'):
-$f->addInputField('text', $this->locale->_('username'), 'username', 'account[username]', $this->account->getUsername())
+$f->addInputField('text', $this->locale->_('username'), 'username', 'member[username]', $this->account->getUsername())
     ->addValidateRule('required', true);
-endif;
-$f->addInputField('email', $this->locale->_('email'), 'email', 'account[email]', $this->account->getEmail())
-    ->addValidateRule('required', true);
-if($this->router->action == 'add'):
-$f->addInputField('text', $this->locale->_('password'), 'password', 'account[password]', '')
+$f->addInputField('text', $this->locale->_('password'), 'password', 'member[password]')
     ->addValidateRule('required', true);
 endif;
 $f->endGroup();
-$f->beginGroup('personal_info', $this->locale->_('user_personal_info'));
+$f->beginGroup('personal_info', $this->locale->_('member_personal_info'));
 $f->addInputField('text', $this->locale->_('user_first_name'), 'first_name', 'member[first_name]', $this->member->getFirstName())
     ->addValidateRule('required', true);
 $f->addInputField('text', $this->locale->_('user_last_name'), 'last_name', 'member[last_name]', $this->member->getLastName())
     ->addValidateRule('required', true);
-$f->addInputField('text', $this->locale->_('gender'), 'gender', 'member[gender]', $this->member->getGender())
-    ->addValidateRule('required', true);
+$f->addSelectField(array(1=>$this->locale->_('male'), 2=>$this->locale->_('female')),
+                    $this->locale->_('gender'), 'gender', 'member[gender]', $this->member->getGender())
+    ->addValidateRule('required', true)
+    ->getInput()->setCaption('');
 $f->addInputField('email', $this->locale->_('email'), 'email', 'member[email]', $this->account->getEmail())
     ->addValidateRule('required', true);
 $f->addInputField('text', $this->locale->_('mobile'), 'mobile', 'member[mobile]', $this->member->getMobile());

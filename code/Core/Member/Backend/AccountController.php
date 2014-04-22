@@ -1,19 +1,17 @@
 <?php
-namespace Core\Attrs\Backend;
+namespace Core\Member\Backend;
 
-use Toy\Data\Helper;
-use Toy\Util\ArrayUtil;
+use Ecleague\Tops;
 use Toy\Web;
 
-class AttributeSetController extends Web\Controller
+class AccountController extends Web\Controller
 {
 
     public function listAction()
     {
         $pi = $this->request->getParameter("pageindex", 1);
-        $count = \Ecleague\Tops::loadModel('attrs/attributeSet')->find()->selectCount()->execute()->getFirstValue();
-        $models = \Ecleague\Tops::loadModel('attrs/attributeSet')->find()
-            ->asc('code')
+        $count = Tops::loadModel('member/account')->find()->selectCount()->execute()->getFirstValue();
+        $models = Tops::loadModel('member/account')->find()
             ->limit(PAGINATION_SIZE, ($pi - 1) * PAGINATION_SIZE)
             ->load();
         return Web\Result::templateResult(array(
@@ -25,29 +23,30 @@ class AttributeSetController extends Web\Controller
 
     public function addAction()
     {
-        $model = \Ecleague\Tops::loadModel('attrs/attributeSet');
-        return $this->getEditTemplateResult($model);
+        return $this->getEditTemplateResult(Tops::loadModel('member/account'));
     }
 
     public function addPostAction()
     {
         $locale = $this->context->locale;
-        $m = \Ecleague\Tops::loadModel('attrs/attributeSet')->fillArray($this->request->getPost('data'));
+        $member = Tops::loadModel('member/account')->fillArray($this->request->getPost('member'));
 
-        $vr = $m->validateProperties();
+        $vr = $member->validateProperties();
         if ($vr !== true) {
             $this->session->set('errors', $locale->_('err_input_invalid'));
-            return $this->getEditTemplateResult($m);
+            return $this->getEditTemplateResult($member);
         }
 
-        if ($m->validateUnique() !== true) {
-            $this->session->set('errors', $locale->_('attrs_err_attribute_set_exists', $m->getCode()));
-            return $this->getEditTemplateResult($m);
+        $vr = $member->validateUnique();
+        if ($vr !== true) {
+            $this->session->set('errors', $locale->_('member_err_account_exists', $member->getUsername()));
+            return $this->getEditTemplateResult($member);
         }
 
-        if (!$m->insert()) {
+
+        if (!$member->insert()) {
             $this->session->set('errors', $locale->_('err_system'));
-            return $this->getEditTemplateResult($m);
+            return $this->getEditTemplateResult($member);;
         }
 
         return Web\Result::redirectResult($this->router->buildUrl('list'));
@@ -55,7 +54,7 @@ class AttributeSetController extends Web\Controller
 
     public function editAction($id)
     {
-        $m = \Ecleague\Tops::loadModel('attrs/attributeSet');
+        $m = Tops::loadModel('member/account');
         $m->load($id);
         return $this->getEditTemplateResult($m);
     }
@@ -63,8 +62,8 @@ class AttributeSetController extends Web\Controller
     public function editPostAction()
     {
         $locale = $this->context->locale;
-        $m = \Ecleague\Tops::loadModel('attrs/attributeSet')
-                ->merge($this->request->getPost('id'), $this->request->getPost('data'));
+        $m = Tops::loadModel('member/account')->fillArray($this->request->getPost('data'));
+
         $vr = $m->validateProperties();
         if ($vr !== true) {
             $this->session->set('errors', $locale->_('err_input_invalid'));
@@ -82,7 +81,7 @@ class AttributeSetController extends Web\Controller
     public function deleteAction($id)
     {
         $lang = $this->context->locale;
-        $m = \Ecleague\Tops::loadModel('attrs/attribute')->load($id);
+        $m = Tops::loadModel('member/account')->load($id);
 
         if (!$m) {
             $this->session->set('errors', $lang->_('err_system'));
@@ -96,18 +95,11 @@ class AttributeSetController extends Web\Controller
         return Web\Result::redirectResult($this->router->buildUrl('list'));
     }
 
-    private function getEditTemplateResult($model)
+    private function getEditTemplateResult($member)
     {
-        $lid = $this->context->locale->getCurrentLanguageId();
-        $attrs = \Ecleague\Tops::loadModel('attrs/attributeGroup')->find()->load()
-                    ->toArray(function($item) use($lid){
-                        return array($item->getId(), $item->names[$lid]);
-                    });
-        $coms = \Ecleague\Tops::loadModel('admin/component')
-            ->find()->execute()->combineColumns('code', 'name');
         return Web\Result::templateResult(
-            array('model' => $model, 'attributes'=>$attrs, 'components'=>$coms),
-            'attrs/attribute-set/edit'
+            array('member' => $member),
+            'member/account/edit'
         );
     }
 }

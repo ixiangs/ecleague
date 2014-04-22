@@ -1,14 +1,13 @@
 <?php
 namespace Toy\View\Html;
 
-class InputField extends FormField
+class TextareaField extends FormField
 {
 
-    public function __construct($type, $label)
+    public function __construct($label)
     {
         parent::__construct($label);
-        $this->input = new Element('input', array(
-            'type' => $type,
+        $this->input = new Element('textarea', array(
             'class' => 'form-control'
         ));
     }
@@ -23,7 +22,8 @@ class InputField extends FormField
                 $this->input->setAttribute('data-validate-' . $n, $v === true ? 'true' : $v);
             }
         }
-
-        return $this->input->render();
+        $text = $this->getAttribute('value');
+        $this->removeAttribute('value');
+        return $this->input->renderBegin().$text.$this->input->renderEnd();
     }
 }

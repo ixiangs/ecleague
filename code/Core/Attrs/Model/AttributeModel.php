@@ -30,7 +30,7 @@ Orm\Model::register('Core\Attrs\Model\AttributeModel', array(
     'table' => AttributeModel::TABLE_NAME,
     'properties' => array(
         Orm\IntegerProperty::create('id')->setPrimaryKey(true)->setAutoIncrement(true),
-        Orm\StringProperty::create('name')->setNullable(false)->setUpdateable(false),
+        Orm\StringProperty::create('name')->setNullable(false),
         Orm\StringProperty::create('data_type')->setNullable(false),
         Orm\StringProperty::create('input_type')->setNullable(false),
         Orm\StringProperty::create('input_id'),
@@ -38,11 +38,10 @@ Orm\Model::register('Core\Attrs\Model\AttributeModel', array(
         Orm\BooleanProperty::create('indexable')->setDefaultValue(false)->setNullable(false),
         Orm\BooleanProperty::create('required')->setDefaultValue(false)->setNullable(false),
         Orm\BooleanProperty::create('enabled')->setDefaultValue(false)->setNullable(false),
+        Orm\StringProperty::create('component_code')->setNullable(false),
         Orm\SerializeProperty::create('display_text')->setNullable(false),
         Orm\SerializeProperty::create('memo')->setNullable(false),
-        Orm\SerializeProperty::create('input_setting')
-    ),
-    'relations'=>array(
-        Orm\Relation::childrenRelation('options', 'Core\Attrs\Model\AttributeOptionModel', 'attribute_id')
+        Orm\SerializeProperty::create('options'),
+        Orm\SerializeProperty::create('input_setting'),
     )
 ));

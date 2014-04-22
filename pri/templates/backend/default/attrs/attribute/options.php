@@ -1,7 +1,7 @@
 <?php
 $this->assign('breadcrumb', array(
     $this->html->anchor($this->locale->_('attrs_manage')),
-    $this->html->anchor($this->attribute->names[$this->locale->getCurrentLanguageId()]),
+    $this->html->anchor($this->attribute->name),
     $this->html->anchor($this->locale->_('attrs_option'))
 ));
 
@@ -34,7 +34,6 @@ $this->beginBlock('footerjs');
             '</div></div>';
         <?php endforeach; ?>
         optionHtml += '</div><div class="panel-footer text-right"><button type="button" class="btn btn-danger" data-option-id="{id}" onclick="javascript:deleteOption(this);"><?php echo $this->locale->_('delete'); ?></button></div>';
-        optionHtml += '<input type="hidden" name="options[{index}][id]" value="{id}"/></div>';
 
         $('#new').click(function () {
             newOption({});
@@ -48,9 +47,6 @@ $this->beginBlock('footerjs');
         }
 
         function deleteOption(el) {
-            if ($(el).attr('data-option-id')) {
-                $('<input type="hidden" name="delete_ids[]" value="' + $(el).attr('data-option-id') + '"/>').appendTo('#form1');
-            }
             $(el).parent().parent().remove();
         }
 
@@ -59,8 +55,8 @@ $this->beginBlock('footerjs');
             <?php
             if(count($this->options) > 0):
                 foreach($this->options as $index=>$option):
-                echo 'var data'.$index.'={"id":"'.$option->getId().'",ovalue:"'.$option->getValue().'"};';
-                foreach($option->getLabels() as $lid=>$label):
+                echo 'var data'.$index.'={ovalue:"'.$option['value'].'"};';
+                foreach($option['labels'] as $lid=>$label):
                     echo 'data'.$index.'["olabel'. $lid.'"] = "'.$label.'";', "\n";
                 endforeach;
                 echo 'newOption(data'.$index.');', "\n";

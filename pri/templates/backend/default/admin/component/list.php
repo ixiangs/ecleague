@@ -6,11 +6,12 @@ $this->assign('breadcrumb', array(
 $clang = $this->locale->getCurrentLanguage();
 $dt = $this->html->grid($this->models);
 $dt->addIndexColumn('#', 'index', 'index');
-$dt->addLabelColumn($this->locale->_('name'), '{name}', 'middle', 'text-center');
-$dt->addLabelColumn($this->locale->_('author'), '{author}', 'middle', 'text-center');
-$dt->addLabelColumn($this->locale->_('version'), '{version}', 'middle', 'text-center');
-$dt->addLabelColumn($this->locale->_('website'), '{website}', 'large', 'text-center');
-$dt->addLabelColumn($this->locale->_('description'), '{description}', '', 'text-center');
+$dt->addLabelColumn($this->locale->_('code'), '{code}', 'middle', 'left');
+$dt->addLabelColumn($this->locale->_('name'), '{name}', 'large', 'left');
+$dt->addLabelColumn($this->locale->_('version'), '{version}', 'small', 'text-center');
+$dt->addLinkColumn($this->locale->_('author'), '{author}', 'http://{website}', 'middle', 'text-center')
+    ->getCell()->getChild(0)->setAttribute('target', '_blank');
+$dt->addLabelColumn($this->locale->_('description'), '{description}', '', 'left');
 
 //$dt->addBooleanColumn($this->locale->_('status'), 'enabled', $this->locale->_('enabled'), $this->locale->_('disabled').'</span>',
 //    'small', 'small text-center');

@@ -14,7 +14,11 @@ class CheckboxColumn extends GridColumn
 
     public function renderCell($row, $index)
     {
+        if(!is_null($this->cellRenderer)){
+            return call_user_func_array($this->cellRenderer, array($this, $row, $index));
+        }
+
         $this->getCell()->getChild(0)->bindAttribute($row);
-        return parent::renderCell($row, $index);
+        return $this->cell->render();
     }
 }

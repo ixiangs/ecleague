@@ -14,19 +14,16 @@ class LinkColumn extends GridColumn
 
     public function renderCell($row, $index)
     {
+        if(!is_null($this->cellRenderer)){
+            return call_user_func_array($this->cellRenderer, array($this, $row, $index));
+        }
+
         $link = $this->getCell()->getChild(0);
         $link->bindAttribute($row);
         if (empty($link->getAttribute('text'))) {
             $link->setAttribute('text', $this->getDefaultText());
         }
-        return parent::renderCell($row, $index);
-//        $res = $this->getCell()->renderBegin();
-//        if (!is_null($this->cellRenderer)) {
-//            $res .= call_user_func_array($this->cellRenderer, array($link, $this, $row, $index));
-//        } else {
-//            $res .= $link->render();
-//        }
-//        $res .= $this->getCell()->renderEnd();
-//        return $res;
+
+        return $this->cell->render();
     }
 }

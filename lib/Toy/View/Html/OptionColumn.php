@@ -20,6 +20,10 @@ class OptionColumn extends LabelColumn
 
     public function renderCell($row, $index)
     {
+        if (!is_null($this->cellRenderer)) {
+            return call_user_func_array($this->cellRenderer, array($this, $row, $index));
+        }
+
         $label = $this->getCell()->getChild(0);
         $st = $label->getAttribute('text');
         $op = StringUtil::substitute($st, $row);

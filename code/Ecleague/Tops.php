@@ -1,13 +1,15 @@
 <?php
 namespace Ecleague;
 
+use Toy\Loader;
+
 final class Tops {
 
     public function loadModel($name, array $data = array()){
-        return \Toy\Loader::create(str_replace('/', '\\model\\', $name).'Model', $data);
+        return Loader::create(str_replace('/', '\\model\\', $name).'Model', $data);
     }
 
     public function loadController($name){
-        return \Toy\Loader::create(str_replace('/', '_model_', $name).'Model');
+        return Loader::create(str_replace('/', '_model_', $name).'Model');
     }
 } 

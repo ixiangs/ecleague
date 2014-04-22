@@ -108,7 +108,9 @@ class AttributeController extends Web\Controller
     public function optionsAction($attributeid)
     {
         $attr = \Ecleague\Tops::loadModel('attrs/attribute')->load($attributeid);
-        $options = $attr->getOptions()->load();
+        $options = $attr->getOptions();
+//        print_r($options);
+//        die();
         return Web\Result::templateResult(array(
             'attribute' => $attr,
             'options' => $options
@@ -119,20 +121,16 @@ class AttributeController extends Web\Controller
     {
         $lang = $this->context->locale;
         $attr = \Ecleague\Tops::loadModel('attrs/attribute')->load($this->request->getPost('attribute_id'));
-        $options = ArrayUtil::toArray($this->request->getPost('options'), function($item) use($attr, $ao){
-            return \Ecleague\Tops::loadModel('attrs/attributeOption')
-                        ->fillArray($item)
-                        ->setAttributeId($attr->getId());
-        });
-
+        $options = $this->request->getPost('options');
         //check unique
-        $values = ArrayUtil::toArray($options, function($item){
-            return $item->getValue();
-        });
-        $repeated = ArrayUtil::contains(array_count_values($values), function($item){
+        $repeated = ArrayUtil::contains(array_count_values(
+            ArrayUtil::toArray($options, function ($item) {
+                return $item['value'];
+            })
+        ), function ($item) {
             return $item > 1;
         });
-        if($repeated){
+        if ($repeated) {
             $this->session->set('errors', $lang->_('attrs_err_option_repeated'));
             return Web\Result::templateResult(array(
                 'attribute' => $attr,
@@ -140,23 +138,9 @@ class AttributeController extends Web\Controller
             ));
         }
 
-        $res = Helper::withTx(function($db) use($attr, $options, $lang){
-            $dids = $this->request->getPost('delete_ids');
-            if($dids){
-                \Ecleague\Tops::loadModel('attrs/attributeOption')->deleteBatch($dids, $db);
-            }
-            foreach($options as $option){
-                $b = $option->getId()? $option->update($db): $option->insert($db);
-                if(!$b){
-                    return false;
-                }
-            }
-            return true;
-        });
-
-        if($res){
+        if ($attr->setOptions($options)->update()) {
             return Web\Result::redirectResult($this->router->buildUrl('list'));
-        }else{
+        } else {
             $this->session->set('errors', $lang->_('err_system'));
             return Web\Result::templateResult(array(
                 'attribute' => $attr,
@@ -167,8 +151,10 @@ class AttributeController extends Web\Controller
 
     private function getEditTemplateResult($model)
     {
+        $coms = \Ecleague\Tops::loadModel('admin/component')
+            ->find()->execute()->combineColumns('code', 'name');
         return Web\Result::templateResult(
-            array('model' => $model),
+            array('model' => $model, 'components' => $coms),
             'attrs/attribute/edit'
         );
     }

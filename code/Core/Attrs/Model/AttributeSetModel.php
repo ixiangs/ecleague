@@ -13,9 +13,10 @@ Orm\Model::register('Core\Attrs\Model\AttributeSetModel', array(
     'table'=>AttributeSetModel::TABLE_NAME,
     'properties'=>array(
         Orm\IntegerProperty::create('id')->setPrimaryKey(true)->setAutoIncrement(true),
-        Orm\StringProperty::create('code')->setNullable(false)->setUnique(true),
+        Orm\StringProperty::create('code')->setNullable(false),
         Orm\BooleanProperty::create('enabled')->setNullable(false),
         Orm\SerializeProperty::create('names')->setNullable(false),
-        Orm\ListProperty::create('group_ids')->setNullable(false)
+        Orm\ListProperty::create('group_ids')->setNullable(false),
+        Orm\StringProperty::create('component_code')->setNullable(false)
     )
 ));

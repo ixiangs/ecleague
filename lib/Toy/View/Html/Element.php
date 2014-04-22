@@ -189,7 +189,8 @@ class Element
         return $this;
     }
 
-    public function getChild($index){
+    public function getChild($index)
+    {
         return $this->children[$index];
     }
 

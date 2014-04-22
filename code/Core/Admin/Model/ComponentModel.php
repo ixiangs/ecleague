@@ -12,6 +12,7 @@ Orm\Model::register('Core\Admin\Model\ComponentModel', array(
     'table' => ComponentModel::TABLE_NAME,
     'properties' => array(
         Orm\IntegerProperty::create('id')->setPrimaryKey(true)->setAutoIncrement(true),
+        Orm\StringProperty::create('code')->setNullable(false)->setUnique(true),
         Orm\StringProperty::create('name'),
         Orm\StringProperty::create('author'),
         Orm\StringProperty::create('website'),

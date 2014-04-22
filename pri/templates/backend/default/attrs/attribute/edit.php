@@ -36,7 +36,9 @@ $f = $this->html->groupedForm();
 $f->beginGroup('tab_base', $this->locale->_('base_info'));
 $f->addLabelField($this->locale->_('attrs_data_type'), $dataTypes[$this->model->getDataType()]);
 $f->addLabelField($this->locale->_('attrs_input_type'), $inputTypes[$this->model->getInputType()]);
-$f->addInputField('text', $this->locale->_('name'), 'name', 'data[name]', $this->model->getCode())
+$f->addSelectField($this->components, $this->locale->_('attrs_owner_component'), 'component_code', 'data[component_code]',
+                    $this->model->getComponentCode());
+$f->addInputField('text', $this->locale->_('name'), 'name', 'data[name]', $this->model->getName())
     ->addValidateRule('required', true);
 $f->addSelectField(array('1'=>$this->locale->_('yes'), '0'=>$this->locale->_('no')),
     $this->locale->_('attrs_indexable'), 'indexable', 'data[indexable]', $this->model->getEnabled());

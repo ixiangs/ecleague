@@ -22,11 +22,16 @@ class ButtonColumn extends GridColumn
 
     public function renderCell($row, $index)
     {
+        if(!is_null($this->cellRenderer)){
+            return call_user_func_array($this->cellRenderer, array($this, $row, $index));
+        }
+        
         $button = $this->getCell()->getChild(0);
         $button->bindAttribute($row);
         if (empty($button->getAttribute('text'))) {
             $button->setAttribute('text', $this->getDefaultText());
         }
-        return parent::renderCell($row, $index);
+
+        return $this->cell->render();
     }
 }

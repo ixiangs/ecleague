@@ -1,12 +1,13 @@
 <?php
 namespace Toy\View\Html;
 
-class CheckboxListField extends FormField
+class OptionListField extends FormField
 {
-    public function __construct($label)
+    public function __construct($label, $multiple = true)
     {
         parent::__construct($label);
-        $this->input = new CheckboxList();
+        $this->input = new OptionList();
+        $this->input->setMultiple($multiple);
     }
 
     protected function renderInput()

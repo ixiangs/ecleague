@@ -129,15 +129,12 @@ abstract class BaseProperty
         return $this;
     }
 
-    public function getSetting($name, $d = null){
-        if(array_key_exists($name, $this->_settings)){
-            return $this->_settings[$name];
-        }
-        return $d;
+    public function getSettings(){
+        return $this->_settings;
     }
 
-    public function setSetting($name, $value){
-        $this->_settings[$name] = $value;
+    public function setSettings($value){
+        $this->_settings = $value;
         return $this;
     }
 

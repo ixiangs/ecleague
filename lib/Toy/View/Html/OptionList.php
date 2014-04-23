@@ -1,9 +1,10 @@
 <?php
 namespace Toy\View\Html;
 
-class CheckboxList extends Element
+class OptionList extends Element
 {
     private $_options = array();
+    private $_multiple = true;
 
     public function __construct()
     {
@@ -21,6 +22,17 @@ class CheckboxList extends Element
         return $this->_options;
     }
 
+    public function setMultiple($value)
+    {
+        $this->_multiple = $value;
+        return $this;
+    }
+
+    public function getMultiple()
+    {
+        return $this->_multiple;
+    }
+
     public function renderBegin()
     {
         return '';
@@ -35,7 +47,7 @@ class CheckboxList extends Element
     {
         $val = $this->getAttribute('value');
         $this->removeAttribute('value');
-        $this->setAttribute('type', 'checkbox');
+        $this->setAttribute('type', $this->_multiple? 'checkbox': 'radio');
         $html = array();
         foreach ($this->_options as $option => $text) {
             $this->setAttribute('value', $option);

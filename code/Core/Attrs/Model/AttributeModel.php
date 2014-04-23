@@ -1,7 +1,14 @@
 <?php
 namespace Core\Attrs\Model;
 
+use Core\Locale\Localize;
 use Toy\Orm;
+use Toy\Util\ArrayUtil;
+use Toy\View\Html\CheckboxListField;
+use Toy\View\Html\InputField;
+use Toy\View\Html\OptionListField;
+use Toy\View\Html\RadioButtonListField;
+use Toy\View\Html\SelectField;
 
 class AttributeModel extends Orm\Model
 {
@@ -24,6 +31,54 @@ class AttributeModel extends Orm\Model
     const DATA_TYPE_EMAIL = 'email';
     const DATA_TYPE_DATE = 'date';
 
+    public function toFormField(){
+        $lid = Localize::singleton()->getCurrentLanguageId();
+        switch($this->input_type){
+            case self::INPUT_TYPE_TEXTBOX:
+                $res = new InputField('text', $this->display_text[$lid]);
+                $res->getInput()->setAttribute(array(
+                   'id'=>$this->name,
+                   'name'=>'data['.$this->name.']'
+                ));
+                break;
+            case self::INPUT_TYPE_DROPDOWN:
+            case self::INPUT_TYPE_LISTBOX:
+                $options = ArrayUtil::toArray($this->options, function($item, $index) use($lid){
+                    return array($item['labels'][$lid], $item['value']);
+                });
+                $res = new SelectField($this->display_text[$lid]);
+                $res->getInput()
+                        ->setCaption('')
+                        ->setOptions($options)
+                        ->setAttribute(array(
+                            'id'=>$this->name,
+                            'name'=>'data['.$this->name.']'
+                        ));
+                if($this->input_type == self::INPUT_TYPE_LISTBOX){
+                    $res->getInput()->setAttribute(array(
+                        'multiple'=>'multiple',
+                        'size'=>5
+                    ));
+                }
+                break;
+            case self::INPUT_TYPE_CHECKBOX_LIST:
+            case self::INPUT_TYPE_RADIO_LIST:
+                $options = ArrayUtil::toArray($this->options, function($item, $index) use($lid){
+                    return array($item['labels'][$lid], $item['value']);
+                });
+                $res = new OptionListField($this->display_text[$lid], $this->input_type == self::INPUT_TYPE_CHECKBOX_LIST);
+                $res->getInput()
+                    ->setOptions($options)
+                    ->setAttribute(array(
+                        'name'=>'data['.$this->name.']'
+                    ));
+                break;
+        }
+        if($this->required){
+            $res->addValidateRule('required', true);
+        }
+        return $res;
+    }
 }
 
 Orm\Model::register('Core\Attrs\Model\AttributeModel', array(
@@ -38,6 +93,7 @@ Orm\Model::register('Core\Attrs\Model\AttributeModel', array(
         Orm\BooleanProperty::create('indexable')->setDefaultValue(false)->setNullable(false),
         Orm\BooleanProperty::create('required')->setDefaultValue(false)->setNullable(false),
         Orm\BooleanProperty::create('enabled')->setDefaultValue(false)->setNullable(false),
+        Orm\BooleanProperty::create('localizable')->setDefaultValue(false)->setNullable(false),
         Orm\StringProperty::create('component_code')->setNullable(false),
         Orm\SerializeProperty::create('display_text')->setNullable(false),
         Orm\SerializeProperty::create('memo')->setNullable(false),

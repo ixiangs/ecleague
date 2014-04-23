@@ -1,6 +1,7 @@
 <?php
 namespace Core\Catalogue\Backend;
 
+use Ecleague\Tops;
 use Toy\Data\Helper;
 use Toy\Web;
 
@@ -10,8 +11,8 @@ class ProductController extends Web\Controller
     public function listAction()
     {
         $pi = $this->request->getParameter("pageindex", 1);
-        $count = \Ecleague\Tops::loadModel('catalogue/product')->find()->selectCount()->execute()->getFirstValue();
-        $models = \Ecleague\Tops::loadModel('catalogue/product')->find()
+        $count = Tops::loadModel('catalogue/product')->find()->selectCount()->execute()->getFirstValue();
+        $models = Tops::loadModel('catalogue/product')->find()
             ->limit(PAGINATION_SIZE, ($pi - 1) * PAGINATION_SIZE)
             ->load();
         return Web\Result::templateResult(array(
@@ -23,60 +24,35 @@ class ProductController extends Web\Controller
 
     public function addAction()
     {
-        return $this->getEditTemplateResult(\Ecleague\Tops::loadModel('catalogue/product'));
+        return $this->getEditTemplateResult(Tops::loadModel('catalogue/product'));
     }
 
     public function addPostAction()
     {
         $locale = $this->context->locale;
-        $member = \Ecleague\Tops::loadModel('catalogue/product')->fillArray($this->request->getPost('member'));
-        $account = \Ecleague\Tops::loadModel('auth/account')
-                    ->fillArray($this->request->getPost('account'))
-                    ->setStatus(AccountModel::STATUS_ACTIVATED)
-                    ->setLevel(AccountModel::LEVEL_NORMAL);
-
-        $vr = $account->validateProperties();
+        $post = $this->request->getAllPost();
+        $model = Tops::loadModel('catalogue/product')
+                    ->bindAttributeSet()
+                    ->fillArray($post['data']);
+        $vr = $model->validateProperties();
         if ($vr !== true) {
             $this->session->set('errors', $locale->_('err_input_invalid'));
-            return $this->getEditTemplateResult($member, $account);
+            return $this->getEditTemplateResult($model);
         }
 
-        $vr = $account->validateUnique();
-        if ($vr !== true) {
-            $this->session->set('errors', $locale->_('auth_err_account_exists', $account->getCode()));
-            return $this->getEditTemplateResult($member, $account);
+        $langId = $locale->getCurrentLanguageId();
+        $model->setName(array($langId=>$post['data']['name']))
+              ->setDescription(array($langId=>$post['data']['description']));
+        if($model->insert()){
+            return Web\Result::redirectResult($this->router->buildUrl('list'));
+        }else{
+            return $this->getEditTemplateResult($model);
         }
-
-        $res = Helper::withTx(function ($db) use ($member, $account, $locale) {
-            if (!$account->insert($db)) {
-                $this->session->set('errors', $locale->_('err_system'));
-                return false;
-            }
-
-            $member->setAccountId($account->getId());
-            $vr = $member->validateProperties();
-
-            if ($vr !== true) {
-                $this->session->set('errors', $locale->_('err_input_invalid'));
-                return false;
-            }
-
-            if (!$member->insert($db)) {
-                $this->session->set('errors', $locale->_('err_system'));
-                return false;
-            }
-
-            return true;
-        });
-
-        return $res === true ?
-            Web\Result::redirectResult($this->router->buildUrl('list')) :
-            $this->getEditTemplateResult($member, $account);
     }
 
     public function editAction($id)
     {
-        $m = \Ecleague\Tops::loadModel('catalogue/product');
+        $m = Tops::loadModel('catalogue/product');
         $m->load($id);
         return $this->getEditTemplateResult($m, null);
     }
@@ -84,7 +60,7 @@ class ProductController extends Web\Controller
     public function editPostAction()
     {
         $locale = $this->context->locale;
-        $m = \Ecleague\Tops::loadModel('catalogue/product')->fillArray($this->request->getPost('data'));
+        $m = Tops::loadModel('catalogue/product')->fillArray($this->request->getPost('data'));
 
         $vr = $m->validateProperties();
         if ($vr !== true) {
@@ -103,7 +79,7 @@ class ProductController extends Web\Controller
     public function deleteAction($id)
     {
         $lang = $this->context->locale;
-        $m = \Ecleague\Tops::loadModel('catalogue/product')->load($id);
+        $m = Tops::loadModel('catalogue/product')->load($id);
 
         if (!$m) {
             $this->session->set('errors', $lang->_('err_system'));
@@ -119,7 +95,7 @@ class ProductController extends Web\Controller
 
     private function getEditTemplateResult($model)
     {
-        $attrTree = \Core\Attrs\Helper::getAttributeTree('clothing');
+        $attrTree = \Core\Attrs\Helper::getAttributeTree(1);
         return Web\Result::templateResult(
             array('model' => $model, 'attributeSet'=>$attrTree),
             'catalogue/product/edit'

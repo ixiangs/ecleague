@@ -9,7 +9,7 @@ use Toy\Data\Sql\UpdateStatement;
 abstract class Model implements \ArrayAccess, \Iterator
 {
 
-    private static $_metadatas = array();
+    protected static $metadatas = array();
     private static $_camelCaseToUnderline = array();
 
     protected $tableName = '';
@@ -21,7 +21,7 @@ abstract class Model implements \ArrayAccess, \Iterator
 
     public function __construct($data = array())
     {
-        $m = self::$_metadatas[get_class($this)];
+        $m = self::$metadatas[get_class($this)];
         $this->idProperty = $m['idProperty'];
         $this->properties = $m['properties'];
         $this->tableName = $m['table'];
@@ -428,7 +428,7 @@ abstract class Model implements \ArrayAccess, \Iterator
 
     public function deleteBatch(array $ids, $db = null)
     {
-        $m = self::$_metadatas[get_called_class()];
+        $m = self::$metadatas[get_called_class()];
         if(is_null($db)){
             return Helper::withTx(function ($db) use ($ids, $m) {
                 $ds = new DeleteStatement($this->tableName);
@@ -457,9 +457,9 @@ abstract class Model implements \ArrayAccess, \Iterator
     static public function getMetadata($class = null)
     {
         if (is_null($class)) {
-            return self::$_metadatas[get_called_class()];
+            return self::$metadatas[get_called_class()];
         }
-        return self::$_metadatas[$class];
+        return self::$metadatas[$class];
     }
 
     static public function register($class, $metadata)
@@ -480,6 +480,6 @@ abstract class Model implements \ArrayAccess, \Iterator
                 $arr['relations'][$rel->getPropertyName()] = $rel;
             }
         }
-        self::$_metadatas[$class] = $arr;
+        self::$metadatas[$class] = $arr;
     }
 }

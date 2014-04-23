@@ -5,10 +5,10 @@ use Ecleague\Tops;
 
 class Helper
 {
-    static public function getAttributeTree($code)
+    static public function getAttributeTree($id)
     {
         $set = Tops::loadModel('attrs/attributeSet')
-            ->find()->eq('code', $code)
+            ->find()->eq('id', $id)
             ->limit(1)->load()
             ->getFirst();
 
@@ -21,7 +21,7 @@ class Helper
             $attrIds = array_merge($attrIds, $group->getAttributeIds());
         }
         $attributes = Tops::loadModel('attrs/attribute')
-            ->find()->in('id', $attrIds)
+            ->find()->in('id', $attrIds)->eq('enabled', true)
             ->load();
 
         foreach ($groups as $group) {

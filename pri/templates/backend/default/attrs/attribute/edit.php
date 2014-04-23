@@ -43,14 +43,14 @@ $f->addInputField('text', $this->locale->_('name'), 'name', 'data[name]', $this-
 $f->addSelectField(array('1'=>$this->locale->_('yes'), '0'=>$this->locale->_('no')),
     $this->locale->_('attrs_indexable'), 'indexable', 'data[indexable]', $this->model->getEnabled());
 $f->addSelectField(array('1'=>$this->locale->_('yes'), '0'=>$this->locale->_('no')),
+    $this->locale->_('attrs_localizable'), 'localizable', 'data[localizable]', $this->model->getLocalizable());
+$f->addSelectField(array('1'=>$this->locale->_('yes'), '0'=>$this->locale->_('no')),
     $this->locale->_('enable'), 'enabled', 'data[enabled]', $this->model->getEnabled());
 $f->endGroup();
 
 $f->beginGroup('tab_input', $this->locale->_('attrs_input_setting'));
 $f->addSelectField(array('1'=>$this->locale->_('yes'), '0'=>$this->locale->_('no')),
     $this->locale->_('attrs_required'), 'required', 'data[required]', $this->model->getEnabled());
-//$f->addInputField('text', $this->locale->_('attrs_input_id'), 'input_id', 'data[input_id]', $this->model->getInputId());
-//$f->addInputField('text', $this->locale->_('attrs_input_name'), 'input_name', 'data[input_name]', $this->model->getInputName());
 $vs = $this->model->getInputSetting();
 switch($this->model->getInputType()):
     case \Core\Attrs\Model\AttributeModel::INPUT_TYPE_TEXTBOX:
@@ -80,7 +80,6 @@ $names = $this->model->getNames(array());
 $dlabels = $this->model->getDisplayLabels(array());
 $flabels = $this->model->getFormLabels(array());
 foreach($this->locale->getLanguages() as $lang):
-
     $f->beginGroup('tab_lang_'.$lang['code'], $lang['name']);
     $f->addInputField('text', $this->locale->_('text'), 'display_label_'.$lang['id'], 'data[display_text]['.$lang['id'].']',
         array_key_exists($lang['id'], $dlabels)? $dlabels[$lang['id']]: '')

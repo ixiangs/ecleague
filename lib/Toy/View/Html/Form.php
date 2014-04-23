@@ -71,7 +71,17 @@ class Form extends Element
 
     public function addCheckboxListField($options, $label, $id, $name, $value = null)
     {
-        $f = new CheckboxListField($label);
+        $f = new OptionListField($label, true);
+        $f->getInput()
+            ->setAttribute(array('id' => $id, 'name' => $name, 'value' => $value))
+            ->setOptions($options);
+        $this->addField($f);
+        return $f;
+    }
+
+    public function addRadioButtonListField($options, $label, $id, $name, $value = null)
+    {
+        $f = new OptionListField($label, false);
         $f->getInput()
             ->setAttribute(array('id' => $id, 'name' => $name, 'value' => $value))
             ->setOptions($options);

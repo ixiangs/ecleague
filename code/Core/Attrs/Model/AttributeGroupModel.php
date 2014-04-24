@@ -15,8 +15,9 @@ Orm\Model::register('Core\Attrs\Model\AttributeGroupModel', array(
         Orm\IntegerProperty::create('id')->setPrimaryKey(true)->setAutoIncrement(true),
         Orm\StringProperty::create('code')->setNullable(false)->setUnique(true),
         Orm\BooleanProperty::create('enabled')->setNullable(false),
-        Orm\SerializeProperty::create('names')->setNullable(false),
+        Orm\SerializeProperty::create('name')->setNullable(false),
         Orm\ListProperty::create('attribute_ids')->setNullable(false),
-        Orm\StringProperty::create('component_code')->setNullable(false)
+        Orm\StringProperty::create('component_code')->setNullable(false),
+        Orm\SerializeProperty::create('memo')->setNullable(false)
     )
 ));

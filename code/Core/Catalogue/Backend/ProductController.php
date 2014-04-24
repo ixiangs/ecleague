@@ -2,7 +2,6 @@
 namespace Core\Catalogue\Backend;
 
 use Ecleague\Tops;
-use Toy\Data\Helper;
 use Toy\Web;
 
 class ProductController extends Web\Controller
@@ -35,14 +34,13 @@ class ProductController extends Web\Controller
                     ->bindAttributeSet()
                     ->fillArray($post['data']);
         $vr = $model->validateProperties();
+//        print_r($vr);
+//        die();
         if ($vr !== true) {
             $this->session->set('errors', $locale->_('err_input_invalid'));
             return $this->getEditTemplateResult($model);
         }
 
-        $langId = $locale->getCurrentLanguageId();
-        $model->setName(array($langId=>$post['data']['name']))
-              ->setDescription(array($langId=>$post['data']['description']));
         if($model->insert()){
             return Web\Result::redirectResult($this->router->buildUrl('list'));
         }else{
@@ -60,7 +58,9 @@ class ProductController extends Web\Controller
     public function editPostAction()
     {
         $locale = $this->context->locale;
-        $m = Tops::loadModel('catalogue/product')->fillArray($this->request->getPost('data'));
+        $m = Tops::loadModel('catalogue/product')
+                    ->load($this->request->getPost('id'))
+                    ->fillArray($this->request->getPost('data'));
 
         $vr = $m->validateProperties();
         if ($vr !== true) {

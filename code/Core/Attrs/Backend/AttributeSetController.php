@@ -1,6 +1,7 @@
 <?php
 namespace Core\Attrs\Backend;
 
+use Ecleague\Tops;
 use Toy\Data\Helper;
 use Toy\Util\ArrayUtil;
 use Toy\Web;
@@ -11,8 +12,8 @@ class AttributeSetController extends Web\Controller
     public function listAction()
     {
         $pi = $this->request->getParameter("pageindex", 1);
-        $count = \Ecleague\Tops::loadModel('attrs/attributeSet')->find()->selectCount()->execute()->getFirstValue();
-        $models = \Ecleague\Tops::loadModel('attrs/attributeSet')->find()
+        $count = Tops::loadModel('attrs/attributeSet')->find()->selectCount()->execute()->getFirstValue();
+        $models = Tops::loadModel('attrs/attributeSet')->find()
             ->asc('code')
             ->limit(PAGINATION_SIZE, ($pi - 1) * PAGINATION_SIZE)
             ->load();
@@ -23,16 +24,31 @@ class AttributeSetController extends Web\Controller
         );
     }
 
+    public function groupsAction($id)
+    {
+        $m = Tops::loadModel('attrs/attributeSet')->load($id);
+        $groups = $m->getGroupAttributes();
+        $attributes = Tops::loadModel('attrs/attribute')
+                        ->find()
+                        ->eq('component_code', 'ixiangs_catalogue')
+                        ->load();
+        return Web\Result::templateResult(array(
+            'model' => $m,
+            'groups'=>$groups,
+            'attributes'=>$attributes
+        ));
+    }
+
     public function addAction()
     {
-        $model = \Ecleague\Tops::loadModel('attrs/attributeSet');
+        $model = Tops::loadModel('attrs/attributeSet');
         return $this->getEditTemplateResult($model);
     }
 
     public function addPostAction()
     {
         $locale = $this->context->locale;
-        $m = \Ecleague\Tops::loadModel('attrs/attributeSet')->fillArray($this->request->getPost('data'));
+        $m = Tops::loadModel('attrs/attributeSet')->fillArray($this->request->getPost('data'));
 
         $vr = $m->validateProperties();
         if ($vr !== true) {
@@ -55,7 +71,7 @@ class AttributeSetController extends Web\Controller
 
     public function editAction($id)
     {
-        $m = \Ecleague\Tops::loadModel('attrs/attributeSet');
+        $m = Tops::loadModel('attrs/attributeSet');
         $m->load($id);
         return $this->getEditTemplateResult($m);
     }
@@ -63,7 +79,7 @@ class AttributeSetController extends Web\Controller
     public function editPostAction()
     {
         $locale = $this->context->locale;
-        $m = \Ecleague\Tops::loadModel('attrs/attributeSet')
+        $m = Tops::loadModel('attrs/attributeSet')
                 ->merge($this->request->getPost('id'), $this->request->getPost('data'));
         $vr = $m->validateProperties();
         if ($vr !== true) {
@@ -82,7 +98,7 @@ class AttributeSetController extends Web\Controller
     public function deleteAction($id)
     {
         $lang = $this->context->locale;
-        $m = \Ecleague\Tops::loadModel('attrs/attribute')->load($id);
+        $m = Tops::loadModel('attrs/attribute')->load($id);
 
         if (!$m) {
             $this->session->set('errors', $lang->_('err_system'));
@@ -99,11 +115,11 @@ class AttributeSetController extends Web\Controller
     private function getEditTemplateResult($model)
     {
         $lid = $this->context->locale->getCurrentLanguageId();
-        $attrs = \Ecleague\Tops::loadModel('attrs/attributeGroup')->find()->load()
+        $attrs = Tops::loadModel('attrs/attributeGroup')->find()->load()
                     ->toArray(function($item) use($lid){
-                        return array($item->getId(), $item->names[$lid]);
+                        return array($item->getId(), $item->name[$lid].'('.$item->memo[$lid].')');
                     });
-        $coms = \Ecleague\Tops::loadModel('admin/component')
+        $coms = Tops::loadModel('admin/component')
             ->find()->execute()->combineColumns('code', 'name');
         return Web\Result::templateResult(
             array('model' => $model, 'attributes'=>$attrs, 'components'=>$coms),

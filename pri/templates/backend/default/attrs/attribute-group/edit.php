@@ -26,8 +26,9 @@ $f->endGroup();
 
 foreach($this->locale->getLanguages() as $lang):
     $f->beginGroup('tab_lang_'.$lang['code'], $lang['name']);
-    $f->addInputField('text', $this->locale->_('name'), 'name_'.$lang['id'], 'data[names]['.$lang['id'].']', $this->model->getCode())
+    $f->addInputField('text', $this->locale->_('name'), 'name_'.$lang['id'], 'data[name]['.$lang['id'].']', $this->model->name[$lang['id']])
         ->addValidateRule('required', true);
+    $f->addInputField('text', $this->locale->_('memo'), 'memo_'.$lang['id'], 'data[memo]['.$lang['id'].']', $this->model->name[$lang['id']]);
     $f->endGroup();
 endforeach;
 

@@ -4,10 +4,8 @@ namespace Core\Attrs\Model;
 use Core\Locale\Localize;
 use Toy\Orm;
 use Toy\Util\ArrayUtil;
-use Toy\View\Html\CheckboxListField;
 use Toy\View\Html\InputField;
 use Toy\View\Html\OptionListField;
-use Toy\View\Html\RadioButtonListField;
 use Toy\View\Html\SelectField;
 
 class AttributeModel extends Orm\Model
@@ -17,6 +15,7 @@ class AttributeModel extends Orm\Model
 
     const INPUT_TYPE_TEXTBOX = 'textbox';
     const INPUT_TYPE_TEXTAREA = 'textarea';
+    const INPUT_TYPE_EDITOR = 'editor';
     const INPUT_TYPE_DROPDOWN = 'dropdown';
     const INPUT_TYPE_LISTBOX = 'listbox';
     const INPUT_TYPE_CHECKBOX_LIST = 'checkbox_list';

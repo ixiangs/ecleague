@@ -20,14 +20,19 @@ $f->addInputField('text', $this->locale->_('code'), 'code', 'data[code]', $this-
     ->addValidateRule('required', true);
 $f->addSelectField(array('1'=>$this->locale->_('yes'), '0'=>$this->locale->_('no')),
     $this->locale->_('enable'), 'enabled', 'data[enabled]', $this->model->getEnabled());
-$f->addCheckboxListField($this->attributes, $this->locale->_('attrs_attribute_group'), '', 'data[group_ids][]', $this->model->getGroupIds())
+$f->endGroup();
+
+$f->beginGroup('tab_group', $this->locale->_('attrs_attribute_group'));
+$f->addCheckboxListField($this->attributes, '', '', 'data[group_ids][]', $this->model->getGroupIds())
+    ->setLabelVisiable(false)
     ->addValidateRule('required', true);
 $f->endGroup();
 
 foreach($this->locale->getLanguages() as $lang):
     $f->beginGroup('tab_lang_'.$lang['code'], $lang['name']);
-    $f->addInputField('text', $this->locale->_('name'), 'name_'.$lang['id'], 'data[names]['.$lang['id'].']', $this->model->names[$lang['id']])
+    $f->addInputField('text', $this->locale->_('name'), 'name_'.$lang['id'], 'data[name]['.$lang['id'].']', $this->model->name[$lang['id']])
         ->addValidateRule('required', true);
+    $f->addInputField('text', $this->locale->_('memo'), 'memo_'.$lang['id'], 'data[memo]['.$lang['id'].']', $this->model->memo[$lang['id']]);
     $f->endGroup();
 endforeach;
 

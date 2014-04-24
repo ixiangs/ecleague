@@ -25,6 +25,7 @@ $dataTypes = array(
 $inputTypes = array(
     \Core\Attrs\Model\AttributeModel::INPUT_TYPE_TEXTBOX=>$this->locale->_('attrs_input_type_textbox'),
     \Core\Attrs\Model\AttributeModel::INPUT_TYPE_TEXTAREA=>$this->locale->_('attrs_input_type_textarea'),
+    \Core\Attrs\Model\AttributeModel::INPUT_TYPE_EDITOR=>$this->locale->_('attrs_input_type_editor'),
     \Core\Attrs\Model\AttributeModel::INPUT_TYPE_DROPDOWN=>$this->locale->_('attrs_input_type_dropdown'),
     \Core\Attrs\Model\AttributeModel::INPUT_TYPE_LISTBOX=>$this->locale->_('attrs_input_type_listbox'),
     \Core\Attrs\Model\AttributeModel::INPUT_TYPE_DATE_PICKER=>$this->locale->_('attrs_input_type_datepicker'),
@@ -77,16 +78,15 @@ endswitch;
 $f->endGroup();
 
 $names = $this->model->getNames(array());
-$dlabels = $this->model->getDisplayLabels(array());
-$flabels = $this->model->getFormLabels(array());
+$dlabels = $this->model->getDisplayText(array());
+$flabels = $this->model->getMemo(array());
 foreach($this->locale->getLanguages() as $lang):
     $f->beginGroup('tab_lang_'.$lang['code'], $lang['name']);
     $f->addInputField('text', $this->locale->_('text'), 'display_label_'.$lang['id'], 'data[display_text]['.$lang['id'].']',
         array_key_exists($lang['id'], $dlabels)? $dlabels[$lang['id']]: '')
         ->addValidateRule('required', true);
     $f->addInputField('text', $this->locale->_('memo'), 'memo_'.$lang['id'], 'data[memo]['.$lang['id'].']',
-        array_key_exists($lang['id'], $flabels)? $flabels[$lang['id']]: '')
-        ->addValidateRule('required', true);
+        array_key_exists($lang['id'], $flabels)? $flabels[$lang['id']]: '');
     $f->endGroup();
 endforeach;
 $f->addHiddenField('main_data_type', 'data[data_type]', $this->model->getDataType());

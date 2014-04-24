@@ -1,6 +1,7 @@
 <?php
 namespace Core\Attrs\Backend;
 
+use Ecleague\Tops;
 use Toy\Data\Helper;
 use Toy\Util\ArrayUtil;
 use Toy\Web;
@@ -11,8 +12,8 @@ class AttributeController extends Web\Controller
     public function listAction()
     {
         $pi = $this->request->getParameter("pageindex", 1);
-        $count = \Ecleague\Tops::loadModel('attrs/attribute')->find()->selectCount()->execute()->getFirstValue();
-        $models = \Ecleague\Tops::loadModel('attrs/attribute')->find()
+        $count = Tops::loadModel('attrs/attribute')->find()->selectCount()->execute()->getFirstValue();
+        $models = Tops::loadModel('attrs/attribute')->find()
             ->asc('name')
             ->limit(PAGINATION_SIZE, ($pi - 1) * PAGINATION_SIZE)
             ->load();
@@ -30,7 +31,7 @@ class AttributeController extends Web\Controller
 
     public function addAction()
     {
-        $model = \Ecleague\Tops::loadModel('attrs/attribute')->fillArray(array(
+        $model = Tops::loadModel('attrs/attribute')->fillArray(array(
             'data_type' => $this->request->getQuery('data_type'),
             'input_type' => $this->request->getQuery('input_type')
         ));
@@ -40,7 +41,7 @@ class AttributeController extends Web\Controller
     public function addPostAction()
     {
         $locale = $this->context->locale;
-        $m = \Ecleague\Tops::loadModel('attrs/attribute')->fillArray($this->request->getPost('data'));
+        $m = Tops::loadModel('attrs/attribute')->fillArray($this->request->getPost('data'));
 
         $vr = $m->validateProperties();
         if ($vr !== true) {
@@ -64,7 +65,7 @@ class AttributeController extends Web\Controller
 
     public function editAction($id)
     {
-        $m = \Ecleague\Tops::loadModel('attrs/attribute');
+        $m = Tops::loadModel('attrs/attribute');
         $m->load($id);
         return $this->getEditTemplateResult($m);
     }
@@ -72,7 +73,7 @@ class AttributeController extends Web\Controller
     public function editPostAction()
     {
         $locale = $this->context->locale;
-        $m = \Ecleague\Tops::loadModel('attrs/attribute')->fillArray($this->request->getPost('data'));
+        $m = Tops::loadModel('attrs/attribute')->fillArray($this->request->getPost('data'));
 
         $vr = $m->validateProperties();
         if ($vr !== true) {
@@ -91,7 +92,7 @@ class AttributeController extends Web\Controller
     public function deleteAction($id)
     {
         $lang = $this->context->locale;
-        $m = \Ecleague\Tops::loadModel('attrs/attribute')->load($id);
+        $m = Tops::loadModel('attrs/attribute')->load($id);
 
         if (!$m) {
             $this->session->set('errors', $lang->_('err_system'));
@@ -107,10 +108,8 @@ class AttributeController extends Web\Controller
 
     public function optionsAction($attributeid)
     {
-        $attr = \Ecleague\Tops::loadModel('attrs/attribute')->load($attributeid);
+        $attr = Tops::loadModel('attrs/attribute')->load($attributeid);
         $options = $attr->getOptions();
-//        print_r($options);
-//        die();
         return Web\Result::templateResult(array(
             'attribute' => $attr,
             'options' => $options
@@ -120,7 +119,7 @@ class AttributeController extends Web\Controller
     public function optionsPostAction($attributeid)
     {
         $lang = $this->context->locale;
-        $attr = \Ecleague\Tops::loadModel('attrs/attribute')->load($this->request->getPost('attribute_id'));
+        $attr = Tops::loadModel('attrs/attribute')->load($this->request->getPost('attribute_id'));
         $options = $this->request->getPost('options');
         //check unique
         $repeated = ArrayUtil::contains(array_count_values(
@@ -151,7 +150,7 @@ class AttributeController extends Web\Controller
 
     private function getEditTemplateResult($model)
     {
-        $coms = \Ecleague\Tops::loadModel('admin/component')
+        $coms = Tops::loadModel('admin/component')
             ->find()->execute()->combineColumns('code', 'name');
         return Web\Result::templateResult(
             array('model' => $model, 'components' => $coms),

@@ -15,13 +15,13 @@ $this->assign('toolbar', array(
 $langId = $this->locale->getCurrentLanguageId();
 $f = $this->html->groupedForm();
 $f->beginGroup('base_info', $this->locale->_('base_info'));
-$f->addInputField('text', $this->locale->_('name'), 'name', 'data[name]', $this->model->name[$langId])
+$f->addInputField('text', $this->locale->_('name'), 'name', 'data[name]', $this->model->name)
     ->addValidateRule('required', true);
 $f->addInputField('text', $this->locale->_('catalogue_sku'), 'sku', 'data[sku]', $this->model->getSku())
     ->addValidateRule('required', true);
 $f->addSelectField(array('1' => $this->locale->_('yes'), '0' => $this->locale->_('no')),
     $this->locale->_('enable'), 'enabled', 'data[enabled]', $this->model->getEnabled());
-$f->addTextareaField($this->locale->_('description'), 'description', 'data[description]', $this->model->getSku())
+$f->addTextareaField($this->locale->_('description'), 'description', 'data[description]', $this->model->description)
     ->addValidateRule('required', true);
 $f->endGroup();
 
@@ -30,7 +30,7 @@ $clangId = $clang['id'];
 foreach($this->attributeSet->getGroups() as $attrGroup):
     $f->beginGroup($attrGroup->getCode(), $attrGroup->names[$clangId]);
     foreach($attrGroup->getAttributes() as $attr):
-        $av = $this->model->extension_data[$attr->getName()];
+        $av = $this->model->getData($attr->getName());
         $field = $attr->toFormField();
         $field->getInput()->setAttribute('value', $av);
         $f->addField($field);
@@ -38,5 +38,6 @@ foreach($this->attributeSet->getGroups() as $attrGroup):
     $f->endGroup();
 endforeach;
 $f->addHiddenField('id', 'id', $this->model->getId());
+$f->addHiddenField('attribute_set_id', 'data[attribute_set_id]', 1);
 $this->assign('form', $f);
 echo $this->includeTemplate('layout\form');

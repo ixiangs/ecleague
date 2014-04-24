@@ -10,17 +10,8 @@ $this->assign('navigationBar', array(
 $clang = $this->locale->getCurrentLanguage();
 $dt = $this->html->grid($this->models);
 $dt->addIndexColumn('#', 'index', 'index');
-$dt->addLabelColumn($this->locale->_('name'), '{name}', '', 'left')
-    ->setCellRenderer(function($col, $row) use($clang){
-        $col->getCell()->getChild(0)
-            ->removeBindableAttribute('text')
-            ->setAttribute('text', $row->name[$clang['id']]);
-        return $col->getCell()->renderBegin().$col->getCell()->renderInner().$col->getCell()->renderEnd();
-    });
-//$dt->addLabelColumn($this->locale->_('name'), '{last_name} {first_name}', 'middle');
-//$dt->addLabelColumn($this->locale->_('gender'), '{gender}', 'small');
-//$dt->addLabelColumn($this->locale->_('email'), '{email}');
-//$dt->addLabelColumn($this->locale->_('mobile'), '{mobile}', 'middle');
+$dt->addLabelColumn('SKU', '{sku}', 'large', 'left');
+$dt->addLabelColumn($this->locale->_('name'), '{name}', '', 'left');
 $dt->addLinkColumn('', $this->locale->_('edit'), urldecode($this->router->buildUrl('edit', array('id'=>'{id}'))), 'edit', 'edit');
 $dt->addLinkButtonColumn('', $this->locale->_('delete'), "deleteConfirm('".urldecode($this->router->buildUrl('delete', array('id'=>'{id}')))."')", 'edit', 'edit');
 $this->assign('datatable', $dt);

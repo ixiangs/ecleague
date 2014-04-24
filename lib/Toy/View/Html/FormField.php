@@ -7,7 +7,7 @@ abstract class FormField extends Element
     protected $input = null;
     protected $validateRules = array();
     protected $description = null;
-    protected $horizontalLayout = true;
+    protected $labelVisiable = true;
 
     public function __construct($label)
     {
@@ -39,15 +39,15 @@ abstract class FormField extends Element
         return $this;
     }
 
-    public function setHorizontalLayout($value)
+    public function setLabelVisiable($value)
     {
-        $this->horizontalLayout = $value;
+        $this->labelVisiable = $value;
         return $this;
     }
 
-    public function getHorizontalLayout()
+    public function getLabelVisiable()
     {
-        return $this->horizontalLayout;
+        return $this->labelVisiable;
     }
 
     public function getValidateRules()
@@ -84,15 +84,12 @@ abstract class FormField extends Element
         }
 
         $html = array($this->renderBegin());
-        if ($this->horizontalLayout) {
+        if($this->labelVisiable){
             $html[] = '<label class="col-sm-1 control-label">' . $this->label . '</label>';
-            $html[] = '<div class="col-sm-9">';
-            $html[] = $this->renderInput();
-            $html[] = '</div>';
-        } else {
-            $html[] = $this->label ? '<label class="col-sm-1 control-label">' . $this->label . '</label>' : '';
-            $html[] = $this->renderInput();
         }
+        $html[] = '<div class="col-sm-9">';
+        $html[] = $this->renderInput();
+        $html[] = '</div>';
         $html[] = $this->renderEnd();
 
         return implode('', $html);

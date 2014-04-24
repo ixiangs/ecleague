@@ -17,6 +17,7 @@ abstract class Model implements \ArrayAccess, \Iterator
     protected $relations = array();
     protected $idProperty = null;
     protected $changedProperties = array();
+    protected $originalData = array();
     protected $data = array();
 
     public function __construct($data = array())
@@ -379,12 +380,9 @@ abstract class Model implements \ArrayAccess, \Iterator
     {
         $props = $this->getProperties();
         foreach ($row as $field => $value) {
-            if (array_key_exists($field, $props)) {
-                $this->data[$field] = $props[$field]->fromDbValue($value);
-            } else {
-                $this->data[$field] = $value;
-            }
+            $this->data[$field] = array_key_exists($field, $props)? $props[$field]->fromDbValue($value): $value;
         }
+        $this->originalData = $this->data;
         return $this;
     }
 

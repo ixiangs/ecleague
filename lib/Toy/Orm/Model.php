@@ -55,7 +55,7 @@ abstract class Model implements \ArrayAccess, \Iterator
         if ($st == 'get') {
             $pn = self::getUnderlineName(substr($name, 3));
             if ($nums == 1) {
-                return $this->getData($pn, $arguments);
+                return $this->getData($pn, $arguments[0]);
             }
             return $this->getData($pn);
         } elseif ($st == 'set') {
@@ -184,6 +184,9 @@ abstract class Model implements \ArrayAccess, \Iterator
     public function getData($name, $default = null)
     {
         if (array_key_exists($name, $this->data)) {
+            if(is_null($this->data[$name])){
+                return $default;
+            }
             return $this->data[$name];
         }
 

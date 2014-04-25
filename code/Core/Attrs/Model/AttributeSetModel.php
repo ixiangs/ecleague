@@ -10,8 +10,12 @@ class AttributeSetModel extends Orm\Model{
 
     public function getGroupAttributes()
     {
+        if(count($this->getGroupIds()) == 0){
+            return array();
+        }
+
         $groups = Tops::loadModel('attrs/attributeGroup')
-            ->find()->in('id', $this->getGroupIds())
+            ->find()->in('id', $this->group_ids)
             ->load();
 
         $attrIds = array();
@@ -45,8 +49,8 @@ Orm\Model::register('Core\Attrs\Model\AttributeSetModel', array(
         Orm\StringProperty::create('code')->setNullable(false),
         Orm\BooleanProperty::create('enabled')->setNullable(false),
         Orm\SerializeProperty::create('name')->setNullable(false),
-        Orm\ListProperty::create('group_ids')->setNullable(false),
-        Orm\StringProperty::create('component_code')->setNullable(false),
+        Orm\SerializeProperty::create('group_ids'),
+        Orm\IntegerProperty::create('component_id')->setNullable(false),
         Orm\SerializeProperty::create('memo')->setNullable(false)
     )
 ));

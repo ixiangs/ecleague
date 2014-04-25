@@ -1,7 +1,8 @@
 <?php
 $this->assign('breadcrumb', array(
     $this->html->anchor($this->locale->_('attrs_manage')),
-    $this->html->anchor($this->locale->_('attrs_attribute_group'))
+//    $this->html->anchor($this->locale->_('attrs_attribute_group')),
+    $this->html->anchor($this->locale->_('attrs_new_group'))
 ));
 
 $this->assign('navigationBar', array(
@@ -14,14 +15,10 @@ $this->assign('toolbar', array(
 
 $f = $this->html->groupedForm();
 $f->beginGroup('tab_base', $this->locale->_('base_info'));
-$f->addSelectField($this->components, $this->locale->_('attrs_owner_component'), 'component_code', 'data[component_code]',
-    $this->model->getComponentCode());
 $f->addInputField('text', $this->locale->_('code'), 'code', 'data[code]', $this->model->getCode())
     ->addValidateRule('required', true);
 $f->addSelectField(array('1'=>$this->locale->_('yes'), '0'=>$this->locale->_('no')),
     $this->locale->_('enable'), 'enabled', 'data[enabled]', $this->model->getEnabled());
-$f->addCheckboxListField($this->attributes, $this->locale->_('attrs_attribute_list'), '', 'data[attribute_ids][]', $this->model->getAttributeIds())
-    ->addValidateRule('required', true);
 $f->endGroup();
 
 foreach($this->locale->getLanguages() as $lang):
@@ -33,5 +30,6 @@ foreach($this->locale->getLanguages() as $lang):
 endforeach;
 
 $f->addHiddenField('id', 'id', $this->model->getId());
+$f->addHiddenField('component_id', 'data[component_id]', $this->model->getComponentId());
 $this->assign('form', $f);
 echo $this->includeTemplate('layout\form');

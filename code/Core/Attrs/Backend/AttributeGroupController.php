@@ -1,6 +1,7 @@
 <?php
 namespace Core\Attrs\Backend;
 
+use Ecleague\Tops;
 use Toy\Data\Helper;
 use Toy\Util\ArrayUtil;
 use Toy\Web;
@@ -11,8 +12,8 @@ class AttributeGroupController extends Web\Controller
     public function listAction()
     {
         $pi = $this->request->getParameter("pageindex", 1);
-        $count = \Ecleague\Tops::loadModel('attrs/attributeGroup')->find()->selectCount()->execute()->getFirstValue();
-        $models = \Ecleague\Tops::loadModel('attrs/attributeGroup')->find()
+        $count = Tops::loadModel('attrs/attributeGroup')->find()->selectCount()->execute()->getFirstValue();
+        $models = Tops::loadModel('attrs/attributeGroup')->find()
             ->asc('code')
             ->limit(PAGINATION_SIZE, ($pi - 1) * PAGINATION_SIZE)
             ->load();
@@ -25,23 +26,19 @@ class AttributeGroupController extends Web\Controller
 
     public function addAction()
     {
-        $model = \Ecleague\Tops::loadModel('attrs/attributeGroup');
+        $model = Tops::loadModel('attrs/attributeGroup')
+                    ->setComponentId($this->request->getQuery('component_id'));
         return $this->getEditTemplateResult($model);
     }
 
     public function addPostAction()
     {
         $locale = $this->context->locale;
-        $m = \Ecleague\Tops::loadModel('attrs/attributeGroup')->fillArray($this->request->getPost('data'));
+        $m = Tops::loadModel('attrs/attributeGroup')->fillArray($this->request->getPost('data'));
 
         $vr = $m->validateProperties();
         if ($vr !== true) {
             $this->session->set('errors', $locale->_('err_input_invalid'));
-            return $this->getEditTemplateResult($m);
-        }
-
-        if ($m->validateUnique() !== true) {
-            $this->session->set('errors', $locale->_('attrs_err_attribute_group_exists', $m->getCode()));
             return $this->getEditTemplateResult($m);
         }
 
@@ -50,12 +47,16 @@ class AttributeGroupController extends Web\Controller
             return $this->getEditTemplateResult($m);
         }
 
-        return Web\Result::redirectResult($this->router->buildUrl('list'));
+        $as = Tops::loadModel('attrs/attributeSet')->load($this->request->getQuery('set_id'));
+        $as->setGroupIds(array_merge($as->getGroupIds(array()), array($m->getId())));
+        $as->update();
+
+        return Web\Result::redirectResult($this->router->buildUrl('attribute-set/groups', array('id'=>$this->request->getQuery('set_id'))));
     }
 
     public function editAction($id)
     {
-        $m = \Ecleague\Tops::loadModel('attrs/attributeGroup');
+        $m = Tops::loadModel('attrs/attributeGroup');
         $m->load($id);
         return $this->getEditTemplateResult($m);
     }
@@ -63,7 +64,7 @@ class AttributeGroupController extends Web\Controller
     public function editPostAction()
     {
         $locale = $this->context->locale;
-        $m = \Ecleague\Tops::loadModel('attrs/attributeGroup')
+        $m = Tops::loadModel('attrs/attributeGroup')
                 ->merge($this->request->getPost('id'), $this->request->getPost('data'));
         $vr = $m->validateProperties();
         if ($vr !== true) {
@@ -82,7 +83,7 @@ class AttributeGroupController extends Web\Controller
     public function deleteAction($id)
     {
         $lang = $this->context->locale;
-        $m = \Ecleague\Tops::loadModel('attrs/attribute')->load($id);
+        $m = Tops::loadModel('attrs/attribute')->load($id);
 
         if (!$m) {
             $this->session->set('errors', $lang->_('err_system'));
@@ -98,15 +99,8 @@ class AttributeGroupController extends Web\Controller
 
     private function getEditTemplateResult($model)
     {
-        $lid = $this->context->locale->getCurrentLanguageId();
-        $attrs = \Ecleague\Tops::loadModel('attrs/attribute')->find()->load()
-                    ->toArray(function($item) use($lid){
-                        return array($item->getId(), $item->display_text[$lid]);
-                    });
-        $coms = \Ecleague\Tops::loadModel('admin/component')
-            ->find()->execute()->combineColumns('code', 'name');
         return Web\Result::templateResult(
-            array('model' => $model, 'attributes'=>$attrs, 'components'=>$coms),
+            array('model' => $model),
             'attrs/attribute-group/edit'
         );
     }

@@ -28,14 +28,21 @@ class AttributeSetController extends Web\Controller
     {
         $m = Tops::loadModel('attrs/attributeSet')->load($id);
         $groups = $m->getGroupAttributes();
-        $attributes = Tops::loadModel('attrs/attribute')
+        $selectedIds = array();
+        foreach($groups as $group){
+            foreach($group->getAttributes() as $attribute){
+                $selectedIds[] = $attribute->getId();
+            }
+        }
+        $unattributes = Tops::loadModel('attrs/attribute')
                         ->find()
-                        ->eq('component_code', 'ixiangs_catalogue')
+                        ->eq('component_id', $m->getComponentId())
+                        ->notIn('id', $selectedIds)
                         ->load();
         return Web\Result::templateResult(array(
             'model' => $m,
             'groups'=>$groups,
-            'attributes'=>$attributes
+            'unattributes'=>$unattributes
         ));
     }
 
@@ -66,7 +73,7 @@ class AttributeSetController extends Web\Controller
             return $this->getEditTemplateResult($m);
         }
 
-        return Web\Result::redirectResult($this->router->buildUrl('list'));
+        return Web\Result::redirectResult($this->router->buildUrl('groups', array('id'=>$m->getId())));
     }
 
     public function editAction($id)
@@ -115,14 +122,10 @@ class AttributeSetController extends Web\Controller
     private function getEditTemplateResult($model)
     {
         $lid = $this->context->locale->getCurrentLanguageId();
-        $attrs = Tops::loadModel('attrs/attributeGroup')->find()->load()
-                    ->toArray(function($item) use($lid){
-                        return array($item->getId(), $item->name[$lid].'('.$item->memo[$lid].')');
-                    });
         $coms = Tops::loadModel('admin/component')
-            ->find()->execute()->combineColumns('code', 'name');
+            ->find()->execute()->combineColumns('id', 'name');
         return Web\Result::templateResult(
-            array('model' => $model, 'attributes'=>$attrs, 'components'=>$coms),
+            array('model' => $model, 'components'=>$coms),
             'attrs/attribute-set/edit'
         );
     }

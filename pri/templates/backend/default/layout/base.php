@@ -8,6 +8,7 @@
 
     <link href="/pub/assets/css/bootstrap.min.css" rel="stylesheet">
     <link href="/pub/assets/css/bootstrap-theme.min.css" rel="stylesheet">
+    <link href="/pub/assets/css/jquery-ui.css" rel="stylesheet">
     <link href="/pub/assets/css/font-awesome.css" rel="stylesheet">
 <!--    <link href="/pub/assets/css/jquery-ui.css" rel="stylesheet">-->
     <link href="/pub/assets/css/base-admin.css" rel="stylesheet">
@@ -15,6 +16,7 @@
     <?php echo $this->renderBlock('headcss'); ?>
     <link href="/pub/assets/css/admin.css" rel="stylesheet">
     <script src="/pub/assets/js/libs.js"></script>
+    <script src="/pub/assets/js/jquery-ui.js"></script>
     <script src="/pub/assets/js/bootstrap.min.js"></script>
     <script src="/pub/assets/js/toy/core.js"></script>
     <script src="/pub/assets/js/toy/html.js"></script>

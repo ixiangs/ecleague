@@ -49,3 +49,26 @@ table.table tbody tr td.true{color:#2b542c;}
 
 .panel .dd{float:none;max-width:none;width: 100%;}
 .panel .dd .dd-handle{-webkit-border-radius: 0;border-radius: 0;cursor: move;}
+
+.ui-state-highlight{
+    border: 1px dashed #080808;
+    height: 50px;
+    margin-bottom: 20px;
+}
+.sortable{
+    padding: 5px 0 5px 0;
+}
+.ui-state-default{
+     margin: 5px 0 5px 0;
+     padding: 5px 5px 5px 5px;
+     list-style: none;
+     background-color: #f7f7f9;
+     border: 1px solid #e1e1e8;
+ }
+.ui-state-default .fa{
+    cursor:move;
+}
+.panel-heading .fa{
+    margin-right: 5px;
+    cursor:move;
+}

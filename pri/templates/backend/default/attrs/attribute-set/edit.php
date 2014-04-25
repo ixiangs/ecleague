@@ -1,7 +1,8 @@
 <?php
 $this->assign('breadcrumb', array(
     $this->html->anchor($this->locale->_('attrs_manage')),
-    $this->html->anchor($this->locale->_('attrs_attribute_set'))
+    $this->html->anchor($this->locale->_('attrs_attribute_set')),
+    $this->html->anchor($this->locale->_('attrs_new_attribute_set'))
 ));
 
 $this->assign('navigationBar', array(
@@ -9,24 +10,19 @@ $this->assign('navigationBar', array(
 ));
 
 $this->assign('toolbar', array(
-    $this->html->button('button', $this->locale->_('save'), 'btn btn-primary')->setAttribute('data-submit', 'form1')
+    $this->html->button('button', $this->locale->_('next_step'), 'btn btn-primary')->setAttribute('data-submit', 'form1')
 ));
 
 $f = $this->html->groupedForm();
 $f->beginGroup('tab_base', $this->locale->_('base_info'));
-$f->addSelectField($this->components, $this->locale->_('attrs_owner_component'), 'component_code', 'data[component_code]',
-    $this->model->getComponentCode());
+$f->addSelectField($this->components, $this->locale->_('attrs_owner_component'), 'component_id', 'data[component_id]',
+    $this->model->getComponentId());
 $f->addInputField('text', $this->locale->_('code'), 'code', 'data[code]', $this->model->getCode())
     ->addValidateRule('required', true);
 $f->addSelectField(array('1'=>$this->locale->_('yes'), '0'=>$this->locale->_('no')),
     $this->locale->_('enable'), 'enabled', 'data[enabled]', $this->model->getEnabled());
 $f->endGroup();
 
-$f->beginGroup('tab_group', $this->locale->_('attrs_attribute_group'));
-$f->addCheckboxListField($this->attributes, '', '', 'data[group_ids][]', $this->model->getGroupIds())
-    ->setLabelVisiable(false)
-    ->addValidateRule('required', true);
-$f->endGroup();
 
 foreach($this->locale->getLanguages() as $lang):
     $f->beginGroup('tab_lang_'.$lang['code'], $lang['name']);

@@ -39,5 +39,7 @@ $f->addSelectField(array(
     $this->locale->_('attrs_input_type'), 'input_type', 'input_type')
     ->addValidateRule('required', true)
     ->getInput()->setCaption('');
+$f->addHiddenField('set_id', 'set_id', $this->request->getQuery('set_id'));
+$f->addHiddenField('component_id', 'component_id', $this->request->getQuery('component_id'));
 $this->assign('form', $f);
 echo $this->includeTemplate('layout\form');

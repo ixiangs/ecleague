@@ -33,7 +33,8 @@ class AttributeController extends Web\Controller
     {
         $model = Tops::loadModel('attrs/attribute')->fillArray(array(
             'data_type' => $this->request->getQuery('data_type'),
-            'input_type' => $this->request->getQuery('input_type')
+            'input_type' => $this->request->getQuery('input_type'),
+            'component_id'=>$this->request->getQuery('component_id')
         ));
         return $this->getEditTemplateResult($model);
     }
@@ -49,15 +50,14 @@ class AttributeController extends Web\Controller
             return $this->getEditTemplateResult($m);
         }
 
-        if (!$m->validateUnique()) {
-            $this->session->set('errors', $locale->_('attrs_err_attribute_exists', $m->getCode()));
-            return $this->getEditTemplateResult($m);
-        }
-
-
         if (!$m->insert()) {
             $this->session->set('errors', $locale->_('err_system'));
             return $this->getEditTemplateResult($m);
+        }
+
+        if($this->request->hasParameter('set_id')){
+            return Web\Result::redirectResult($this->router->buildUrl(
+                'attribute-set/groups', array('id'=>$this->request->getQuery('set_id'))));
         }
 
         return Web\Result::redirectResult($this->router->buildUrl('list'));

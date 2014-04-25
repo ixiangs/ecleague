@@ -93,7 +93,7 @@ Orm\Model::register('Core\Attrs\Model\AttributeModel', array(
         Orm\BooleanProperty::create('required')->setDefaultValue(false)->setNullable(false),
         Orm\BooleanProperty::create('enabled')->setDefaultValue(false)->setNullable(false),
         Orm\BooleanProperty::create('localizable')->setDefaultValue(false)->setNullable(false),
-        Orm\StringProperty::create('component_code')->setNullable(false),
+        Orm\IntegerProperty::create('component_id')->setNullable(false),
         Orm\SerializeProperty::create('display_text')->setNullable(false),
         Orm\SerializeProperty::create('memo')->setNullable(false),
         Orm\SerializeProperty::create('options'),

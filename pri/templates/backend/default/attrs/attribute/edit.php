@@ -37,8 +37,8 @@ $f = $this->html->groupedForm();
 $f->beginGroup('tab_base', $this->locale->_('base_info'));
 $f->addLabelField($this->locale->_('attrs_data_type'), $dataTypes[$this->model->getDataType()]);
 $f->addLabelField($this->locale->_('attrs_input_type'), $inputTypes[$this->model->getInputType()]);
-$f->addSelectField($this->components, $this->locale->_('attrs_owner_component'), 'component_code', 'data[component_code]',
-                    $this->model->getComponentCode());
+//$f->addSelectField($this->components, $this->locale->_('attrs_owner_component'), 'component_code', 'data[component_code]',
+//                    $this->model->getComponentCode());
 $f->addInputField('text', $this->locale->_('name'), 'name', 'data[name]', $this->model->getName())
     ->addValidateRule('required', true);
 $f->addSelectField(array('1'=>$this->locale->_('yes'), '0'=>$this->locale->_('no')),
@@ -89,10 +89,10 @@ foreach($this->locale->getLanguages() as $lang):
         array_key_exists($lang['id'], $flabels)? $flabels[$lang['id']]: '');
     $f->endGroup();
 endforeach;
-$f->addHiddenField('main_data_type', 'data[data_type]', $this->model->getDataType());
-$f->addHiddenField('main_input_type', 'data[input_type]', $this->model->getInputType());
-$f->addHiddenField('main_input_type', 'data[id]', $this->model->getId());
+$f->addHiddenField('data_type', 'data[data_type]', $this->model->getDataType());
+$f->addHiddenField('input_type', 'data[input_type]', $this->model->getInputType());
+$f->addHiddenField('component_id', 'data[component_id]', $this->model->getComponentId());
+$f->addHiddenField('id', 'data[id]', $this->model->getId());
 
-$this->assign('form', $f);
 $this->assign('form', $f);
 echo $this->includeTemplate('layout\form');

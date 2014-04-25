@@ -46,11 +46,6 @@ $f->addSelectField(array('1'=>$this->locale->_('yes'), '0'=>$this->locale->_('no
 $f->addSelectField(array('1'=>$this->locale->_('yes'), '0'=>$this->locale->_('no')),
     $this->locale->_('attrs_localizable'), 'localizable', 'data[localizable]', $this->model->getLocalizable());
 $f->addSelectField(array('1'=>$this->locale->_('yes'), '0'=>$this->locale->_('no')),
-    $this->locale->_('enable'), 'enabled', 'data[enabled]', $this->model->getEnabled());
-$f->endGroup();
-
-$f->beginGroup('tab_input', $this->locale->_('attrs_input_setting'));
-$f->addSelectField(array('1'=>$this->locale->_('yes'), '0'=>$this->locale->_('no')),
     $this->locale->_('attrs_required'), 'required', 'data[required]', $this->model->getEnabled());
 $vs = $this->model->getInputSetting();
 switch($this->model->getInputType()):
@@ -75,6 +70,8 @@ switch($this->model->getInputType()):
         endswitch;
         break;
 endswitch;
+$f->addSelectField(array('1'=>$this->locale->_('yes'), '0'=>$this->locale->_('no')),
+    $this->locale->_('enable'), 'enabled', 'data[enabled]', $this->model->getEnabled());
 $f->endGroup();
 
 $names = $this->model->getNames(array());
@@ -91,7 +88,7 @@ foreach($this->locale->getLanguages() as $lang):
 endforeach;
 $f->addHiddenField('data_type', 'data[data_type]', $this->model->getDataType());
 $f->addHiddenField('input_type', 'data[input_type]', $this->model->getInputType());
-$f->addHiddenField('component_id', 'data[component_id]', $this->model->getComponentId());
+$f->addHiddenField('component_id', 'data[component_id]', $this->model->getId());
 $f->addHiddenField('id', 'data[id]', $this->model->getId());
 
 $this->assign('form', $f);

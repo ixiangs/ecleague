@@ -9,8 +9,10 @@ $langId = $this->locale->getCurrentLanguageId();
         </ol>
         <div class="pull-right">
             <?php
-            echo $this->html->anchor($this->locale->_('attrs_new_group'), $this->router->buildUrl('attribute-group/add',
-                                        array('component_id'=>$this->model->getComponentId(), 'set_id'=>$this->model->getId())))
+            echo $this->html->anchor($this->locale->_('attrs_new_group'),
+                                     $this->router->buildUrl(
+                                         'attribute-group/add',
+                                         array('component_id'=>$this->model->getComponentId(), 'set_id'=>$this->model->getId())))
                 ->setAttribute('class', 'btn btn-default')
                 ->render();
             echo '&nbsp;&nbsp;';
@@ -22,25 +24,20 @@ $langId = $this->locale->getCurrentLanguageId();
         </div>
     </div>
     <div class="row">
+        <form id="form1" method="post">
         <div class="panel panel-default">
             <div class="panel-heading  text-right">
-                <?php echo $this->html->button('button', $this->locale->_('save'), 'btn btn-primary')->setAttribute('data-submit', 'form1')->render(); ?>
+                <?php echo $this->html->button('button', $this->locale->_('save'), 'btn btn-primary')->setAttribute('id', 'save')->render(); ?>
             </div>
             <div class="panel-body">
                 <div class="col-md-8 column">
                     <?php foreach ($this->groups as $group): ?>
                         <div class="panel panel-default">
-                            <div class="panel-heading" data-id="<?php echo $group->getId(); ?>">
+                            <div class="panel-heading">
                                 <i class="fa fa-list fa-fw"></i><?php echo $group->name[$langId] ?>
                             </div>
                             <div class="panel-body">
-                                <ul class="sortable">
-                                    <?php foreach ($this->unattributes as $attr): ?>
-                                        <li class="ui-state-default">
-                                            <i class="fa fa-list fa-fw"></i>
-                                            <?php echo $attr->display_text[$langId]; ?>
-                                        </li>
-                                    <?php endforeach; ?>
+                                <ul class="sortable attribute-group" data-id="<?php echo $group->getId(); ?>">
                                     <?php foreach ($group->getAttributes() as $attr): ?>
                                         <li class="ui-state-default">
                                             <i class="fa fa-list fa-fw"></i>
@@ -60,7 +57,7 @@ $langId = $this->locale->getCurrentLanguageId();
                         <div class="panel-body">
                             <ul class="sortable">
                                 <?php foreach ($this->unattributes as $attr): ?>
-                                    <li class="ui-state-default">
+                                    <li class="ui-state-default attribute" data-id="<?php echo $attr->getId(); ?>">
                                         <i class="fa fa-list fa-fw"></i>
                                         <?php echo $attr->display_text[$langId]; ?>
                                     </li>
@@ -71,6 +68,7 @@ $langId = $this->locale->getCurrentLanguageId();
                 </div>
             </div>
         </div>
+        </form>
     </div>
 <?php
 $this->nextBlock('footerjs');
@@ -85,12 +83,22 @@ $this->nextBlock('footerjs');
             $(".column").sortable({
                 handle: '.fa'
             });
-        });
+            $('#save').click(function(){
+                $('#form1 input[type="hidden"]').remove();
 
-        //        function saveSort(){
-        //            $('#data').val(JSON.encode($('#nestable').nestable('serialize')));
-        //            $('#table_form').submit();
-        //        }
+                $('.attribute-group').each(function(){
+                    var values = [];
+                    var $f = $('#form1');
+
+                    $(this).find('.attribute').each(function(){
+                        values.push($(this).attr('data-id'));
+                    });
+                    for(var i = 0; i < values.length; i++){
+                        $f.append('<input type="hidden" name="groups[' + $(this).attr('data-id') + '][]" value="' + values[i] + '"/>');
+                    }
+                })
+            });
+        });
     </script>
 <?php
 $this->endBlock();

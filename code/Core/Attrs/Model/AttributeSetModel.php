@@ -47,7 +47,7 @@ Orm\Model::register('Core\Attrs\Model\AttributeSetModel', array(
     'properties'=>array(
         Orm\IntegerProperty::create('id')->setPrimaryKey(true)->setAutoIncrement(true),
         Orm\StringProperty::create('code')->setNullable(false),
-        Orm\BooleanProperty::create('enabled')->setNullable(false),
+        Orm\BooleanProperty::create('enabled')->setDefaultValue(true)->setNullable(false),
         Orm\SerializeProperty::create('name')->setNullable(false),
         Orm\SerializeProperty::create('group_ids'),
         Orm\IntegerProperty::create('component_id')->setNullable(false),

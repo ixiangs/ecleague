@@ -1,6 +1,7 @@
 <?php
 $this->assign('breadcrumb', array(
     $this->html->anchor($this->locale->_('attrs_manage')),
+    $this->html->anchor($this->component->getName()),
     $this->html->anchor($this->locale->_('attrs_add_attribute'))
 ));
 
@@ -9,10 +10,13 @@ $this->assign('navigationBar', array(
 ));
 
 $this->assign('toolbar', array(
-    $this->html->button('button', $this->locale->_('save'), 'btn btn-primary')->setAttribute('data-submit', 'form1')
+    $this->html->button('button', $this->locale->_('save'), 'btn btn-primary')
+        ->setAttribute('data-submit', 'form1'),
+    $this->html->button('button', $this->locale->_('save_and_new'), 'btn btn-primary')
+        ->setAttribute('data-submit', 'form1:next_action=new')
 ));
 
-$f = $this->html->form()->setAttribute();
+$f = $this->html->form()->setAttribute('action', $this->router->buildUrl('save'));
 $dataTypes = array(
     \Core\Attrs\Model\AttributeModel::DATA_TYPE_STRING=>$this->locale->_('attrs_data_type_string'),
     \Core\Attrs\Model\AttributeModel::DATA_TYPE_INTEGER=>$this->locale->_('attrs_data_type_integer'),
@@ -26,11 +30,9 @@ $inputTypes = array(
     \Core\Attrs\Model\AttributeModel::INPUT_TYPE_TEXTBOX=>$this->locale->_('attrs_input_type_textbox'),
     \Core\Attrs\Model\AttributeModel::INPUT_TYPE_TEXTAREA=>$this->locale->_('attrs_input_type_textarea'),
     \Core\Attrs\Model\AttributeModel::INPUT_TYPE_EDITOR=>$this->locale->_('attrs_input_type_editor'),
-    \Core\Attrs\Model\AttributeModel::INPUT_TYPE_DROPDOWN=>$this->locale->_('attrs_input_type_dropdown'),
-    \Core\Attrs\Model\AttributeModel::INPUT_TYPE_LISTBOX=>$this->locale->_('attrs_input_type_listbox'),
-    \Core\Attrs\Model\AttributeModel::INPUT_TYPE_DATE_PICKER=>$this->locale->_('attrs_input_type_datepicker'),
-    \Core\Attrs\Model\AttributeModel::INPUT_TYPE_CHECKBOX_LIST=>$this->locale->_('attrs_input_type_checkboxlist'),
-    \Core\Attrs\Model\AttributeModel::INPUT_TYPE_RADIO_LIST=>$this->locale->_('attrs_input_type_raidolist')
+    \Core\Attrs\Model\AttributeModel::INPUT_TYPE_SELECT=>$this->locale->_('attrs_input_type_select'),
+    \Core\Attrs\Model\AttributeModel::INPUT_TYPE_OPTION_LIST=>$this->locale->_('attrs_input_type_option_list'),
+    \Core\Attrs\Model\AttributeModel::INPUT_TYPE_DATE_PICKER=>$this->locale->_('attrs_input_type_datepicker')
 );
 $f = $this->html->groupedForm();
 
@@ -45,9 +47,14 @@ $f->addSelectField(array('1'=>$this->locale->_('yes'), '0'=>$this->locale->_('no
     $this->locale->_('attrs_indexable'), 'indexable', 'data[indexable]', $this->model->getEnabled());
 $f->addSelectField(array('1'=>$this->locale->_('yes'), '0'=>$this->locale->_('no')),
     $this->locale->_('attrs_localizable'), 'localizable', 'data[localizable]', $this->model->getLocalizable());
+$vs = $this->model->getInputSetting(array());
+$f->addSelectField(array('1'=>$this->locale->_('yes'), '0'=>$this->locale->_('no')),
+    $this->locale->_('enable'), 'enabled', 'data[enabled]', $this->model->getEnabled());
+$f->endGroup();
+
+$f->beginGroup('input_setting', $this->locale->_('attrs_input_setting'));
 $f->addSelectField(array('1'=>$this->locale->_('yes'), '0'=>$this->locale->_('no')),
     $this->locale->_('attrs_required'), 'required', 'data[required]', $this->model->getEnabled());
-$vs = $this->model->getInputSetting();
 switch($this->model->getInputType()):
     case \Core\Attrs\Model\AttributeModel::INPUT_TYPE_TEXTBOX:
         switch($this->model->getDataType()):
@@ -56,7 +63,7 @@ switch($this->model->getInputType()):
                     ->addValidateRule('integer', true);
                 $f->addInputField('text', $this->locale->_('attrs_max_value'), 'max_value', 'data[input_setting][max_value]', $vs['max_value'])
                     ->addValidateRule('integer', true)->addValidateRule('greatto', '#min_value', $this->locale->_('attrs_max_great_min'));
-            break;
+                break;
             case \Core\Attrs\Model\AttributeModel::DATA_TYPE_NUMBER:
                 $f->addInputField('text', $this->locale->_('attrs_min_value'), 'min_value', 'data[input_setting][min_value]', $vs['min_value'])
                     ->addValidateRule('number', true);
@@ -64,14 +71,23 @@ switch($this->model->getInputType()):
                     ->addValidateRule('number', true)->addValidateRule('greatto', '#min_value', $this->locale->_('attrs_max_great_min'));
                 break;
             case \Core\Attrs\Model\AttributeModel::DATA_TYPE_STRING:
-                $f->addInputField('text', $this->locale->_('attrs_max_length'), 'max_length', 'data[input_setting][max_length]', $vs['max_length'])
+                $f->addInputField('text', $this->locale->_('attrs_max_length'), 'max_length', 'data[input_setting][max_length]',
+                    array_key_exists('max_length', $vs)? $vs['max_length']: false)
                     ->addValidateRule('integer', true);
-            break;
+                break;
         endswitch;
         break;
+    case \Core\Attrs\Model\AttributeModel::INPUT_TYPE_SELECT:
+        $f->addSelectField(array('1'=>$this->locale->_('yes'), '0'=>$this->locale->_('no')),
+            $this->locale->_('attrs_multiple'), 'multiple', 'data[input_setting][multiple]',
+            array_key_exists('multiple', $vs)? $vs['multiple']: false)
+            ->addValidateRule('required', true);
+        $f->addInputField('text', $this->locale->_('attrs_multiple_size'), 'size', 'data[input_setting][size]',
+            array_key_exists('size', $vs)? $vs['size']: 1)
+            ->addValidateRule('required', true)
+            ->addValidateRule('integer', true);
+        break;
 endswitch;
-$f->addSelectField(array('1'=>$this->locale->_('yes'), '0'=>$this->locale->_('no')),
-    $this->locale->_('enable'), 'enabled', 'data[enabled]', $this->model->getEnabled());
 $f->endGroup();
 
 $names = $this->model->getNames(array());
@@ -88,7 +104,7 @@ foreach($this->locale->getLanguages() as $lang):
 endforeach;
 $f->addHiddenField('data_type', 'data[data_type]', $this->model->getDataType());
 $f->addHiddenField('input_type', 'data[input_type]', $this->model->getInputType());
-$f->addHiddenField('component_id', 'data[component_id]', $this->model->getId());
+$f->addHiddenField('component_id', 'data[component_id]', $this->model->getComponentId());
 $f->addHiddenField('id', 'data[id]', $this->model->getId());
 
 $this->assign('form', $f);

@@ -23,11 +23,14 @@ abstract class Model implements \ArrayAccess, \Iterator
     public function __construct($data = array())
     {
         $m = self::$metadatas[get_class($this)];
+        $this->tableName = $m['table'];
         $this->idProperty = $m['idProperty'];
         $this->properties = $m['properties'];
-        $this->tableName = $m['table'];
         $this->relations = $m['relations'];
-        $this->data = $data;
+        foreach($this->properties as $prop){
+            $this->data[$prop->getName()] = $prop->getDefaultValue();
+        }
+        $this->data = array_merge($this->data, $data);
     }
 
     public function __get($name)

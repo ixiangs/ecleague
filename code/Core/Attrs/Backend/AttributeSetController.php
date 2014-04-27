@@ -27,6 +27,7 @@ class AttributeSetController extends Web\Controller
     public function groupsAction($id)
     {
         $m = Tops::loadModel('attrs/attributeSet')->load($id);
+        $c = Tops::loadModel('admin/component')->load($m->getComponentId());
         $groups = $m->getGroupAttributes();
         $selectedIds = array();
         foreach($groups as $group){
@@ -41,8 +42,9 @@ class AttributeSetController extends Web\Controller
                         ->load();
         return Web\Result::templateResult(array(
             'model' => $m,
+            'component'=>$c,
             'groups'=>$groups,
-            'unattributes'=>$unattributes
+            'unselectedAttributes'=>$unattributes
         ));
     }
 

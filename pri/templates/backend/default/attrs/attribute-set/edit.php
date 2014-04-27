@@ -2,6 +2,7 @@
 $this->assign('breadcrumb', array(
     $this->html->anchor($this->locale->_('attrs_manage')),
     $this->html->anchor($this->locale->_('attrs_attribute_set')),
+    $this->html->anchor($this->component->getName()),
     $this->html->anchor($this->locale->_('attrs_new_attribute_set'))
 ));
 

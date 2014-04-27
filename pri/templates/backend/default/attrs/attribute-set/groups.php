@@ -5,6 +5,7 @@ $langId = $this->locale->getCurrentLanguageId();
         <ol class="breadcrumb col-md-6">
             <li><?php echo $this->locale->_('attrs_manage'); ?></li>
             <li><?php echo $this->locale->_('attrs_attribute_set'); ?></li>
+            <li><?php echo $this->component->getName(); ?></li>
             <li class="active"><?php echo $this->model->name[$langId]; ?></li>
         </ol>
         <div class="pull-right">
@@ -56,7 +57,7 @@ $langId = $this->locale->getCurrentLanguageId();
                         </div>
                         <div class="panel-body">
                             <ul class="sortable">
-                                <?php foreach ($this->unattributes as $attr): ?>
+                                <?php foreach ($this->unselectedAttributes as $attr): ?>
                                     <li class="ui-state-default attribute" data-id="<?php echo $attr->getId(); ?>">
                                         <i class="fa fa-list fa-fw"></i>
                                         <?php echo $attr->display_text[$langId]; ?>

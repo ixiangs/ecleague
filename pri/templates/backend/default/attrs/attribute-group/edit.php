@@ -15,8 +15,8 @@ $this->assign('toolbar', array(
 
 $f = $this->html->groupedForm();
 $f->beginGroup('tab_base', $this->locale->_('base_info'));
-$f->addInputField('text', $this->locale->_('code'), 'code', 'data[code]', $this->model->getCode())
-    ->addValidateRule('required', true);
+//$f->addInputField('text', $this->locale->_('code'), 'code', 'data[code]', $this->model->getCode())
+//    ->addValidateRule('required', true);
 $f->addSelectField(array('1'=>$this->locale->_('yes'), '0'=>$this->locale->_('no')),
     $this->locale->_('enable'), 'enabled', 'data[enabled]', $this->model->getEnabled());
 $f->endGroup();

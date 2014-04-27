@@ -34,43 +34,18 @@ class AttributeController extends Web\Controller
         $model = Tops::loadModel('attrs/attribute')->fillArray(array(
             'data_type' => $this->request->getQuery('data_type'),
             'input_type' => $this->request->getQuery('input_type'),
-            'component_id'=>$this->request->getQuery('component_id')
+            'component_id' => $this->request->getQuery('component_id')
         ));
         return $this->getEditTemplateResult($model);
     }
 
-    public function addPostAction()
-    {
-        $locale = $this->context->locale;
-        $m = Tops::loadModel('attrs/attribute')->fillArray($this->request->getPost('data'));
-
-        $vr = $m->validateProperties();
-        if ($vr !== true) {
-            $this->session->set('errors', $locale->_('err_input_invalid'));
-            return $this->getEditTemplateResult($m);
-        }
-
-        if (!$m->insert()) {
-            $this->session->set('errors', $locale->_('err_system'));
-            return $this->getEditTemplateResult($m);
-        }
-
-        if($this->request->hasParameter('set_id')){
-            return Web\Result::redirectResult($this->router->buildUrl(
-                'attribute-set/groups', array('id'=>$this->request->getQuery('set_id'))));
-        }
-
-        return Web\Result::redirectResult($this->router->buildUrl('list'));
-    }
-
     public function editAction($id)
     {
-        $m = Tops::loadModel('attrs/attribute');
-        $m->load($id);
+        $m = Tops::loadModel('attrs/attribute')->load($id);
         return $this->getEditTemplateResult($m);
     }
 
-    public function editPostAction()
+    public function savePostAction()
     {
         $locale = $this->context->locale;
         $m = Tops::loadModel('attrs/attribute')->fillArray($this->request->getPost('data'));
@@ -81,13 +56,46 @@ class AttributeController extends Web\Controller
             return $this->getEditTemplateResult($m);
         }
 
-        if (!$m->update()) {
-            $this->session->set('errors', $locale->_('err_system'));
-            return $this->getEditTemplateResult($m);
+        if ($this->request->getPost('action') == 'add') {
+            if (!$m->insert()) {
+                $this->session->set('errors', $locale->_('err_system'));
+                return $this->getEditTemplateResult($m);
+            }
+        } else {
+            if (!$m->update()) {
+                $this->session->set('errors', $locale->_('err_system'));
+                return $this->getEditTemplateResult($m);
+            }
+        }
+
+        if ($this->request->hasParameter('set_id')) {
+            return Web\Result::redirectResult($this->router->buildUrl(
+                'attribute-set/groups', array('id' => $this->request->getQuery('set_id'))));
         }
 
         return Web\Result::redirectResult($this->router->buildUrl('list'));
     }
+
+
+
+//    public function editPostAction()
+//    {
+//        $locale = $this->context->locale;
+//        $m = Tops::loadModel('attrs/attribute')->fillArray($this->request->getPost('data'));
+//
+//        $vr = $m->validateProperties();
+//        if ($vr !== true) {
+//            $this->session->set('errors', $locale->_('err_input_invalid'));
+//            return $this->getEditTemplateResult($m);
+//        }
+//
+//        if (!$m->update()) {
+//            $this->session->set('errors', $locale->_('err_system'));
+//            return $this->getEditTemplateResult($m);
+//        }
+//
+//        return Web\Result::redirectResult($this->router->buildUrl('list'));
+//    }
 
     public function deleteAction($id)
     {
@@ -150,10 +158,9 @@ class AttributeController extends Web\Controller
 
     private function getEditTemplateResult($model)
     {
-        $coms = Tops::loadModel('admin/component')
-            ->find()->execute()->combineColumns('code', 'name');
+        $c = Tops::loadModel('admin/component')->load($model->getComponentId());
         return Web\Result::templateResult(
-            array('model' => $model, 'components' => $coms),
+            array('model' => $model, 'component' => $c),
             'attrs/attribute/edit'
         );
     }

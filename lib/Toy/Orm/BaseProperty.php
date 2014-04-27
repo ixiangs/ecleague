@@ -1,7 +1,7 @@
 <?php
 namespace Toy\Orm;
 
-abstract class BaseProperty
+abstract class BaseProperty extends \Toy\Object
 {
 
     private $_name = null;
@@ -13,7 +13,6 @@ abstract class BaseProperty
     private $_defaultValue = null;
     private $_insertable = true;
     private $_updateable = true;
-    private $_settings = array();
 
     public function __construct($name)
     {
@@ -126,15 +125,6 @@ abstract class BaseProperty
     public function setUpdateable($value)
     {
         $this->_updateable = $value;
-        return $this;
-    }
-
-    public function getSettings(){
-        return $this->_settings;
-    }
-
-    public function setSettings($value){
-        $this->_settings = $value;
         return $this;
     }
 

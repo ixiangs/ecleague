@@ -5,7 +5,7 @@ $this->assign('breadcrumb', array(
 ));
 
 $this->assign('navigationBar', array(
-    $this->html->anchor($this->locale->_('add'), $this->router->buildUrl('select-component'))
+    $this->html->anchor($this->locale->_('attrs_new_attribute_set'), $this->router->buildUrl('add'))
 ));
 
 $clang = $this->locale->getCurrentLanguage();

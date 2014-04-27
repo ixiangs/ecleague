@@ -51,7 +51,9 @@ class AttributeGroupController extends Web\Controller
         $as->setGroupIds(array_merge($as->getGroupIds(array()), array($m->getId())));
         $as->update();
 
-        return Web\Result::redirectResult($this->router->buildUrl('attribute-set/groups', array('id'=>$this->request->getQuery('set_id'))));
+        return Web\Result::redirectResult($this->router->buildUrl(
+            'attribute-set/groups',
+            array('id'=>$this->request->getQuery('set_id'))));
     }
 
     public function editAction($id)

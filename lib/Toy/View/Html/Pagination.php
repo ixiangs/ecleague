@@ -49,7 +49,7 @@ class Pagination extends Element
             }
         }
 
-        $pargs = $request->getAllParameters();
+        $pargs = $request->getParameter();
         $pargs['pageindex'] = 1;
         $html = array(
             $this->renderBegin()

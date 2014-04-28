@@ -11,7 +11,7 @@ $this->assign('navigationBar', array(
 $clang = $this->locale->getCurrentLanguage();
 $dt = $this->html->grid($this->models);
 $dt->addIndexColumn('#', 'index', 'index');
-$dt->addLabelColumn($this->locale->_('name'), '{name}', 'middle', 'left');
+$dt->addLabelColumn($this->locale->_('name'), '{name}', 'large', 'left');
 $dt->addOptionColumn($this->locale->_('attrs_data_type'), '{data_type}', array(
     \Core\Attrs\Model\AttributeModel::DATA_TYPE_ARRAY=>$this->locale->_('attrs_data_type_array'),
     \Core\Attrs\Model\AttributeModel::DATA_TYPE_BOOLEAN=>$this->locale->_('attrs_data_type_boolean'),
@@ -22,11 +22,9 @@ $dt->addOptionColumn($this->locale->_('attrs_data_type'), '{data_type}', array(
     \Core\Attrs\Model\AttributeModel::DATA_TYPE_STRING=>$this->locale->_('attrs_data_type_string')
     ), 'small', 'small text-center');
 $dt->addOptionColumn($this->locale->_('attrs_input_type'), '{input_type}',  array(
-    \Core\Attrs\Model\AttributeModel::INPUT_TYPE_CHECKBOX_LIST=>$this->locale->_('attrs_input_type_checkboxlist'),
+    \Core\Attrs\Model\AttributeModel::INPUT_TYPE_OPTION_LIST=>$this->locale->_('attrs_input_type_option_list'),
     \Core\Attrs\Model\AttributeModel::INPUT_TYPE_DATE_PICKER=>$this->locale->_('attrs_input_type_datepicker'),
-    \Core\Attrs\Model\AttributeModel::INPUT_TYPE_DROPDOWN=>$this->locale->_('attrs_input_type_dropdown'),
-    \Core\Attrs\Model\AttributeModel::INPUT_TYPE_LISTBOX=>$this->locale->_('attrs_input_type_listbox'),
-    \Core\Attrs\Model\AttributeModel::INPUT_TYPE_RADIO_LIST=>$this->locale->_('attrs_input_type_raidolist'),
+    \Core\Attrs\Model\AttributeModel::INPUT_TYPE_SELECT=>$this->locale->_('attrs_input_type_select'),
     \Core\Attrs\Model\AttributeModel::INPUT_TYPE_TEXTBOX=>$this->locale->_('attrs_input_type_textbox'),
     \Core\Attrs\Model\AttributeModel::INPUT_TYPE_TEXTAREA=>$this->locale->_('attrs_input_type_textarea'),
     \Core\Attrs\Model\AttributeModel::INPUT_TYPE_EDITOR=>$this->locale->_('attrs_input_type_editor')
@@ -47,13 +45,11 @@ $dt->addLabelColumn($this->locale->_('memo'), '{memo}', '', 'left')
 $dt->addLinkColumn('', $this->locale->_('edit'), urldecode($this->router->buildUrl('edit', array('id' => '{id}'))), 'small', 'small edit');
 
 $dt->addLinkColumn('', $this->locale->_('attrs_option'),
-                    urldecode($this->router->buildUrl('options', array('attributeid' => '{id}'))), 'small', 'small edit')
+                    urldecode($this->router->buildUrl('options', array('id' => '{id}'))), 'small', 'small edit')
     ->setCellRenderer(function($col, $row){
         switch($row['input_type']){
-            case \Core\Attrs\Model\AttributeModel::INPUT_TYPE_DROPDOWN:
-            case \Core\Attrs\Model\AttributeModel::INPUT_TYPE_LISTBOX:
-            case \Core\Attrs\Model\AttributeModel::INPUT_TYPE_CHECKBOX_LIST:
-            case \Core\Attrs\Model\AttributeModel::INPUT_TYPE_RADIO_LIST:
+            case \Core\Attrs\Model\AttributeModel::INPUT_TYPE_SELECT:
+            case \Core\Attrs\Model\AttributeModel::INPUT_TYPE_OPTION_LIST:
                 $col->getCell()->getChild(0)->bindAttribute($row);
                 return $col->getCell()->renderBegin().$col->getCell()->renderInner().$col->getCell()->renderEnd();
             default:

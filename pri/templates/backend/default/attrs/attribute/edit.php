@@ -5,18 +5,21 @@ $this->assign('breadcrumb', array(
     $this->html->anchor($this->locale->_('attrs_add_attribute'))
 ));
 
-$this->assign('navigationBar', array(
-    $this->html->anchor($this->locale->_('back'), $this->router->buildUrl('list'))
-));
+$nbs = array();
+if($this->request->getQuery('set_id')){
+    $nbs[] = $this->html->anchor($this->locale->_('back'), $this->router->buildUrl('attribute-set/groups', array(
+        'id'=>$this->request->getQuery('set_id')
+    )));
+}else{
+    $nbs[] = $this->html->anchor($this->locale->_('back'), $this->router->buildUrl('list'));
+}
+$this->assign('navigationBar', $nbs);
 
 $this->assign('toolbar', array(
     $this->html->button('button', $this->locale->_('save'), 'btn btn-primary')
-        ->setAttribute('data-submit', 'form1'),
-    $this->html->button('button', $this->locale->_('save_and_new'), 'btn btn-primary')
-        ->setAttribute('data-submit', 'form1:next_action=new')
+        ->setAttribute('data-submit', 'form1')
 ));
 
-$f = $this->html->form()->setAttribute('action', $this->router->buildUrl('save'));
 $dataTypes = array(
     \Core\Attrs\Model\AttributeModel::DATA_TYPE_STRING=>$this->locale->_('attrs_data_type_string'),
     \Core\Attrs\Model\AttributeModel::DATA_TYPE_INTEGER=>$this->locale->_('attrs_data_type_integer'),
@@ -34,13 +37,11 @@ $inputTypes = array(
     \Core\Attrs\Model\AttributeModel::INPUT_TYPE_OPTION_LIST=>$this->locale->_('attrs_input_type_option_list'),
     \Core\Attrs\Model\AttributeModel::INPUT_TYPE_DATE_PICKER=>$this->locale->_('attrs_input_type_datepicker')
 );
-$f = $this->html->groupedForm();
-
+$f = $this->html->groupedForm()
+        ->setAttribute('action', $this->router->buildUrl('save', '*'));
 $f->beginGroup('tab_base', $this->locale->_('base_info'));
 $f->addLabelField($this->locale->_('attrs_data_type'), $dataTypes[$this->model->getDataType()]);
 $f->addLabelField($this->locale->_('attrs_input_type'), $inputTypes[$this->model->getInputType()]);
-//$f->addSelectField($this->components, $this->locale->_('attrs_owner_component'), 'component_code', 'data[component_code]',
-//                    $this->model->getComponentCode());
 $f->addInputField('text', $this->locale->_('name'), 'name', 'data[name]', $this->model->getName())
     ->addValidateRule('required', true);
 $f->addSelectField(array('1'=>$this->locale->_('yes'), '0'=>$this->locale->_('no')),
@@ -78,14 +79,21 @@ switch($this->model->getInputType()):
         endswitch;
         break;
     case \Core\Attrs\Model\AttributeModel::INPUT_TYPE_SELECT:
+    case \Core\Attrs\Model\AttributeModel::INPUT_TYPE_OPTION_LIST:
         $f->addSelectField(array('1'=>$this->locale->_('yes'), '0'=>$this->locale->_('no')),
             $this->locale->_('attrs_multiple'), 'multiple', 'data[input_setting][multiple]',
             array_key_exists('multiple', $vs)? $vs['multiple']: false)
             ->addValidateRule('required', true);
-        $f->addInputField('text', $this->locale->_('attrs_multiple_size'), 'size', 'data[input_setting][size]',
-            array_key_exists('size', $vs)? $vs['size']: 1)
-            ->addValidateRule('required', true)
-            ->addValidateRule('integer', true);
+        if($this->model->getInputType() == \Core\Attrs\Model\AttributeModel::INPUT_TYPE_SELECT):
+            $f->addInputField('text', $this->locale->_('attrs_multiple_size'), 'size', 'data[input_setting][size]',
+                array_key_exists('size', $vs)? $vs['size']: 1)
+                ->addValidateRule('required', true)
+                ->addValidateRule('integer', true);
+            $f->addSelectField(array('1'=>$this->locale->_('attrs_empty_option'), '2'=>$this->locale->_('attrs_first_option')),
+                $this->locale->_('attrs_default_option'), 'default_option', 'data[input_setting][default_option]',
+                array_key_exists('default_option', $vs)? $vs['default_option']: false)
+                ->addValidateRule('required', true);
+        endif;
         break;
 endswitch;
 $f->endGroup();

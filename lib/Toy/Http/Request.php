@@ -169,43 +169,39 @@ class Request implements \ArrayAccess
         return false;
     }
 
-    public function getAllParameters()
+    public function getParameter()
     {
+        $nums = func_num_args();
+        $args = func_get_args();
+        if($nums == 2){
+            return array_key_exists($args[0], $_REQUEST) ? $_REQUEST[$args[0]] : $args[1];
+        }elseif($nums == 1){
+            return array_key_exists($args[0], $_REQUEST) ? $_REQUEST[$args[0]] : null;
+        }
         return $_REQUEST;
     }
 
-    public function getParameters()
+    public function getQuery()
     {
+        $nums = func_num_args();
         $args = func_get_args();
-        $result = array();
-        foreach ($args as $v) {
-            $result = $this->getParameter($v);
+        if($nums == 2){
+            return array_key_exists($args[0], $_GET) ? $_GET[$args[0]] : $args[1];
+        }elseif($nums == 1){
+            return array_key_exists($args[0], $_GET) ? $_GET[$args[0]] : null;
         }
-        return $result;
-    }
-
-    public function getParameter($name, $default = '')
-    {
-        return array_key_exists($name, $_REQUEST) ? $_REQUEST[$name] : $default;
-    }
-
-    public function getQuery($name, $default = '')
-    {
-        return array_key_exists($name, $_GET) ? $_REQUEST[$name] : $default;
-    }
-
-    public function getAllQuery()
-    {
         return $_GET;
     }
 
-    public function getPost($name, $default = '')
+    public function getPost()
     {
-        return array_key_exists($name, $_POST) ? $_REQUEST[$name] : $default;
-    }
-
-    public function getAllPost()
-    {
+        $nums = func_num_args();
+        $args = func_get_args();
+        if($nums == 2){
+            return array_key_exists($args[0], $_POST) ? $_POST[$args[0]] : $args[1];
+        }elseif($nums == 1){
+            return array_key_exists($args[0], $_POST) ? $_POST[$args[0]] : null;
+        }
         return $_POST;
     }
 

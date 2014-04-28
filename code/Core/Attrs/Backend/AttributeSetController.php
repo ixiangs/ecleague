@@ -48,6 +48,27 @@ class AttributeSetController extends Web\Controller
         ));
     }
 
+    public function groupsPostAction($id){
+        $groupIds = $this->request->getPost('groups');
+        $attributeIds = $this->request->getPost('attributes');
+        $model = Tops::loadModel('attrs/attributeSet')->load($id);
+        $gourps = Tops::loadModel('attrs/attributeGroup')->find()->in('id', $groupIds)->load();
+        $res = Helper::withTx(function($db) use($groupIds, $gourps, $attributeIds, $model){
+            foreach($gourps as $group){
+                $group->setAttributeIds($attributeIds[$group->getId()])->update();
+            }
+            $model->setGroupIds($groupIds)->update();
+            return true;
+        });
+
+        if($res){
+            return Web\Result::redirectResult('list');
+        }else{
+            $this->session->set('errors', $this->context->locale->_('err_system'));
+            return $this->groupsAction($id);
+        }
+    }
+
     public function addAction()
     {
         $model = Tops::loadModel('attrs/attributeSet');

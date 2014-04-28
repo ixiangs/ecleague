@@ -33,7 +33,20 @@ $(function () {
         new Toy.Validation.Validator($(this));
     });
     $('button[data-submit]').click(function(){
-        $('#' + $(this).attr('data-submit')).submit();
+        var $form = $('#' + $(this).attr('data-submit'));
+        var args = $(this).attr('data-submit-arguments');
+        if(args){
+            args = JSON.decode(args);
+            Object.each(args, function(item, key){
+                if($form.find('#' + key).length == 0){
+                    var h = '<input type="hidden" name="{id}" id="{id}" value="{val}"/>'.substitute({
+                        'id': key, 'val':item
+                    });
+                    $form.append(h);
+                }
+            });
+        }
+        $form.submit();
     });
 });
 

@@ -3,6 +3,7 @@ namespace Ecleague;
 
 use Toy\Util\ArrayUtil;
 use Toy\Util\StringUtil;
+use Toy\Web\Application;
 
 class Router
 {
@@ -63,29 +64,16 @@ class Router
                 $action = $arr[3];
                 break;
         }
-//        if (Configuration::$seoUrl) {
         $url = $domain->getStartUrl();
         $url .= $component;
         $url .= '/' . $controller;
         $url .= '/' . $action;
         if (is_array($params)) {
             $url .= '?' . http_build_query($params);
+        }elseif(is_string($params) && $params == '*'){
+            $url .= '?'. http_build_query(Application::$context->request->getQuery());
         }
         return $url;
-//        } else {
-//            $args = array();
-//            if (!$domain->getDefault()) {
-//                $args['domain'] = $domain->getName();
-//            }
-//            $args['component'] = $component;
-//            $args['controller'] = $controller;
-//            $args['action'] = $action;
-//            $url = http_build_query($args);
-//            if (is_array($params)) {
-//                $url .= '&' . http_build_query($params);
-//            }
-//            return '/?' . $url;
-//        }
     }
 
     public function parseUrl($url)

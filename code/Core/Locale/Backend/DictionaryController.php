@@ -107,7 +107,7 @@ class DictionaryController extends Web\Controller
     public function editPostAction($languageid)
     {
         $lang = $this->context->locale;
-        $m = \Ecleague\Tops::loadModel('locale/dictionary')->merge($this->request->getParameter('id'), $this->request->getAllPost());
+        $m = \Ecleague\Tops::loadModel('locale/dictionary')->merge($this->request->getParameter('id'), $this->request->getPost());
         $vr = $m->validateProperties();
         if ($vr !== true) {
             $this->session->set('errors', $lang->_('err_input_invalid'));

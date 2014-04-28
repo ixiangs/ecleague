@@ -432,3 +432,25 @@ Toy.Validation.rules = {
         }
     }))()
 };
+
+Toy.Widget = {};
+Toy.Widget.Loading = new Class({
+
+    initialize:function(){
+        if($('#loading_model').length == 0){
+            element = '<div id="loading_modal" class="modal fade" role="dialog" tabindex="-1">'
+                    + '<div class="modal-dialog modal-sm"><div class="modal-content">dddddddddddd</div></div></div>';
+            $(element).appendTo('body');
+        }
+    },
+
+    showModal: function(){
+        $('#loading_model').modal({
+            'show':true
+        });
+    },
+
+    hide: function(){
+
+    }
+});

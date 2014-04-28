@@ -1,6 +1,7 @@
 <?php
 namespace Core\Attrs\Backend;
 
+use Core\Attrs\Model\AttributeModel;
 use Ecleague\Tops;
 use Toy\Data\Helper;
 use Toy\Util\ArrayUtil;
@@ -56,15 +57,20 @@ class AttributeController extends Web\Controller
             return $this->getEditTemplateResult($m);
         }
 
-        if ($this->request->getPost('action') == 'add') {
-            if (!$m->insert()) {
+        if ($m->getId()) {
+            if (!$m->update()) {
                 $this->session->set('errors', $locale->_('err_system'));
                 return $this->getEditTemplateResult($m);
             }
         } else {
-            if (!$m->update()) {
+            if (!$m->insert()) {
                 $this->session->set('errors', $locale->_('err_system'));
                 return $this->getEditTemplateResult($m);
+            }
+            if(in_array($m->getInputType(),
+                    array(AttributeModel::INPUT_TYPE_SELECT, AttributeModel::INPUT_TYPE_OPTION_LIST))){
+                return Web\Result::redirectResult($this->router->buildUrl(
+                    'options', ArrayUtil::splice($this->request->getQuery(), array('input_type', 'data_type'), array('id'=>$m->getId()))));
             }
         }
 
@@ -75,27 +81,6 @@ class AttributeController extends Web\Controller
 
         return Web\Result::redirectResult($this->router->buildUrl('list'));
     }
-
-
-
-//    public function editPostAction()
-//    {
-//        $locale = $this->context->locale;
-//        $m = Tops::loadModel('attrs/attribute')->fillArray($this->request->getPost('data'));
-//
-//        $vr = $m->validateProperties();
-//        if ($vr !== true) {
-//            $this->session->set('errors', $locale->_('err_input_invalid'));
-//            return $this->getEditTemplateResult($m);
-//        }
-//
-//        if (!$m->update()) {
-//            $this->session->set('errors', $locale->_('err_system'));
-//            return $this->getEditTemplateResult($m);
-//        }
-//
-//        return Web\Result::redirectResult($this->router->buildUrl('list'));
-//    }
 
     public function deleteAction($id)
     {
@@ -114,9 +99,9 @@ class AttributeController extends Web\Controller
         return Web\Result::redirectResult($this->router->buildUrl('list'));
     }
 
-    public function optionsAction($attributeid)
+    public function optionsAction($id)
     {
-        $attr = Tops::loadModel('attrs/attribute')->load($attributeid);
+        $attr = Tops::loadModel('attrs/attribute')->load($id);
         $options = $attr->getOptions();
         return Web\Result::templateResult(array(
             'attribute' => $attr,
@@ -124,7 +109,7 @@ class AttributeController extends Web\Controller
         ));
     }
 
-    public function optionsPostAction($attributeid)
+    public function optionsPostAction($id)
     {
         $lang = $this->context->locale;
         $attr = Tops::loadModel('attrs/attribute')->load($this->request->getPost('attribute_id'));
@@ -146,6 +131,11 @@ class AttributeController extends Web\Controller
         }
 
         if ($attr->setOptions($options)->update()) {
+            if ($this->request->hasParameter('set_id')) {
+                return Web\Result::redirectResult($this->router->buildUrl(
+                    'attribute-set/groups', array('id' => $this->request->getQuery('set_id'))));
+            }
+
             return Web\Result::redirectResult($this->router->buildUrl('list'));
         } else {
             $this->session->set('errors', $lang->_('err_system'));

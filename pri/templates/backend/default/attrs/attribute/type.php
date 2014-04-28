@@ -4,9 +4,15 @@ $this->assign('breadcrumb', array(
     $this->html->anchor($this->locale->_('attrs_add_attribute'))
 ));
 
-$this->assign('navigationBar', array(
-    $this->html->anchor($this->locale->_('back'), $this->router->buildUrl('list'))
-));
+$nbs = array();
+if($this->request->getQuery('set_id')){
+    $nbs[] = $this->html->anchor($this->locale->_('back'), $this->router->buildUrl('attribute-set/groups', array(
+        'id'=>$this->request->getQuery('set_id')
+    )));
+}else{
+    $nbs[] = $this->html->anchor($this->locale->_('back'), $this->router->buildUrl('list'));
+}
+$this->assign('navigationBar', $nbs);
 
 $this->assign('toolbar', array(
     $this->html->button('button', $this->locale->_('next_step'), 'btn btn-primary')->setAttribute('data-submit', 'form1')

@@ -1,19 +1,25 @@
 <?php
 $this->assign('breadcrumb', array(
     $this->html->anchor($this->locale->_('attrs_manage')),
-//    $this->html->anchor($this->locale->_('attrs_attribute_group')),
-    $this->html->anchor($this->locale->_('attrs_new_group'))
+    $this->html->anchor($this->locale->_($this->router->action == 'add'?'attrs_new_group':'attrs_edit_group'))
 ));
 
-$this->assign('navigationBar', array(
-    $this->html->anchor($this->locale->_('back'), $this->router->buildUrl('list'))
-));
+$nbs = array();
+if($this->request->getQuery('set_id')){
+    $nbs[] = $this->html->anchor($this->locale->_('back'), $this->router->buildUrl('attribute-set/groups', array(
+        'id'=>$this->request->getQuery('set_id')
+    )));
+}else{
+    $nbs[] = $this->html->anchor($this->locale->_('back'), $this->router->buildUrl('list'));
+}
+$this->assign('navigationBar', $nbs);
 
 $this->assign('toolbar', array(
     $this->html->button('button', $this->locale->_('save'), 'btn btn-primary')->setAttribute('data-submit', 'form1')
 ));
 
-$f = $this->html->groupedForm();
+$f = $this->html->groupedForm()
+    ->setAttribute('action', $this->router->buildUrl('save', '*'));
 $f->beginGroup('tab_base', $this->locale->_('base_info'));
 //$f->addInputField('text', $this->locale->_('code'), 'code', 'data[code]', $this->model->getCode())
 //    ->addValidateRule('required', true);

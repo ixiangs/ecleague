@@ -1,6 +1,8 @@
 <?php
 namespace Toy\Util;
 
+use Toy\Platform\PathUtil;
+
 final class ArrayUtil
 {
 
@@ -70,6 +72,15 @@ final class ArrayUtil
             }
         }
         return false;
+    }
+
+    static public function splice(array $arr, array $removes, array $news){
+        foreach($removes as $rk){
+            if(array_key_exists($arr, $rk)){
+                unset($arr[$rk]);
+            }
+        }
+        return array_merge($arr, $news);
     }
 
     static public function toArray()

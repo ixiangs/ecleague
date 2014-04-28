@@ -27,11 +27,17 @@ class AttributeGroupController extends Web\Controller
     public function addAction()
     {
         $model = Tops::loadModel('attrs/attributeGroup')
-                    ->setComponentId($this->request->getQuery('component_id'));
+            ->setComponentId($this->request->getQuery('component_id'));
         return $this->getEditTemplateResult($model);
     }
 
-    public function addPostAction()
+    public function editAction($id)
+    {
+        $m = Tops::loadModel('attrs/attributeGroup')->load($id);
+        return $this->getEditTemplateResult($m);
+    }
+
+    public function savePostAction()
     {
         $locale = $this->context->locale;
         $m = Tops::loadModel('attrs/attributeGroup')->fillArray($this->request->getPost('data'));
@@ -42,9 +48,16 @@ class AttributeGroupController extends Web\Controller
             return $this->getEditTemplateResult($m);
         }
 
-        if (!$m->insert()) {
-            $this->session->set('errors', $locale->_('err_system'));
-            return $this->getEditTemplateResult($m);
+        if ($m->getId()) {
+            if (!$m->update()) {
+                $this->session->set('errors', $locale->_('err_system'));
+                return $this->getEditTemplateResult($m);
+            }
+        } else {
+            if (!$m->insert()) {
+                $this->session->set('errors', $locale->_('err_system'));
+                return $this->getEditTemplateResult($m);
+            }
         }
 
         $as = Tops::loadModel('attrs/attributeSet')->load($this->request->getQuery('set_id'));
@@ -53,34 +66,27 @@ class AttributeGroupController extends Web\Controller
 
         return Web\Result::redirectResult($this->router->buildUrl(
             'attribute-set/groups',
-            array('id'=>$this->request->getQuery('set_id'))));
+            array('id' => $this->request->getQuery('set_id'))));
     }
 
-    public function editAction($id)
-    {
-        $m = Tops::loadModel('attrs/attributeGroup');
-        $m->load($id);
-        return $this->getEditTemplateResult($m);
-    }
-
-    public function editPostAction()
-    {
-        $locale = $this->context->locale;
-        $m = Tops::loadModel('attrs/attributeGroup')
-                ->merge($this->request->getPost('id'), $this->request->getPost('data'));
-        $vr = $m->validateProperties();
-        if ($vr !== true) {
-            $this->session->set('errors', $locale->_('err_input_invalid'));
-            return $this->getEditTemplateResult($m);
-        }
-
-        if (!$m->update()) {
-            $this->session->set('errors', $locale->_('err_system'));
-            return $this->getEditTemplateResult($m);
-        }
-
-        return Web\Result::redirectResult($this->router->buildUrl('list'));
-    }
+//    public function editPostAction()
+//    {
+//        $locale = $this->context->locale;
+//        $m = Tops::loadModel('attrs/attributeGroup')
+//                ->merge($this->request->getPost('id'), $this->request->getPost('data'));
+//        $vr = $m->validateProperties();
+//        if ($vr !== true) {
+//            $this->session->set('errors', $locale->_('err_input_invalid'));
+//            return $this->getEditTemplateResult($m);
+//        }
+//
+//        if (!$m->update()) {
+//            $this->session->set('errors', $locale->_('err_system'));
+//            return $this->getEditTemplateResult($m);
+//        }
+//
+//        return Web\Result::redirectResult($this->router->buildUrl('list'));
+//    }
 
     public function deleteAction($id)
     {

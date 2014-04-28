@@ -33,19 +33,19 @@ class Renderer
                     $domain . '/'
                 );
                 $tmpl = new View\Template(array_merge(array(
-                    'router'=>$context->router,
-                    'request'=>$context->request,
-                    'session'=>$context->session,
-                    'applicationContext'=>$context
+                    'router' => $context->router,
+                    'request' => $context->request,
+                    'session' => $context->session,
+                    'applicationContext' => $context
                 ), $result->data));
-                $path = $result->path? $result->path: $component . '/' . $controller . '/' . $action;
+                $path = $result->path ? $result->path : $component . '/' . $controller . '/' . $action;
                 $response->write($tmpl->render($path));
                 break;
             case 'content' :
                 $response->write($result->content);
                 break;
             case 'redirect' :
-                if($result->message){
+                if ($result->message) {
                     $context->session->set('infos', $result->message);
                 }
                 $response->redirect($result->url);

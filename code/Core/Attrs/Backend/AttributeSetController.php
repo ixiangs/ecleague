@@ -29,6 +29,7 @@ class AttributeSetController extends Web\Controller
         $m = Tops::loadModel('attrs/attributeSet')->load($id);
         $c = Tops::loadModel('admin/component')->load($m->getComponentId());
         $groups = $m->getGroupAttributes();
+        $groupIds = $m->getGroupIds();
         $selectedIds = array();
         foreach($groups as $group){
             foreach($group->getAttributes() as $attribute){
@@ -38,13 +39,21 @@ class AttributeSetController extends Web\Controller
         $unattributes = Tops::loadModel('attrs/attribute')
                         ->find()
                         ->eq('component_id', $m->getComponentId())
+                        ->eq('enabled', true)
                         ->notIn('id', $selectedIds)
                         ->load();
+        $ungroups = Tops::loadModel('attrs/attributeGroup')
+            ->find()
+            ->eq('component_id', $m->getComponentId())
+            ->eq('enabled', true)
+            ->notIn('id', $groupIds)
+            ->load();
         return Web\Result::templateResult(array(
             'model' => $m,
             'component'=>$c,
             'groups'=>$groups,
-            'unselectedAttributes'=>$unattributes
+            'unselectedAttributes'=>$unattributes,
+            'unselectedGroups'=>$ungroups
         ));
     }
 

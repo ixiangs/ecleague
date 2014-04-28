@@ -82,6 +82,27 @@ $langId = $this->locale->getCurrentLanguageId();
                 <div class="col-md-4">
                     <div class="panel panel-default">
                         <div class="panel-heading">
+                            <?php echo $this->locale->_('attrs_attribute_group'); ?>
+                        </div>
+                        <div class="panel-body">
+                            <ul id="unselected-group" class="sortable">
+                                <?php foreach ($this->unselectedGroups as $group): ?>
+                                    <li class="ui-state-default group" data-locked="<?php echo $group->getLocked()?>" data-group-ids="<?php echo implode(',', $group->getAttributeIds()); ?>" data-id="<?php echo $group->getId(); ?>">
+                                        <?php echo $group->name[$langId]; ?>
+                                        <div class="pull-right">
+                                            <a href="javascript:void(0);" class="select-group"><?php echo $this->locale->_('select'); ?></a>
+                                            <a href="<?php echo $this->router->buildUrl(
+                                                'attribute-group/edit',
+                                                array('id'=>$group->getId(), 'component_id'=>$this->model->getComponentId(), 'set_id'=>$this->model->getId()))
+                                            ?>"><?php echo $this->locale->_('edit'); ?></a>
+                                        </div>
+                                    </li>
+                                <?php endforeach; ?>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
                             <?php echo $this->locale->_('attrs_attribute_list'); ?>
                         </div>
                         <div class="panel-body">
@@ -112,9 +133,7 @@ $langId = $this->locale->getCurrentLanguageId();
 $this->nextBlock('footerjs');
 ?>
     <script language="javascript">
-        var loadingModal = null;
         $(document).ready(function () {
-            loadingModal = new Toy.Widget.Loading();
             $(".sortable").sortable({
                 handle: '.fa',
                 connectWith: ".sortable",
@@ -131,6 +150,9 @@ $this->nextBlock('footerjs');
                    $(this).appendTo('#unselected-attribute');
                 });
                $(this).parent().parent().parent().remove();
+            });
+            $('.select-group').click(function(){
+
             });
             $('#save').click(function(){
                 var passed = true;

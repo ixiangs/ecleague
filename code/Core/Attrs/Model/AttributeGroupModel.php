@@ -17,6 +17,7 @@ Orm\Model::register('Core\Attrs\Model\AttributeGroupModel', array(
         Orm\SerializeProperty::create('name')->setNullable(false),
         Orm\ListProperty::create('attribute_ids'),
         Orm\IntegerProperty::create('component_id')->setNullable(false),
-        Orm\SerializeProperty::create('memo')
+        Orm\SerializeProperty::create('memo'),
+        Orm\BooleanProperty::create('locked')
     )
 ));

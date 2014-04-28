@@ -47,6 +47,8 @@ table.table th.right, table.table tbody tr td.right{text-align: right;}
 table.table tbody tr td.false{color:#ff0000;}
 table.table tbody tr td.true{color:#2b542c;}
 
+#progress_modal .modal-dialog .modal-content .progress{margin-bottom: 0px;}
+
 .panel .dd{float:none;max-width:none;width: 100%;}
 .panel .dd .dd-handle{-webkit-border-radius: 0;border-radius: 0;cursor: move;}
 

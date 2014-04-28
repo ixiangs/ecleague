@@ -2,7 +2,7 @@
 const PAGINATION_SIZE = 20;
 const PAGINATION_RANGE = 10;
 
-if (preg_match('/^\/pub\//', $_SERVER["REQUEST_URI"])) {
+if (preg_match('/^\/pub\/|\.html$/', $_SERVER["REQUEST_URI"])) {
     return false;
 } else {
     date_default_timezone_set('PRC');

@@ -434,23 +434,26 @@ Toy.Validation.rules = {
 };
 
 Toy.Widget = {};
-Toy.Widget.Loading = new Class({
+Toy.Widget.ProgressModal = {
 
-    initialize:function(){
-        if($('#loading_model').length == 0){
-            element = '<div id="loading_modal" class="modal fade" role="dialog" tabindex="-1">'
-                    + '<div class="modal-dialog modal-sm"><div class="modal-content">dddddddddddd</div></div></div>';
-            $(element).appendTo('body');
+    show: function(){
+        if($('#progress_modal').length == 0){
+            element = '<div id="progress_modal" class="modal fade" role="dialog" tabindex="-1">'
+                + '<div class="modal-dialog" style="margin-top: 20%;"><div class="modal-content">'
+                + '<div class="progress progress-striped active">'
+                + '<div class="progress-bar progress-bar-warning" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%">'
+                + '</div></div></div></div></div>';
+            $(element).appendTo('body')
+            $('#progress_modal').modal({
+                'show':false,
+                'keyboard':false,
+                'backdrop':'static'
+            });
         }
-    },
-
-    showModal: function(){
-        $('#loading_model').modal({
-            'show':true
-        });
+        $('#progress_modal').modal('show');
     },
 
     hide: function(){
 
     }
-});
+}

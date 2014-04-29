@@ -92,7 +92,14 @@ class Form extends Element
     public function addInputGroupField($type, $label, $id, $name, $value = null)
     {
         $f = new InputGroupField($type, $label);
-        $f->getInput()->setAttribute(array('id' => $id, 'name' => $name, 'value' => $value));
+        $f->getInput()->getInput()->setAttribute(array('id' => $id, 'name' => $name, 'value' => $value));
+        $this->addField($f);
+        return $f;
+    }
+
+    public function addCustomField()
+    {
+        $f = new CustomField();
         $this->addField($f);
         return $f;
     }

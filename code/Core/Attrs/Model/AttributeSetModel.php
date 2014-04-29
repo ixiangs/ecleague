@@ -46,11 +46,13 @@ Orm\Model::register('Core\Attrs\Model\AttributeSetModel', array(
     'table'=>AttributeSetModel::TABLE_NAME,
     'properties'=>array(
         Orm\IntegerProperty::create('id')->setPrimaryKey(true)->setAutoIncrement(true),
+        Orm\IntegerProperty::create('component_id')->setNullable(false),
         Orm\StringProperty::create('code')->setNullable(false),
-        Orm\BooleanProperty::create('enabled')->setDefaultValue(true)->setNullable(false),
         Orm\SerializeProperty::create('name')->setNullable(false),
         Orm\SerializeProperty::create('group_ids'),
-        Orm\IntegerProperty::create('component_id')->setNullable(false),
+        Orm\SerializeProperty::create('attribute_ids'),
+        Orm\SerializeProperty::create('layout'),
+        Orm\BooleanProperty::create('enabled')->setDefaultValue(true)->setNullable(false),
         Orm\SerializeProperty::create('memo')->setNullable(false)
     )
 ));

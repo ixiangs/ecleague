@@ -21,10 +21,6 @@ $langId = $this->locale->getCurrentLanguageId();
                 array('component_id'=>$this->model->getComponentId(), 'set_id'=>$this->model->getId())))
                 ->setAttribute('class', 'btn btn-default')
                 ->render();
-            echo '&nbsp;&nbsp;';
-            echo $this->html->button('button', $this->locale->_('attrs_new_attribute'))
-                    ->setEvent('click', 'loadingModal.show();')
-                    ->render();
             ?>
         </div>
     </div>
@@ -35,17 +31,13 @@ $langId = $this->locale->getCurrentLanguageId();
                 <?php echo $this->html->button('button', $this->locale->_('save'), 'btn btn-primary')->setAttribute('id', 'save')->render(); ?>
             </div>
             <div class="panel-body">
-                <div class="col-md-8 column">
+                <div id="selected_group" class="col-md-8 column">
                     <?php foreach ($this->groups as $group): ?>
                         <div class="panel panel-default">
                             <div class="panel-heading">
                                 <i class="fa fa-list fa-fw"></i><?php echo $group->name[$langId] ?>
                                 <div class="pull-right">
-                                    <a href="<?php echo $this->router->buildUrl('attribute-group/edit', array('id'=>$group->getId(), 'component_id'=>$this->model->getComponentId(), 'set_id'=>$this->model->getId()));?>">
-                                        <?php echo $this->locale->_('edit'); ?>
-                                    </a>
-                                    &nbsp;
-                                    <a href="javascript:void(0);" class="delete-group">
+                                    <a href="javascript:void(0);" class="delete-group" data-id="<?php echo $group->getId(); ?>" data-title="<?php echo $group->name[$langId]; ?>">
                                         <?php echo $this->locale->_('delete'); ?>
                                     </a>
                                 </div>
@@ -61,13 +53,6 @@ $langId = $this->locale->getCurrentLanguageId();
                                         <li class="ui-state-default attribute" data-id="<?php echo $attr->getId(); ?>">
                                             <i class="fa fa-list fa-fw"></i>
                                             <?php echo $attr->display_text[$langId];?>
-                                            <div class="pull-right">
-                                            <a href="<?php echo $this->router->buildUrl('attribute/edit',
-                                                    array('id'=>$attr->getId(), 'component_id'=>$this->model->getComponentId(), 'set_id'=>$this->model->getId()));
-                                            ?>"><?php echo $this->locale->_('edit'); ?></a>
-                                        &nbsp;
-                                        <a href="javascript:void(0);" class="delete-attribute"><?php echo $this->locale->_('delete'); ?></a>
-                                        </div>
                                         </li>
                                     <?php
                                             endif;
@@ -85,16 +70,12 @@ $langId = $this->locale->getCurrentLanguageId();
                             <?php echo $this->locale->_('attrs_attribute_group'); ?>
                         </div>
                         <div class="panel-body">
-                            <ul id="unselected-group" class="sortable">
+                            <ul id="unselected_group" class="sortable">
                                 <?php foreach ($this->unselectedGroups as $group): ?>
                                     <li class="ui-state-default group" data-locked="<?php echo $group->getLocked()?>" data-group-ids="<?php echo implode(',', $group->getAttributeIds()); ?>" data-id="<?php echo $group->getId(); ?>">
                                         <?php echo $group->name[$langId]; ?>
                                         <div class="pull-right">
                                             <a href="javascript:void(0);" class="select-group"><?php echo $this->locale->_('select'); ?></a>
-                                            <a href="<?php echo $this->router->buildUrl(
-                                                'attribute-group/edit',
-                                                array('id'=>$group->getId(), 'component_id'=>$this->model->getComponentId(), 'set_id'=>$this->model->getId()))
-                                            ?>"><?php echo $this->locale->_('edit'); ?></a>
                                         </div>
                                     </li>
                                 <?php endforeach; ?>
@@ -106,19 +87,11 @@ $langId = $this->locale->getCurrentLanguageId();
                             <?php echo $this->locale->_('attrs_attribute_list'); ?>
                         </div>
                         <div class="panel-body">
-                            <ul id="unselected-attribute" class="sortable">
+                            <ul id="unselecte_attribute" class="sortable">
                                 <?php foreach ($this->unselectedAttributes as $attr): ?>
                                     <li class="ui-state-default attribute" data-id="<?php echo $attr->getId(); ?>">
                                         <i class="fa fa-list fa-fw"></i>
-                                        <?php echo $attr->display_text[$langId];
-                                        echo '<div class="pull-right">';
-                                        echo $this->html->anchor($this->locale->_('edit'),
-                                            $this->router->buildUrl(
-                                                'attribute/edit',
-                                                array('id'=>$attr->getId(), 'component_id'=>$this->model->getComponentId(), 'set_id'=>$this->model->getId()))
-                                        )->render();
-                                        echo '</div>';
-                                        ?>
+                                        <?php echo $attr->display_text[$langId];?>
                                     </li>
                                 <?php endforeach; ?>
                             </ul>
@@ -133,7 +106,7 @@ $langId = $this->locale->getCurrentLanguageId();
 $this->nextBlock('footerjs');
 ?>
     <script language="javascript">
-        $(document).ready(function () {
+        function sort(){
             $(".sortable").sortable({
                 handle: '.fa',
                 connectWith: ".sortable",
@@ -142,18 +115,51 @@ $this->nextBlock('footerjs');
             $(".column").sortable({
                 handle: '.fa'
             });
-            $('.delete-attribute').click(function(){
+        }
+        $(document).ready(function () {
+            sort();
+            $('#selected_group').delegate('.delete-attribute', 'click', function(){
                 $(this).parent().parent().appendTo('#unselected-attribute');
             });
-            $('.delete-group').click(function(){
+
+            $('#selected_group').delegate('.delete-group', 'click', function(){
+                $this = $(this);
+                var tpl = '<li class="ui-state-default group" data-id="' + $this.attr('data-id') + '">'
+                        + $this.attr('data-title') + '</li>';
+                $('#unselected_group').append(tpl);
                 $(this).parent().parent().parent().find('li.attribute').each(function(){
                    $(this).appendTo('#unselected-attribute');
                 });
                $(this).parent().parent().parent().remove();
             });
-            $('.select-group').click(function(){
 
+            $('#unselected_group').delegate('.select-group', 'click', function(){
+                var $this = $(this);
+                var gid = $this.parent().parent().attr('data-id')
+                new Toy.Request()
+                    .addEvent('ready', function(){
+                        Toy.Widget.ProgressModal.show();
+                    }).addEvent('success', function(data, status, xhr){
+                        var json = data;
+                        var tpl = '<div class="panel panel-default">'
+                                + '<div class="panel-heading">'
+                                + '<i class="fa fa-list fa-fw"></i>' + json.name + '<div class="pull-right">'
+                                + '<a href="javascript:void(0);" class="delete-group">'
+                                + '<?php echo $this->locale->_('delete'); ?>'
+                                + '</a></div></div><div class="panel-body">'
+                                + '<ul class="sortable attribute-group ui-sortable" data-id="' + json.id + '">';
+                        json.attributes.each(function(item){
+                            tpl += '<li class="ui-state-default attribute" data-id="' + item.id + '">'
+                                + '<i class="fa fa-list fa-fw"></i>' + item.name + '</li>';
+                        });
+                        tpl += '</ul></div></div>';
+                        $('.column').append(tpl);
+                        Toy.Widget.ProgressModal.hide();
+                        $this.parent().parent().remove();
+                        sort();
+                    }).get('<?php echo $this->router->buildUrl('group'); ?>', {'id':gid});
             });
+
             $('#save').click(function(){
                 var passed = true;
                 var $f = $('#form1');

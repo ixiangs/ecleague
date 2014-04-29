@@ -1,4 +1,3 @@
-Toy = {};
 Toy.Validation = {};
 
 Toy.Validation.Validator = new Class({
@@ -454,6 +453,6 @@ Toy.Widget.ProgressModal = {
     },
 
     hide: function(){
-
+        $('#progress_modal').modal('hide');
     }
 }

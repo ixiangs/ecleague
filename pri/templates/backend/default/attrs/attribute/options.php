@@ -50,7 +50,6 @@ $this->beginBlock('footerjs');
             $(el).parent().parent().remove();
         }
 
-
         $(function () {
             <?php
             if(count($this->options) > 0):

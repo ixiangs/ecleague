@@ -3,18 +3,12 @@ namespace Toy\View\Html;
 
 class InputGroupField extends FormField
 {
-//    private $_inputGroup = null;
 
     public function __construct($type, $label)
     {
         parent::__construct($label);
-        $this->_inputGroup = new InputGroup($type);
+        $this->input = new InputGroup($type);
     }
-
-//    public function getInputGroup()
-//    {
-//        return $this->_inputGroup;
-//    }
 
     protected function renderInput()
     {

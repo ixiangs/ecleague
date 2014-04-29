@@ -64,5 +64,6 @@
         </div>
     </div>
 <?php
+echo $this->renderBlock('others');
 $this->endBlock();
 echo $this->includeTemplate('layout\base');

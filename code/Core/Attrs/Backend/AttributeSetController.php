@@ -78,7 +78,18 @@ class AttributeSetController extends Web\Controller
         }
     }
 
-    public function addAction()
+    public function groupAjaxAction($id){
+        $langId = $this->context->locale->getCurrentLanguageId();
+        $group = Tops::loadModel('attrs/attributeGroup')->load($id);
+        $attributes = $group->getAttributes();
+        $res = array('groupId'=>$group->getId(), 'name'=>$group->name[$langId]);
+        $res['attributes'] = $attributes->toArray(function($item) use($langId){
+            return array(null, array('id'=>$item->getId(), 'name'=>$item->display_text[$langId]));
+        });
+        return Web\Result::jsonResult($res);
+    }
+
+    public function ddAction()
     {
         $model = Tops::loadModel('attrs/attributeSet');
         return $this->getEditTemplateResult($model);

@@ -27,7 +27,8 @@ class AttributeGroupController extends Web\Controller
     public function addAction()
     {
         $model = Tops::loadModel('attrs/attributeGroup')
-            ->setComponentId($this->request->getQuery('component_id'));
+            ->setComponentId($this->request->getQuery('component_id'))
+            ->setSetId($this->request->getQuery('set_id', 0));
         return $this->getEditTemplateResult($model);
     }
 
@@ -107,8 +108,35 @@ class AttributeGroupController extends Web\Controller
 
     private function getEditTemplateResult($model)
     {
+        $selectedAttributes = array();
+        $unselectedAttributes = array();
+        if ($model->getAttributeIds()) {
+            $selectedAttributes = Tops::loadModel('attrs/attribute')
+                ->find()
+                ->eq('component_id', $model->getComponentId())
+                ->eq('enabled', true)
+                ->in('id', $model->getAttributeIds())
+                ->load();
+        }
+
+        if ($model->getAttributeIds()) {
+            $unselectedAttributes = Tops::loadModel('attrs/attribute')
+                ->find()
+                ->eq('component_id', $model->getComponentId())
+                ->eq('enabled', true)
+                ->notIn('id', $model->getAttributeIds())
+                ->load();
+        } else {
+            $unselectedAttributes = Tops::loadModel('attrs/attribute')
+                ->find()
+                ->eq('component_id', $model->getComponentId())
+                ->eq('enabled', true)
+                ->load();
+        }
+
         return Web\Result::templateResult(
-            array('model' => $model),
+            array('model' => $model, 'selectedAttributes'=>$selectedAttributes,
+                'unselectedAttributes'=>$unselectedAttributes),
             'attrs/attribute-group/edit'
         );
     }

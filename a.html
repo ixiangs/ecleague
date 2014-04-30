@@ -23,13 +23,32 @@
     <!--[if lt IE 9]>
     <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
+    <style>
+        #sortable { list-style-type: none; margin: 0; padding: 0; }
+        #sortable li { margin: 3px 3px 3px 0; padding: 1px; float: left; font-size: 4em; text-align: center; border: none; background: none; font-size: 150%; }
+    </style>
+    <script>
+        $(function() {
+            $( "#sortable" ).sortable();
+            $( "#sortable" ).disableSelection();
+        });
+    </script>
 </head>
 <body>
 
-<script language="javascript">
-//    $('#myModal').modal('show');
-//    var m = new Toy.Widget.ProgressModal();
-    Toy.Widget.ProgressModal.show();
-</script>
+<ul id="sortable" class="col-md-12">
+    <li class="ui-state-default"><span class="label label-default">1</span></li>
+    <li class="ui-state-default"><span class="label label-default">2</span></li>
+    <li class="ui-state-default"><span class="label label-default">3</span></li>
+    <li class="ui-state-default"><span class="label label-default">4</span></li>
+    <li class="ui-state-default"><span class="label label-default">5</span></li>
+    <li class="ui-state-default"><span class="label label-default">6</span></li>
+    <li class="ui-state-default"><span class="label label-default">7</span></li>
+    <li class="ui-state-default"><span class="label label-default">8</span></li>
+    <li class="ui-state-default"><span class="label label-default">9</span></li>
+    <li class="ui-state-default"><span class="label label-default">10</span></li>
+    <li class="ui-state-default"><span class="label label-default">11</span></li>
+    <li class="ui-state-default"><span class="label label-default">12</span></li>
+</ul>
 </body>
 </html>

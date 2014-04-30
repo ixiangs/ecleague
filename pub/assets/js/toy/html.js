@@ -127,7 +127,7 @@ Toy.Validation.Field = new Class({
 
 Toy.Validation.selectors = [
     function (validator) {
-        return validator.form.find('input[type="text"],input[type="checkbox"],input[type="raido"],input[type="email"],input[type="password"],input[type="file"],select,textarea').get();
+        return validator.form.find('input[type="text"],input[type="hidden"],input[type="checkbox"],input[type="raido"],input[type="email"],input[type="password"],input[type="file"],select,textarea').get();
     }
 ];
 
@@ -139,17 +139,12 @@ Toy.Validation.renderers = [
             var result = $('#' + eid);
             if (result.length == 0) {
                 result = $('<small class="help-block" id="' + eid + '"></small>');
-                $input.parents(field.validator.options.inputContainer).append(result);
+                $input.parent().append(result);
             }
             return result;
         };
 
         var renderFailure = function () {
-//            $input.parents(field.validator.options.fieldContainer).removeClass(field.validator.options.successClass)
-//                .addClass(field.validator.options.failureClass);
-//            Object.each(errors, function (msg, rule) {
-//                newErrorElement(rule).text(msg).addClass(field.validator.options.errorClass).css('display', '');
-//            });
             $input.parents(field.validator.options.fieldContainer).removeClass(field.validator.options.successClass)
                 .addClass(field.validator.options.failureClass);
             Object.each(errors, function (msg, rule) {
@@ -192,6 +187,7 @@ Toy.Validation.rules = {
                         case 'email':
                         case 'password':
                         case 'number':
+                        case 'hidden':
                             return $input.val().length > 0;
                         case 'radio':
                         case 'checkbox':

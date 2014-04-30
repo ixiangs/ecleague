@@ -57,6 +57,20 @@ table.table tbody tr td.true{color:#2b542c;}
     height: 50px;
     margin-bottom: 20px;
 }
+
+.label-list { list-style-type: none; margin: 0; padding: 0; }
+.label-list li { margin: 3px 3px 3px 0; padding: 1px; float: left; font-size: 4em; text-align: center; border: none; background: none; font-size: 150%; }
+
+.panel-default > .panel-heading{
+    background-image: none;
+}
+.panel-thin{margin-bottom: 5px;}
+.panel-thin .panel-heading {
+    padding: 5px 5px 5px 5px;
+}
+.panel-thin .panel-body{
+    padding: 5px 5px 5px 5px;
+}
 .sortable{
     padding: 5px 0 5px 0;
 }

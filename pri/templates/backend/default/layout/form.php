@@ -29,16 +29,6 @@
                     echo $btn->render();
                 endforeach;
             endif;
-            ?>
-        </div>
-    </div>
-
-<div class="row">
-    <div class="panel panel-default">
-        <?php
-        if ($this->hasBlock('toolbar') || $this->toolbar):
-            echo '<div class="panel-heading text-right">';
-
             if ($this->hasBlock('toolbar')):
                 echo $this->renderBlock('toolbar');
             endif;
@@ -48,10 +38,12 @@
                     echo $act->render();
                 endforeach;
             endif;
-            echo '</div>';
-        endif;
-        ?>
-        <div class="panel-body">
+            ?>
+        </div>
+    </div>
+
+<div class="row">
+
             <?php
             if ($this->hasBlock('form')):
                 echo $this->renderBlock('form');
@@ -62,7 +54,7 @@
             endif;
             ?>
         </div>
-    </div>
+
 <?php
 echo $this->renderBlock('others');
 $this->endBlock();

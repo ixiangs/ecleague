@@ -9,7 +9,7 @@ class Form extends Element
 
     public function __construct($id = 'form1', $method = 'post')
     {
-        parent::__construct('form', array('class' => 'form-horizontal', 'id' => $id, 'method' => $method));
+        parent::__construct('form', array('class' => 'form', 'id' => $id, 'method' => $method));
     }
 
     public function getHiddens()
@@ -23,7 +23,7 @@ class Form extends Element
         return $this;
     }
 
-    public function addLabelField($label, $value = null)
+    public function addStaticField($label, $value = null)
     {
         $f = new LabelField($label);
         $f->getInput()->setAttribute(array('text' => $value));
@@ -97,9 +97,10 @@ class Form extends Element
         return $f;
     }
 
-    public function addCustomField()
+    public function addCustomField($renderer)
     {
         $f = new CustomField();
+        $f->setRenderer($renderer);
         $this->addField($f);
         return $f;
     }

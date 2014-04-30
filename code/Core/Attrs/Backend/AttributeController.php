@@ -27,7 +27,14 @@ class AttributeController extends Web\Controller
 
     public function typeAction()
     {
-        return Web\Result::templateResult();
+        $components = Tops::loadModel('admin/component')
+                        ->find()->load()
+                        ->toArray(function($item){
+                            return array($item->getId(), $item->getName());
+                        });
+        return Web\Result::templateResult(array(
+            'components'=>$components
+        ));
     }
 
     public function addAction()
@@ -74,10 +81,14 @@ class AttributeController extends Web\Controller
             }
         }
 
-        if ($this->request->hasParameter('set_id')) {
-            return Web\Result::redirectResult($this->router->buildUrl(
-                'attribute-set/groups', array('id' => $this->request->getQuery('set_id'))));
+        if($this->request->getPost('next_action') == 'new'){
+            return Web\Result::redirectResult($this->router->buildUrl('type'));
         }
+
+//        if ($this->request->hasParameter('set_id')) {
+//            return Web\Result::redirectResult($this->router->buildUrl(
+//                'attribute-set/groups', array('id' => $this->request->getQuery('set_id'))));
+//        }
 
         return Web\Result::redirectResult($this->router->buildUrl('list'));
     }

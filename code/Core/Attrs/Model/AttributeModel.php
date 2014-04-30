@@ -17,9 +17,7 @@ class AttributeModel extends Orm\Model
     const INPUT_TYPE_TEXTAREA = 'textarea';
     const INPUT_TYPE_EDITOR = 'editor';
     const INPUT_TYPE_SELECT = 'select';
-//    const INPUT_TYPE_LISTBOX = 'listbox';
     const INPUT_TYPE_OPTION_LIST = 'option_list';
-//    const INPUT_TYPE_RADIO_LIST = 'radio_list';
     const INPUT_TYPE_DATE_PICKER = 'date_picker';
 
     const DATA_TYPE_STRING = 'string';

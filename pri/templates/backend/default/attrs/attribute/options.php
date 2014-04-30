@@ -15,6 +15,7 @@ $this->assign('toolbar', array(
 ));
 
 $f = $this->html->form();
+
 $f->addHiddenField('attribute_id', 'attribute_id', $this->attribute->getId());
 $this->assign('form', $f);
 
@@ -24,14 +25,14 @@ $this->beginBlock('footerjs');
         var curIndex = 0;
         var optionHtml = '<div class="panel panel-default"><div class="panel-body">' +
             '<div class="form-group">' +
-            '<label class="col-sm-1 control-label" for="options_{index}_value"><?php echo $this->locale->_('attrs_option_value'); ?></label>' +
-            '<div class="col-sm-9"><input type="text" value="{ovalue}" data-validate-required="true" id="options_{index}_value" name="options[{index}][value]" class="form-control option-value">' +
-            '</div></div>';
+            '<label class="control-label" for="options_{index}_value"><?php echo $this->locale->_('attrs_option_value'); ?></label>' +
+            '<input type="text" value="{ovalue}" data-validate-required="true" id="options_{index}_value" name="options[{index}][value]" class="form-control option-value">' +
+            '</div>';
         <?php foreach($this->locale->getLanguages() as $lang): ?>
         optionHtml += '<div class="form-group">' +
-            '<label class="col-sm-1 control-label" for="options_{index}_<?php $lang['id']?>"><?php echo $lang['name']; ?></label>' +
-            '<div class="col-sm-9"><input type="text" value="{olabel<?php echo $lang['id']; ?>}" data-validate-required="true" id="options_{index}_label_<?php echo $lang['id']?>" name="options[{index}][labels][<?php echo $lang['id']?>]" class="form-control" data-validate-required="true">' +
-            '</div></div>';
+            '<label class="control-label" for="options_{index}_<?php $lang['id']?>"><?php echo $lang['name']; ?></label>' +
+            '<input type="text" value="{olabel<?php echo $lang['id']; ?>}" data-validate-required="true" id="options_{index}_label_<?php echo $lang['id']?>" name="options[{index}][labels][<?php echo $lang['id']?>]" class="form-control" data-validate-required="true">' +
+            '</div>';
         <?php endforeach; ?>
         optionHtml += '</div><div class="panel-footer text-right"><button type="button" class="btn btn-danger" data-option-id="{id}" onclick="javascript:deleteOption(this);"><?php echo $this->locale->_('delete'); ?></button></div>';
 

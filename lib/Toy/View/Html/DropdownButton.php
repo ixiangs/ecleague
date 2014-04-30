@@ -4,29 +4,29 @@ namespace Toy\View\Html;
 class DropdownButton extends Element
 {
 
-    private $_label = null;
+    private $button = null;
 
-    public function __construct($label, $attrs = array('class' => "btn-group"))
+    public function __construct($button, $attrs = array('class' => "btn-group"))
     {
-        $this->_label = $label;
+        $this->button = $button;
         parent::__construct('div', $attrs);
     }
 
-    public function getLabel()
+    public function getButton()
     {
-        return $this->_label;
+        return $this->button;
     }
 
-    public function setLabel($value)
+    public function setButton($value)
     {
-        $this->_label = $value;
+        $this->button = $value;
         return $this;
     }
 
     public function renderInner()
     {
-        $res = '<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">'
-                .$this->_label . '<span class="caret"></span></button>';
+        $res = $this->button->render();
+        $res .= '<button type="button" class="'.$this->button->getAttribute('class').' dropdown-toggle" data-toggle="dropdown"><span class="caret"></span><span class="sr-only">Toggle Dropdown</span></button>';
         $res .= $this->renderChildren();
         return $res;
     }

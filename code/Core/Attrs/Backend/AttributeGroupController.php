@@ -14,7 +14,6 @@ class AttributeGroupController extends Web\Controller
         $pi = $this->request->getParameter("pageindex", 1);
         $count = Tops::loadModel('attrs/attributeGroup')->find()->selectCount()->execute()->getFirstValue();
         $models = Tops::loadModel('attrs/attributeGroup')->find()
-            ->asc('code')
             ->limit(PAGINATION_SIZE, ($pi - 1) * PAGINATION_SIZE)
             ->load();
         return Web\Result::templateResult(array(
@@ -61,13 +60,15 @@ class AttributeGroupController extends Web\Controller
             }
         }
 
-        $as = Tops::loadModel('attrs/attributeSet')->load($this->request->getQuery('set_id'));
-        $as->setGroupIds(array_merge($as->getGroupIds(array()), array($m->getId())));
-        $as->update();
+        return Web\Result::redirectResult($this->router->buildUrl('list'));
 
-        return Web\Result::redirectResult($this->router->buildUrl(
-            'attribute-set/groups',
-            array('id' => $this->request->getQuery('set_id'))));
+//        $as = Tops::loadModel('attrs/attributeSet')->load($this->request->getQuery('set_id'));
+//        $as->setGroupIds(array_merge($as->getGroupIds(array()), array($m->getId())));
+//        $as->update();
+
+//        return Web\Result::redirectResult($this->router->buildUrl(
+//            'attribute-set/groups',
+//            array('id' => $this->request->getQuery('set_id'))));
     }
 
 //    public function editPostAction()

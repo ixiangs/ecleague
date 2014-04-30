@@ -85,11 +85,12 @@ abstract class FormField extends Element
 
         $html = array($this->renderBegin());
         if($this->labelVisiable){
-            $html[] = '<label class="col-sm-1 control-label">' . $this->label . '</label>';
+//            $html[] = '<label class="col-sm-1 control-label">' . $this->label . '</label>';
+            $html[] = '<label class="control-label">' . $this->label . '</label>';
         }
-        $html[] = '<div class="col-md-11">';
+//        $html[] = '<div class="col-md-11">';
         $html[] = $this->renderInput();
-        $html[] = '</div>';
+//        $html[] = '</div>';
         $html[] = $this->renderEnd();
 
         return implode('', $html);

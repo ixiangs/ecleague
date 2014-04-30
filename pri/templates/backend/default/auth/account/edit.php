@@ -18,7 +18,7 @@ if($this->router->action == 'add'):
 $f->addInputField('text', $this->locale->_('username'), 'username', 'username', $this->model->getUsername())
     ->addValidateRule('required', true);
 else:
-$f->addLabelField($this->locale->_('username'), $this->model->getUsername());
+$f->addStaticField($this->locale->_('username'), $this->model->getUsername());
 endif;
 $f->addInputField('email', $this->locale->_('email'), 'email', 'email', $this->model->getEmail())
     ->addValidateRule('required', true);

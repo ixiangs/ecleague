@@ -17,7 +17,7 @@ $this->assign('toolbar', array(
 $f = $this->html->form();
 $len = count($this->models);
 
-$f->addLabelField($this->locale->_('code'), $this->model->getCode());
+$f->addStaticField($this->locale->_('code'), $this->model->getCode());
 $f->addInputField('text', $this->locale->_('text'), 'label', 'label', $this->model->getLabel())
     ->addValidateRule('required', true);
 $f->addHiddenField('language_id', 'language_id', $this->model->getLanguageId());

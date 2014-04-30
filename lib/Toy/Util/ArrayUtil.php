@@ -76,7 +76,7 @@ final class ArrayUtil
 
     static public function splice(array $arr, array $removes, array $news){
         foreach($removes as $rk){
-            if(array_key_exists($arr, $rk)){
+            if(array_key_exists($rk, $arr)){
                 unset($arr[$rk]);
             }
         }

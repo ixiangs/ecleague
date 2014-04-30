@@ -22,6 +22,11 @@ $f = $this->html->form()->setAttribute(array(
     'action'=>$this->router->buildUrl('add'),
     'method'=>'get')
 );
+$f->addSelectField($this->components,
+                    $this->locale->_('attrs_select_component'),
+                    'component_id', 'component_id',
+                    $this->request->getQuery('component_id'))
+        ->getInput()->setCaption('');
 $f->addSelectField(array(
     \Core\Attrs\Model\AttributeModel::DATA_TYPE_STRING=>$this->locale->_('attrs_data_type_string'),
     \Core\Attrs\Model\AttributeModel::DATA_TYPE_INTEGER=>$this->locale->_('attrs_data_type_integer'),
@@ -44,6 +49,5 @@ $f->addSelectField(array(
     ->addValidateRule('required', true)
     ->getInput()->setCaption('');
 $f->addHiddenField('set_id', 'set_id', $this->request->getQuery('set_id'));
-$f->addHiddenField('component_id', 'component_id', $this->request->getQuery('component_id'));
 $this->assign('form', $f);
 echo $this->includeTemplate('layout\form');

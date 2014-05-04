@@ -1,7 +1,7 @@
 <?php
 namespace Toy\View\Html;
 
-class LabelField extends FormField
+class StaticField extends FormField
 {
 
     public function __construct($label)

@@ -18,9 +18,10 @@ $f = $this->html->form();
 $len = count($this->models);
 
 $f->addStaticField($this->locale->_('code'), $this->model->getCode());
-$f->addInputField('text', $this->locale->_('text'), 'label', 'label', $this->model->getLabel())
+$f->newField($this->locale->_('text'), true,
+    $this->html->textbox('label', 'label', $this->model->getLabel()))
     ->addValidateRule('required', true);
-$f->addHiddenField('language_id', 'language_id', $this->model->getLanguageId());
-$f->addHiddenField('id', 'id', $this->model->getId());
+$f->addHidden('language_id', 'language_id', $this->model->getLanguageId());
+$f->addHidden('id', 'id', $this->model->getId());
 $this->assign('form', $f);
 echo $this->includeTemplate('layout\form');

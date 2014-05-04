@@ -45,65 +45,82 @@ $inputTypes = array(
 $f = $this->html->groupedForm()
         ->setAttribute('action', $this->router->buildUrl('save', '*'));
 $f->beginGroup('tab_base', $this->locale->_('base_info'));
-$f->addStaticField($this->locale->_('attrs_data_type'), $dataTypes[$this->model->getDataType()]);
-$f->addStaticField($this->locale->_('attrs_input_type'), $inputTypes[$this->model->getInputType()]);
-$f->addStaticField($this->locale->_('attrs_component'), $this->component->getName());
+$f->newField('')->setRenderer(function($field) use($dataTypes, $inputTypes){
+    $res = array('<div class="form-group">');
+    $res[] = '<label class="control-label col-md-4" style="padding-left:0">'.$this->locale->_('attrs_data_type').':'.$dataTypes[$this->model->getDataType()].'</label>';
+    $res[] = '<label class="control-label col-md-4" style="padding-left:0">'.$this->locale->_('attrs_input_type').':'.$inputTypes[$this->model->getInputType()].'</label>';
+    $res[] = '<label class="control-label col-md-4" style="padding-left:0">'.$this->locale->_('attrs_component').':'.$this->component->getName().'</label>';
+    $res[] = '</div>';
+    return implode('', $res);
+});
 
-$f->addInputField('text', $this->locale->_('name'), 'name', 'data[name]', $this->model->getName())
-    ->addValidateRule('required', true);
-$f->addSelectField(array('1'=>$this->locale->_('yes'), '0'=>$this->locale->_('no')),
-    $this->locale->_('attrs_indexable'), 'indexable', 'data[indexable]', $this->model->getEnabled());
-$f->addSelectField(array('1'=>$this->locale->_('yes'), '0'=>$this->locale->_('no')),
-    $this->locale->_('attrs_localizable'), 'localizable', 'data[localizable]', $this->model->getLocalizable());
-$vs = $this->model->getInputSetting(array());
-$f->addSelectField(array('1'=>$this->locale->_('yes'), '0'=>$this->locale->_('no')),
-    $this->locale->_('enable'), 'enabled', 'data[enabled]', $this->model->getEnabled());
-$f->endGroup();
+$f->newField($this->locale->_('name'), true,
+    $this->html->textbox('name', 'data[name]', $this->model->getName())
+        ->addValidateRule('required', true));
+$f->newField($this->locale->_('attrs_indexable'), true,
+    $this->html->select('indexable', 'data[indexable]', $this->model->getEnabled(),
+        array('1'=>$this->locale->_('yes'), '0'=>$this->locale->_('no'))));
+$f->newField($this->locale->_('attrs_localizable'), true,
+    $this->html->select('localizable', 'data[localizable]', $this->model->getLocalizable(),
+        array('1'=>$this->locale->_('yes'), '0'=>$this->locale->_('no'))));
 
-$f->beginGroup('tab_input', $this->locale->_('attrs_input_setting'));
-$f->addSelectField(array('1'=>$this->locale->_('yes'), '0'=>$this->locale->_('no')),
-    $this->locale->_('attrs_required'), 'required', 'data[required]', $this->model->getEnabled());
+$f->newField($this->locale->_('enabled'), true,
+    $this->html->select('enabled', 'data[enabled]', $this->model->getEnabled(),
+        array('1'=>$this->locale->_('yes'), '0'=>$this->locale->_('no'))));
+
+$vs = array_merge(array(
+    'min_value'=>'',
+    'max_value'=>'',
+    'max_length'=>'',
+    'multiple'=>'',
+    'size'=>'1'
+), $this->model->getInputSetting(array()));
+
+$f->newField($this->locale->_('attrs_required'), true,
+    $this->html->select('required', 'data[required]', $this->model->getEnabled(),
+        array('1'=>$this->locale->_('yes'), '0'=>$this->locale->_('no'))));
 switch($this->model->getInputType()):
     case \Core\Attrs\Model\AttributeModel::INPUT_TYPE_TEXTBOX:
         switch($this->model->getDataType()):
             case \Core\Attrs\Model\AttributeModel::DATA_TYPE_INTEGER:
-                $f->addInputField('text', $this->locale->_('attrs_min_value'), 'min_value', 'data[input_setting][min_value]',
-                    array_key_exists('min_value', $vs)? $vs['min_value']: '')
-                    ->addValidateRule('integer', true);
-                $f->addInputField('text', $this->locale->_('attrs_max_value'), 'max_value', 'data[input_setting][max_value]',
-                    array_key_exists('max_value', $vs)? $vs['max_value']: '')
-                    ->addValidateRule('integer', true)->addValidateRule('greatto', '#min_value', $this->locale->_('attrs_max_great_min'));
+                $f->newField($this->locale->_('attrs_min_value'), false,
+                    $this->html->textbox('min_value', 'data[input_setting][min_value]', $vs['min_value'])
+                    ->addValidateRule('integer', true));
+                $f->newField($this->locale->_('attrs_max_value'), false,
+                    $this->html->textbox('max_value', 'data[input_setting][max_value]', $vs['max_value'])
+                    ->addValidateRule('integer', true)
+                    ->addValidateRule('greatto', '#min_value', $this->locale->_('attrs_max_great_min')));
                 break;
             case \Core\Attrs\Model\AttributeModel::DATA_TYPE_NUMBER:
-                $f->addInputField('text', $this->locale->_('attrs_min_value'), 'min_value', 'data[input_setting][min_value]',
-                    array_key_exists('min_value', $vs)? $vs['min_value']: '')
-                    ->addValidateRule('number', true);
-                $f->addInputField('text', $this->locale->_('attrs_max_value'), 'max_value', 'data[input_setting][max_value]',
-                    array_key_exists('max_value', $vs)? $vs['max_value']: '')
-                    ->addValidateRule('number', true)->addValidateRule('greatto', '#min_value', $this->locale->_('attrs_max_great_min'));
+                $f->newField($this->locale->_('attrs_min_value'), false,
+                    $this->html->textbox('min_value', 'data[input_setting][min_value]', $vs['min_value'])
+                    ->addValidateRule('number', true));
+                $f->newField($this->locale->_('attrs_max_value'), false,
+                    $this->html->textbox('max_value', 'data[input_setting][max_value]', $vs['max_value'])
+                    ->addValidateRule('number', true)
+                    ->addValidateRule('greatto', '#min_value', $this->locale->_('attrs_max_great_min')));
                 break;
             case \Core\Attrs\Model\AttributeModel::DATA_TYPE_STRING:
-                $f->addInputField('text', $this->locale->_('attrs_max_length'), 'max_length', 'data[input_setting][max_length]',
-                    array_key_exists('max_length', $vs)? $vs['max_length']: false)
-                    ->addValidateRule('integer', true);
+                $f->newField($this->locale->_('attrs_max_length'), false,
+                    $this->html->textbox('max_length', 'data[input_setting][max_length]', $vs['max_length'])
+                    ->addValidateRule('integer', true));
                 break;
         endswitch;
         break;
     case \Core\Attrs\Model\AttributeModel::INPUT_TYPE_SELECT:
     case \Core\Attrs\Model\AttributeModel::INPUT_TYPE_OPTION_LIST:
-        $f->addSelectField(array('1'=>$this->locale->_('yes'), '0'=>$this->locale->_('no')),
-            $this->locale->_('attrs_multiple'), 'multiple', 'data[input_setting][multiple]',
-            array_key_exists('multiple', $vs)? $vs['multiple']: false)
-            ->addValidateRule('required', true);
+        $f->newField($this->locale->_('attrs_multiple'), true,
+            $this->html->select('multiple', 'data[input_setting][multiple]', $vs['multiple'],
+            array('1'=>$this->locale->_('yes'), '0'=>$this->locale->_('no')))
+            ->addValidateRule('required', true));
         if($this->model->getInputType() == \Core\Attrs\Model\AttributeModel::INPUT_TYPE_SELECT):
-            $f->addInputField('text', $this->locale->_('attrs_multiple_size'), 'size', 'data[input_setting][size]',
-                array_key_exists('size', $vs)? $vs['size']: 1)
-                ->addValidateRule('required', true)
-                ->addValidateRule('integer', true);
-            $f->addSelectField(array('1'=>$this->locale->_('attrs_empty_option'), '2'=>$this->locale->_('attrs_first_option')),
-                $this->locale->_('attrs_default_option'), 'default_option', 'data[input_setting][default_option]',
-                array_key_exists('default_option', $vs)? $vs['default_option']: false)
-                ->addValidateRule('required', true);
+            $f->newField($this->locale->_('attrs_multiple_size'), true,
+                $this->html->textbox('size', 'data[input_setting][size]', $vs['size'])
+                ->addValidateRule('required', true));
+            $f->newField($this->locale->_('attrs_default_option'), true,
+                $this->html->select('default_option', 'data[input_setting][default_option]', $vs['multiple'],
+                    array('1'=>$this->locale->_('attrs_empty_option'), '2'=>$this->locale->_('attrs_first_option')))
+                    ->addValidateRule('required', true));
         endif;
         break;
 endswitch;
@@ -115,7 +132,7 @@ switch($this->model->getInputType()):
     case \Core\Attrs\Model\AttributeModel::INPUT_TYPE_OPTION_LIST:
         $f->beginGroup('tab_option', $this->locale->_('attrs_option'));
         $options = $this->model->getOptions(array());
-        $f->addCustomField(function() use($options, $langId, $langs){
+        $f->newField('', false)->setRenderer(function() use($options, $langId, $langs){
             $res = array('<div class="form-group"><table id="option_table" class="table table-bordered" style="width:auto;">');
             $res[] = '<thead><tr><th>'.$this->locale->_('attrs_option_value').'</th>';
             foreach($langs as $lang){
@@ -153,18 +170,20 @@ $dlabels = $this->model->getDisplayText(array());
 $flabels = $this->model->getMemo(array());
 foreach($langs as $lang):
     $f->beginGroup('tab_lang_'.$lang['code'], $lang['name']);
-    $f->addInputField('text', $this->locale->_('text'), 'display_label_'.$lang['id'], 'data[display_text]['.$lang['id'].']',
+    $f->newField($this->locale->_('text'), true,
+        $this->html->textbox('display_label_'.$lang['id'], 'data[display_text]['.$lang['id'].']',
         array_key_exists($lang['id'], $dlabels)? $dlabels[$lang['id']]: '')
-        ->addValidateRule('required', true);
-    $f->addInputField('text', $this->locale->_('memo'), 'memo_'.$lang['id'], 'data[memo]['.$lang['id'].']',
-        array_key_exists($lang['id'], $flabels)? $flabels[$lang['id']]: '');
+        ->addValidateRule('required', true));
+    $f->newField($this->locale->_('memo'), true,
+        $this->html->textbox('memo_'.$lang['id'], 'data[memo]['.$lang['id'].']',
+        array_key_exists($lang['id'], $flabels)? $flabels[$lang['id']]: ''));
     $f->endGroup();
 endforeach;
-$f->addHiddenField('data_type', 'data[data_type]', $this->model->getDataType());
-$f->addHiddenField('input_type', 'data[input_type]', $this->model->getInputType());
-$f->addHiddenField('component_id', 'data[component_id]', $this->model->getComponentId());
-$f->addHiddenField('next_action', 'next_action', '');
-$f->addHiddenField('id', 'data[id]', $this->model->getId());
+$f->addHidden('data_type', 'data[data_type]', $this->model->getDataType());
+$f->addHidden('input_type', 'data[input_type]', $this->model->getInputType());
+$f->addHidden('component_id', 'data[component_id]', $this->model->getComponentId());
+$f->addHidden('next_action', 'next_action', '');
+$f->addHidden('id', 'data[id]', $this->model->getId());
 
 $this->assign('form', $f);
 $this->beginBlock('footerjs');
@@ -178,7 +197,7 @@ $this->beginBlock('footerjs');
         optionHtml += '<td><a href="javascript:void(0);" data-action="delete"><?php echo $this->locale->_('delete'); ?></a></td>';
         optionHtml += '</tr>';
 
-        $('#option_table').delegate('button', 'click', function(){
+        $('#option_table tbody').delegate('a', 'click', function(){
            $(this).parents('tr').remove();
         });
         $('#add_option').click(function () {

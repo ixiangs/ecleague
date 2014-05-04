@@ -47,11 +47,16 @@ abstract class Model implements \ArrayAccess, \Iterator
     {
         $nums = count($arguments);
         if ($name == 'load') {
-            return $this->_load($arguments[0], $nums > 1 ? $arguments[1] : null);
+            return $this->_load(
+                $nums > 0 ? $arguments[0] : $this->getIdValue(),
+                $nums > 1 ? $arguments[1] : null);
         } elseif ($name == 'find') {
             return $this->_find();
         } elseif ($name == 'merge') {
-            return $this->_merge($arguments[0], $arguments[1], $nums > 2 ? $arguments[2] : null);
+            return $this->_merge(
+                $nums > 0? $arguments[0]: $this->getIdValue(),
+                $nums > 1? $arguments[1]: array_merge(array(), $this->data),
+                $nums > 2 ? $arguments[2] : null);
         }
 
         $st = substr($name, 0, 3);

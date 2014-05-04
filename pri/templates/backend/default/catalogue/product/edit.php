@@ -37,7 +37,7 @@ foreach($this->attributeSet->getGroups() as $attrGroup):
     endforeach;
     $f->endGroup();
 endforeach;
-$f->addHiddenField('id', 'id', $this->model->getId());
-$f->addHiddenField('attribute_set_id', 'data[attribute_set_id]', 1);
+$f->addHidden('id', 'id', $this->model->getId());
+$f->addHidden('attribute_set_id', 'data[attribute_set_id]', 1);
 $this->assign('form', $f);
 echo $this->includeTemplate('layout\form');

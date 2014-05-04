@@ -34,15 +34,24 @@ class Collection extends Query implements \Iterator, \ArrayAccess, \SeekableIter
         return $this;
     }
 
-    public function findById($value)
-    {
-        foreach ($this->source as $item) {
-            if ($item->getIdValue() == $value) {
-                return $item;
-            }
-        }
-        return null;
-    }
+//    public function hasModel($id){
+//        foreach ($this->source as $item) {
+//            if ($item->getIdValue() == $id) {
+//                return true;
+//            }
+//        }
+//        return false;
+//    }
+//
+//    public function findModel($value)
+//    {
+//        foreach ($this->source as $item) {
+//            if ($item->getIdValue() == $value) {
+//                return $item;
+//            }
+//        }
+//        return null;
+//    }
 
     public function load($db = null)
     {

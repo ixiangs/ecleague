@@ -34,6 +34,6 @@ $f->addInputField('email', $this->locale->_('email'), 'email', 'member[email]', 
     ->addValidateRule('required', true);
 $f->addInputField('text', $this->locale->_('mobile'), 'mobile', 'member[mobile]', $this->member->getMobile());
 $f->endGroup();
-$f->addHiddenField('id', 'id', $this->member->getId());
+$f->addHidden('id', 'id', $this->member->getId());
 $this->assign('form', $f);
 echo $this->includeTemplate('layout\form');

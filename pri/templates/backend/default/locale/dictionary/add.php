@@ -18,10 +18,12 @@ $this->assign('toolbar', array(
 $f = $this->html->form();
 $len = count($this->models);
 foreach($this->models as $index=>$model):
-$f->addInputField('text', $this->locale->_('code'), 'codes_'.$index, 'codes['.$index.']', $model->getCode())
-    ->addValidateRule('required', true);
-$f->addInputField('text', $this->locale->_('text'), 'labels_'.$index, 'labels['.$index.']', $model->getLabel())
-    ->addValidateRule('required', true);
+$f->newField($this->locale->_('code'), true,
+    $this->html->textbox('codes_'.$index, 'codes['.$index.']', $model->getCode())
+    ->addValidateRule('required', true));
+$f->newField($this->locale->_('text'), true,
+    $this->html->textbox('labels_'.$index, 'labels['.$index.']', $model->getLabel())
+    ->addValidateRule('required', true));
 endforeach;
 $this->assign('form', $f);
 
@@ -30,16 +32,16 @@ $this->beginBlock('footerjs');
     <script language="javascript">
         var curIndex = <?php echo $len; ?>;
         var fieldHtml = '<div class="form-group">' +
-            '<label class="col-lg-2 control-label" for="codes_{index}"><?php echo $this->locale->_('code'); ?></label>' +
-            '<div class="col-lg-10"><input type="text" value="" data-validate-required="true" id="codes_{index}" name="codes[{index}]" class="form-control">' +
-            '</div></div>' +
+            '<label class="control-label" for="codes_{index}"><?php echo $this->locale->_('code'); ?></label>' +
+            '<input type="text" value="" data-validate-required="true" id="codes_{index}" name="codes[{index}]" class="form-control">' +
+            '</div>' +
             '<div class="form-group">' +
-            '<label class="col-lg-2 control-label" for="labels_{index}"><?php echo $this->locale->_('text'); ?></label>' +
-            '<div class="col-lg-10"><input type="text" value="" data-validate-required="true" id="labels_{index}" name="labels[{index}]" class="form-control">' +
-            '</div></div>'+
-            '<div class="form-group"><div class="col-lg-2"></div><div class="col-lg-10">' +
+            '<label class="control-label" for="labels_{index}"><?php echo $this->locale->_('text'); ?></label>' +
+            '<input type="text" value="" data-validate-required="true" id="labels_{index}" name="labels[{index}]" class="form-control">' +
+            '</div>'+
+            '<div class="form-group">' +
             '<button type="button" class="btn btn-default" id="delete_{index}" onclick="javascript:deleteField({index});"><?php echo $this->locale->_('delete'); ?></button>' +
-            '</div></div>';
+            '</div>';
 
         $('#new').click(function () {
             $('<hr/>').appendTo('#form1');
@@ -52,10 +54,10 @@ $this->beginBlock('footerjs');
         });
 
         function deleteField(index){
-            $('#codes_' + index).parent().parent().prev().remove();
-            $('#codes_' + index).parent().parent().remove();
-            $('#labels_' + index).parent().parent().remove();
-            $('#delete_' + index).parent().parent().remove();
+            $('#codes_' + index).parent().prev().remove();
+            $('#codes_' + index).parent().remove();
+            $('#labels_' + index).parent().remove();
+            $('#delete_' + index).parent().remove();
             $('#form1').data('validator').reload();
         }
     </script>

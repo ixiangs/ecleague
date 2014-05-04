@@ -1,13 +1,13 @@
 <?php
 namespace Toy\View\Html;
 
-abstract class FormField extends Element
+class FormField extends Element
 {
     protected $label = null;
     protected $input = null;
+    protected $required = false;
     protected $validateRules = array();
     protected $description = null;
-    protected $labelVisiable = true;
 
     public function __construct($label)
     {
@@ -15,6 +15,17 @@ abstract class FormField extends Element
             'class' => 'form-group'
         ));
         $this->label = $label;
+    }
+
+    public function getRequired()
+    {
+        return $this->required;
+    }
+
+    public function setRequired($value)
+    {
+        $this->required = $value;
+        return $this;
     }
 
     public function getLabel()
@@ -37,17 +48,6 @@ abstract class FormField extends Element
     {
         $this->input = $value;
         return $this;
-    }
-
-    public function setLabelVisiable($value)
-    {
-        $this->labelVisiable = $value;
-        return $this;
-    }
-
-    public function getLabelVisiable()
-    {
-        return $this->labelVisiable;
     }
 
     public function getValidateRules()
@@ -84,17 +84,10 @@ abstract class FormField extends Element
         }
 
         $html = array($this->renderBegin());
-        if($this->labelVisiable){
-//            $html[] = '<label class="col-sm-1 control-label">' . $this->label . '</label>';
-            $html[] = '<label class="control-label">' . $this->label . '</label>';
-        }
-//        $html[] = '<div class="col-md-11">';
-        $html[] = $this->renderInput();
-//        $html[] = '</div>';
+        $html[] = '<label class="control-label">' . $this->label . '</label>';
+        $html[] = $this->input->render();
         $html[] = $this->renderEnd();
 
         return implode('', $html);
     }
-
-    abstract protected function renderInput();
 }

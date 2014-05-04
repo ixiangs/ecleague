@@ -36,6 +36,6 @@ $f->addSelectField(array(
         \Core\Auth\Model\AccountModel::STATUS_DISABLED=>$this->locale->_('disabled')
 ), $this->locale->_('status'), 'status', 'status', $this->model->getStatus());
 $f->addCheckboxListField($this->roles, $this->locale->_('auth_role_list'), 'role_ids', 'role_ids[]', $this->model->getRoleIds());
-$f->addHiddenField('id', 'id', $this->model->getId());
+$f->addHidden('id', 'id', $this->model->getId());
 $this->assign('form', $f);
 echo $this->includeTemplate('layout\form');

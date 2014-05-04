@@ -65,7 +65,7 @@ class AttributeController extends Web\Controller
         }
 
         if ($m->getId()) {
-            if (!$m->update()) {
+            if (!$m->merge()->update()) {
                 $this->session->set('errors', $locale->_('err_system'));
                 return $this->getEditTemplateResult($m);
             }
@@ -74,21 +74,11 @@ class AttributeController extends Web\Controller
                 $this->session->set('errors', $locale->_('err_system'));
                 return $this->getEditTemplateResult($m);
             }
-            if(in_array($m->getInputType(),
-                    array(AttributeModel::INPUT_TYPE_SELECT, AttributeModel::INPUT_TYPE_OPTION_LIST))){
-                return Web\Result::redirectResult($this->router->buildUrl(
-                    'options', ArrayUtil::splice($this->request->getQuery(), array('input_type', 'data_type'), array('id'=>$m->getId()))));
-            }
         }
 
         if($this->request->getPost('next_action') == 'new'){
             return Web\Result::redirectResult($this->router->buildUrl('type'));
         }
-
-//        if ($this->request->hasParameter('set_id')) {
-//            return Web\Result::redirectResult($this->router->buildUrl(
-//                'attribute-set/groups', array('id' => $this->request->getQuery('set_id'))));
-//        }
 
         return Web\Result::redirectResult($this->router->buildUrl('list'));
     }
@@ -110,52 +100,52 @@ class AttributeController extends Web\Controller
         return Web\Result::redirectResult($this->router->buildUrl('list'));
     }
 
-    public function optionsAction($id)
-    {
-        $attr = Tops::loadModel('attrs/attribute')->load($id);
-        $options = $attr->getOptions();
-        return Web\Result::templateResult(array(
-            'attribute' => $attr,
-            'options' => $options
-        ));
-    }
-
-    public function optionsPostAction($id)
-    {
-        $lang = $this->context->locale;
-        $attr = Tops::loadModel('attrs/attribute')->load($this->request->getPost('attribute_id'));
-        $options = $this->request->getPost('options');
-        //check unique
-        $repeated = ArrayUtil::contains(array_count_values(
-            ArrayUtil::toArray($options, function ($item) {
-                return array($item['value'], null);
-            })
-        ), function ($item) {
-            return $item > 1;
-        });
-        if ($repeated) {
-            $this->session->set('errors', $lang->_('attrs_err_option_repeated'));
-            return Web\Result::templateResult(array(
-                'attribute' => $attr,
-                'options' => $options
-            ));
-        }
-
-        if ($attr->setOptions($options)->update()) {
-            if ($this->request->hasParameter('set_id')) {
-                return Web\Result::redirectResult($this->router->buildUrl(
-                    'attribute-set/groups', array('id' => $this->request->getQuery('set_id'))));
-            }
-
-            return Web\Result::redirectResult($this->router->buildUrl('list'));
-        } else {
-            $this->session->set('errors', $lang->_('err_system'));
-            return Web\Result::templateResult(array(
-                'attribute' => $attr,
-                'options' => $options
-            ));
-        }
-    }
+//    public function optionsAction($id)
+//    {
+//        $attr = Tops::loadModel('attrs/attribute')->load($id);
+//        $options = $attr->getOptions();
+//        return Web\Result::templateResult(array(
+//            'attribute' => $attr,
+//            'options' => $options
+//        ));
+//    }
+//
+//    public function optionsPostAction($id)
+//    {
+//        $lang = $this->context->locale;
+//        $attr = Tops::loadModel('attrs/attribute')->load($this->request->getPost('attribute_id'));
+//        $options = $this->request->getPost('options');
+//        //check unique
+//        $repeated = ArrayUtil::contains(array_count_values(
+//            ArrayUtil::toArray($options, function ($item) {
+//                return array($item['value'], null);
+//            })
+//        ), function ($item) {
+//            return $item > 1;
+//        });
+//        if ($repeated) {
+//            $this->session->set('errors', $lang->_('attrs_err_option_repeated'));
+//            return Web\Result::templateResult(array(
+//                'attribute' => $attr,
+//                'options' => $options
+//            ));
+//        }
+//
+//        if ($attr->setOptions($options)->update()) {
+//            if ($this->request->hasParameter('set_id')) {
+//                return Web\Result::redirectResult($this->router->buildUrl(
+//                    'attribute-set/groups', array('id' => $this->request->getQuery('set_id'))));
+//            }
+//
+//            return Web\Result::redirectResult($this->router->buildUrl('list'));
+//        } else {
+//            $this->session->set('errors', $lang->_('err_system'));
+//            return Web\Result::templateResult(array(
+//                'attribute' => $attr,
+//                'options' => $options
+//            ));
+//        }
+//    }
 
     private function getEditTemplateResult($model)
     {

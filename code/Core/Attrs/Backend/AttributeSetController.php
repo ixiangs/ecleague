@@ -95,7 +95,7 @@ class AttributeSetController extends Web\Controller
         return $this->getEditTemplateResult($model);
     }
 
-    public function addPostAction()
+    public function savePostAction()
     {
         $locale = $this->context->locale;
         $m = Tops::loadModel('attrs/attributeSet')->fillArray($this->request->getPost('data'));
@@ -106,14 +106,16 @@ class AttributeSetController extends Web\Controller
             return $this->getEditTemplateResult($m);
         }
 
-        if ($m->validateUnique() !== true) {
-            $this->session->set('errors', $locale->_('attrs_err_attribute_set_exists', $m->getCode()));
-            return $this->getEditTemplateResult($m);
-        }
-
-        if (!$m->insert()) {
-            $this->session->set('errors', $locale->_('err_system'));
-            return $this->getEditTemplateResult($m);
+        if($m->getId()){
+            if (!$m->merge()->update()) {
+                $this->session->set('errors', $locale->_('err_system'));
+                return $this->getEditTemplateResult($m);
+            }
+        }else{
+            if (!$m->insert()) {
+                $this->session->set('errors', $locale->_('err_system'));
+                return $this->getEditTemplateResult($m);
+            }
         }
 
         return Web\Result::redirectResult($this->router->buildUrl('groups', array('id'=>$m->getId())));
@@ -121,29 +123,28 @@ class AttributeSetController extends Web\Controller
 
     public function editAction($id)
     {
-        $m = Tops::loadModel('attrs/attributeSet');
-        $m->load($id);
+        $m = Tops::loadModel('attrs/attributeSet')->load($id);
         return $this->getEditTemplateResult($m);
     }
 
-    public function editPostAction()
-    {
-        $locale = $this->context->locale;
-        $m = Tops::loadModel('attrs/attributeSet')
-                ->merge($this->request->getPost('id'), $this->request->getPost('data'));
-        $vr = $m->validateProperties();
-        if ($vr !== true) {
-            $this->session->set('errors', $locale->_('err_input_invalid'));
-            return $this->getEditTemplateResult($m);
-        }
-
-        if (!$m->update()) {
-            $this->session->set('errors', $locale->_('err_system'));
-            return $this->getEditTemplateResult($m);
-        }
-
-        return Web\Result::redirectResult($this->router->buildUrl('list'));
-    }
+//    public function editPostAction()
+//    {
+//        $locale = $this->context->locale;
+//        $m = Tops::loadModel('attrs/attributeSet')
+//                ->merge($this->request->getPost('id'), $this->request->getPost('data'));
+//        $vr = $m->validateProperties();
+//        if ($vr !== true) {
+//            $this->session->set('errors', $locale->_('err_input_invalid'));
+//            return $this->getEditTemplateResult($m);
+//        }
+//
+//        if (!$m->update()) {
+//            $this->session->set('errors', $locale->_('err_system'));
+//            return $this->getEditTemplateResult($m);
+//        }
+//
+//        return Web\Result::redirectResult($this->router->buildUrl('list'));
+//    }
 
     public function deleteAction($id)
     {
@@ -164,11 +165,13 @@ class AttributeSetController extends Web\Controller
 
     private function getEditTemplateResult($model)
     {
-        $lid = $this->context->locale->getCurrentLanguageId();
-        $coms = Tops::loadModel('admin/component')
-            ->find()->execute()->combineColumns('id', 'name');
+        $components = Tops::loadModel('admin/component')
+            ->find()
+            ->execute()
+            ->combineColumns('id', 'name');
         return Web\Result::templateResult(
-            array('model' => $model, 'components'=>$coms),
+            array('model' => $model,
+                    'components'=>$components),
             'attrs/attribute-set/edit'
         );
     }

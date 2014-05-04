@@ -24,6 +24,7 @@ $dt->addLabelColumn($this->locale->_('name'), '{memo}', '', '')
 $dt->addBooleanColumn($this->locale->_('status'), 'enabled', $this->locale->_('enabled'), $this->locale->_('disabled').'</span>',
     'small', 'small');
 $dt->addLinkColumn('', $this->locale->_('edit'), urldecode($this->router->buildUrl('edit', array('id' => '{id}'))), 'edit', 'edit');
+$dt->addLinkColumn('', $this->locale->_('layout'), urldecode($this->router->buildUrl('layout', array('id' => '{id}'))), 'edit', 'edit');
 
 $this->assign('datatable', $dt);
 

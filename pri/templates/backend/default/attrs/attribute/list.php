@@ -44,18 +44,6 @@ $dt->addLabelColumn($this->locale->_('memo'), '{memo}', '', 'left')
     });
 $dt->addLinkColumn('', $this->locale->_('edit'), urldecode($this->router->buildUrl('edit', array('id' => '{id}'))), 'small', 'small edit');
 
-$dt->addLinkColumn('', $this->locale->_('attrs_option'),
-                    urldecode($this->router->buildUrl('options', array('id' => '{id}'))), 'small', 'small edit')
-    ->setCellRenderer(function($col, $row){
-        switch($row['input_type']){
-            case \Core\Attrs\Model\AttributeModel::INPUT_TYPE_SELECT:
-            case \Core\Attrs\Model\AttributeModel::INPUT_TYPE_OPTION_LIST:
-                $col->getCell()->getChild(0)->bindAttribute($row);
-                return $col->getCell()->renderBegin().$col->getCell()->renderInner().$col->getCell()->renderEnd();
-            default:
-                return $col->getCell()->renderBegin().$col->getCell()->renderEnd();
-        }
-    });
 $dt->addLinkButtonColumn('', $this->locale->_('delete'), "deleteConfirm('".urldecode($this->router->buildUrl('delete', array('id'=>'{id}')))."')", 'edit', 'edit');
 $this->assign('datatable', $dt);
 

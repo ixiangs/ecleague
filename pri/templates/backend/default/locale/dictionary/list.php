@@ -22,9 +22,9 @@ $dt = $this->html->grid($this->models);
 $dt->addSelectableColumn('ids[]', '{id}', null, 'index', 'index');
 $dt->addIndexColumn('', 'index', 'index');
 $dt->addLabelColumn($this->locale->_('code'), '{code}', 'large', 'left')
-    ->setFilter($this->html->input('text', 'kwcode', 'kwcode', $this->request->getParameter('kw')));
+    ->setFilter($this->html->textbox('kwcode', 'kwcode', $this->request->getParameter('kw')));
 $dt->addLabelColumn($this->locale->_('text'), '{label}', '', 'left')
-    ->setFilter($this->html->input('text', 'kwlabel', 'kwlabel', $this->request->getParameter('kw')));
+    ->setFilter($this->html->textbox('kwlabel', 'kwlabel', $this->request->getParameter('kw')));
 $dt->addLinkColumn('', $this->locale->_('edit'), urldecode($this->router->buildUrl('edit', array('languageid'=>$this->language->getId(), 'id'=>'{id}'))), 'small', 'edit text-center');
 $this->assign('datatable', $dt);
 

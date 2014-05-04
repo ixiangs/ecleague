@@ -49,7 +49,7 @@ class AttributeGroupController extends Web\Controller
         }
 
         if ($m->getId()) {
-            if (!$m->update()) {
+            if (!$m->merge()->update()) {
                 $this->session->set('errors', $locale->_('err_system'));
                 return $this->getEditTemplateResult($m);
             }
@@ -61,34 +61,7 @@ class AttributeGroupController extends Web\Controller
         }
 
         return Web\Result::redirectResult($this->router->buildUrl('list'));
-
-//        $as = Tops::loadModel('attrs/attributeSet')->load($this->request->getQuery('set_id'));
-//        $as->setGroupIds(array_merge($as->getGroupIds(array()), array($m->getId())));
-//        $as->update();
-
-//        return Web\Result::redirectResult($this->router->buildUrl(
-//            'attribute-set/groups',
-//            array('id' => $this->request->getQuery('set_id'))));
     }
-
-//    public function editPostAction()
-//    {
-//        $locale = $this->context->locale;
-//        $m = Tops::loadModel('attrs/attributeGroup')
-//                ->merge($this->request->getPost('id'), $this->request->getPost('data'));
-//        $vr = $m->validateProperties();
-//        if ($vr !== true) {
-//            $this->session->set('errors', $locale->_('err_input_invalid'));
-//            return $this->getEditTemplateResult($m);
-//        }
-//
-//        if (!$m->update()) {
-//            $this->session->set('errors', $locale->_('err_system'));
-//            return $this->getEditTemplateResult($m);
-//        }
-//
-//        return Web\Result::redirectResult($this->router->buildUrl('list'));
-//    }
 
     public function deleteAction($id)
     {
@@ -107,37 +80,60 @@ class AttributeGroupController extends Web\Controller
         return Web\Result::redirectResult($this->router->buildUrl('list'));
     }
 
-    private function getEditTemplateResult($model)
-    {
-        $selectedAttributes = array();
-        $unselectedAttributes = array();
-        if ($model->getAttributeIds()) {
-            $selectedAttributes = Tops::loadModel('attrs/attribute')
-                ->find()
-                ->eq('component_id', $model->getComponentId())
-                ->eq('enabled', true)
-                ->in('id', $model->getAttributeIds())
-                ->load();
-        }
-
-        if ($model->getAttributeIds()) {
-            $unselectedAttributes = Tops::loadModel('attrs/attribute')
-                ->find()
-                ->eq('component_id', $model->getComponentId())
-                ->eq('enabled', true)
-                ->notIn('id', $model->getAttributeIds())
-                ->load();
-        } else {
-            $unselectedAttributes = Tops::loadModel('attrs/attribute')
-                ->find()
-                ->eq('component_id', $model->getComponentId())
-                ->eq('enabled', true)
-                ->load();
-        }
+    public function layoutAction($id){
+        $model = Tops::loadModel('attrs/attributeGroup')->load($id);
+        $allAttributes = Tops::loadModel('attrs/attribute')
+            ->find()
+            ->eq('component_id', $model->getComponentId())
+            ->eq('enabled', true)
+            ->load();
+        $selectedAttributes = $model->getAttributes();
+        $unselectedAttributes = $allAttributes->filter(function($item) use($selectedAttributes){
+            foreach($selectedAttributes as $sa){
+                if($sa->getId() == $item->getId()){
+                    return false;
+                }
+            }
+            return true;
+        });
 
         return Web\Result::templateResult(
-            array('model' => $model, 'selectedAttributes'=>$selectedAttributes,
-                'unselectedAttributes'=>$unselectedAttributes),
+            array('model' => $model,
+                  'selectedAttributes'=>$selectedAttributes,
+                  'unselectedAttributes'=>$unselectedAttributes)
+        );
+    }
+
+    public function layoutPostAction($id){
+        $attributeIds = $this->request->getPost('attribute_ids');
+        $attributes = array();
+        foreach($attributeIds as $index=>$attributeId){
+            $attributes[] = array('id'=>$attributeId, 'position'=>$index + 1);
+        }
+        $model = Tops::loadModel('attrs/attributeGroup')->load($id);
+        $res = Helper::withTx(function($db) use($model, $attributes){
+            $model->assignAttribute($attributes, $db);
+            return true;
+        });
+
+        if (!$res) {
+            $this->session->set('errors', $this->context->locale->_('err_system'));
+            return $this->layoutAction($id);
+        }
+
+        return Web\Result::redirectResult($this->router->buildUrl('list'));
+    }
+
+    private function getEditTemplateResult($model)
+    {
+        $components = Tops::loadModel('admin/component')
+            ->find()->load()
+            ->toArray(function($item){
+                return array($item->getId(), $item->getName());
+            });
+        return Web\Result::templateResult(
+            array('model' => $model,
+                'components'=>$components),
             'attrs/attribute-group/edit'
         );
     }

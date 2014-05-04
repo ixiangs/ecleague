@@ -8,8 +8,8 @@ class Element
 
     private $_tag = null;
     protected $children = array();
-    private $_bindableAttributes = array();
-    private $_boundAttributes = array();
+    protected $bindableAttributes = array();
+    protected $boundAttributes = array();
     protected $renderer = null;
     protected $attributes = array();
 
@@ -55,7 +55,7 @@ class Element
     public function addBindableAttribute()
     {
         $args = func_get_args();
-        $this->_bindableAttributes = array_merge($this->_bindableAttributes, $args);
+        $this->bindableAttributes = array_merge($this->bindableAttributes, $args);
         return $this;
     }
 
@@ -63,10 +63,10 @@ class Element
     {
         $args = func_get_args();
         foreach ($args as $arg) {
-            $k = array_search($arg, $this->_bindableAttributes);
-            unset($this->_bindableAttributes[$k]);
-            if (array_key_exists($arg, $this->_boundAttributes)) {
-                unset($this->_boundAttributes[$arg]);
+            $k = array_search($arg, $this->bindableAttributes);
+            unset($this->bindableAttributes[$k]);
+            if (array_key_exists($arg, $this->boundAttributes)) {
+                unset($this->boundAttributes[$arg]);
             }
         }
         return $this;
@@ -74,12 +74,12 @@ class Element
 
     public function getBindableAttribute()
     {
-        return $this->_bindableAttributes;
+        return $this->bindableAttributes;
     }
 
     public function getBoundAttribute()
     {
-        return $this->_boundAttributes;
+        return $this->boundAttributes;
     }
 
     public function getAttribute()
@@ -151,10 +151,10 @@ class Element
 
     public function bindAttribute($data)
     {
-        $this->_boundAttributes = array();
-        foreach ($this->_bindableAttributes as $k) {
+        $this->boundAttributes = array();
+        foreach ($this->bindableAttributes as $k) {
             if (array_key_exists($k, $this->attributes)) {
-                $this->_boundAttributes[$k] = StringUtil::substitute($this->attributes[$k], $data);
+                $this->boundAttributes[$k] = StringUtil::substitute($this->attributes[$k], $data);
             }
         }
         return $this;
@@ -163,7 +163,7 @@ class Element
     public function renderAttribute()
     {
         $arr = array();
-        foreach ($this->_boundAttributes as $k => $v) {
+        foreach ($this->boundAttributes as $k => $v) {
             if ($k != 'text') {
                 if (!empty($v)) {
                     $arr[] = $k . '="' . $v . '"';
@@ -172,7 +172,7 @@ class Element
         }
 
         foreach ($this->attributes as $k => $v) {
-            if ($k != 'text' && !array_key_exists($k, $this->_boundAttributes)) {
+            if ($k != 'text' && !array_key_exists($k, $this->boundAttributes)) {
                 if (!empty($v)) {
                     $arr[] = $k . '="' . $v . '"';
                 }
@@ -207,8 +207,8 @@ class Element
     public function renderInner()
     {
         $res = '';
-        if (array_key_exists('text', $this->_boundAttributes)) {
-            $res = $this->_boundAttributes['text'];
+        if (array_key_exists('text', $this->boundAttributes)) {
+            $res = $this->boundAttributes['text'];
         } elseif (array_key_exists('text', $this->attributes)) {
             $res = $this->attributes['text'];
         }

@@ -29,6 +29,6 @@ foreach($this->locale->getLanguages() as $lang):
     $f->endGroup();
 endforeach;
 
-$f->addHiddenField('id', 'id', $this->model->getId());
+$f->addHidden('id', 'id', $this->model->getId());
 $this->assign('form', $f);
 echo $this->includeTemplate('layout\form');

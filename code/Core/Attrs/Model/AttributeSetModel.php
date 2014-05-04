@@ -8,6 +8,32 @@ class AttributeSetModel extends Orm\Model{
 
     const TABLE_NAME = '{t}attrs_attribute_set';
 
+    public function getGroups(){
+        if(!array_key_exists('groups', $this->data)){
+            $this->data['groups'] = Tops::loadModel('attrs/attributeGroup')
+                ->find()
+                ->join('{t}attrs_r_set_group', '{t}attrs_r_set_group.group_id', '{t}attrs_attribute_group.id')
+                ->eq('{t}attrs_r_set_group.set_id', $this->id)
+                ->asc('{t}attrs_r_set_group.position')
+                ->load();
+        }
+        return $this->data['groups'];
+    }
+
+    public function assignGroup(array $attributes, $db){
+        $ds = new \Toy\Data\Sql\DeleteStatement('{t}attrs_r_set_group');
+        $db->delete($ds->eq('set_id', $this->id));
+        foreach($attributes as $attribute){
+            $us = new \Toy\Data\Sql\InsertStatement('{t}attrs_r_set_group', array(
+                'set_id'=>$this->id,
+                'group_id'=>$attribute['id'],
+                'position'=>$attribute['position']
+            ));
+            $db->insert($us);
+        }
+        return $this;
+    }
+
     public function getGroupAttributes()
     {
         if(count($this->getGroupIds()) == 0){

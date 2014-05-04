@@ -45,10 +45,6 @@ class Helper
         return new InputGroup();
     }
 
-//    public function input($type, $id = null, $name = null, $value = null){
-//        return new Element('input', array('type'=>$type, 'id'=>$id, 'name'=>$name, 'value'=>$value, 'class'=>"form-control" ));
-//    }
-
     public function textbox($id = null, $name = null, $value = null, $type = 'text'){
         $res = new Textbox('input');
         $res->setAttribute(array('type'=>$type, 'id'=>$id, 'name'=>$name, 'value'=>$value, 'class'=>"form-control"));
@@ -63,6 +59,12 @@ class Helper
 
     public function select($id = null, $name = null, $value = null, $options = array()){
         $res = new Select(array('id'=>$id, 'name'=>$name, 'value'=>$value, 'class'=>"form-control"));
+        $res->setOptions($options);
+        return $res;
+    }
+
+    public function treeSelect($id = null, $name = null, $value = null, $options = array()){
+        $res = new TreeSelect(array('id'=>$id, 'name'=>$name, 'value'=>$value, 'class'=>"form-control"));
         $res->setOptions($options);
         return $res;
     }

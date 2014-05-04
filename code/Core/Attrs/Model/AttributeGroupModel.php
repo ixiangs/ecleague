@@ -11,7 +11,7 @@ class AttributeGroupModel extends Orm\Model{
     public function getAttributes(){
         if(!array_key_exists('attributes', $this->data)){
             $this->data['attributes'] = Tops::loadModel('attrs/attribute')
-                ->find('{t}attrs_r_group_attribute.*')
+                ->find()
                 ->join('{t}attrs_r_group_attribute', '{t}attrs_r_group_attribute.attribute_id', '{t}attrs_attribute.id')
                 ->eq('{t}attrs_r_group_attribute.group_id', $this->id)
                 ->asc('{t}attrs_r_group_attribute.position')

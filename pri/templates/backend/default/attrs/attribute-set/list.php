@@ -25,7 +25,7 @@ $dt->addLabelColumn($this->locale->_('memo'), '{memo}', '', '')
 $dt->addBooleanColumn($this->locale->_('status'), 'enabled', $this->locale->_('enabled'), $this->locale->_('disabled').'</span>',
     'small', 'small text-center');
 $dt->addLinkColumn('', $this->locale->_('edit'), urldecode($this->router->buildUrl('edit', array('id' => '{id}'))), 'small', 'small edit');
-$dt->addLinkColumn('', $this->locale->_('edit'), urldecode($this->router->buildUrl('groups', array('id' => '{id}'))), 'small', 'small edit');
+$dt->addLinkColumn('', $this->locale->_('layout'), urldecode($this->router->buildUrl('layout', array('id' => '{id}'))), 'small', 'small edit');
 $this->assign('datatable', $dt);
 
 $p = $this->html->pagination($this->total, PAGINATION_SIZE, PAGINATION_RANGE);

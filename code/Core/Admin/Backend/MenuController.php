@@ -42,7 +42,7 @@ class MenuController extends Web\Controller
         return $this->getEditTemplateResult($model);
     }
 
-    public function addPostAction()
+    public function savePostAction()
     {
         $locale = $this->context->locale;
         $m = \Ecleague\Tops::loadModel('admin/menu')->fillArray($this->request->getPost('data'));
@@ -53,9 +53,16 @@ class MenuController extends Web\Controller
             return $this->getEditTemplateResult($m);
         }
 
-        if (!$m->insert()) {
-            $this->session->set('errors', $locale->_('err_system'));
-            return $this->getEditTemplateResult($m);
+        if ($m->getId()) {
+            if (!$m->merge()->update()) {
+                $this->session->set('errors', $locale->_('err_system'));
+                return $this->getEditTemplateResult($m);
+            }
+        } else {
+            if (!$m->insert()) {
+                $this->session->set('errors', $locale->_('err_system'));
+                return $this->getEditTemplateResult($m);
+            }
         }
 
         return Web\Result::redirectResult($this->router->buildUrl('list'));
@@ -65,25 +72,6 @@ class MenuController extends Web\Controller
     {
         $m = \Ecleague\Tops::loadModel('admin/menu')->load($id);
         return $this->getEditTemplateResult($m);
-    }
-
-    public function editPostAction()
-    {
-        $locale = $this->context->locale;
-        $m = \Ecleague\Tops::loadModel('admin/menu')
-            ->merge($this->request->getPost('id'), $this->request->getPost('data'));
-        $vr = $m->validateProperties();
-        if ($vr !== true) {
-            $this->session->set('errors', $locale->_('err_input_invalid'));
-            return $this->getEditTemplateResult($m);
-        }
-
-        if (!$m->update()) {
-            $this->session->set('errors', $locale->_('err_system'));
-            return $this->getEditTemplateResult($m);
-        }
-
-        return Web\Result::redirectResult($this->router->buildUrl('list'));
     }
 
     public function deleteAction($id)
@@ -108,21 +96,21 @@ class MenuController extends Web\Controller
         $locale = $this->context->locale;
         $lid = $locale->getCurrentLanguageId();
         $find = \Ecleague\Tops::loadModel('admin/menu')->find()
-                    ->asc('parent_id');
-        if($model->getId()){
+            ->asc('parent_id');
+        if ($model->getId()) {
             $find->ne('id', $model->getId());
         }
 
-        $menus = $find->load()->toArray(function ($item) use($lid){
-                        return array(null, array(
-                            'id' => $item->getId(),
-                            'parentId' => $item->getParentId(),
-                            'value' => $item->getId(),
-                            'text' => $item->names[$lid],
-                        ));
-                    });
+        $menus = $find->load()->toArray(function ($item) use ($lid) {
+            return array(null, array(
+                'id' => $item->getId(),
+                'parentId' => $item->getParentId(),
+                'value' => $item->getId(),
+                'text' => $item->names[$lid],
+            ));
+        });
         return Web\Result::templateResult(
-            array('model' => $model, 'menus'=>$menus),
+            array('model' => $model, 'menus' => $menus),
             'admin/menu/edit'
         );
     }

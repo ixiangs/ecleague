@@ -111,14 +111,14 @@ class AttributeSetController extends Web\Controller
                 $this->session->set('errors', $locale->_('err_system'));
                 return $this->getEditTemplateResult($m);
             }
+            return Web\Result::redirectResult($this->router->buildUrl('groups', array('id'=>$m->getId())));
         }else{
             if (!$m->insert()) {
                 $this->session->set('errors', $locale->_('err_system'));
                 return $this->getEditTemplateResult($m);
             }
+            return Web\Result::redirectResult($this->router->buildUrl('layout', array('id'=>$m->getId())));
         }
-
-        return Web\Result::redirectResult($this->router->buildUrl('groups', array('id'=>$m->getId())));
     }
 
     public function editAction($id)
@@ -126,25 +126,6 @@ class AttributeSetController extends Web\Controller
         $m = Tops::loadModel('attrs/attributeSet')->load($id);
         return $this->getEditTemplateResult($m);
     }
-
-//    public function editPostAction()
-//    {
-//        $locale = $this->context->locale;
-//        $m = Tops::loadModel('attrs/attributeSet')
-//                ->merge($this->request->getPost('id'), $this->request->getPost('data'));
-//        $vr = $m->validateProperties();
-//        if ($vr !== true) {
-//            $this->session->set('errors', $locale->_('err_input_invalid'));
-//            return $this->getEditTemplateResult($m);
-//        }
-//
-//        if (!$m->update()) {
-//            $this->session->set('errors', $locale->_('err_system'));
-//            return $this->getEditTemplateResult($m);
-//        }
-//
-//        return Web\Result::redirectResult($this->router->buildUrl('list'));
-//    }
 
     public function deleteAction($id)
     {
@@ -162,6 +143,51 @@ class AttributeSetController extends Web\Controller
         }
         return Web\Result::redirectResult($this->router->buildUrl('list'));
     }
+
+    public function layoutAction($id){
+        $model = Tops::loadModel('attrs/attributeSet')->load($id);
+        $allGroups = Tops::loadModel('attrs/attributeGroup')
+            ->find()
+            ->eq('component_id', $model->getComponentId())
+            ->eq('enabled', true)
+            ->load();
+        $assignedGroups = $model->getGroups();
+        $unassignedGroups = $allGroups->filter(function($item) use($assignedGroups){
+            foreach($assignedGroups as $sa){
+                if($sa->getId() == $item->getId()){
+                    return false;
+                }
+            }
+            return true;
+        });
+
+        return Web\Result::templateResult(
+            array('model' => $model,
+                'selectedGroups'=>$assignedGroups,
+                'unselectedGroups'=>$unassignedGroups)
+        );
+    }
+
+    public function layoutPostAction($id){
+        $groupIds = $this->request->getPost('group_ids');
+        $groups = array();
+        foreach($groupIds as $index=>$groupId){
+            $groups[] = array('id'=>$groupId, 'position'=>$index + 1);
+        }
+        $model = Tops::loadModel('attrs/attributeSet')->load($id);
+        $res = Helper::withTx(function($db) use($model, $groups){
+            $model->assignGroup($groups, $db);
+            return true;
+        });
+
+        if (!$res) {
+            $this->session->set('errors', $this->context->locale->_('err_system'));
+            return $this->layoutAction($id);
+        }
+
+        return Web\Result::redirectResult($this->router->buildUrl('list'));
+    }
+
 
     private function getEditTemplateResult($model)
     {

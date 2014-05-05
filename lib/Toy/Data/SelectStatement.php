@@ -1,5 +1,5 @@
 <?php
-namespace Toy\Data\Sql;
+namespace Toy\Data;
 
 class SelectStatement extends WhereStatement
 {
@@ -27,26 +27,6 @@ class SelectStatement extends WhereStatement
                 $this->fields[] = $v;
             }
         }
-        return $this;
-    }
-
-    public function selectAll(){
-        $this->fields = array();
-        return $this;
-    }
-
-    public function selectCount($field = '*'){
-        $this->fields = array(Func::count($field));
-        return $this;
-    }
-
-    public function selectMax($field){
-        $this->fields = array(Func::max($field));
-        return $this;
-    }
-
-    public function selectMin($field){
-        $this->fields = array(Func::min($field));
         return $this;
     }
 
@@ -148,4 +128,14 @@ class SelectStatement extends WhereStatement
         return $this->limit;
     }
 
+    public function count($db = null){
+        $cdb = is_null($db)? Helper::openDb():$db;
+        $res = $cdb->select($this->resetSelect()->select('count(*)'));
+        return $res->getFirstValue();
+    }
+
+    public function execute($db = null){
+        $cdb = is_null($db)? Helper::openDb():$db;
+        return $cdb->select($this);
+    }
 }

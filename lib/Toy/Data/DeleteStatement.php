@@ -1,6 +1,6 @@
 <?php
 
-namespace Toy\Data\Sql;
+namespace Toy\Data;
 
 class DeleteStatement extends WhereStatement{
 
@@ -10,11 +10,17 @@ class DeleteStatement extends WhereStatement{
         $this->table = $table;
     }
 
-    public function from($table){
-        $this->table = $table;
+    public function setTable($value){
+        $this->table = $value;
+        return $this;
     }
 
     public function getTable(){
         return $this->table;
+    }
+
+    public function execute($db = null){
+        $cdb = is_null($db)? Helper::openDb():$db;
+        return $cdb->delete($this);
     }
 }

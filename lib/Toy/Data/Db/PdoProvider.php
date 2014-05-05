@@ -36,6 +36,14 @@ abstract class PdoProvider extends BaseProvider
         return $this->connection->quote($value);
     }
 
+    public function open()
+    {
+        if (!$this->connection) {
+            $this->connection = new \PDO($this->settings['dsn']);
+        }
+        return $this;
+    }
+
     public function close()
     {
         if ($this->connection) {

@@ -4,7 +4,7 @@ namespace Toy\Web;
 use Toy\Loader;
 use Toy\Web\Interfaces\IHandler;
 
-class Handler implements IHandler{
+class Handler{
 
 	public function handle() {
 		$context = Application::singleton() -> getContext();

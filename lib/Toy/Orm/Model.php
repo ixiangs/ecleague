@@ -2,6 +2,7 @@
 namespace Toy\Orm;
 
 use Toy\Data\Helper;
+use Toy\Data\SelectStatement;
 use Toy\Data\Sql\DeleteStatement;
 use Toy\Data\Sql\InsertStatement;
 use Toy\Data\Sql\UpdateStatement;
@@ -27,7 +28,7 @@ abstract class Model implements \ArrayAccess, \Iterator
         $this->idProperty = $m['idProperty'];
         $this->properties = $m['properties'];
         $this->relations = $m['relations'];
-        foreach($this->properties as $prop){
+        foreach ($this->properties as $prop) {
             $this->data[$prop->getName()] = $prop->getDefaultValue();
         }
         $this->data = array_merge($this->data, $data);
@@ -46,19 +47,6 @@ abstract class Model implements \ArrayAccess, \Iterator
     public function __call($name, $arguments)
     {
         $nums = count($arguments);
-        if ($name == 'load') {
-            return $this->_load(
-                $nums > 0 ? $arguments[0] : $this->getIdValue(),
-                $nums > 1 ? $arguments[1] : null);
-        } elseif ($name == 'find') {
-            return $this->_find();
-        } elseif ($name == 'merge') {
-            return $this->_merge(
-                $nums > 0? $arguments[0]: $this->getIdValue(),
-                $nums > 1? $arguments[1]: array_merge(array(), $this->data),
-                $nums > 2 ? $arguments[2] : null);
-        }
-
         $st = substr($name, 0, 3);
         if ($st == 'get') {
             $pn = self::getUnderlineName(substr($name, 3));
@@ -69,21 +57,6 @@ abstract class Model implements \ArrayAccess, \Iterator
         } elseif ($st == 'set') {
             $pn = self::getUnderlineName(substr($name, 3));
             return $this->setData($pn, $arguments[0]);
-        }
-    }
-
-    static public function __callStatic($name, $arguments)
-    {
-        $nums = count($arguments);
-        if ($name == 'load') {
-            $inst = new static();
-            return $inst->_load($arguments[0], $nums > 1 ? $arguments[1] : null);
-        } elseif ($name == 'find') {
-            $inst = new static();
-            return $inst->_find();
-        } elseif ($name == 'merge') {
-            $inst = new static();
-            return $inst->_merge($arguments[0], $arguments[1], $nums > 2 ? $arguments[2] : null);
         }
     }
 
@@ -192,7 +165,7 @@ abstract class Model implements \ArrayAccess, \Iterator
     public function getData($name, $default = null)
     {
         if (array_key_exists($name, $this->data)) {
-            if(is_null($this->data[$name])){
+            if (is_null($this->data[$name])) {
                 return $default;
             }
             return $this->data[$name];
@@ -246,7 +219,7 @@ abstract class Model implements \ArrayAccess, \Iterator
                 $this->changedProperties[] = $name;
             }
         }
-        
+
         $this->data[$name] = $value;
         return $this;
     }
@@ -320,9 +293,17 @@ abstract class Model implements \ArrayAccess, \Iterator
             }
         }
 
-        $result = $cdb->insert(new InsertStatement($this->tableName, $values));
+
         if ($this->idProperty->getAutoIncrement()) {
-            $this->setIdValue($cdb->getLastInsertId());
+            $id = Helper::insert($this->tableName, $values)->executeLastInsertId($cdb);
+            if ($id > 0) {
+                $this->setIdValue($id);
+                $result = true;
+            } else {
+                $result = false;
+            }
+        } else {
+            $result = Helper::insert($this->tableName, $values)->execute($cdb);
         }
         $this->afterInsert($cdb);
         return $result;
@@ -349,9 +330,9 @@ abstract class Model implements \ArrayAccess, \Iterator
         if (count($values) == 0) {
             return false;
         }
-        $us = new UpdateStatement($this->tableName, $values);
-        $us->eq($this->idProperty->getName(), $this->getIdValue());
-        $result = $cdb->update($us);
+        $result = Helper::update($this->tableName, $values)
+            ->eq($this->idProperty->getName(), $this->getIdValue())
+            ->execute($cdb);
         $this->afterUpdate($cdb);
         return $result;
     }
@@ -368,9 +349,9 @@ abstract class Model implements \ArrayAccess, \Iterator
     {
         $cdb = $db ? $db : Helper::openDb();
         $this->beforeDelete($cdb);
-        $ds = new DeleteStatement($this->tableName);
-        $ds->eq($this->idProperty->getName(), $this->getIdValue());
-        $result = $cdb->delete($ds);
+        $result = Helper::delete($this->tableName)
+            ->eq($this->idProperty->getName(), $this->getIdValue())
+            ->execute($cdb);
         $this->afterDelete($cdb);
         return $result;
     }
@@ -391,62 +372,51 @@ abstract class Model implements \ArrayAccess, \Iterator
     {
         $props = $this->getProperties();
         foreach ($row as $field => $value) {
-            $this->data[$field] = array_key_exists($field, $props)? $props[$field]->fromDbValue($value): $value;
+            $this->data[$field] = array_key_exists($field, $props) ? $props[$field]->fromDbValue($value) : $value;
         }
         $this->originalData = $this->data;
         return $this;
     }
 
-    protected function _load($id, $db = null)
+    static public function load($id, $db = null)
     {
+        $inst = new static();
         $fields = array();
-        foreach ($this->properties as $prop) {
-            $fields[] = $this->tableName . '.' . $prop->getName();
+        foreach ($inst->properties as $prop) {
+            $fields[] = $inst->tableName . '.' . $prop->getName();
         }
-        $q = new Query(get_class($this));
+        $q = new SelectStatement(get_class($inst));
         $q->select($fields)
-            ->from($this->tableName)
-            ->eq($this->idProperty->getName(), $id)
+            ->from($inst->tableName)
+            ->eq($inst->idProperty->getName(), $id)
             ->limit(1);
         $row = $q->execute($db)->getFirstRow();
         if ($row != null) {
-            $this->fillRow($row);
-            return $this;
+            $inst->fillRow($row);
+            return $inst;
         }
         return false;
     }
 
-    protected function _merge($id, $data, $db = null)
+    static public function merge($id, $data, $db = null)
     {
-        if ($this->_load($id, $db) !== false) {
-            $this->fillArray($data);
-            return $this;
+        $inst = new static();
+        if ($inst->_load($id, $db) !== false) {
+            $inst->fillArray($data);
+            return $inst;
         }
         return false;
     }
 
-    protected function _find()
+    static public function find()
     {
+        $inst = new static();
         $fields = array();
-        foreach ($this->properties as $prop) {
-            $fields[] = $this->tableName . '.' . $prop->getName();
+        foreach ($inst->properties as $prop) {
+            $fields[] = $inst->tableName . '.' . $prop->getName();
         }
-        $result = new Collection(get_class($this));
-        return $result->select($fields)->from($this->tableName);
-    }
-
-    public function deleteBatch(array $ids, $db = null)
-    {
-        $m = self::$metadatas[get_called_class()];
-        if(is_null($db)){
-            return Helper::withTx(function ($db) use ($ids, $m) {
-                $ds = new DeleteStatement($this->tableName);
-                return $db->delete($ds->in($this->idProperty->getName(), $ids));
-            });
-        }else{
-            $ds = new DeleteStatement($this->tableName);
-            return $db->delete($ds->in($this->idProperty->getName(), $ids));
-        }
+        $result = new Collection(get_class($inst));
+        return $result->select($fields)->from($inst->tableName);
     }
 
     static public function create($data = array())
@@ -471,7 +441,7 @@ abstract class Model implements \ArrayAccess, \Iterator
         return self::$metadatas[$class];
     }
 
-    static public function register($class, $metadata)
+    static public function register($metadata)
     {
         $arr = array(
             'table' => $metadata['table'],
@@ -489,6 +459,6 @@ abstract class Model implements \ArrayAccess, \Iterator
                 $arr['relations'][$rel->getPropertyName()] = $rel;
             }
         }
-        self::$metadatas[$class] = $arr;
+        self::$metadatas[__CLASS__] = $arr;
     }
 }

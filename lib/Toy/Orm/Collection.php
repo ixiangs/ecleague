@@ -5,7 +5,7 @@ use Toy\Collection\TEnumerator;
 use Toy\Collection\TList;
 use Toy\Data\Helper;
 
-class Collection extends Query implements \Iterator, \ArrayAccess, \SeekableIterator, \Serializable, \Countable
+class Collection extends SelectStatement implements \Iterator, \ArrayAccess, \SeekableIterator, \Serializable, \Countable
 {
     use TList;
 
@@ -33,25 +33,6 @@ class Collection extends Query implements \Iterator, \ArrayAccess, \SeekableIter
         $this->_itemClass = $value;
         return $this;
     }
-
-//    public function hasModel($id){
-//        foreach ($this->source as $item) {
-//            if ($item->getIdValue() == $id) {
-//                return true;
-//            }
-//        }
-//        return false;
-//    }
-//
-//    public function findModel($value)
-//    {
-//        foreach ($this->source as $item) {
-//            if ($item->getIdValue() == $value) {
-//                return $item;
-//            }
-//        }
-//        return null;
-//    }
 
     public function load($db = null)
     {

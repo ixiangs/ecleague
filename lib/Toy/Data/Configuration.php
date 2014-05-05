@@ -10,10 +10,7 @@ class Configuration
     static public $connectionSettings = array();
     static public $logger = null;
 
-	static public function addConnection($name, $provider, $settings){
-		self::$connectionSettings[$name] = array(
-            'provider'=>$provider,
-            'settings'=>$settings
-        );
+	static public function addConnection($name, $settings){
+		self::$connectionSettings[$name] = $settings;
 	}
 }

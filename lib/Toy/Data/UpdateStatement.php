@@ -16,15 +16,20 @@ class UpdateStatement extends WhereStatement{
         return $this->values;
     }
 
+    public function setValue($field, $value){
+        $this->values[$field] = $value;
+    }
+
     public function getTable(){
         return $this->table;
     }
 
-    public function into($table){
-        $this->table = $table;
+    public function setTable($value){
+        $this->table = $value;
     }
 
-    public function setValue($field, $value){
-        $this->values[$field] = $value;
+    public function execute($db = null){
+        $cdb = is_null($db)? Helper::openDb():$db;
+        return $cdb->update($this);
     }
 }

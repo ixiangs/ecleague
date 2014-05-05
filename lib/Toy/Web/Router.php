@@ -4,7 +4,7 @@ namespace Toy\Web;
 use Toy\Web\Framework\Configuration;
 use Toy\Web\Interfaces\IRouter;
 
-class Router implements IRouter
+class Router
 {
     public $controller = null;
     public $action = null;

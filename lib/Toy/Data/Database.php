@@ -1,15 +1,49 @@
 <?php
-namespace Toy\Data\Db;
+namespace Toy\Data;
 
-use Toy\Data\Sql;
-use Toy\Util\ArrayUtil;
-
-class SqliteProvider extends PdoProvider
+class Database
 {
+
+    protected $connection = NULL;
+    protected $settings = null;
 
     public function __construct($settings)
     {
-        parent::__construct($settings);
+        $this->settings = $settings;
+    }
+
+    public function __destruct()
+    {
+        $this->connection = NULL;
+    }
+
+    public function getSettings()
+    {
+        return $this->settings;
+    }
+
+    protected function log($sql, $arguments)
+    {
+        $content = $sql;
+        foreach ($arguments as $n => $v) {
+            $content .= '[' . $n . ':' . $v . ']';
+        }
+        Configuration::$logger->v($content, 'sql');
+    }
+
+    public function isConnected()
+    {
+        return $this->connection ? TRUE : false;
+    }
+
+    public function inTransaction()
+    {
+        return $this->connection->inTransaction();
+    }
+
+    public function escape($value)
+    {
+        return $this->connection->quote($value);
     }
 
     public function open()
@@ -18,6 +52,81 @@ class SqliteProvider extends PdoProvider
             $this->connection = new \PDO($this->settings['dsn']);
         }
         return $this;
+    }
+
+    public function close()
+    {
+        if ($this->connection) {
+            $this->connection = NULL;
+        }
+    }
+
+    public function begin()
+    {
+        if (!$this->inTransaction()) {
+            if (!$this->connection->beginTransaction()) {
+                $this->handleError($this->connection->errorInfo());
+            }
+        }
+        return $this;
+    }
+
+    public function commit()
+    {
+        if ($this->inTransaction()) {
+            if (!$this->connection->commit()) {
+                $this->handleError($this->connection->errorInfo());
+            }
+        }
+        return $this;
+    }
+
+    public function rollback()
+    {
+        if ($this->inTransaction()) {
+            if (!$this->connection->rollback()) {
+                $this->handleError($this->connection->errorInfo());
+            }
+        }
+        return $this;
+    }
+
+    public function getLastInsertId()
+    {
+        return $this->connection->lastInsertId();
+    }
+
+    public function execute($sql, $parameters = array())
+    {
+        $this->log($sql, $parameters);
+        $statement = $this->connection->prepare(str_replace('{t}', Configuration::$tablePrefix, $sql));
+        if ($statement === false) {
+            $this->handleError($this->connection->errorInfo());
+        }
+        foreach ($parameters as $name => $value) {
+            $statement->bindValue($name, $value);
+        }
+        $result = $statement->execute();
+        $statement->closeCursor();
+        $this->handleError($statement->errorInfo());
+        return $result;
+    }
+
+    public function fetch($sql, $parameters = array())
+    {
+        $this->log($sql, $parameters);
+        $statement = $this->connection->prepare(str_replace('{t}', Configuration::$tablePrefix, $sql));
+        if ($statement === false) {
+            $this->handleError($this->connection->errorInfo());
+        }
+        foreach ($parameters as $name => $value) {
+            $statement->bindValue($name, $value);
+        }
+        $statement->execute();
+        $this->handleError($statement->errorInfo());
+        $rows = $statement->fetchAll(\PDO::FETCH_ASSOC);
+        $statement->closeCursor();
+        return new Result($rows);
     }
 
     public function insert($statement)
@@ -61,37 +170,37 @@ class SqliteProvider extends PdoProvider
         return $this->execute(trim($sql), $params);
     }
 
-    public function select($query)
+    public function select($statement)
     {
         $params = array();
-        if (count($query->getFields()) > 0) {
-            $sql = 'SELECT ' . implode(',', ArrayUtil::toArray($query->getFields(), function($item, $index){
+        if (count($statement->getFields()) > 0) {
+            $sql = 'SELECT ' . implode(',', ArrayUtil::toArray($query->getFields(), function ($item, $index) {
                     return array($this->parseFunction($item), null);
                 }));
         } else {
             $sql = 'SELECT *';
         }
-        $sql .= ' FROM ' . $query->getTable();
+        $sql .= ' FROM ' . $statement->getTable();
 
-        $joins = $query->getJoins();
+        $joins = $statement->getJoins();
         foreach ($joins as $v) {
             $sql .= ' ' . strtoupper($v[0]) . ' JOIN ' . $v[1] . ' ON ' . $v[2] . '=' . $v[3];
         }
 
-        if (count($query->getConditions()) > 0) {
+        if (count($statement->getConditions()) > 0) {
             $sql .= ' ' . $this->parseWhere($query->getConditions(), $params);
         }
 
-        if (count($query->getOrderBy()) > 0) {
+        if (count($statement->getOrderBy()) > 0) {
             $arr = array();
-            foreach ($query->getOrderBy() as $f => $d) {
+            foreach ($statement->getOrderBy() as $f => $d) {
                 $arr[] = $f . ' ' . $d;
             }
             $sql .= ' ORDER BY ' . implode(',', $arr);
         }
 
-        $offset = $query->getOffset();
-        $limit = $query->getLimit();
+        $offset = $statement->getOffset();
+        $limit = $statement->getLimit();
         if ($offset + $limit > 0) {
             $sql .= ' LIMIT ' . $offset . ',' . $limit;
         }
@@ -162,5 +271,12 @@ class SqliteProvider extends PdoProvider
             }
         }
         return 'WHERE ' . implode(' ', $result);
+    }
+
+    private function handleError($err)
+    {
+        if ($err[1]) {
+            throw new Exception($err[2]);
+        }
     }
 }

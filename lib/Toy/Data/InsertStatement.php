@@ -1,6 +1,6 @@
 <?php
 
-namespace Toy\Data\Sql;
+namespace Toy\Data;
 
 class InsertStatement extends BaseStatement{
 
@@ -20,11 +20,24 @@ class InsertStatement extends BaseStatement{
         return $this->table;
     }
 
-    public function into($table){
-        $this->table = $table;
+    public function setTable($value){
+        $this->table = $value;
     }
 
     public function setValue($field, $value){
         $this->values[$field] = $value;
+    }
+
+    public function execute($db = null){
+        $cdb = is_null($db)? Helper::openDb():$db;
+        return $cdb->insert($this);
+    }
+
+    public function executeLastInsertId($db = null){
+        $cdb = is_null($db)? Helper::openDb():$db;
+        if($cdb->insert($this)){
+            return $cdb->getLastInsertId();
+        }
+        return 0;
     }
 }

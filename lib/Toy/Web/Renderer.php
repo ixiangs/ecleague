@@ -4,7 +4,7 @@ namespace Toy\Web;
 use Toy\View;
 use Toy\Web\Interfaces\IRenderer;
 
-class Renderer implements IRenderer
+class Renderer
 {
 
     public function render()

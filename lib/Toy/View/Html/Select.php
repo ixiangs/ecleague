@@ -1,7 +1,7 @@
 <?php
 namespace Toy\View\Html;
 
-class Select extends VerifiableElement
+class Select extends InputElement
 {
 
     protected $caption = null;

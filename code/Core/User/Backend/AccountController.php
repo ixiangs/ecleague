@@ -1,5 +1,5 @@
 <?php
-namespace Core\Member\Backend;
+namespace Core\User\Backend;
 
 use Ecleague\Tops;
 use Toy\Web;
@@ -10,8 +10,8 @@ class AccountController extends Web\Controller
     public function listAction()
     {
         $pi = $this->request->getParameter("pageindex", 1);
-        $count = Tops::loadModel('member/account')->find()->selectCount()->execute()->getFirstValue();
-        $models = Tops::loadModel('member/account')->find()
+        $count = Tops::loadModel('user/account')->find()->selectCount()->execute()->getFirstValue();
+        $models = Tops::loadModel('user/account')->find()
             ->limit(PAGINATION_SIZE, ($pi - 1) * PAGINATION_SIZE)
             ->load();
         return Web\Result::templateResult(array(
@@ -23,30 +23,30 @@ class AccountController extends Web\Controller
 
     public function addAction()
     {
-        return $this->getEditTemplateResult(Tops::loadModel('member/account'));
+        return $this->getEditTemplateResult(Tops::loadModel('user/account'));
     }
 
     public function addPostAction()
     {
         $locale = $this->context->locale;
-        $member = Tops::loadModel('member/account')->fillArray($this->request->getPost('member'));
+        $user = Tops::loadModel('user/account')->fillArray($this->request->getPost('user'));
 
-        $vr = $member->validateProperties();
+        $vr = $user->validateProperties();
         if ($vr !== true) {
             $this->session->set('errors', $locale->_('err_input_invalid'));
-            return $this->getEditTemplateResult($member);
+            return $this->getEditTemplateResult($user);
         }
 
-        $vr = $member->validateUnique();
+        $vr = $user->validateUnique();
         if ($vr !== true) {
-            $this->session->set('errors', $locale->_('member_err_account_exists', $member->getUsername()));
-            return $this->getEditTemplateResult($member);
+            $this->session->set('errors', $locale->_('user_err_account_exists', $user->getUsername()));
+            return $this->getEditTemplateResult($user);
         }
 
 
-        if (!$member->insert()) {
+        if (!$user->insert()) {
             $this->session->set('errors', $locale->_('err_system'));
-            return $this->getEditTemplateResult($member);;
+            return $this->getEditTemplateResult($user);;
         }
 
         return Web\Result::redirectResult($this->router->buildUrl('list'));
@@ -54,7 +54,7 @@ class AccountController extends Web\Controller
 
     public function editAction($id)
     {
-        $m = Tops::loadModel('member/account');
+        $m = Tops::loadModel('user/account');
         $m->load($id);
         return $this->getEditTemplateResult($m);
     }
@@ -62,7 +62,7 @@ class AccountController extends Web\Controller
     public function editPostAction()
     {
         $locale = $this->context->locale;
-        $m = Tops::loadModel('member/account')->fillArray($this->request->getPost('data'));
+        $m = Tops::loadModel('user/account')->fillArray($this->request->getPost('data'));
 
         $vr = $m->validateProperties();
         if ($vr !== true) {
@@ -81,7 +81,7 @@ class AccountController extends Web\Controller
     public function deleteAction($id)
     {
         $lang = $this->context->locale;
-        $m = Tops::loadModel('member/account')->load($id);
+        $m = Tops::loadModel('user/account')->load($id);
 
         if (!$m) {
             $this->session->set('errors', $lang->_('err_system'));
@@ -95,11 +95,11 @@ class AccountController extends Web\Controller
         return Web\Result::redirectResult($this->router->buildUrl('list'));
     }
 
-    private function getEditTemplateResult($member)
+    private function getEditTemplateResult($user)
     {
         return Web\Result::templateResult(
-            array('member' => $member),
-            'member/account/edit'
+            array('model' => $user),
+            'user/account/edit'
         );
     }
 }

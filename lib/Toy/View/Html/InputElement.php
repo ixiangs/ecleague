@@ -1,7 +1,7 @@
 <?php
 namespace Toy\View\Html;
 
-abstract class VerifiableElement extends Element
+abstract class InputElement extends Element
 {
     protected $validateRules = array();
 

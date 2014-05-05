@@ -1,14 +1,14 @@
 <?php
 namespace Toy\View\Html;
 
-class OptionList extends Element
+class OptionList extends InputElement
 {
     private $_options = array();
     private $_multiple = true;
 
-    public function __construct()
+    public function __construct(array $attrs)
     {
-        parent::__construct(null);
+        parent::__construct('div', $attrs);
     }
 
     public function setOptions($value)
@@ -33,18 +33,13 @@ class OptionList extends Element
         return $this->_multiple;
     }
 
-    public function renderBegin()
+    public function render()
     {
-        return '';
-    }
+        if (!is_null($this->renderer)) {
+            $r = call_user_func($this->renderer, $this);
+            return $r;
+        }
 
-    public function renderEnd()
-    {
-        return '';
-    }
-
-    public function renderInner()
-    {
         $val = $this->getAttribute('value');
         $this->removeAttribute('value');
         $this->setAttribute('type', $this->_multiple? 'checkbox': 'radio');

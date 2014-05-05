@@ -1,7 +1,7 @@
 <?php
 namespace Toy\View\Html;
 
-class Textbox extends VerifiableElement
+class Textbox extends InputElement
 {
 
     public function __construct($type)

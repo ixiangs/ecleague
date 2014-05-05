@@ -40,23 +40,22 @@ class AttributeSetModel extends Orm\Model{
             return array();
         }
 
-        $groups = Tops::loadModel('attrs/attributeGroup')
-            ->find()->in('id', $this->group_ids)
-            ->load();
-
-        $attrIds = array();
-        foreach ($groups as $group) {
-            $attrIds = array_merge($attrIds, $group->getAttributeIds());
-        }
+        $groups = $this->getGroups();
+        $groupIds = $groups->toArray(function($item){
+           return array(null, $item->getId());
+        });
         $attributes = Tops::loadModel('attrs/attribute')
-            ->find()->in('id', $attrIds)->eq('enabled', true)
+            ->find()
+            ->join('{t}attrs_r_group_attribute', '{t}attrs_r_group_attribute.attribute_id', '{t}attrs_attribute.id')
+            ->in('{t}attrs_r_group_attribute.group_id', $groupIds)
+            ->asc('{t}attrs_r_group_attribute.group_id', '{t}attrs_r_group_attribute.position')
             ->load();
 
         foreach ($groups as $group) {
             $ids = $group->getAttributeIds();
             $groupAttrs = array();
             foreach ($attributes as $attribute) {
-                if (in_array($attribute->getId(), $ids)) {
+                if ($attribute->getGroupId() == $group->getId()) {
                     $groupAttrs[] = $attribute;
                 }
             }
@@ -75,9 +74,6 @@ Orm\Model::register('Core\Attrs\Model\AttributeSetModel', array(
         Orm\IntegerProperty::create('component_id')->setNullable(false),
         Orm\StringProperty::create('code')->setNullable(false),
         Orm\SerializeProperty::create('name')->setNullable(false),
-        Orm\SerializeProperty::create('group_ids'),
-        Orm\SerializeProperty::create('attribute_ids'),
-        Orm\SerializeProperty::create('layout'),
         Orm\BooleanProperty::create('enabled')->setDefaultValue(true)->setNullable(false),
         Orm\SerializeProperty::create('memo')->setNullable(false)
     )

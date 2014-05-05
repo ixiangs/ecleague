@@ -1,15 +1,15 @@
 <?php
-namespace Core\Member\Model;
+namespace Core\User\Model;
 
 use Toy\Orm;
 
 class AccountModel extends Orm\Model{
 
-    const TABLE_NAME = '{t}member_account';
+    const TABLE_NAME = '{t}user_account';
 
 }
 
-Orm\Model::register('Core\Member\Model\AccountModel', array(
+Orm\Model::register('Core\User\Model\AccountModel', array(
     'table'=>AccountModel::TABLE_NAME,
     'properties'=>array(
         Orm\IntegerProperty::create('id')->setPrimaryKey(true)->setAutoIncrement(true),

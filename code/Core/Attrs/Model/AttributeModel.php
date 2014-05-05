@@ -4,6 +4,8 @@ namespace Core\Attrs\Model;
 use Core\Locale\Localize;
 use Toy\Orm;
 use Toy\Util\ArrayUtil;
+use Toy\View\Html\FormField;
+use Toy\View\Html\Helper;
 use Toy\View\Html\InputField;
 use Toy\View\Html\OptionListField;
 use Toy\View\Html\SelectField;
@@ -30,51 +32,41 @@ class AttributeModel extends Orm\Model
 
     public function toFormField()
     {
+        $html = Helper::singleton();
         $lid = Localize::singleton()->getCurrentLanguageId();
         $is = $this->getInputSetting(array());
+        $field = new FormField($this->display_text[$lid]);
         switch ($this->input_type) {
             case self::INPUT_TYPE_TEXTBOX:
-                $res = new InputField('text', $this->display_text[$lid]);
-                $res->getInput()->setAttribute(array(
-                    'id' => $this->name,
-                    'name' => 'data[' . $this->name . ']'
-                ));
+                $field->setInput($html->textbox($this->name, 'data[' . $this->name . ']'));
                 break;
             case self::INPUT_TYPE_SELECT:
                 $options = ArrayUtil::toArray($this->options, function ($item, $index) use ($lid) {
                     return array($item['labels'][$lid], $item['value']);
                 });
-                $res = new SelectField($this->display_text[$lid]);
-                $res->getInput()
-                    ->setCaption('')
-                    ->setOptions($options)
-                    ->setAttribute(array(
-                        'id' => $this->name,
-                        'name' => 'data[' . $this->name . ']'
-                    ));
-                if (array_key_exists('multiple', $is)) {
-                    $res->getInput()->setAttribute('multiple', 'multiple');
-                    if (array_key_exists('size', $is)) {
-                        $res->getInput()->setAttribute('size', 5);
-                    }
+                $field->setInput($html->select($this->name, 'data[' . $this->name . ']', null, $options));
+                $field->getInput()->setAttribute('size', $is['size']);
+                if ($is['multiple']) {
+                    $field->getInput()->setAttribute('multiple', 'multiple');
+                }
+                if($is['default_option'] == 'empty'){
+                    $field->getInput()->setCaption('');
                 }
                 break;
             case self::INPUT_TYPE_OPTION_LIST:
                 $options = ArrayUtil::toArray($this->options, function ($item, $index) use ($lid) {
                     return array($item['labels'][$lid], $item['value']);
                 });
-                $res = new OptionListField($this->display_text[$lid], array_key_exists('multiple', $is) && $is['multiple']);
-                $res->getInput()
-                    ->setOptions($options)
-                    ->setAttribute(array(
-                        'name' => 'data[' . $this->name . ']'
-                    ));
+                $field->setInput($html->optionList($this->name, 'data[' . $this->name . ']', null, $options));
+                if ($is['multiple']) {
+                    $field->getInput()->setMultiple(true);
+                }
                 break;
         }
         if ($this->required) {
-            $res->addValidateRule('required', true);
+            $field->getInput()->addValidateRule('required', true);
         }
-        return $res;
+        return $field;
     }
 }
 

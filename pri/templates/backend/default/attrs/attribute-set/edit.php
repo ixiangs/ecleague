@@ -16,9 +16,14 @@ $this->assign('toolbar', array(
 $f = $this->html->groupedForm()
         ->setAttribute('action', $this->router->buildUrl('save', '*'));
 $f->beginGroup('tab_base', $this->locale->_('base_info'));
-$f->newField($this->locale->_('attrs_owner_component'), true,
-    $this->html->select('component_id', 'data[component_id]', $this->model->getComponentId(), $this->components)
-        ->addValidateRule('required', true));
+if($this->model->id):
+    $f->addStaticField($this->locale->_('attrs_owner_component'), $this->components[$this->model->getComponentId()]);
+else:
+    $f->newField($this->locale->_('attrs_owner_component'), true,
+        $this->html->select('component_id', 'component_id', $this->request->getQuery('component_id'), $this->components)
+            ->setCaption('')
+            ->addValidateRule('required', true));
+endif;
 $f->newField($this->locale->_('code'), true,
     $this->html->textbox('code', 'data[code]', $this->model->getCode())
         ->addValidateRule('required', true));

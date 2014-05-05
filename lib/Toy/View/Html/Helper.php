@@ -69,6 +69,12 @@ class Helper
         return $res;
     }
 
+    public function optionList($id = null, $name = null, $value = null, $options = array()){
+        $res = new OptionList(array('id'=>$id, 'name'=>$name, 'value'=>$value, 'class'=>"form-control"));
+        $res->setOptions($options);
+        return $res;
+    }
+
     public function newElement($tag, array $attrs = array()){
         return new Element($tag, $attrs);
     }

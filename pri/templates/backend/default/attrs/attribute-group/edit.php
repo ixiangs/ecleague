@@ -28,9 +28,9 @@ $f = $this->html->groupedForm()
     ->setAttribute('action', $this->router->buildUrl('save', '*'));
 $f->beginGroup('tab_base', $this->locale->_('base_info'));
 if($this->model->id):
-    $f->addStaticField($this->locale->_('attrs_select_component'), $this->components[$this->model->getComponentId()]);
+    $f->addStaticField($this->locale->_('attrs_owner_component'), $this->components[$this->model->getComponentId()]);
 else:
-    $f->newField($this->locale->_('attrs_select_component'), true,
+    $f->newField($this->locale->_('attrs_owner_component'), true,
         $this->html->select('component_id', 'component_id', $this->request->getQuery('component_id'), $this->components)
             ->setCaption('')
             ->addValidateRule('required', true));

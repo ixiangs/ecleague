@@ -119,7 +119,7 @@ switch($this->model->getInputType()):
                 ->addValidateRule('required', true));
             $f->newField($this->locale->_('attrs_default_option'), true,
                 $this->html->select('default_option', 'data[input_setting][default_option]', $vs['multiple'],
-                    array('1'=>$this->locale->_('attrs_empty_option'), '2'=>$this->locale->_('attrs_first_option')))
+                    array('empty'=>$this->locale->_('attrs_empty_option'), 'first'=>$this->locale->_('attrs_first_option')))
                     ->addValidateRule('required', true));
         endif;
         break;

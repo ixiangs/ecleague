@@ -1,7 +1,7 @@
 <?php
 namespace Toy\View\Html;
 
-class Textarea extends VerifiableElement
+class Textarea extends InputElement
 {
 
     public function __construct()

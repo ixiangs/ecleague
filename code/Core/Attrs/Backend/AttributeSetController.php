@@ -24,72 +24,7 @@ class AttributeSetController extends Web\Controller
         );
     }
 
-    public function groupsAction($id)
-    {
-        $m = Tops::loadModel('attrs/attributeSet')->load($id);
-        $c = Tops::loadModel('admin/component')->load($m->getComponentId());
-        $groups = $m->getGroupAttributes();
-        $groupIds = $m->getGroupIds();
-        $selectedIds = array();
-        foreach($groups as $group){
-            foreach($group->getAttributes() as $attribute){
-                $selectedIds[] = $attribute->getId();
-            }
-        }
-        $unattributes = Tops::loadModel('attrs/attribute')
-                        ->find()
-                        ->eq('component_id', $m->getComponentId())
-                        ->eq('enabled', true)
-                        ->notIn('id', $selectedIds)
-                        ->load();
-        $ungroups = Tops::loadModel('attrs/attributeGroup')
-            ->find()
-            ->eq('component_id', $m->getComponentId())
-            ->eq('enabled', true)
-            ->notIn('id', $groupIds)
-            ->load();
-        return Web\Result::templateResult(array(
-            'model' => $m,
-            'component'=>$c,
-            'groups'=>$groups,
-            'unselectedAttributes'=>$unattributes,
-            'unselectedGroups'=>$ungroups
-        ));
-    }
-
-    public function groupsPostAction($id){
-        $groupIds = $this->request->getPost('groups');
-        $attributeIds = $this->request->getPost('attributes');
-        $model = Tops::loadModel('attrs/attributeSet')->load($id);
-        $gourps = Tops::loadModel('attrs/attributeGroup')->find()->in('id', $groupIds)->load();
-        $res = Helper::withTx(function($db) use($groupIds, $gourps, $attributeIds, $model){
-            foreach($gourps as $group){
-                $group->setAttributeIds($attributeIds[$group->getId()])->update();
-            }
-            $model->setGroupIds($groupIds)->update();
-            return true;
-        });
-
-        if($res){
-            return Web\Result::redirectResult('list');
-        }else{
-            $this->session->set('errors', $this->context->locale->_('err_system'));
-            return $this->groupsAction($id);
-        }
-    }
-
-    public function groupAjaxAction($id){
-        $langId = $this->context->locale->getCurrentLanguageId();
-        $group = Tops::loadModel('attrs/attributeGroup')->load($id);
-        $attributes = $group->getAttributes();
-        $res = array('groupId'=>$group->getId(), 'name'=>$group->name[$langId]);
-        $res['attributes'] = $attributes->toArray(function($item) use($langId){
-            return array(null, array('id'=>$item->getId(), 'name'=>$item->display_text[$langId]));
-        });
-        return Web\Result::jsonResult($res);
-    }
-
-    public function ddAction()
+    public function addAction()
     {
         $model = Tops::loadModel('attrs/attributeSet');
         return $this->getEditTemplateResult($model);

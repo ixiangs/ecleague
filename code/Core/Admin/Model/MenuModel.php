@@ -1,8 +1,8 @@
 <?php
 namespace Core\Admin\Model;
 
-use Toy\Data\Helper;
-use Toy\Data\Sql\UpdateStatement;
+use Toy\Db\Helper;
+use Toy\Db\UpdateStatement;
 use Toy\Orm;
 
 class MenuModel extends Orm\Model

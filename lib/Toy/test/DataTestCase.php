@@ -1,8 +1,8 @@
 <?php
 use Toy\Unit\TestCase;
-use Toy\Data\Configuration;
-use Toy\Data\Db;
-use Toy\Data\Query;
+use Toy\Db\Configuration;
+use Toy\Db;
+use Toy\Db\Query;
 use Toy\Joy;
 
 class DataTestCase extends TestCase {
@@ -10,7 +10,7 @@ class DataTestCase extends TestCase {
 	private $_db = null;
 
 	public function __construct() {
-		Configuration::addConnection('default', 'Toy\Data\Provider\MysqlProvider', 'mysql:host=localhost;dbname=Toy', 'root', '');
+		Configuration::addConnection('default', 'Toy\Db\Provider\MysqlProvider', 'mysql:host=localhost;dbname=Toy', 'root', '');
 		Configuration::$trace = true;
 		$this -> _db = Joy::db();
 	}

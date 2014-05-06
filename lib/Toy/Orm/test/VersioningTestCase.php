@@ -31,7 +31,7 @@ class VersioningTestCase extends Toy\Unit\TestCase
     public function __construct()
     {
         $this->_model = VersioningModel::create();
-        $this->_db = \Toy\Data\Helper::openDb();
+        $this->_db = \Toy\Db\Helper::openDb();
     }
 
     public function testEntity()

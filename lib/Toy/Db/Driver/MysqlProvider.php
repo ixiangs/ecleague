@@ -1,10 +1,8 @@
 <?php
-namespace Toy\Data\Db;
+namespace Toy\Db;
 
-use Toy\Data\Sql;
-use Toy\Util\ArrayUtil;
 
-class SqliteProvider extends PdoProvider
+class MysqlProvider extends PdoProvider
 {
 
     public function __construct($settings)
@@ -65,9 +63,7 @@ class SqliteProvider extends PdoProvider
     {
         $params = array();
         if (count($query->getFields()) > 0) {
-            $sql = 'SELECT ' . implode(',', ArrayUtil::toArray($query->getFields(), function($item, $index){
-                    return array($this->parseFunction($item), null);
-                }));
+            $sql = 'SELECT ' . implode(',', $query->getFields());
         } else {
             $sql = 'SELECT *';
         }
@@ -138,19 +134,19 @@ class SqliteProvider extends PdoProvider
                         $result[] = $v[1] . ' IS NOT NULL';
                         break;
                     case 'like':
-                        $result[] = $v[1] . " LIKE " . $this->escape($v[2]) . "";
+                        $result[] = $v[1] . " LIKE '" . $this->escape($v[2]) . "'";
                         break;
                     case 'in':
                         $arr = array();
                         foreach ($v[2] as $item) {
-                            $arr[] = $this->escape($item);
+                            $arr[] = "'" . $this->escape($item) . "'";
                         }
                         $result[] = $v[1] . " IN(" . implode(',', $arr) . ")";
                         break;
                     case 'notin':
                         $arr = array();
                         foreach ($v[2] as $item) {
-                            $arr[] = $this->escape($item);
+                            $arr[] = "'" . $this->escape($item) . "'";
                         }
                         $result[] = $v[1] . " NOT IN(" . implode(',', $arr) . ")";
                         break;

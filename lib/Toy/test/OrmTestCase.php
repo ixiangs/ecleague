@@ -1,6 +1,6 @@
 <?php
 use Toy\Unit\TestCase;
-use Toy\Data\Db;
+use Toy\Db;
 use Toy\Joy;
 
 class TestModel extends \Toy\Orm\ModelBase{

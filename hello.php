@@ -4,16 +4,13 @@ class A
 {
     static public function test()
     {
-        echo __CLASS__ . "\n";
+        echo get_called_class() . "\n";
     }
 }
 
 class B extends A
 {
-    static public function test()
-    {
-        echo __CLASS__ . "\n";
-    }
+
 }
 
 B::test();

@@ -21,10 +21,10 @@ class AttributeSetModel extends Orm\Model{
     }
 
     public function assignGroup(array $attributes, $db){
-        $ds = new \Toy\Data\Sql\DeleteStatement('{t}attrs_r_set_group');
+        $ds = new \Toy\Db\DeleteStatement('{t}attrs_r_set_group');
         $db->delete($ds->eq('set_id', $this->id));
         foreach($attributes as $attribute){
-            $us = new \Toy\Data\Sql\InsertStatement('{t}attrs_r_set_group', array(
+            $us = new \Toy\Db\InsertStatement('{t}attrs_r_set_group', array(
                 'set_id'=>$this->id,
                 'group_id'=>$attribute['id'],
                 'position'=>$attribute['position']

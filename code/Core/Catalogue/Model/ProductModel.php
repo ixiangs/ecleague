@@ -1,9 +1,9 @@
 <?php
 namespace Core\Catalogue\Model;
 
-use Toy\Data;
-use Toy\Data\Sql\InsertStatement;
-use Toy\Data\Sql\UpdateStatement;
+use Toy\Db;
+use Toy\Db\InsertStatement;
+use Toy\Db\UpdateStatement;
 use Toy\Orm;
 
 use Core\Attrs;

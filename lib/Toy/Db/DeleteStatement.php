@@ -1,6 +1,6 @@
 <?php
 
-namespace Toy\Data;
+namespace Toy\Db;
 
 class DeleteStatement extends WhereStatement{
 

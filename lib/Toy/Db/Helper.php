@@ -1,9 +1,9 @@
 <?php
 
-namespace Toy\Data;
+namespace Toy\Db;
 
 
-use Toy\Data\Sql\UpdateStatement;
+use Toy\Db\UpdateStatement;
 
 class Helper
 {
@@ -16,7 +16,8 @@ class Helper
             $name = Configuration::$defaultConnection;
         }
         $s = Configuration::$connectionSettings[$name];
-        return new Database($s);
+        $d = Configuration::$driverClass;
+        return new $d($s);
     }
 
     static public function openDb($name = null)

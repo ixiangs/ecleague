@@ -1,10 +1,10 @@
 <?php
 namespace Core\Admin\Model;
 
-use Toy\Data\Helper, Toy\Data\Sql\UpdateStatement;
+use Toy\Db\Helper, Toy\Db\UpdateStatement;
 use Toy\Orm;
 use Toy\Util\EncryptUtil;
-use Toy\Data\Db;
+use Toy\Db;
 
 class AdministratorModel extends Orm\Model
 {

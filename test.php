@@ -17,7 +17,7 @@ include_once 'Toy\Autoload.php';
 );
 \Toy\Log\Configuration::$defaultOutput = 'console';
 
-\Toy\Data\Configuration::addConnection('default', 'Toy\Data\Provider\MysqlProvider', 'mysql:host=localhost;dbname=comexoa', 'root', '');
-\Toy\Data\Configuration::$trace = true;
+\Toy\Db\Configuration::addConnection('default', 'Toy\Db\Provider\MysqlProvider', 'mysql:host=localhost;dbname=comexoa', 'root', '');
+\Toy\Db\Configuration::$trace = true;
 
 \Toy\Unit\Runner::run(array('directory' => TEST_PATH, 'output'=>'console'));

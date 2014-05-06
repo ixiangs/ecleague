@@ -2,10 +2,10 @@
 namespace Core\Auth\Model;
 
 use Core\Auth\Identity;
-use Toy\Data\Helper, Toy\Data\Sql\UpdateStatement;
+use Toy\Db\Helper, Toy\Db\UpdateStatement;
 use Toy\Orm;
 use Toy\Util\EncryptUtil;
-use Toy\Data\Db;
+use Toy\Db;
 
 class AccountModel extends Orm\Model
 {

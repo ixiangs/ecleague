@@ -1,9 +1,7 @@
 <?php
-namespace Toy\Data\Db;
+namespace Toy\Db\Driver;
 
-use Toy\Data\Configuration;
-
-abstract class BaseProvider {
+abstract class BaseDriver {
 
     protected $settings = null;
 
@@ -34,9 +32,4 @@ abstract class BaseProvider {
     public abstract function getLastInsertId();
     public abstract function execute($sql, $arguments = array());
     public abstract function fetch($sql, $arguments = array());
-    public abstract function insert($statement);
-    public abstract function update($statement);
-    public abstract function delete($statement);
-    public abstract function select($statement);
-//    public abstract function create($statement);
 }

@@ -6,7 +6,7 @@
  * Time: 下午11:58
  */
 
-namespace Toy\Data\Sql;
+namespace Toy\Db;
 
 abstract class WhereStatement extends BaseStatement{
 

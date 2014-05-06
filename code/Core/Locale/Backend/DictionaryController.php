@@ -1,7 +1,7 @@
 <?php
 namespace Core\Locale\Backend;
 
-use Toy\Data\Helper;
+use Toy\Db\Helper;
 use Toy\Web;
 
 class DictionaryController extends Web\Controller

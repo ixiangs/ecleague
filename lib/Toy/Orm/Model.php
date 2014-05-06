@@ -1,11 +1,8 @@
 <?php
 namespace Toy\Orm;
 
-use Toy\Data\Helper;
-use Toy\Data\SelectStatement;
-use Toy\Data\Sql\DeleteStatement;
-use Toy\Data\Sql\InsertStatement;
-use Toy\Data\Sql\UpdateStatement;
+use Toy\Db\Helper;
+use Toy\Db\SelectStatement;
 
 abstract class Model implements \ArrayAccess, \Iterator
 {
@@ -380,18 +377,20 @@ abstract class Model implements \ArrayAccess, \Iterator
 
     static public function load($id, $db = null)
     {
-        $inst = new static();
+        $calledClass = get_called_class();
+        $metadata = self::$metadatas[$calledClass];
+        $table = $metadata['table'];
         $fields = array();
-        foreach ($inst->properties as $prop) {
-            $fields[] = $inst->tableName . '.' . $prop->getName();
+        foreach ($metadata['properties'] as $prop) {
+            $fields[] = $table . '.' . $prop->getName();
         }
-        $q = new SelectStatement(get_class($inst));
-        $q->select($fields)
-            ->from($inst->tableName)
-            ->eq($inst->idProperty->getName(), $id)
-            ->limit(1);
-        $row = $q->execute($db)->getFirstRow();
+        $row = Helper::select($table, $fields)
+            ->eq($metadata['idProperty']->getName(), $id)
+            ->limit(1)
+            ->execute($db)
+            ->getFirstRow();
         if ($row != null) {
+            $inst = new $calledClass();
             $inst->fillRow($row);
             return $inst;
         }
@@ -400,8 +399,8 @@ abstract class Model implements \ArrayAccess, \Iterator
 
     static public function merge($id, $data, $db = null)
     {
-        $inst = new static();
-        if ($inst->_load($id, $db) !== false) {
+        $inst = static::load($id, $db);
+        if ($inst !== false) {
             $inst->fillArray($data);
             return $inst;
         }
@@ -410,13 +409,15 @@ abstract class Model implements \ArrayAccess, \Iterator
 
     static public function find()
     {
-        $inst = new static();
+        $calledClass = get_called_class();
+        $metadata = self::$metadatas[$calledClass];
+        $table = $metadata['table'];
         $fields = array();
-        foreach ($inst->properties as $prop) {
-            $fields[] = $inst->tableName . '.' . $prop->getName();
+        foreach ($metadata['properties'] as $prop) {
+            $fields[] = $table . '.' . $prop->getName();
         }
-        $result = new Collection(get_class($inst));
-        return $result->select($fields)->from($inst->tableName);
+        $result = new Collection($calledClass);
+        return $result->select($fields)->from($table);
     }
 
     static public function create($data = array())
@@ -424,7 +425,7 @@ abstract class Model implements \ArrayAccess, \Iterator
         return new static($data);
     }
 
-    private static function getUnderlineName($camelCase)
+    static private function getUnderlineName($camelCase)
     {
         if (!array_key_exists($camelCase, self::$_camelCaseToUnderline)) {
             preg_match_all('/([A-Z]{1}[a-z0-9]+)/', $camelCase, $matches);
@@ -459,6 +460,6 @@ abstract class Model implements \ArrayAccess, \Iterator
                 $arr['relations'][$rel->getPropertyName()] = $rel;
             }
         }
-        self::$metadatas[__CLASS__] = $arr;
+        self::$metadatas[get_called_class()] = $arr;
     }
 }

@@ -5,7 +5,7 @@ class PeopleModel extends \Toy\Orm\Model
 
 }
 
-\Toy\Orm\Model::register('PeopleModel', array(
+PeopleModel::register(array(
     'table' => 'people',
     'properties' => array(
         \Toy\Orm\IntegerProperty::create('id')->setPrimaryKey(true)->setAutoIncrement(true),
@@ -24,14 +24,13 @@ class OrmTestCase extends Toy\Unit\TestCase
     public function __construct()
     {
         $this->_people = PeopleModel::create();
-        $this->_db = \Toy\Data\Helper::openDb();
+        $this->_db = \Toy\Db\Helper::openDb();
     }
 
     public function testEntity(){
-        $this->assertNotNull($this->_people->getEntity());
-        $this->assertEqual('people', $this->_people->getEntity()->getTableName());
-        $this->assertEqual(4, count($this->_people->getEntity()->getProperties()));
-        $idp = $this->_people->getEntity()->getProperty('id');
+        $this->assertEqual('people', $this->_people->getTableName());
+        $this->assertEqual(4, count($this->_people->getProperties()));
+        $idp = $this->_people->getProperty('id');
         $this->assertEqual(true, $idp->getPrimaryKey());
         $this->assertEqual(true, $idp->getAutoIncrement());
         $this->assertEqual(true, $idp->getUnique());
@@ -72,7 +71,7 @@ class OrmTestCase extends Toy\Unit\TestCase
         $rs2 = $this->_db->fetch('SELECT * FROM people');
         $this->assertEqual(count($rs1->rows), count($rs2->rows));
 
-        $rs1 = PeopleModel::find()->execute()->getModelArray();
+        $rs1 = PeopleModel::find()->load();
         $this->assertTrue(count($rs1) > 0);
     }
 }

@@ -3,7 +3,8 @@ namespace Toy\Orm;
 
 use Toy\Collection\TEnumerator;
 use Toy\Collection\TList;
-use Toy\Data\Helper;
+use Toy\Db\Helper;
+use Toy\Db\SelectStatement;
 
 class Collection extends SelectStatement implements \Iterator, \ArrayAccess, \SeekableIterator, \Serializable, \Countable
 {

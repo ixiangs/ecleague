@@ -30,9 +30,9 @@ if (preg_match('/^\/pub\/|\.html$/', $_SERVER["REQUEST_URI"])) {
     \Toy\Log\Configuration::$settings = array('directory' => ROOT_PATH . 'log');
     \Toy\Log\Configuration::$appender = '\Toy\Log\FileAppender';
 
-    \Toy\Data\Configuration::$trace = true;
-    \Toy\Data\Configuration::$logger = \Toy\Log\Logger::singleton();
-    \Toy\Data\Configuration::addConnection('default', 'Toy\Data\Db\SqliteProvider', array(
+    \Toy\Db\Configuration::$trace = true;
+    \Toy\Db\Configuration::$logger = \Toy\Log\Logger::singleton();
+    \Toy\Db\Configuration::addConnection('default', 'Toy\Db\SqliteProvider', array(
         'dsn' => 'sqlite:' . ROOT_PATH . 'db.db'
     ));
 

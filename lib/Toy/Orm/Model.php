@@ -262,11 +262,9 @@ abstract class Model implements \ArrayAccess, \Iterator
         $result = array();
         foreach ($this->properties as $n => $p) {
             if (!$p->getAutoIncrement() && $p->getUnique()) {
-                $c = $this->find()
-                    ->selectCount()
+                $c = static::find()
                     ->eq($n, $p->toDbValue($this->getData($n)))
-                    ->execute($db)
-                    ->getFirstValue();
+                    ->count($db);
                 if ($c > 0) {
                     $result[] = $n;
                 }

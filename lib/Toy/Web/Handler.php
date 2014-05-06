@@ -1,23 +1,20 @@
 <?php
 namespace Toy\Web;
 
-use Toy\Loader;
-use Toy\Web\Interfaces\IHandler;
+class Handler
+{
 
-class Handler{
+    public function handle()
+    {
+        $router = Application::$context->router;
 
-	public function handle() {
-		$context = Application::singleton() -> getContext();
-        $router = $context->router;
-
-//        $ctrlClass = Configuration::$codeNamespaces[0];
-        $ctrlClass = str_replace(' ', '', ucwords(str_replace('-', ' ', $router -> component)));
-		$ctrlClass .= '\\'.ucfirst($router->domain->getNamespace());
-		$ctrlClass .= '\\'.str_replace(' ', '', ucwords(str_replace('-', ' ', $router -> controller))).'Controller';
-
-		$inst = Loader::create($ctrlClass);
-		$inst -> initialize($context);
-		return $inst -> execute($router->action);
-	}
+        $controllerClass = $router->component.'_'.str_replace(' ', '', ucwords(str_replace('-', ' ', $router->controller)));
+        $controllerClass = '\\' . str_replace(' ', '', ucwords(str_replace(' ', '\\', $controllerClass))) . 'Controller';
+        $controllerPath = $router->domain->getName() . DIRECTORY_SEPARATOR . str_replace('\\', DIRECTORY_SEPARATOR, $controllerClass) . '.php';
+        include_once $controllerPath;
+        $inst = new $controllerClass();
+        $inst->initialize(Application::$context);
+        return $inst->execute($router->action);
+    }
 
 }

@@ -26,11 +26,12 @@ class Template
         return $this->get($name);
     }
 
-	public function __call($name, $args) {
-		if (array_key_exists($name, self::$_helpers)) {
-			return call_user_func_array(self::$_helpers[$name], $args);
-		}
-	}
+    public function __call($name, $args)
+    {
+        if (array_key_exists($name, self::$_helpers)) {
+            return call_user_func_array(self::$_helpers[$name], $args);
+        }
+    }
 
     public function assign()
     {
@@ -50,14 +51,15 @@ class Template
             return self::$_data[$name];
         }
 
-        if($name == 'html'){
+        if ($name == 'html') {
             return Helper::singleton();
         }
 
         return $default;
     }
 
-    public function escape($name, $default = ''){
+    public function escape($name, $default = '')
+    {
         if (array_key_exists($name, self::$_data)) {
             $result = urldecode(self::$_data[$name]);
             return $result;
@@ -130,11 +132,13 @@ class Template
     public function render($path)
     {
         $root = Configuration::$templateRoot;
-        $dirs = Configuration::$templateDirectories;
+//        $dirs = Configuration::$templateDirectories;
         $extensions = Configuration::$templateExtensions;
-        foreach ($dirs as $dir) {
-            foreach ($extensions as $ex) {
-                $file = PathUtil::combines($root, $dir, $path, $ex);
+        $paths = is_array($path) ? $path : array($path);
+//        foreach ($dirs as $dir) {
+        foreach ($extensions as $ex) {
+            foreach ($paths as $subPath) {
+                $file = PathUtil::combines($root, $subPath, $ex);
                 if (file_exists($file)) {
                     if (Configuration::$trace) {
                         Configuration::$logger->v($file, 'template');
@@ -145,12 +149,15 @@ class Template
                 }
             }
         }
+//        }
 
-        throw new \Exception('Not found template:'.$path);
+        throw new \Exception('Not found template:' . $path);
     }
 
     private static $_helpers = array();
-    static public function addHelper($name, $func){
+
+    static public function addHelper($name, $func)
+    {
         self::$_helpers[$name] = $func;
     }
 }

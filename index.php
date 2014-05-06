@@ -8,11 +8,12 @@ if (preg_match('/^\/pub\/|\.html$/', $_SERVER["REQUEST_URI"])) {
     date_default_timezone_set('PRC');
     define('DS', DIRECTORY_SEPARATOR);
     define('ROOT_PATH', dirname(__FILE__) . DS);
-    define('PRI_PATH', ROOT_PATH . 'pri' . DS);
-    define('CODE_PATH', ROOT_PATH . 'code' . DS);
+    define('VIEW_PATH', ROOT_PATH . 'views' . DS);
+    define('CONTROLLER_PATH', ROOT_PATH . 'controllers' . DS);
+    define('CODE_PATH', ROOT_PATH . 'codes' . DS);
     define('CONF_PATH', ROOT_PATH . 'conf' . DS);
     define('LIB_PATH', ROOT_PATH . 'lib' . DS);
-    define('TEMP_PATH', PRI_PATH . 'temp' . DS);
+    define('TEMP_PATH', ROOT_PATH . 'temp' . DS);
     set_include_path(get_include_path() . PATH_SEPARATOR . LIB_PATH . PATH_SEPARATOR . CODE_PATH);
 
     include_once 'Toy\Platform\FileUtil.php';
@@ -31,8 +32,7 @@ if (preg_match('/^\/pub\/|\.html$/', $_SERVER["REQUEST_URI"])) {
     \Toy\Log\Configuration::$appender = '\Toy\Log\FileAppender';
 
     \Toy\Db\Configuration::$trace = true;
-    \Toy\Db\Configuration::$logger = \Toy\Log\Logger::singleton();
-    \Toy\Db\Configuration::addConnection('default', 'Toy\Db\SqliteProvider', array(
+    \Toy\Db\Configuration::addConnection('default', array(
         'dsn' => 'sqlite:' . ROOT_PATH . 'db.db'
     ));
 
@@ -41,15 +41,15 @@ if (preg_match('/^\/pub\/|\.html$/', $_SERVER["REQUEST_URI"])) {
     \Toy\Web\Configuration::$routerClass = '\Ecleague\Router';
     \Toy\Web\Configuration::$rendererClass = '\Ecleague\Renderer';
     \Toy\Web\Configuration::$trace = true;
-    \Toy\Web\Configuration::$logger = \Toy\Log\Logger::singleton();
+//    \Toy\Web\Configuration::$logger = \Toy\Log\Logger::singleton();
 
     \Ecleague\Configuration::addDomain('frontend', 'Frontend', '/', TRUE);
     \Ecleague\Configuration::addDomain('backend', 'Backend', '/admin/');
 
-    \Toy\View\Configuration::$trace = true;
-    \Toy\View\Configuration::$templateRoot = PRI_PATH . 'templates';
-    \Toy\View\Configuration::$templateDirectories = array(PRI_PATH . 'templates');
-    \Toy\View\Configuration::$logger = \Toy\Log\Logger::singleton();
+//    \Toy\View\Configuration::$trace = true;
+    \Toy\View\Configuration::$templateRoot = VIEW_PATH;
+//    \Toy\View\Configuration::$templateDirectories = array(PRI_PATH . 'templates');
+//    \Toy\View\Configuration::$logger = \Toy\Log\Logger::singleton();
 
     \Toy\Web\Application::run();
 }

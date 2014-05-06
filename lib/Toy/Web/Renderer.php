@@ -16,26 +16,22 @@ class Renderer
         $router = $context->router;
         switch ($result->getType()) {
             case 'template' :
-                $theme = 'default';
                 $lang = $request->getBrowserLanguage();
                 $action = $router->action;
-                $component = $router->component;
                 $controller = $router->controller;
                 $domain = strtolower($router->domain->getName());
-                View\Configuration::$templateDirectories = array(
-                    $domain . '/' . $lang . '/' . $theme . '/',
-                    $domain . '/' . $lang . '/',
-                    $domain . '/' . $theme . '/',
-                    $domain . '/'
-                );
                 $tmpl = new View\Template(array_merge(array(
                     'router'=>$context->router,
                     'request'=>$context->request,
                     'session'=>$context->session,
                     'applicationContext'=>$context
                 ), $result->data));
-                $path = $result->path? $result->path: $component . '/' . $controller . '/' . $action;
-                $response->write($tmpl->render($path));
+                $path = $result->path? $result->path: $controller . '/' . $action;
+                $paths = array(
+                    $domain . '/' . $lang . '/' . $path,
+                    $domain . '/' . $path
+                );
+                $response->write($tmpl->render($paths));
                 break;
             case 'content' :
                 $response->write($result->content);

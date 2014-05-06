@@ -2,9 +2,5 @@
     "name":"System",
     "version":"0.0.0.1",
     "author":"IXiangs Studio",
-    "website":"ixiangs.com",
-    "listeners":{
-        "webOnStart":"\\Ixiangs\\System\\Listener::webOnStart",
-        "webPostRoute":"\\Ixiangs\\System\\Listener::webPostRoute"
-    }
+    "website":"ixiangs.com"
 }

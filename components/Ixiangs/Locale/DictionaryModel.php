@@ -5,11 +5,10 @@ use Toy\Orm;
 
 class DictionaryModel extends Orm\Model{
 
-    const TABLE_NAME = '{t}locale_dictionary';
 }
 
-Orm\Model::register('Ixiangs\Locale\DictionaryModel', array(
-    'table'=>DictionaryModel::TABLE_NAME,
+DictionaryModel::register(array(
+    'table'=>Constant::TABLE_DICTIONARY,
     'properties'=>array(
         Orm\IntegerProperty::create('id')->setPrimaryKey(true)->setAutoIncrement(true),
         Orm\IntegerProperty::create('language_id')->setNullable(false),

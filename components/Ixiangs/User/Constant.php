@@ -4,7 +4,7 @@ namespace Ixiangs\User;
 
 class Constant
 {
-    const TABLE_ACCOUNT = '{t}auth_account';
+    const TABLE_ACCOUNT = '{t}user_account';
     const TABLE_ROLE = '{t}user_role';
     const TABLE_BEHAVIOR = '{t}user_behavior';
 

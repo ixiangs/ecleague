@@ -5,12 +5,10 @@ use Toy\Orm;
 
 class LanguageModel extends Orm\Model{
 
-    const TABLE_NAME = '{t}locale_language';
-
 }
 
-Orm\Model::register('Ixiangs\Locale\LanguageModel', array(
-    'table'=>LanguageModel::TABLE_NAME,
+LanguageModel::register(array(
+    'table'=>Constant::TABLE_LANGUAGE,
     'properties'=>array(
         Orm\IntegerProperty::create('id')->setPrimaryKey(true)->setAutoIncrement(true),
         Orm\StringProperty::create('code')->setUnique(true),

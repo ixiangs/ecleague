@@ -1,8 +1,5 @@
 <?php
-namespace Ixiangs\Auth;
-
-use Ixiangs\User\AccountModel;
-use Toy\Web\Application;
+namespace Ixiangs\User;
 
 class Listener{
 

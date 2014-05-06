@@ -18,18 +18,20 @@ class Renderer
             case 'template' :
                 $lang = $request->getBrowserLanguage();
                 $action = $router->action;
+                $component = $router->component;
                 $controller = $router->controller;
                 $domain = strtolower($router->domain->getName());
+                View\Configuration::$templateDirectories = array($domain);
                 $tmpl = new View\Template(array_merge(array(
                     'router'=>$context->router,
                     'request'=>$context->request,
                     'session'=>$context->session,
                     'applicationContext'=>$context
                 ), $result->data));
-                $path = $result->path? $result->path: $controller . '/' . $action;
+                $path = $result->path? $result->path: str_replace('_', '/', $component.'/'.$controller . '/' . $action);
                 $paths = array(
-                    $domain . '/' . $lang . '/' . $path,
-                    $domain . '/' . $path
+                    $lang . '/' . $path,
+                    $path
                 );
                 $response->write($tmpl->render($paths));
                 break;

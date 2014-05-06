@@ -1,6 +1,7 @@
 <?php
 namespace Toy\View;
 
+use Toy\Log\Logger;
 use Toy\Platform\PathUtil;
 use Toy\View\Html\Helper;
 
@@ -131,26 +132,29 @@ class Template
 
     public function render($path)
     {
+        $allPaths = array();
         $root = Configuration::$templateRoot;
-//        $dirs = Configuration::$templateDirectories;
+        $dirs = Configuration::$templateDirectories;
         $extensions = Configuration::$templateExtensions;
-        $paths = is_array($path) ? $path : array($path);
-//        foreach ($dirs as $dir) {
-        foreach ($extensions as $ex) {
-            foreach ($paths as $subPath) {
-                $file = PathUtil::combines($root, $subPath, $ex);
-                if (file_exists($file)) {
-                    if (Configuration::$trace) {
-                        Configuration::$logger->v($file, 'template');
+        $subPaths = is_array($path) ? $path : array($path);
+        foreach ($dirs as $dir) {
+            foreach ($extensions as $ex) {
+                foreach ($subPaths as $subPath) {
+                    $file = PathUtil::combines($root, $dir, $subPath, $ex);
+                    $allPaths[] = $file;
+                    if (file_exists($file)) {
+                        if (Configuration::$trace) {
+                            Logger::singleton()->v($file, 'template');
+                        }
+                        ob_start();
+                        include $file;
+                        return ob_get_clean();
                     }
-                    ob_start();
-                    include $file;
-                    return ob_get_clean();
                 }
             }
         }
-//        }
 
+        print_r($allPaths);
         throw new \Exception('Not found template:' . $path);
     }
 

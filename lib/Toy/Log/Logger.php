@@ -48,7 +48,7 @@ class Logger
             $str = sprintf("%s|%s|%s|%s|%s\n",
                 self::$_levelLabels[$level],
                 date('Y-m-d H:i:s'),
-                (array_key_exists('REMOTE_ADD', $_SERVER)? $_SERVER['REMOTE_ADD']: 'localhost'),
+                (array_key_exists('REMOTE_ADD', $_SERVER) ? $_SERVER['REMOTE_ADD'] : 'localhost'),
                 empty($type) ? '-' : $type,
                 $content);
             self::$_appender->append($str);
@@ -61,8 +61,7 @@ class Logger
     {
         if (is_null(self::$_instance)) {
             self::$_instance = new self();
-//            $os = Configuration::$outputSettings[Configuration::$defaultOutput];
-            self::$_appender = new Configuration::$appender(); //new $os['class']($os);
+            self::$_appender = new Configuration::$appender();
         }
         return self::$_instance;
     }

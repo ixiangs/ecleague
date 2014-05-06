@@ -1,9 +1,8 @@
 <?php
-namespace Top\Web;
+namespace Toy\Web;
 
 use Toy\Util\ArrayUtil;
 use Toy\Util\StringUtil;
-use Toy\Web\Application;
 
 class Router
 {
@@ -66,25 +65,27 @@ class Router
         }
         $url = $domain->getStartUrl();
         $url .= $component;
-        $url .= '/' . $controller;
-        $url .= '/' . $action;
+        $url .= '_' . $controller;
+        $url .= '_' . $action;
         if (is_array($params)) {
             $url .= '?' . http_build_query($params);
-        }elseif(is_string($params) && $params == '*'){
-            $url .= '?'. http_build_query(Application::$context->request->getQuery());
+        } elseif (is_string($params) && $params == '*') {
+            $url .= '?' . http_build_query(Application::$context->request->getQuery());
         }
         return $url;
     }
 
     public function parseUrl($url)
     {
-        $defaultDomain = ArrayUtil::find(Configuration::$domains, function ($item, $index) {
-            return $item->getDefault();
-        });
+        $defaultDomain = Configuration::$domains[Configuration::$defaultDomain];
 
 //		//判断是否网站首页，如果是直接返回首页Action
         if ($url == $defaultDomain->getStartUrl()) {
-            return array('domain' => $defaultDomain, 'component' => 'index', 'controller' => 'index', 'action' => 'index');
+            $parts = explode('_', $defaultDomain->getIndexUrl());
+            return array('domain' => $defaultDomain,
+                'component' => $parts[0] . '_' . $parts[1],
+                'controller' => $parts[2],
+                'action' => $parts[3]);
         }
 
         //如果使用URL参数专递
@@ -116,10 +117,18 @@ class Router
             if (!$v->getDefault() && StringUtil::startsWith($url, $v->getStartUrl())) {
                 $suburl = substr($url, strlen($v->getStartUrl()));
                 if (strlen($suburl) == 0) {
-                    return array('domain' => $v, 'component' => 'index', 'controller' => 'index', 'action' => 'index');
+                    $parts = explode('_', $v->getIndexUrl());
+                    return array('domain' => $v,
+                        'component' => $parts[0] . '_' . $parts[1],
+                        'controller' => $parts[2],
+                        'action' => $parts[3]);
                 } else {
                     $arr = explode('/', $suburl);
-                    return array('domain' => $v, 'component' => $arr[0], 'controller' => $arr[1], 'action' => $arr[2]);
+                    $parts = explode('_', $arr[0]);
+                    return array('domain' => $v,
+                        'component' => $parts[0] . '_' . $parts[1],
+                        'controller' => $parts[2],
+                        'action' => $parts[3]);
                 }
             }
         }
@@ -127,7 +136,11 @@ class Router
         //直接使用默认Domain
         $suburl = stristr($url, $defaultDomain->getStartUrl());
         $arr = explode('/', $suburl);
-        return array('domain' => $defaultDomain, 'component' => $arr[0], 'controller' => $arr[1], 'action' => $arr[2]);
+        $parts = explode('_', $arr[0]);
+        return array('domain' => $v,
+            'component' => $parts[0] . '_' . $parts[1],
+            'controller' => $parts[2],
+            'action' => $parts[3]);
     }
 
     private function parseQuery($url)

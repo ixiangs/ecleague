@@ -2,7 +2,9 @@
 namespace Toy\Db\Driver;
 
 use Toy\Db\Configuration;
+use Toy\Db\Exception;
 use Toy\Db\Result;
+use Toy\Log\Logger;
 use Toy\Util\ArrayUtil;
 
 class PdoDriver extends BaseDriver
@@ -32,7 +34,7 @@ class PdoDriver extends BaseDriver
         foreach ($arguments as $n => $v) {
             $content .= '[' . $n . ':' . $v . ']';
         }
-        Configuration::$logger->v($content, 'sql');
+        Logger::singleton()->v($content, 'sql');
     }
 
     public function isConnected()

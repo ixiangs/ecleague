@@ -1,10 +1,10 @@
 {
-    "name":"Auth",
+    "name":"User",
     "version":"0.0.0.1",
     "author":"IXiangs Studio",
     "website":"ixiangs.com",
     "listeners":{
-        "webOnStart":"\\Ixiangs\\Auth\\Listener::webOnStart",
-        "webPostRoute":"\\Ixiangs\\Auth\\Listener::webPostRoute"
+        "webOnStart":"\\Ixiangs\\User\\Listener::webOnStart",
+        "webPostRoute":"\\Ixiangs\\User\\Listener::webPostRoute"
     }
 }

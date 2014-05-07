@@ -1,5 +1,5 @@
 <?php $this->beginBlock('content');
-$langId = $this->locale->getCurrentLanguageId();
+$langId = $this->locale->getLanguageId();
 ?>
     <div class="row breadcrumb-row">
         <ol class="breadcrumb col-md-6">
@@ -52,7 +52,7 @@ $langId = $this->locale->getCurrentLanguageId();
                                     ?>
                                         <li class="ui-state-default attribute" data-id="<?php echo $attr->getId(); ?>">
                                             <i class="fa fa-list fa-fw"></i>
-                                            <?php echo $attr->display_text[$langId];?>
+                                            <?php echo $attr->label[$langId];?>
                                         </li>
                                     <?php
                                             endif;
@@ -91,7 +91,7 @@ $langId = $this->locale->getCurrentLanguageId();
                                 <?php foreach ($this->unselectedAttributes as $attr): ?>
                                     <li class="ui-state-default attribute" data-id="<?php echo $attr->getId(); ?>">
                                         <i class="fa fa-list fa-fw"></i>
-                                        <?php echo $attr->display_text[$langId];?>
+                                        <?php echo $attr->label[$langId];?>
                                     </li>
                                 <?php endforeach; ?>
                             </ul>

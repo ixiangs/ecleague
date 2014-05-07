@@ -1,5 +1,5 @@
 <?php
-$langId = $this->locale->getCurrentLanguageId();
+$langId = $this->locale->getLanguageId();
 $this->assign('breadcrumb', array(
     $this->html->anchor($this->locale->_('attrs_manage')),
     $this->html->anchor($this->model->name[$langId]),

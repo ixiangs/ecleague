@@ -18,12 +18,8 @@ if (preg_match('/^\/pub\/|\.html$/', $_SERVER["REQUEST_URI"])) {
     include_once 'Toy\Platform\FileUtil.php';
     include_once 'Toy\Platform\PathUtil.php';
     include_once 'Toy\Autoload.php';
-//    include_once 'Toy\Loader.php';
 
     \Toy\Autoload::register();
-
-//    \Toy\Loader::$path = CODE_PATH;
-//    \Toy\Loader::$namespaces = array('Core');
 
     \Toy\Log\Configuration::$settings = array('directory' => ROOT_PATH . 'log');
     \Toy\Log\Configuration::$appender = '\Toy\Log\FileAppender';
@@ -36,13 +32,11 @@ if (preg_match('/^\/pub\/|\.html$/', $_SERVER["REQUEST_URI"])) {
     \Toy\Web\Configuration::$trace = true;
     \Toy\Web\Configuration::$controllerDirectory = CONTROLLER_PATH;
     \Toy\Web\Configuration::$componentDirectory = COMPONENT_PATH;
-    \Toy\Web\Configuration::addDomain('frontend', '/', '/', '/',  TRUE);
+    \Toy\Web\Configuration::addDomain('frontend', '/', '/', '/', TRUE);
     \Toy\Web\Configuration::addDomain('backend', '/admin/', 'ixiangs_admin/main/dashboard', 'ixiangs_admin/account/login');
 
     \Toy\View\Configuration::$trace = true;
     \Toy\View\Configuration::$templateRoot = VIEW_PATH;
-//    \Toy\View\Configuration::$templateDirectories = array(PRI_PATH . 'templates');
-//    \Toy\View\Configuration::$logger = \Toy\Log\Logger::singleton();
 
     \Toy\Web\Application::run();
 }

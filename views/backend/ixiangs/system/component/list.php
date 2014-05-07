@@ -3,7 +3,7 @@ $this->assign('breadcrumb', array(
     $this->html->anchor($this->locale->_('admin_component_manage'))
 ));
 
-$clang = $this->locale->getCurrentLanguage();
+$clang = $this->locale->getLanguage();
 $dt = $this->html->grid($this->models);
 $dt->addIndexColumn('#', 'index', 'index');
 $dt->addLabelColumn($this->locale->_('code'), '{code}', 'middle', 'left');

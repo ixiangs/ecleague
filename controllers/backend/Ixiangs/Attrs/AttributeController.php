@@ -1,10 +1,7 @@
 <?php
 namespace Ixiangs\Attrs;
 
-use Ixiangs\Attrs\Model\AttributeModel;
-use Ecleague\Tops;
-use Toy\Db\Helper;
-use Toy\Util\ArrayUtil;
+use Ixiangs\System\ComponentModel;
 use Toy\Web;
 
 class AttributeController extends Web\Controller
@@ -13,8 +10,8 @@ class AttributeController extends Web\Controller
     public function listAction()
     {
         $pi = $this->request->getParameter("pageindex", 1);
-        $count = Tops::loadModel('attrs/attribute')->find()->selectCount()->execute()->getFirstValue();
-        $models = Tops::loadModel('attrs/attribute')->find()
+        $count = AttributeModel::find()->count();
+        $models = AttributeModel::find()
             ->asc('name')
             ->limit(PAGINATION_SIZE, ($pi - 1) * PAGINATION_SIZE)
             ->load();
@@ -27,19 +24,18 @@ class AttributeController extends Web\Controller
 
     public function typeAction()
     {
-        $components = Tops::loadModel('admin/component')
-                        ->find()->load()
-                        ->toArray(function($item){
-                            return array($item->getId(), $item->getName());
-                        });
+        $components = ComponentModel::find()->load()
+            ->toArray(function ($item) {
+                return array($item->getId(), $item->getName());
+            });
         return Web\Result::templateResult(array(
-            'components'=>$components
+            'components' => $components
         ));
     }
 
     public function addAction()
     {
-        $model = Tops::loadModel('attrs/attribute')->fillArray(array(
+        $model = new AttributeModel(array(
             'data_type' => $this->request->getQuery('data_type'),
             'input_type' => $this->request->getQuery('input_type'),
             'component_id' => $this->request->getQuery('component_id')
@@ -49,14 +45,13 @@ class AttributeController extends Web\Controller
 
     public function editAction($id)
     {
-        $m = Tops::loadModel('attrs/attribute')->load($id);
-        return $this->getEditTemplateResult($m);
+        return $this->getEditTemplateResult(AttributeModel::load($id));
     }
 
     public function savePostAction()
     {
         $locale = $this->context->locale;
-        $m = Tops::loadModel('attrs/attribute')->fillArray($this->request->getPost('data'));
+        $m = new AttributeModel($this->request->getPost('data'));
 
         $vr = $m->validateProperties();
         if ($vr !== true) {
@@ -65,7 +60,7 @@ class AttributeController extends Web\Controller
         }
 
         if ($m->getId()) {
-            if (!$m->merge()->update()) {
+            if (!$m->update()) {
                 $this->session->set('errors', $locale->_('err_system'));
                 return $this->getEditTemplateResult($m);
             }
@@ -76,7 +71,7 @@ class AttributeController extends Web\Controller
             }
         }
 
-        if($this->request->getPost('next_action') == 'new'){
+        if ($this->request->getPost('next_action') == 'new') {
             return Web\Result::redirectResult($this->router->buildUrl('type'));
         }
 
@@ -149,10 +144,10 @@ class AttributeController extends Web\Controller
 
     private function getEditTemplateResult($model)
     {
-        $c = Tops::loadModel('admin/component')->load($model->getComponentId());
+        $c = ComponentModel::load($model->getComponentId());
         return Web\Result::templateResult(
             array('model' => $model, 'component' => $c),
-            'attrs/attribute/edit'
+            'ixiangs/attrs/attribute/edit'
         );
     }
 }

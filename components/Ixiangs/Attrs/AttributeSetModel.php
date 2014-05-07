@@ -68,7 +68,7 @@ class AttributeSetModel extends Orm\Model{
 }
 
 AttributeSetModel::register(array(
-    'table'=>Constant::TABLE_R_SET_GROUP,
+    'table'=>Constant::TABLE_ATTRIBUTE_SET,
     'properties'=>array(
         Orm\IntegerProperty::create('id')->setPrimaryKey(true)->setAutoIncrement(true),
         Orm\IntegerProperty::create('component_id')->setNullable(false),

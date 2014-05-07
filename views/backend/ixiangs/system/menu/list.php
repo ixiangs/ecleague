@@ -8,12 +8,12 @@ $this->assign('navigationBar', array(
     $this->html->anchor($this->locale->_('sort'), $this->router->buildUrl('sort'))
 ));
 
-$clang = $this->locale->getCurrentLanguage();
+$clang = $this->locale->getLanguage();
 $dt = $this->html->grid($this->models);
 $dt->addIndexColumn('#', 'index', 'index');
 $dt->addLabelColumn($this->locale->_('name'), '{name}', 'large', 'left')
     ->setCellRenderer(function($col, $row) use($clang){
-        $col->getCell()->getChild(0)->removeBindableAttribute('text')->setAttribute('text', $row->names[$clang['id']]);
+        $col->getCell()->getChild(0)->removeBindableAttribute('text')->setAttribute('text', $row->name[$clang['id']]);
         return $col->getCell()->renderBegin().$col->getCell()->renderInner().$col->getCell()->renderEnd();
     });
 $dt->addLabelColumn($this->locale->_('url'), '{url}', '', 'left');

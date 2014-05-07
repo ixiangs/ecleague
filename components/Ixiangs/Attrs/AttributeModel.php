@@ -12,9 +12,9 @@ class AttributeModel extends Orm\Model
     public function toFormField()
     {
         $html = Helper::singleton();
-        $lid = Localize::singleton()->getCurrentLanguageId();
+        $lid = Localize::singleton()->getLanguageId();
         $is = $this->getInputSetting(array());
-        $field = new FormField($this->display_text[$lid]);
+        $field = new FormField($this->label[$lid]);
         switch ($this->input_type) {
             case Constant::INPUT_TYPE_TEXTBOX:
                 $field->setInput($html->textbox($this->name, 'data[' . $this->name . ']'));
@@ -63,7 +63,7 @@ AttributeModel::register(array(
         Orm\BooleanProperty::create('enabled')->setDefaultValue(true)->setNullable(false),
         Orm\BooleanProperty::create('localizable')->setDefaultValue(false)->setNullable(false),
         Orm\IntegerProperty::create('component_id')->setNullable(false),
-        Orm\SerializeProperty::create('display_text')->setNullable(false),
+        Orm\SerializeProperty::create('label')->setNullable(false),
         Orm\SerializeProperty::create('memo')->setNullable(false),
         Orm\SerializeProperty::create('options'),
         Orm\SerializeProperty::create('input_setting'),

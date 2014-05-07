@@ -1,5 +1,5 @@
 <?php
-$langId = $this->locale->getCurrentLanguageId();
+$langId = $this->locale->getLanguageId();
 $this->assign('breadcrumb', array(
     $this->html->anchor($this->locale->_('attrs_manage')),
     $this->html->anchor($this->model->name[$langId]),
@@ -22,7 +22,7 @@ $f->newField('')->setRenderer(function($field) use($langId){
         $res[] = '<div class="panel-heading">'.$this->locale->_('attrs_assigned_attribute').'</div>';
         $res[] = '<div class="panel-body"><ul id="selected_attributes" class="sortable" style="min-height:40px;">';
         foreach($this->selectedAttributes as $attr){
-            $res[] = '<li class="ui-state-default" data-id="'.$attr->getId().'">'.$attr->display_text[$langId].'</li>';
+            $res[] = '<li class="ui-state-default" data-id="'.$attr->getId().'">'.$attr->label[$langId].'</li>';
             $aids[] = $attr->getId();
         }
         $res[] = '</ul></div></div></div>';
@@ -31,7 +31,7 @@ $f->newField('')->setRenderer(function($field) use($langId){
         $res[] = '<div class="panel-body"><ul id="unselected_attributes" class="sortable" style="min-height:40px;">';
         foreach($this->unselectedAttributes as $attr){
             $res[] = '<li class="ui-state-default" data-id="'.$attr->getId().'">';
-            $res[] = $attr->display_text[$langId];
+            $res[] = $attr->label[$langId];
             $res[] = '</li>';
         }
         $res[] = '</ul></div></div></div></div>';

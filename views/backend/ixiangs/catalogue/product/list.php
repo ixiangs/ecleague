@@ -7,7 +7,7 @@ $this->assign('navigationBar', array(
     $this->html->anchor($this->locale->_('add'), $this->router->buildUrl('add'))
 ));
 
-$clang = $this->locale->getCurrentLanguage();
+$clang = $this->locale->getLanguage();
 $dt = $this->html->grid($this->models);
 $dt->addIndexColumn('#', 'index', 'index');
 $dt->addLabelColumn('SKU', '{sku}', 'large', 'left');

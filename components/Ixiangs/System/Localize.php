@@ -39,22 +39,22 @@ class Localize implements \ArrayAccess
         return '';
     }
 
-    public function getCurrentLanguageId()
+    public function getLanguageId()
     {
         return $this->_currentLanguage['id'];
     }
 
-    public function getCurrentLanguageCode()
+    public function getLanguageCode()
     {
         return $this->_currentLanguage['code'];
     }
 
-    public function getCurrentLanguage()
+    public function getLanguage()
     {
         return $this->_currentLanguage;
     }
 
-    public function getLanguages()
+    public function getAllLanguages()
     {
         return $this->_languages;
     }

@@ -1,5 +1,5 @@
 <?php
-$langId = $this->locale->getCurrentLanguageId();
+$langId = $this->locale->getLanguageId();
 $this->assign('breadcrumb', array(
     $this->html->anchor($this->locale->_('attrs_manage')),
     $this->html->anchor($this->locale->_('attrs_add_attribute'))
@@ -26,21 +26,21 @@ $this->assign('toolbar', array(
 ));
 
 $dataTypes = array(
-    \Ixiangs\Attrs\Model\AttributeModel::DATA_TYPE_STRING=>$this->locale->_('attrs_data_type_string'),
-    \Ixiangs\Attrs\Model\AttributeModel::DATA_TYPE_INTEGER=>$this->locale->_('attrs_data_type_integer'),
-    \Ixiangs\Attrs\Model\AttributeModel::DATA_TYPE_NUMBER=>$this->locale->_('attrs_data_type_number'),
-    \Ixiangs\Attrs\Model\AttributeModel::DATA_TYPE_BOOLEAN=>$this->locale->_('attrs_data_type_boolean'),
-    \Ixiangs\Attrs\Model\AttributeModel::DATA_TYPE_DATE=>$this->locale->_('attrs_data_type_date'),
-    \Ixiangs\Attrs\Model\AttributeModel::DATA_TYPE_EMAIL=>$this->locale->_('attrs_data_type_email'),
-    \Ixiangs\Attrs\Model\AttributeModel::DATA_TYPE_ARRAY=>$this->locale->_('attrs_data_type_array')
+    \Ixiangs\Attrs\Constant::DATA_TYPE_STRING=>$this->locale->_('attrs_data_type_string'),
+    \Ixiangs\Attrs\Constant::DATA_TYPE_INTEGER=>$this->locale->_('attrs_data_type_integer'),
+    \Ixiangs\Attrs\Constant::DATA_TYPE_NUMBER=>$this->locale->_('attrs_data_type_number'),
+    \Ixiangs\Attrs\Constant::DATA_TYPE_BOOLEAN=>$this->locale->_('attrs_data_type_boolean'),
+    \Ixiangs\Attrs\Constant::DATA_TYPE_DATE=>$this->locale->_('attrs_data_type_date'),
+    \Ixiangs\Attrs\Constant::DATA_TYPE_EMAIL=>$this->locale->_('attrs_data_type_email'),
+    \Ixiangs\Attrs\Constant::DATA_TYPE_ARRAY=>$this->locale->_('attrs_data_type_array')
 );
 $inputTypes = array(
-    \Ixiangs\Attrs\Model\AttributeModel::INPUT_TYPE_TEXTBOX=>$this->locale->_('attrs_input_type_textbox'),
-    \Ixiangs\Attrs\Model\AttributeModel::INPUT_TYPE_TEXTAREA=>$this->locale->_('attrs_input_type_textarea'),
-    \Ixiangs\Attrs\Model\AttributeModel::INPUT_TYPE_EDITOR=>$this->locale->_('attrs_input_type_editor'),
-    \Ixiangs\Attrs\Model\AttributeModel::INPUT_TYPE_SELECT=>$this->locale->_('attrs_input_type_select'),
-    \Ixiangs\Attrs\Model\AttributeModel::INPUT_TYPE_OPTION_LIST=>$this->locale->_('attrs_input_type_option_list'),
-    \Ixiangs\Attrs\Model\AttributeModel::INPUT_TYPE_DATE_PICKER=>$this->locale->_('attrs_input_type_datepicker')
+    \Ixiangs\Attrs\Constant::INPUT_TYPE_TEXTBOX=>$this->locale->_('attrs_input_type_textbox'),
+    \Ixiangs\Attrs\Constant::INPUT_TYPE_TEXTAREA=>$this->locale->_('attrs_input_type_textarea'),
+    \Ixiangs\Attrs\Constant::INPUT_TYPE_EDITOR=>$this->locale->_('attrs_input_type_editor'),
+    \Ixiangs\Attrs\Constant::INPUT_TYPE_SELECT=>$this->locale->_('attrs_input_type_select'),
+    \Ixiangs\Attrs\Constant::INPUT_TYPE_OPTION_LIST=>$this->locale->_('attrs_input_type_option_list'),
+    \Ixiangs\Attrs\Constant::INPUT_TYPE_DATE_PICKER=>$this->locale->_('attrs_input_type_datepicker')
 );
 $f = $this->html->groupedForm()
         ->setAttribute('action', $this->router->buildUrl('save', '*'));
@@ -80,9 +80,9 @@ $f->newField($this->locale->_('attrs_required'), true,
     $this->html->select('required', 'data[required]', $this->model->getEnabled(),
         array('1'=>$this->locale->_('yes'), '0'=>$this->locale->_('no'))));
 switch($this->model->getInputType()):
-    case \Ixiangs\Attrs\Model\AttributeModel::INPUT_TYPE_TEXTBOX:
+    case \Ixiangs\Attrs\Constant::INPUT_TYPE_TEXTBOX:
         switch($this->model->getDataType()):
-            case \Ixiangs\Attrs\Model\AttributeModel::DATA_TYPE_INTEGER:
+            case \Ixiangs\Attrs\Constant::DATA_TYPE_INTEGER:
                 $f->newField($this->locale->_('attrs_min_value'), false,
                     $this->html->textbox('min_value', 'data[input_setting][min_value]', $vs['min_value'])
                     ->addValidateRule('integer', true));
@@ -91,7 +91,7 @@ switch($this->model->getInputType()):
                     ->addValidateRule('integer', true)
                     ->addValidateRule('greatto', '#min_value', $this->locale->_('attrs_max_great_min')));
                 break;
-            case \Ixiangs\Attrs\Model\AttributeModel::DATA_TYPE_NUMBER:
+            case \Ixiangs\Attrs\Constant::DATA_TYPE_NUMBER:
                 $f->newField($this->locale->_('attrs_min_value'), false,
                     $this->html->textbox('min_value', 'data[input_setting][min_value]', $vs['min_value'])
                     ->addValidateRule('number', true));
@@ -100,20 +100,20 @@ switch($this->model->getInputType()):
                     ->addValidateRule('number', true)
                     ->addValidateRule('greatto', '#min_value', $this->locale->_('attrs_max_great_min')));
                 break;
-            case \Ixiangs\Attrs\Model\AttributeModel::DATA_TYPE_STRING:
+            case \Ixiangs\Attrs\Constant::DATA_TYPE_STRING:
                 $f->newField($this->locale->_('attrs_max_length'), false,
                     $this->html->textbox('max_length', 'data[input_setting][max_length]', $vs['max_length'])
                     ->addValidateRule('integer', true));
                 break;
         endswitch;
         break;
-    case \Ixiangs\Attrs\Model\AttributeModel::INPUT_TYPE_SELECT:
-    case \Ixiangs\Attrs\Model\AttributeModel::INPUT_TYPE_OPTION_LIST:
+    case \Ixiangs\Attrs\Constant::INPUT_TYPE_SELECT:
+    case \Ixiangs\Attrs\Constant::INPUT_TYPE_OPTION_LIST:
         $f->newField($this->locale->_('attrs_multiple'), true,
             $this->html->select('multiple', 'data[input_setting][multiple]', $vs['multiple'],
             array('1'=>$this->locale->_('yes'), '0'=>$this->locale->_('no')))
             ->addValidateRule('required', true));
-        if($this->model->getInputType() == \Ixiangs\Attrs\Model\AttributeModel::INPUT_TYPE_SELECT):
+        if($this->model->getInputType() == \Ixiangs\Attrs\Constant::INPUT_TYPE_SELECT):
             $f->newField($this->locale->_('attrs_multiple_size'), true,
                 $this->html->textbox('size', 'data[input_setting][size]', $vs['size'])
                 ->addValidateRule('required', true));
@@ -126,10 +126,10 @@ switch($this->model->getInputType()):
 endswitch;
 $f->endGroup();
 
-$langs = $this->locale->getLanguages();
+$langs = $this->locale->getAllLanguages();
 switch($this->model->getInputType()):
-    case \Ixiangs\Attrs\Model\AttributeModel::INPUT_TYPE_SELECT:
-    case \Ixiangs\Attrs\Model\AttributeModel::INPUT_TYPE_OPTION_LIST:
+    case \Ixiangs\Attrs\Constant::INPUT_TYPE_SELECT:
+    case \Ixiangs\Attrs\Constant::INPUT_TYPE_OPTION_LIST:
         $f->beginGroup('tab_option', $this->locale->_('attrs_option'));
         $options = $this->model->getOptions(array());
         $f->newField('', false)->setRenderer(function() use($options, $langId, $langs){
@@ -171,7 +171,7 @@ $flabels = $this->model->getMemo(array());
 foreach($langs as $lang):
     $f->beginGroup('tab_lang_'.$lang['code'], $lang['name']);
     $f->newField($this->locale->_('text'), true,
-        $this->html->textbox('display_label_'.$lang['id'], 'data[display_text]['.$lang['id'].']',
+        $this->html->textbox('display_label_'.$lang['id'], 'data[label]['.$lang['id'].']',
         array_key_exists($lang['id'], $dlabels)? $dlabels[$lang['id']]: '')
         ->addValidateRule('required', true));
     $f->newField($this->locale->_('memo'), true,

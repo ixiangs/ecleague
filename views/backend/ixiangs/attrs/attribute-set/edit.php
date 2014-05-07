@@ -33,7 +33,7 @@ $f->newField($this->locale->_('enable'), true,
 $f->endGroup();
 
 
-foreach($this->locale->getLanguages() as $lang):
+foreach($this->locale->getAllLanguages() as $lang):
     $f->beginGroup('tab_lang_'.$lang['code'], $lang['name']);
     $f->newField($this->locale->_('name'), true,
         $this->html->textbox('name_'.$lang['id'], 'data[name]['.$lang['id'].']', $this->model->name[$lang['id']])

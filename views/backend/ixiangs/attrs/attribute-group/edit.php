@@ -20,7 +20,7 @@ $this->assign('toolbar', array(
 ));
 
 $locale = $this->locale;
-$langId = $this->locale->getCurrentLanguageId();
+$langId = $this->locale->getLanguageId();
 $unselectedAttributes = $this->unselectedAttributes;
 $selectedAttributes = $this->selectedAttributes;
 
@@ -39,7 +39,7 @@ $f->newField($this->locale->_('enable'), true, $this->html->select(
     'enabled', 'data[enabled]', $this->model->getEnabled(), array('1'=>$this->locale->_('yes'), '0'=>$this->locale->_('no'))));
 $f->endGroup();
 
-foreach($this->locale->getLanguages() as $lang):
+foreach($this->locale->getAllLanguages() as $lang):
     $f->beginGroup('tab_lang_'.$lang['code'], $lang['name']);
     $f->newField($this->locale->_('name'), true,
         $this->html->textbox('name_'.$lang['id'], 'data[name]['.$lang['id'].']', $this->model->name[$lang['id']])

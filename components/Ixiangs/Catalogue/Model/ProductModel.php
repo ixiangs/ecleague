@@ -18,7 +18,7 @@ class ProductModel extends Orm\Model
     protected $languageId = null;
 
     public function __construct($data = array()){
-        $this->languageId = Localize::singleton()->getCurrentLanguageId();
+        $this->languageId = Localize::singleton()->getLanguageId();
         parent::__construct($data);
     }
 

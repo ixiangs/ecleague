@@ -42,18 +42,17 @@
         </div>
     </div>
 
-<div class="row">
-
-            <?php
-            if ($this->hasBlock('form')):
-                echo $this->renderBlock('form');
-            else:
-                if ($this->form):
-                    echo $this->form->render();
-                endif;
+    <div class="row">
+        <?php
+        if ($this->hasBlock('form')):
+            echo $this->renderBlock('form');
+        else:
+            if ($this->form):
+                echo $this->form->render();
             endif;
-            ?>
-        </div>
+        endif;
+        ?>
+    </div>
 
 <?php
 echo $this->renderBlock('others');

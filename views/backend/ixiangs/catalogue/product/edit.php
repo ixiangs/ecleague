@@ -12,7 +12,7 @@ $this->assign('toolbar', array(
     $this->html->button('button', $this->locale->_('save'), 'btn btn-primary')->setAttribute('data-submit', 'form1')
 ));
 
-$langId = $this->locale->getCurrentLanguageId();
+$langId = $this->locale->getLanguageId();
 $f = $this->html->groupedForm();
 $f->beginGroup('base_info', $this->locale->_('base_info'));
 $f->addInputField('text', $this->locale->_('name'), 'name', 'data[name]', $this->model->name)
@@ -25,7 +25,7 @@ $f->addTextareaField($this->locale->_('description'), 'description', 'data[descr
     ->addValidateRule('required', true);
 $f->endGroup();
 
-$clang = $this->locale->getCurrentLanguage();
+$clang = $this->locale->getLanguage();
 $clangId = $clang['id'];
 foreach($this->attributeSet->getGroups() as $attrGroup):
     $f->beginGroup($attrGroup->getCode(), $attrGroup->names[$clangId]);

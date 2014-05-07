@@ -19,29 +19,18 @@ class MenuModel extends Orm\Model
         return $this->beforeInsert($db);
     }
 
-    static public function sort($sorts, $db = null)
+    static public function sort($sorts, $db)
     {
-        $updates = array();
-        foreach ($sorts as $index => $item) {
-            $updates[] = Helper::update(Constant::TABLE_MENU, array(
+        $statements = array();
+        foreach ($sorts as $index=>$item) {
+            $statements[] = Helper::update(Constant::TABLE_MENU, array(
                 'position' => $index + 1,
-                'parent_id' => 0
+                'parent_id' => $item['parent_id']? $item['parent_id']: 0
             ))->eq('id', $item['id']);
-            if (array_key_exists('children', $item)) {
-                self::createUpdatePositionStatement($item['children'], $item['id'], $updates);
-            }
         }
 
-        if (is_null($db)) {
-            Helper::withTx(function ($db) use ($updates) {
-                foreach ($updates as $u) {
-                    $db->update($u);
-                }
-            });
-        } else {
-            foreach ($updates as $u) {
-                $db->update($u);
-            }
+        foreach ($statements as $u) {
+            $db->update($u);
         }
     }
 
@@ -65,7 +54,7 @@ MenuModel::register(array(
         Orm\IntegerProperty::create('id')->setPrimaryKey(true)->setAutoIncrement(true),
         Orm\IntegerProperty::create('component_id'),
         Orm\IntegerProperty::create('parent_id')->setNullable(true),
-        Orm\SerializeProperty::create('names')->setNullable(false),
+        Orm\SerializeProperty::create('name')->setNullable(false),
         Orm\StringProperty::create('url'),
         Orm\IntegerProperty::create('position')->setDefaultValue(99),
         Orm\BooleanProperty::create('enabled')->setNullable(false)

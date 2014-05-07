@@ -2,6 +2,7 @@
 namespace Ixiangs\Attrs;
 
 use Ecleague\Tops;
+use Ixiangs\System\ComponentModel;
 use Toy\Db\Helper;
 use Toy\Util\ArrayUtil;
 use Toy\Web;
@@ -12,8 +13,8 @@ class AttributeSetController extends Web\Controller
     public function listAction()
     {
         $pi = $this->request->getParameter("pageindex", 1);
-        $count = Tops::loadModel('attrs/attributeSet')->find()->selectCount()->execute()->getFirstValue();
-        $models = Tops::loadModel('attrs/attributeSet')->find()
+        $count = AttributeSetModel::find()->count();
+        $models = AttributeSetModel::find()
             ->asc('code')
             ->limit(PAGINATION_SIZE, ($pi - 1) * PAGINATION_SIZE)
             ->load();
@@ -26,14 +27,13 @@ class AttributeSetController extends Web\Controller
 
     public function addAction()
     {
-        $model = Tops::loadModel('attrs/attributeSet');
-        return $this->getEditTemplateResult($model);
+        return $this->getEditTemplateResult(new AttributeSetModel());
     }
 
     public function savePostAction()
     {
         $locale = $this->context->locale;
-        $m = Tops::loadModel('attrs/attributeSet')->fillArray($this->request->getPost('data'));
+        $m = new AttributeSetModel($this->request->getPost('data'));
 
         $vr = $m->validateProperties();
         if ($vr !== true) {
@@ -42,7 +42,7 @@ class AttributeSetController extends Web\Controller
         }
 
         if($m->getId()){
-            if (!$m->merge()->update()) {
+            if (!$m->update()) {
                 $this->session->set('errors', $locale->_('err_system'));
                 return $this->getEditTemplateResult($m);
             }
@@ -58,14 +58,13 @@ class AttributeSetController extends Web\Controller
 
     public function editAction($id)
     {
-        $m = Tops::loadModel('attrs/attributeSet')->load($id);
-        return $this->getEditTemplateResult($m);
+        return $this->getEditTemplateResult(AttributeSetModel::load($id));
     }
 
     public function deleteAction($id)
     {
         $lang = $this->context->locale;
-        $m = Tops::loadModel('attrs/attribute')->load($id);
+        $m = AttributeSetModel::load($id);
 
         if (!$m) {
             $this->session->set('errors', $lang->_('err_system'));
@@ -80,9 +79,8 @@ class AttributeSetController extends Web\Controller
     }
 
     public function layoutAction($id){
-        $model = Tops::loadModel('attrs/attributeSet')->load($id);
-        $allGroups = Tops::loadModel('attrs/attributeGroup')
-            ->find()
+        $model = AttributeSetModel::load($id);
+        $allGroups = AttributeGroupModel::find()
             ->eq('component_id', $model->getComponentId())
             ->eq('enabled', true)
             ->load();
@@ -109,7 +107,7 @@ class AttributeSetController extends Web\Controller
         foreach($groupIds as $index=>$groupId){
             $groups[] = array('id'=>$groupId, 'position'=>$index + 1);
         }
-        $model = Tops::loadModel('attrs/attributeSet')->load($id);
+        $model = AttributeSetModel::load($id);
         $res = Helper::withTx(function($db) use($model, $groups){
             $model->assignGroup($groups, $db);
             return true;
@@ -126,14 +124,13 @@ class AttributeSetController extends Web\Controller
 
     private function getEditTemplateResult($model)
     {
-        $components = Tops::loadModel('admin/component')
-            ->find()
+        $components = ComponentModel::find()
             ->execute()
             ->combineColumns('id', 'name');
         return Web\Result::templateResult(
             array('model' => $model,
                     'components'=>$components),
-            'attrs/attribute-set/edit'
+            'ixiangs/attrs/attribute-set/edit'
         );
     }
 }

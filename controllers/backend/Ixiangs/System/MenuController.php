@@ -1,6 +1,7 @@
 <?php
 namespace Ixiangs\System;
 
+use Toy\Db\Helper;
 use Toy\Web;
 
 class MenuController extends Web\Controller
@@ -31,8 +32,10 @@ class MenuController extends Web\Controller
     public function sortPostAction()
     {
         $data = $this->request->getPost('data');
-        $positions = json_decode($data, true);
-        MenuModel::sort($positions);
+        Helper::withTx(function($db) use($data){
+            MenuModel::sort($data, $db);
+        });
+
         return $this->sortAction();
     }
 
@@ -92,7 +95,7 @@ class MenuController extends Web\Controller
     private function getEditTemplateResult($model)
     {
         $locale = $this->context->locale;
-        $lid = $locale->getCurrentLanguageId();
+        $lid = $locale->getLanguageId();
         $find = MenuModel::find()->asc('parent_id');
         if ($model->getId()) {
             $find->ne('id', $model->getId());

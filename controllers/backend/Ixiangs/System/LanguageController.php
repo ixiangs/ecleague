@@ -90,7 +90,7 @@ class LanguageController extends Web\Controller
             $this->session->set('errors', $lang->_('locale_err_import'));
             return Web\Result::templateResult();
         }
-        $langs = $this->context->locale->getLanguages();
+        $langs = $this->context->locale->getAllLanguages();
         $lines = FileUtil::readCsv($up->getTmpName());
         $titles = array_shift($lines);
         foreach ($lines as $line) {

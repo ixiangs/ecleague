@@ -1,16 +1,17 @@
 <?php
-namespace Ixiangs\User;
+namespace Ixiangs\System;
 
+use Toy\Platform\FileUtil;
 use Toy\Web;
 
-class BehaviorController extends Web\Controller
+class LanguageController extends Web\Controller
 {
 
     public function listAction()
     {
         $pi = $this->request->getParameter("pageindex", 1);
-        $count = BehaviorModel::find()->count();
-        $models = BehaviorModel::find()->limit(PAGINATION_SIZE, ($pi - 1) * PAGINATION_SIZE)->load();
+        $count = LanguageModel::find()->count();
+        $models = LanguageModel::find()->limit(PAGINATION_SIZE, ($pi - 1) * PAGINATION_SIZE)->load();
         return Web\Result::templateResult(array(
                 'models' => $models,
                 'total' => $count,
@@ -20,40 +21,40 @@ class BehaviorController extends Web\Controller
 
     public function addAction()
     {
-        return $this->getEditTemplateResult(new BehaviorModel());
+        return $this->getEditTemplateResult(new LanguageModel());
     }
 
     public function editAction($id)
     {
-        return $this->getEditTemplateResult(BehaviorModel::load($id));
+        return $this->getEditTemplateResult(LanguageModel::load($id));
     }
 
     public function savePostAction()
     {
         $lang = $this->context->locale;
-        $m = new BehaviorModel($this->request->getPost('data'));
+        $m = new LanguageModel($this->request->getPost('data'));
+
         $vr = $m->validateProperties();
         if ($vr !== true) {
             $this->session->set('errors', $lang->_('err_input_invalid'));
             return $this->getEditTemplateResult($m);
         }
 
-        if($m->getId()){
+        if ($m->getId()) {
             if (!$m->update()) {
                 $this->session->set('errors', $lang->_('err_system'));
                 return $this->getEditTemplateResult($m);
             }
-        }else{
+        } else {
             $vr = $m->validateUnique();
             if ($vr !== true) {
-                $this->session->set('errors', $lang->_('err_code_exists', $m->getCode()));
+                $this->session->set('errors', $lang->_('locale_err_language_exists', $m->getCode()));
                 return $this->getEditTemplateResult($m);
             }
             if (!$m->insert()) {
                 $this->session->set('errors', $lang->_('err_system'));
                 return $this->getEditTemplateResult($m);
             }
-
         }
 
         return Web\Result::redirectResult($this->router->buildUrl('list'));
@@ -62,7 +63,7 @@ class BehaviorController extends Web\Controller
     public function deleteAction($id)
     {
         $lang = $this->context->locale;
-        $m = BehaviorModel::load($id);
+        $m = LanguageModel::load($id);
 
         if (!$m) {
             $this->session->set('errors', $lang->_('err_system'));
@@ -76,11 +77,40 @@ class BehaviorController extends Web\Controller
         return Web\Result::redirectResult($this->router->buildUrl('list'));
     }
 
+    public function importAction()
+    {
+        return Web\Result::templateResult();
+    }
+
+    public function importPostAction()
+    {
+        $lang = $this->context->locale;
+        $up = $this->request->getFile('upload');
+        if (!$up->checkExtension('csv')) {
+            $this->session->set('errors', $lang->_('locale_err_import'));
+            return Web\Result::templateResult();
+        }
+        $langs = $this->context->locale->getLanguages();
+        $lines = FileUtil::readCsv($up->getTmpName());
+        $titles = array_shift($lines);
+        foreach ($lines as $line) {
+            for ($i = 1; $i < count($titles); $i++) {
+                DictionaryModel::create(array(
+                    'code' => $line[0],
+                    'label' => $line[$i],
+                    'language_id' => $langs[strtolower($titles[$i])]['id']
+                ))->insert();
+            }
+        }
+
+        return Web\Result::redirectResult($this->router->buildUrl('list'));
+    }
+
     private function getEditTemplateResult($model)
     {
         return Web\Result::templateResult(
             array('model' => $model),
-            'ixiangs/user/behavior/edit'
+            'ixiangs/system/language/edit'
         );
     }
 }

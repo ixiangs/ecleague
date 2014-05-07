@@ -1,7 +1,7 @@
 <?php
 $this->assign('breadcrumb', array(
-    $this->html->anchor($this->locale->_('auth_manage')),
-    $this->html->anchor($this->locale->_('auth_behavior_list'))
+    $this->html->anchor($this->locale->_('user_manage')),
+    $this->html->anchor($this->locale->_('user_role_list'))
 ));
 
 $this->assign('navigationBar', array(
@@ -10,12 +10,10 @@ $this->assign('navigationBar', array(
 
 $dt = $this->html->grid($this->models);
 $dt->addIndexColumn('#', 'index', 'index');
-$dt->addLabelColumn($this->locale->_('code'), '{code}', 'middle', 'middle');
-$dt->addLabelColumn($this->locale->_('name'), '{name}', 'middle', 'middle');
-$dt->addLabelColumn($this->locale->_('url'), '{url}');
-$dt->addBooleanColumn($this->locale->_('status'), 'enabled', $this->locale->_('enabled'), $this->locale->_('disabled').'</span>',
-    'small', 'small text-center');
-//$dt->addBooleanColumn($this->locale->_('status'), '{enabled}', 'small', 'small text-center');
+$dt->addLabelColumn($this->locale->_('code'), '{code}', 'large', 'left');
+$dt->addLabelColumn($this->locale->_('name'), '{name}', '', 'left');
+$dt->addBooleanColumn($this->locale->_('enable'), 'enabled', $this->locale->_('yes'), $this->locale->_('no'),
+    'small');
 $dt->addLinkColumn('', $this->locale->_('edit'), urldecode($this->router->buildUrl('edit', array('id'=>'{id}'))), 'edit', 'edit');
 $dt->addLinkButtonColumn('', $this->locale->_('delete'), "deleteConfirm('".urldecode($this->router->buildUrl('delete', array('id'=>'{id}')))."')", 'edit', 'edit');
 $this->assign('datatable', $dt);

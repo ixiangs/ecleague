@@ -1,23 +1,38 @@
 <?php
 namespace Ixiangs\User;
 
-class Listener{
+use Toy\Web\Application;
 
-	static public function webOnStart($app, $argument){
-//		$oa =Application::->session->get('identity');
-//		if(!empty($oa)){
-//			$oa = unserialize($oa);
-//			$app->getContext()->identity = new Identity(
-//				$oa['id'], $oa['username'], $oa['level'], $oa['roles'], $oa['behaviors']
-//			);
-//		}
-	}
+class Listener
+{
 
-	static public function webPostRoute($app, $argument){
-//		$oa = $app->getContext()->identity;
-//        $router = $app->getContext()->router;
-//		$resp = $app->getContext()->response;
-//		if($router->domain->getName() == 'backend'){
+    static public function webOnStart($app, $argument)
+    {
+        $context = Application::$context;
+        $data = $context->session->get('identity');
+        if (!empty($data)) {
+//            $identity = unserialize($data);
+            $context->identity = new Identity(
+                $data['id'], $data['username'], $data['level'], $data['roles'], $data['behaviors']
+            );
+        }
+    }
+
+    static public function webPostRoute($app, $argument)
+    {
+        $context = Application::$context;
+        $identity = $context->identity;
+        $router = $context->router;
+        $response = $context->response;
+        if ($router->domain->getName() == 'backend') {
+            if ($identity) {
+
+            } else {
+                if (!($router->component == 'ixiangs_user' && $router->controller == 'passport')) {
+                    $response->redirect($router->buildUrl('ixiangs_user/passport/login'));
+                    $app->quit();
+                }
+            }
 //			if($router->component != 'index'){
 //				if(empty($oa)){
 //					$resp->redirect($router->buildUrl('index/index/index'));
@@ -39,13 +54,13 @@ class Listener{
 //					$app->quit();
 //				}
 
-				// $url = StringUtil::PascalCasingToDash($as->getComponent()->getName()).'/'.$as->getController().'/'.$as->getAction();
-				// $code = BehaviorModel::find(array('url ='=>$url))->resetSelect()->select('code')->limit(1)->execute()->getFirstValue();
-				// if(!empty($code) && !$oa->hasBehavior($code)){
-					// $resp->redirect('/permissiondenied.html');
-					// $app->quit();
-				// }
+            // $url = StringUtil::PascalCasingToDash($as->getComponent()->getName()).'/'.$as->getController().'/'.$as->getAction();
+            // $code = BehaviorModel::find(array('url ='=>$url))->resetSelect()->select('code')->limit(1)->execute()->getFirstValue();
+            // if(!empty($code) && !$oa->hasBehavior($code)){
+            // $resp->redirect('/permissiondenied.html');
+            // $app->quit();
+            // }
 //			}
-//		}
-	}
+        }
+    }
 }

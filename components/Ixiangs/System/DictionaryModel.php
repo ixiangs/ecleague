@@ -1,5 +1,5 @@
 <?php
-namespace Ixiangs\Locale;
+namespace Ixiangs\System;
 
 use Toy\Orm;
 
@@ -12,7 +12,7 @@ DictionaryModel::register(array(
     'properties'=>array(
         Orm\IntegerProperty::create('id')->setPrimaryKey(true)->setAutoIncrement(true),
         Orm\IntegerProperty::create('language_id')->setNullable(false),
-        Orm\StringProperty::create('code')->setNullable(false)->setUpdateable(false),
+        Orm\StringProperty::create('code')->setNullable(false),
         Orm\StringProperty::create('label')->setNullable(false)
     )
 ));

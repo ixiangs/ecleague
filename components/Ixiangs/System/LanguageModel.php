@@ -1,5 +1,5 @@
 <?php
-namespace Ixiangs\Locale;
+namespace Ixiangs\System;
 
 use Toy\Orm;
 
@@ -11,7 +11,7 @@ LanguageModel::register(array(
     'table'=>Constant::TABLE_LANGUAGE,
     'properties'=>array(
         Orm\IntegerProperty::create('id')->setPrimaryKey(true)->setAutoIncrement(true),
-        Orm\StringProperty::create('code')->setUnique(true),
+        Orm\StringProperty::create('code')->setUnique(true)->setUpdateable(false),
         Orm\StringProperty::create('name')->setNullable(false),
         Orm\IntegerProperty::create('timezone')->setNullable(false),
         Orm\StringProperty::create('currency_code')->setNullable(false),

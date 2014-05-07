@@ -9,8 +9,8 @@ class MenuController extends Web\Controller
     public function listAction()
     {
         $pi = $this->request->getParameter("pageindex", 1);
-        $count = \Ecleague\Tops::loadModel('admin/menu')->find()->selectCount()->execute()->getFirstValue();
-        $models = \Ecleague\Tops::loadModel('admin/menu')->find()
+        $count = MenuModel::find()->count();
+        $models = MenuModel::find()
             ->limit(PAGINATION_SIZE, ($pi - 1) * PAGINATION_SIZE)
             ->load();
         return Web\Result::templateResult(array(
@@ -22,7 +22,7 @@ class MenuController extends Web\Controller
 
     public function sortAction()
     {
-        $menus = \Ecleague\Tops::loadModel('admin/menu')->find()
+        $menus = MenuModel::find()
             ->asc('parent_id', 'position')
             ->load();
         return Web\Result::templateResult(array('menus' => $menus));
@@ -31,21 +31,20 @@ class MenuController extends Web\Controller
     public function sortPostAction()
     {
         $data = $this->request->getPost('data');
-        $sorts = json_decode($data, true);
-        \Ecleague\Tops::loadModel('admin/menu')->updatePosition($sorts);
+        $positions = json_decode($data, true);
+        MenuModel::sort($positions);
         return $this->sortAction();
     }
 
     public function addAction()
     {
-        $model = \Ecleague\Tops::loadModel('admin/menu');
-        return $this->getEditTemplateResult($model);
+        return $this->getEditTemplateResult(new MenuModel());
     }
 
     public function savePostAction()
     {
         $locale = $this->context->locale;
-        $m = \Ecleague\Tops::loadModel('admin/menu')->fillArray($this->request->getPost('data'));
+        $m = new MenuModel($this->request->getPost('data'));
 
         $vr = $m->validateProperties();
         if ($vr !== true) {
@@ -54,7 +53,7 @@ class MenuController extends Web\Controller
         }
 
         if ($m->getId()) {
-            if (!$m->merge()->update()) {
+            if (!$m->update()) {
                 $this->session->set('errors', $locale->_('err_system'));
                 return $this->getEditTemplateResult($m);
             }
@@ -70,14 +69,13 @@ class MenuController extends Web\Controller
 
     public function editAction($id)
     {
-        $m = \Ecleague\Tops::loadModel('admin/menu')->load($id);
-        return $this->getEditTemplateResult($m);
+        return $this->getEditTemplateResult(MenuModel::load($id));
     }
 
     public function deleteAction($id)
     {
         $lang = $this->context->locale;
-        $m = \Ecleague\Tops::loadModel('admin/attribute')->load($id);
+        $m = MenuModel::load($id);
 
         if (!$m) {
             $this->session->set('errors', $lang->_('err_system'));
@@ -95,8 +93,7 @@ class MenuController extends Web\Controller
     {
         $locale = $this->context->locale;
         $lid = $locale->getCurrentLanguageId();
-        $find = \Ecleague\Tops::loadModel('admin/menu')->find()
-            ->asc('parent_id');
+        $find = MenuModel::find()->asc('parent_id');
         if ($model->getId()) {
             $find->ne('id', $model->getId());
         }
@@ -111,7 +108,7 @@ class MenuController extends Web\Controller
         });
         return Web\Result::templateResult(
             array('model' => $model, 'menus' => $menus),
-            'admin/menu/edit'
+            'ixiangs/system/menu/edit'
         );
     }
 }

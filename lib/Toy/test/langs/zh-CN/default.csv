@@ -27,7 +27,7 @@ area_name,地区名称
 area_abbr,地区简称
 area_code,地区代码
 back,返回
-auth_manage,权限管理
+user_manage,权限管理
 user_list,用户列表
 created_time,创建时间
 user_level,用户等级

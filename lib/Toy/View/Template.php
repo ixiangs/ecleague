@@ -155,7 +155,7 @@ class Template
         }
 
         print_r($allPaths);
-        throw new \Exception('Not found template:' . $path);
+        throw new \Exception("Not found template:" . implode(",", $path));
     }
 
     private static $_helpers = array();

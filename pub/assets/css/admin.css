@@ -115,6 +115,9 @@ table.table tbody tr td.true {
     color: #2b542c;
 }
 
+.form-option-list{height:auto;}
+.form-option-list .checkbox-inline+.checkbox-inline{margin-left:0px;}
+
 #progress_modal .modal-dialog .modal-content .progress {
     margin-bottom: 0px;
 }
@@ -163,17 +166,17 @@ table.table tbody tr td.true {
     background-image: none;
 }
 
-.panel-thin {
-    margin-bottom: 5px;
-}
+/*.panel-thin {*/
+    /*margin-bottom: 5px;*/
+/*}*/
 
-.panel-thin .panel-heading {
-    padding: 5px 5px 5px 5px;
-}
+/*.panel-thin .panel-heading {*/
+    /*padding: 5px 5px 5px 5px;*/
+/*}*/
 
-.panel-thin .panel-body {
-    padding: 5px 5px 5px 5px;
-}
+/*.panel-thin .panel-body {*/
+    /*padding: 5px 5px 5px 5px;*/
+/*}*/
 
 .sortable {
     padding: 5px 0 5px 0;

@@ -1,15 +1,13 @@
 <?php
 namespace Ixiangs\User;
 
-use Toy\Util\FileUtil;
 use Toy\Web;
-use Ixiangs\User\AccountModel, Ixiangs\User\RoleModel, Ixiangs\User\ProfileModel;
 
 class AccountController extends Web\Controller{
 
 	public function listAction(){
 		$pi = $this->request->getParameter("pageindex", 1);
-		$count = AccountModel::find()->selectCount()->execute()->getFirstValue();
+		$count = AccountModel::find()->count();
 		$models = AccountModel::find()
 							->asc('id')
 							->limit(PAGINATION_SIZE, ($pi-1)*PAGINATION_SIZE)
@@ -38,7 +36,7 @@ class AccountController extends Web\Controller{
 
         $vr = $m->validateUnique();
         if ($vr !== true) {
-            $this->session->set('errors', $lang->_('auth_err_account_exists', $m->getCode()));
+            $this->session->set('errors', $lang->_('user_err_account_exists', $m->getCode()));
             return $this->getEditTemplateResult($m);
         }
 
@@ -192,7 +190,7 @@ class AccountController extends Web\Controller{
 				'model'=>$model,
 				'roles' => RoleModel::find()->execute()->combineColumns('id', 'name')
 			),
-			'auth/account/edit'
+			'ixiangs/user/account/edit'
 		);		
 	}
 }

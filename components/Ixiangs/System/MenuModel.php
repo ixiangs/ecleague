@@ -19,16 +19,16 @@ class MenuModel extends Orm\Model
         return $this->beforeInsert($db);
     }
 
-    public function updatePosition($sorts, $db = null)
+    static public function sort($sorts, $db = null)
     {
         $updates = array();
         foreach ($sorts as $index => $item) {
-            $updates[] = Helper::update($this->tableName, array(
+            $updates[] = Helper::update(Constant::TABLE_MENU, array(
                 'position' => $index + 1,
                 'parent_id' => 0
             ))->eq('id', $item['id']);
             if (array_key_exists('children', $item)) {
-                $this->createUpdatePositionStatement($item['children'], $item['id'], $updates);
+                self::createUpdatePositionStatement($item['children'], $item['id'], $updates);
             }
         }
 
@@ -45,15 +45,15 @@ class MenuModel extends Orm\Model
         }
     }
 
-    private function createUpdatePositionStatement($items, $parentId, &$updates)
+    static private function createUpdatePositionStatement($items, $parentId, &$updates)
     {
         foreach ($items as $index => $item) {
-            $updates[] = Helper::update($this->tableName, array(
+            $updates[] = Helper::update(Constant::TABLE_MENU, array(
                 'position' => $index + 1,
                 'parent_id' => $parentId
             ))->eq('id', $item['id']);
             if (array_key_exists('children', $item)) {
-                $this->createUpdatePositionStatement($item['children'], $item['id'], $updates);
+                self::createUpdatePositionStatement($item['children'], $item['id'], $updates);
             }
         }
     }

@@ -37,7 +37,7 @@ if (preg_match('/^\/pub\/|\.html$/', $_SERVER["REQUEST_URI"])) {
     \Toy\Web\Configuration::$controllerDirectory = CONTROLLER_PATH;
     \Toy\Web\Configuration::$componentDirectory = COMPONENT_PATH;
     \Toy\Web\Configuration::addDomain('frontend', '/', '/', '/',  TRUE);
-    \Toy\Web\Configuration::addDomain('backend', '/admin/', 'ixiangs_account_passport_login', 'ixiangs_account_passport_login');
+    \Toy\Web\Configuration::addDomain('backend', '/admin/', 'ixiangs_admin/main/dashboard', 'ixiangs_admin/account/login');
 
     \Toy\View\Configuration::$trace = true;
     \Toy\View\Configuration::$templateRoot = VIEW_PATH;

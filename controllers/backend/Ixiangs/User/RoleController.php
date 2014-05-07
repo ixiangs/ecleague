@@ -2,7 +2,6 @@
 namespace Ixiangs\User;
 
 use Toy\Web;
-use Auth\Model\RoleModel, Auth\Model\BehaviorModel;
 
 class RoleController extends Web\Controller
 {
@@ -10,24 +9,30 @@ class RoleController extends Web\Controller
     public function listAction()
     {
         $pi = $this->request->getParameter("pageindex", 1);
-        $count = \Ecleague\Tops::loadModel('auth/role')->find()->selectCount()->execute()->getFirstValue();
-        $models = \Ecleague\Tops::loadModel('auth/role')->find()->limit(PAGINATION_SIZE, ($pi - 1) * PAGINATION_SIZE)->load();
+        $count = RoleModel::find()->count();
+        $models = RoleModel::find()->limit(PAGINATION_SIZE, ($pi - 1) * PAGINATION_SIZE)->load();
         return Web\Result::templateResult(array(
                 'models' => $models,
-                'behaviors' => \Ecleague\Tops::loadModel('auth/behavior')->find()->execute()->combineColumns('id', 'code'),
+                'behaviors' => BehaviorModel::find()->execute()->combineColumns('id', 'code'),
                 'total' => $count)
         );
     }
 
     public function addAction()
     {
-        return $this->getEditTemplateReult(\Ecleague\Tops::loadModel('auth/role'));
+        return $this->getEditTemplateReult(new RoleModel());
     }
 
-    public function addPostAction()
+    public function editAction($id)
+    {
+        return $this->getEditTemplateReult(RoleModel::load($id));
+    }
+
+
+    public function savePostAction()
     {
         $lang = $this->context->locale;
-        $m = \Ecleague\Tops::loadModel('auth/role', $this->request->getAllParameters());
+        $m = new RoleModel($this->request->getPost('data'));
 
         $vr = $m->validateProperties();
         if ($vr !== true) {
@@ -35,40 +40,22 @@ class RoleController extends Web\Controller
             return $this->getEditTemplateReult($m);
         }
 
-        $vr = $m->validateUnique();
-        if ($vr !== true) {
-            $this->session->set('errors', $lang->_('err_code_exists', $m->getCode()));
-            return $this->getEditTemplateReult($m);
-        }
+        if ($m->getId()) {
+            if (!$m->update()) {
+                $this->session->set('errors', $lang->_('err_system'));
+                return $this->getEditTemplateReult($m);
+            }
+        } else {
+            $vr = $m->validateUnique();
+            if ($vr !== true) {
+                $this->session->set('errors', $lang->_('err_code_exists', $m->getCode()));
+                return $this->getEditTemplateReult($m);
+            }
 
-        if (!$m->insert()) {
-            $this->session->set('errors', $this->_('err_system'));
-            return $this->getEditTemplateReult($m);;
-        }
-
-        return Web\Result::redirectResult($this->router->buildUrl('list'));
-    }
-
-    public function editAction($id)
-    {
-        $m = \Ecleague\Tops::loadModel('auth/role')->load($id);
-        return $this->getEditTemplateReult($m);
-    }
-
-    public function editPostAction()
-    {
-        $lang = $this->context->locale;
-        $m = \Ecleague\Tops::loadModel('auth/role')->merge($this->request->getParameter('id'), $this->request->getAllParameters());
-        $m->setBehaviorIds($this->request->getParameter('behavior_ids', array()));
-        $vr = $m->validateProperties();
-        if ($vr !== true) {
-            $this->session->set('errors', $lang->_('err_input_invalid'));
-            return $this->getEditTemplateReult($m);
-        }
-
-        if (!$m->update()) {
-            $this->session->set('errors', $lang->_('err_system'));
-            return $this->getEditTemplateReult($m);
+            if (!$m->insert()) {
+                $this->session->set('errors', $this->_('err_system'));
+                return $this->getEditTemplateReult($m);;
+            }
         }
 
         return Web\Result::redirectResult($this->router->buildUrl('list'));
@@ -76,7 +63,7 @@ class RoleController extends Web\Controller
 
     public function deleteAction($id)
     {
-        $m = \Ecleague\Tops::loadModel('auth/role')->load($id);
+        $m = RoleModel::load($id);
 
         if (!$m) {
             $this->session->set('errors', $this->languages->get('err_system'));
@@ -95,8 +82,8 @@ class RoleController extends Web\Controller
         return Web\Result::templateResult(
             array(
                 'model' => $model,
-                'behaviors' => \Ecleague\Tops::loadModel('auth/behavior')->find()->asc('code')->execute()->combineColumns('id', 'name')),
-            'auth/role/edit'
+                'behaviors' => BehaviorModel::find()->asc('code')->execute()->combineColumns('id', 'name')),
+            'ixiangs/user/role/edit'
         );
     }
 }

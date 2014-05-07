@@ -14,7 +14,7 @@ RoleModel::register(array(
     'table'=>Constant::TABLE_ROLE,
     'properties'=>array(
         Orm\IntegerProperty::create('id')->setPrimaryKey(true)->setAutoIncrement(true),
-        Orm\StringProperty::create('code')->setUnique(true),
+        Orm\StringProperty::create('code')->setUnique(true)->setUpdateable(false),
         Orm\StringProperty::create('name'),
         Orm\ListProperty::create('behavior_ids'),
         Orm\BooleanProperty::create('enabled')->setDefaultValue(true)

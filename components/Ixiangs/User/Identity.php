@@ -40,4 +40,14 @@ class Identity{
 	public function hasBehavior($code){
 		return in_array($code, $this->_behaviors);
 	}
+
+    public function getAllData(){
+        return array(
+            'id'=>$this->_id,
+            'username'=>$this->_username,
+            'roles'=>$this->_roles,
+            'behaviors'=>$this->_behaviors,
+            'level'=>$this->_level
+        );
+    }
 }

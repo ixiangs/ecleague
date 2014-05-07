@@ -2,8 +2,7 @@
 $this->assign('breadcrumb', array(
     $this->html->anchor($this->locale->_('locale_manage')),
     $this->html->anchor($this->language->getName()),
-    $this->html->anchor($this->locale->_('locale_dictionary')),
-    $this->html->anchor($this->locale->_('add')),
+    $this->html->anchor($this->locale->_('locale_new_dictionary'))
 ));
 
 $this->assign('navigationBar', array(

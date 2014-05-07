@@ -1,8 +1,5 @@
 <?php
-namespace Ixiangs\Locale;
-
-use Ixiangs\Locale\DictionaryModel;
-use Ixiangs\Locale\LanguageModel;
+namespace Ixiangs\System;
 
 class Localize implements \ArrayAccess
 {

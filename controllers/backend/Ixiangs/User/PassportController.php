@@ -1,7 +1,6 @@
 <?php
-namespace Ixiangs\Account;
+namespace Ixiangs\User;
 
-use Ixiangs\User;
 use Toy\Web;
 
 class PassportController extends Web\Controller
@@ -15,19 +14,19 @@ class PassportController extends Web\Controller
     public function loginPostAction()
     {
         $locale = $this->context->locale;
-        list($r, $identity) = User\AccountModel::login($this->request->getPost('username'), $this->request->getPost('password'));
+        list($r, $identity) = AccountModel::login($this->request->getPost('username'), $this->request->getPost('password'));
 
         if ($r === true) {
-            $this->session->set('identity', $identity);
-            return Web\Result::RedirectResult($this->router->buildUrl('dashboard/index'));
+            $this->session->set('identity', $identity->getAllData());
+            return Web\Result::RedirectResult($this->router->buildUrl($this->router->domain->getIndexUrl()));
         } else {
             switch ($r) {
-                case User\Constant::ERROR_ACCOUNT_NOT_FOUND:
-                case User\Constant::ERROR_ACCOUNT_PASSWORD:
+                case Constant::ERROR_ACCOUNT_NOT_FOUND:
+                case Constant::ERROR_ACCOUNT_PASSWORD:
                     $this->session->set('errors', $locale->_('user_err_password'));
                     break;
-                case User\Constant::ERROR_ACCOUNT_DISABLED:
-                case User\Constant::ERROR_ACCOUNT_NONACTIVATED:
+                case Constant::ERROR_ACCOUNT_DISABLED:
+                case Constant::ERROR_ACCOUNT_NONACTIVATED:
                     $this->session->set('errors', $locale->_('user_err_account_disabled'));
                     break;
             }

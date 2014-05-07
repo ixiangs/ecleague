@@ -12,35 +12,35 @@ $this->assign('toolbar', array(
     $this->html->button('button', $this->locale->_('save'), 'btn btn-primary')->setAttribute('data-submit', 'form1')
 ));
 
-$f = $this->html->groupedForm();
-$f->beginGroup('account_info', $this->locale->_('user_account_info'));
+$f = $this->html->form();
 if($this->router->action == 'add'):
 $f->newField($this->locale->_('username'), true,
-    $this->html->textbox('username', 'member[username]', $this->model->getUsername())
+    $this->html->textbox('username', 'data[username]', $this->model->getUsername())
     ->addValidateRule('required', true));
-$f->newField($this->locale->_('password'), true,
-    $this->html->textbox('password', 'member[password]'))
-    ->addValidateRule('required', true);
+else:
+$f->addStaticField($this->locale->_('username'), $this->model->getUsername());
 endif;
-$f->endGroup();
-$f->beginGroup('personal_info', $this->locale->_('user_personal_info'));
-$f->newField($this->locale->_('user_first_name'), true,
-    $this->html->textbox('first_name', 'member[first_name]', $this->model->getFirstName())
-    ->addValidateRule('required', true));
-$f->newField($this->locale->_('user_last_name'), true,
-    $this->html->textbox('last_name', 'member[last_name]', $this->model->getLastName())
-    ->addValidateRule('required', true));
-$f->newField($this->locale->_('gender'), true,
-    $this->html->select('gender', 'member[gender]', $this->model->getGender(),
-        array(1=>$this->locale->_('male'), 2=>$this->locale->_('female')))
-    ->addValidateRule('required', true)
-    ->setCaption(''));
 $f->newField($this->locale->_('email'), true,
-    $this->html->textbox('email', 'member[email]', $this->model->getEmail()))
-    ->addValidateRule('required', true);
-$f->newField($this->locale->_('mobile'), false,
-    $this->html->textbox('mobile', 'member[mobile]', $this->model->getMobile()));
-$f->endGroup();
+    $this->html->textbox('email', 'data[email]', $this->model->getEmail(), 'email')
+    ->addValidateRule('required', true));
+if($this->router->action == 'add'):
+$f->newField($this->locale->_('password'), true,
+    $this->html->textbox('password', 'data[password]', '')
+    ->addValidateRule('required', true));
+endif;
+$f->newField($this->locale->_('level'), true,
+    $this->html->select('level', 'data[level]', $this->model->getLevel(), array(
+        \Ixiangs\User\Constant::LEVEL_ADMINISTRATOR=>$this->locale->_('user_level_admin'),
+        \Ixiangs\User\Constant::LEVEL_NORMAL=>$this->locale->_('user_level_normal')
+    )));
+$f->newField($this->locale->_('status'), true,
+    $this->html->select('status', 'data[status]', $this->model->getStatus(), array(
+        \Ixiangs\User\Constant::STATUS_ACCOUNT_ACTIVATED=>$this->locale->_('user_status_activated'),
+        \Ixiangs\User\Constant::STATUS_ACCOUNT_NONACTIVATED=>$this->locale->_('user_status_nonactivated'),
+        \Ixiangs\User\Constant::STATUS_ACCOUNT_DISABLED=>$this->locale->_('disabled')
+    )));
+$f->newField($this->locale->_('user_role_list'), true,
+    $this->html->optionList('role_ids', 'data[role_ids][]', $this->model->getRoleIds(), $this->roles));
 $f->addHidden('id', 'data[id]', $this->model->getId());
 $this->assign('form', $f);
 echo $this->includeTemplate('layout\form');

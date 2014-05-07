@@ -132,10 +132,10 @@ trait TList
         return $result;
     }
 
-    public function count()
-    {
-        return count($this->source);
-    }
+//    public function count()
+//    {
+//        return count($this->source);
+//    }
 
     public function offsetExists($offset)
     {

@@ -70,7 +70,10 @@ class Router
         if (is_array($params)) {
             $url .= '?' . http_build_query($params);
         } elseif (is_string($params) && $params == '*') {
-            $url .= '?' . http_build_query(Application::$context->request->getQuery());
+            $query = Application::$context->request->getQuery();
+            if(is_array($query) && count($query) > 0){
+                $url .= '?' . http_build_query($query);
+            }
         }
         return $url;
     }

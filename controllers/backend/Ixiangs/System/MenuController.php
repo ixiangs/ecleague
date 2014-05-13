@@ -106,7 +106,7 @@ class MenuController extends Web\Controller
                 'id' => $item->getId(),
                 'parentId' => $item->getParentId(),
                 'value' => $item->getId(),
-                'text' => $item->names[$lid],
+                'text' => $item->name[$lid],
             ));
         });
         return Web\Result::templateResult(

@@ -6,12 +6,12 @@
     <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="/pub/assets/css/font-awesome.css">
-    <link rel="stylesheet" type="text/css" href="/pub/assets/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="/pub/assets/css/bootstrap.css">
     <link rel="stylesheet" type="text/css" href="/pub/assets/css/fonts.css">
     <link rel="stylesheet" type="text/css" href="/pub/assets/css/sb-admin.css">
     <link rel="stylesheet" type="text/css" href="/pub/assets/css/admin.css">
     <script src="/pub/assets/js/libs.js"></script>
-    <script src="/pub/assets/js/bootstrap.min.js"></script>
+    <script src="/pub/assets/js/bootstrap.js"></script>
     <script src="/pub/assets/js/toy/core.js"></script>
     <script src="/pub/assets/js/toy/html.js"></script>
     <script src="/pub/assets/js/toy/locale.js"></script>

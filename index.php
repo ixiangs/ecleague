@@ -13,6 +13,9 @@ if (preg_match('/^\/pub\/|\.html$/', $_SERVER["REQUEST_URI"])) {
     define('COMPONENT_PATH', ROOT_PATH . 'components' . DS);
     define('LIB_PATH', ROOT_PATH . 'lib' . DS);
     define('TEMP_PATH', ROOT_PATH . 'temp' . DS);
+    define('JS_URL', '/pub/assets/js/');
+    define('CSS_URL', '/pub/assets/css/');
+    define('IMG_URL', '/pub/assets/img/');
     set_include_path(get_include_path() . PATH_SEPARATOR . LIB_PATH . PATH_SEPARATOR . COMPONENT_PATH);
 
     include_once 'Toy\Platform\FileUtil.php';

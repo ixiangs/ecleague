@@ -18,7 +18,9 @@ class PassportController extends Web\Controller
 
         if ($r === true) {
             $this->session->set('identity', $identity->getAllData());
-            return Web\Result::RedirectResult($this->router->buildUrl($this->router->domain->getIndexUrl()));
+            print_r($this->router->buildUrl($this->router->domain->getIndexUrl()));
+            return Web\Result::RedirectResult(
+                        $this->router->buildUrl($this->router->domain->getIndexUrl()));
         } else {
             switch ($r) {
                 case Constant::ERROR_ACCOUNT_NOT_FOUND:

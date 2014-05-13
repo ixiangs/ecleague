@@ -104,7 +104,7 @@ AccountModel::register(array(
         Orm\StringProperty::create('password')->setUpdateable(false),
         Orm\StringProperty::create('email'),
         Orm\IntegerProperty::create('status'),
-        Orm\IntegerProperty::create('level'),
+        Orm\IntegerProperty::create('type'),
         Orm\ListProperty::create('role_ids')
     ))
 );

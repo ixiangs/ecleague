@@ -84,9 +84,15 @@ class Application
         $this->finish();
     }
 
-    static public $settings = array();
+//    static public $settings = array();
+    static public $components = array();
     static public $context = null;
     private static $_instance = NULL;
+
+    static function getRequestComponent(){
+        return self::$components[self::$context->router->component];
+    }
+
     static public function singleton()
     {
         if (is_null(self::$_instance)) {

@@ -23,7 +23,7 @@ class DictionaryController extends Web\Controller
             ->asc('code')
             ->limit(PAGINATION_SIZE, ($pi - 1) * PAGINATION_SIZE)
             ->load();
-        $count = DictionaryModel::find()->count();
+        $count = $find->resetLimit()->count();
         return Web\Result::templateResult(array(
                 'models' => $models,
                 'language' => $lang,

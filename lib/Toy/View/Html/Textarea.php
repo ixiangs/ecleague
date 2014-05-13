@@ -16,5 +16,6 @@ class Textarea extends InputElement
         $text = $this->getAttribute('value');
         $this->removeAttribute('value');
         $this->setAttribute('text', $text);
+        return parent::render();
     }
 }

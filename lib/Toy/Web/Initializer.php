@@ -27,7 +27,7 @@ class Initializer
                         $conf = json_decode($content, true);
                         switch (json_last_error()) {
                             case JSON_ERROR_NONE:
-                                Application::$settings[$conf['name']] = $conf;
+                                Application::$components[strtolower($conf['name'])] = new Component($conf);
                                 break;
                             case JSON_ERROR_DEPTH:
                                 echo 'Maximum stack depth exceeded';
@@ -53,9 +53,10 @@ class Initializer
             });
         });
 
-        foreach (Application::$settings as $conf) {
-            if (array_key_exists('listeners', $conf)) {
-                foreach ($conf['listeners'] as $en => $eh) {
+        foreach (Application::$components as $component) {
+            $listeners = $component->getListeners();
+            if ($listeners) {
+                foreach ($listeners as $en => $eh) {
                     Event\Configuration::addListener($en, $eh);
                 }
             }

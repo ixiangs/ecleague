@@ -1,0 +1,82 @@
+{
+    "name": "IXiangs_Office",
+    "version": "0.0.0.1",
+    "author": "IXiangs Studio",
+    "website": "ixiangs.com",
+    "breadcrumbs": {
+        "backend": {
+            "ixiangs_office_department_list": [
+                {
+                    "text": "@office_manage"
+                },
+                {
+                    "text": "@office_department_list"
+                }
+            ],
+            "ixiangs_office_department_add": [
+                {
+                    "text": "@office_manage"
+                },
+                {
+                    "text": "@office_new_department"
+                }
+            ],
+            "ixiangs_office_department_edit": [
+                {
+                    "text": "@office_manage"
+                },
+                {
+                    "text": "@office_edit_department"
+                }
+            ],
+            "ixiangs_office_position_list": [
+                {
+                    "text": "@office_manage"
+                },
+                {
+                    "text": "@office_position_list"
+                }
+            ],
+            "ixiangs_office_position_add": [
+                {
+                    "text": "@office_manage"
+                },
+                {
+                    "text": "@office_new_position"
+                }
+            ],
+            "ixiangs_office_position_edit": [
+                {
+                    "text": "@office_manage"
+                },
+                {
+                    "text": "@office_edit_position"
+                }
+            ],
+            "ixiangs_office_staff_list": [
+                {
+                    "text": "@office_manage"
+                },
+                {
+                    "text": "@office_staff_list"
+                }
+            ],
+            "ixiangs_office_staff_add": [
+                {
+                    "text": "@office_manage"
+                },
+                {
+                    "text": "@office_new_staff"
+                }
+            ],
+            "ixiangs_office_staff_edit": [
+                {
+                    "text": "@office_manage"
+                },
+                {
+                    "text": "@office_edit_staff"
+                }
+            ]
+        }
+    }
+}

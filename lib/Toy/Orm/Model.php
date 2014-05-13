@@ -162,47 +162,24 @@ abstract class Model implements \ArrayAccess, \Iterator
     public function getData($name, $default = null)
     {
         if (array_key_exists($name, $this->data)) {
-            if (is_null($this->data[$name])) {
+            if(is_null($this->data[$name])){
                 return $default;
             }
             return $this->data[$name];
         }
 
         if (array_key_exists($name, $this->relations)) {
-            $this->data[$name] = $this->getRelationData($name);
+            $relation = $this->relations[$name];
+            $mc = $relation->getThatModel();
+            if($relation->getThisProperty()){
+                $this->data[$name] = $mc::find()->eq($relation->getThatProperty(), $this->data[$relation->getThisProperty]);
+            }else{
+                $this->data[$name] = $mc::find()->eq($relation->getThatProperty(), $this->getIdValue());
+            }
             return $this->data[$name];
         }
 
         return $default;
-    }
-
-    protected function getRelationData($name)
-    {
-        $relation = $this->relations[$name];
-
-        switch ($relation->getType()) {
-            case Relation::TYPE_CHILD:
-                $mc = new $relation->getThatModel();
-                if (!$this->isEmptyData($this->idProperty->getName())) {
-                    $mc->setIdValue($this->data[$this->idProperty->getName()]);
-                }
-                return $mc;
-            case Relation::TYPE_CHILDREN:
-                $mc = $relation->getThatModel();
-                $res = $mc::find();
-                if (!$this->isEmptyData($this->idProperty->getName())) {
-                    $res->eq($relation->getThatProperty(), $this->data[$this->idProperty->getName()]);
-                }
-                return $res;
-            case Relation::TYPE_PARENT:
-                if ($this->isEmptyData($relation->getThisProperty())) {
-                    return null;
-                } else {
-                    $mc = new $relation->getThatModel();
-                    $mc->setIdValue($this->data[$relation->getThisProperty()]);
-                    return $mc;
-                }
-        }
     }
 
     public function setData($name, $value)
@@ -221,9 +198,9 @@ abstract class Model implements \ArrayAccess, \Iterator
         return $this;
     }
 
-    public function getIdValue()
+    public function getIdValue($default = null)
     {
-        return $this->getData($this->idProperty->getName());
+        return $this->getData($this->idProperty->getName(), $default);
     }
 
     public function setIdValue($value)

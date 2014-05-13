@@ -6,6 +6,7 @@
                     <?php
                     $langId = $this->locale->getLanguageId();
                     $menus = \Ixiangs\System\MenuModel::find()
+                        ->eq('enabled', true)
                         ->asc('parent_id', 'position')
                         ->load();
                     for ($_mi = 0; $_mi < count($menus); $_mi++):

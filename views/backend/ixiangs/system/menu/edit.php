@@ -30,7 +30,7 @@ $f->endGroup();
 foreach($this->locale->getAllLanguages() as $lang):
     $f->beginGroup('tab_lang_'.$lang['code'], $lang['name']);
     $f->newField($this->locale->_('name'), true,
-        $this->html->textbox('name_'.$lang['id'], 'data[name]['.$lang['id'].']', $this->model->names[$lang['id']])
+        $this->html->textbox('name_'.$lang['id'], 'data[name]['.$lang['id'].']', $this->model->name[$lang['id']])
         ->addValidateRule('required', true));
     $f->endGroup();
 endforeach;

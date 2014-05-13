@@ -28,10 +28,10 @@ $f->newField($this->locale->_('password'), true,
     $this->html->textbox('password', 'data[password]', '')
     ->addValidateRule('required', true));
 endif;
-$f->newField($this->locale->_('level'), true,
-    $this->html->select('level', 'data[level]', $this->model->getLevel(), array(
-        \Ixiangs\User\Constant::LEVEL_ADMINISTRATOR=>$this->locale->_('user_level_admin'),
-        \Ixiangs\User\Constant::LEVEL_NORMAL=>$this->locale->_('user_level_normal')
+$f->newField($this->locale->_('user_type'), true,
+    $this->html->select('type', 'data[type]', $this->model->getLevel(), array(
+        \Ixiangs\User\Constant::TYPE_ADMINISTRATOR=>$this->locale->_('user_type_admin'),
+        \Ixiangs\User\Constant::TYPE_NORMAL=>$this->locale->_('user_type_normal')
     )));
 $f->newField($this->locale->_('status'), true,
     $this->html->select('status', 'data[status]', $this->model->getStatus(), array(

@@ -1,15 +1,24 @@
 <?php $this->beginBlock('content'); ?>
 <?php echo $this->includeTemplate('alert'); ?>
     <div class="row breadcrumb-row">
-        <ol class="breadcrumb col-lg-5">
+        <ol class="breadcrumb col-md-6">
             <?php
             if ($this->breadcrumb):
-                $b = $this->breadcrumb;
-                $lb = array_pop($b);
-                foreach ($b as $item):
-                    echo '<li>' . $item->getAttribute('text') . '</li>';
+                foreach ($this->breadcrumb as $item):
+                    echo '<li>' . $item->render() . '</li>';
                 endforeach;
-                echo '<li class="active">' . $lb->getAttribute('text') . '</li>';
+            else:
+                $requestComponent = \Toy\Web\Application::getRequestComponent();
+                $breadcrumbs = $requestComponent->getActionBreadcrumb();
+                if($breadcrumbs):
+                    foreach($breadcrumbs as $item):
+                        $text = $item['text'];
+                        if($text[0] == '@'):
+                            $text = $this->locale->_(substr($text, 1));
+                        endif;
+                        echo '<li>' . $text . '</li>';
+                    endforeach;
+                endif;
             endif;
             ?>
         </ol>

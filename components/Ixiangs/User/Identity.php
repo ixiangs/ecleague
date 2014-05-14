@@ -41,6 +41,15 @@ class Identity{
 		return in_array($code, $this->_behaviors);
 	}
 
+    public function hasAnyBehavior(array $codes){
+        foreach($codes as $code){
+            if(in_array($code, $this->_behaviors)){
+                return true;
+            }
+        }
+        return false;
+    }
+
     public function getAllData(){
         return array(
             'id'=>$this->_id,

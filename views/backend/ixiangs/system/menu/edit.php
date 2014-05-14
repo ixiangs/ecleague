@@ -21,6 +21,8 @@ $f->newField($this->locale->_('admin_parent_menu'), true,
         ->setCaption($this->locale->_('admin_root_menu')));
 $f->newField($this->locale->_('url'), true,
     $this->html->textbox('url', 'data[url]', $this->model->getUrl()));
+$f->newField($this->locale->_('user_behavior_list'), true,
+    $this->html->optionList('behavior_codes', 'data[behavior_codes][]', $this->model->getBehaviorCodes(), $this->behaviors));
 $f->newField($this->locale->_('enable'), true,
     $this->html->select('enabled', 'data[enabled]', $this->model->getEnabled(),
         array('1'=>$this->locale->_('yes'), '0'=>$this->locale->_('no')))

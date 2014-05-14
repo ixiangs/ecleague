@@ -12,9 +12,9 @@ $dt = $this->html->grid($this->models);
 $dt->addIndexColumn('#', 'index', 'index');
 $dt->addLabelColumn($this->locale->_('username'), '{username}', 'middle', 'middle');
 $dt->addLabelColumn($this->locale->_('email'), '{email}');
-$dt->addOptionColumn($this->locale->_('level'), '{level}', array(
-        \Ixiangs\User\Constant::LEVEL_ADMINISTRATOR=>$this->locale->_('user_level_admin'),
-        \Ixiangs\User\Constant::LEVEL_NORMAL=>$this->locale->_('user_level_normal')),
+$dt->addOptionColumn($this->locale->_('user_type'), '{type}', array(
+        \Ixiangs\User\Constant::TYPE_ADMINISTRATOR=>$this->locale->_('user_type_admin'),
+        \Ixiangs\User\Constant::TYPE_NORMAL=>$this->locale->_('user_type_normal')),
     'small', 'small text-center');
 $dt->addOptionColumn($this->locale->_('status'), '{status}', array(
         \Ixiangs\User\Constant::STATUS_ACCOUNT_ACTIVATED=>'<span class="text-success">'.$this->locale->_('user_status_activated').'</span>',

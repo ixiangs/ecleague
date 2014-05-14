@@ -1,6 +1,7 @@
 <?php
 namespace Ixiangs\User;
 
+use Ixiangs\System;
 use Toy\Web;
 
 class BehaviorController extends Web\Controller
@@ -10,7 +11,12 @@ class BehaviorController extends Web\Controller
     {
         $pi = $this->request->getParameter("pageindex", 1);
         $count = BehaviorModel::find()->count();
-        $models = BehaviorModel::find()->limit(PAGINATION_SIZE, ($pi - 1) * PAGINATION_SIZE)->load();
+        $models = BehaviorModel::find()
+                    ->select(System\Constant::TABLE_COMPONENT.'.name as component_name', Constant::TABLE_BEHAVIOR.'.*')
+                    ->join(System\Constant::TABLE_COMPONENT,
+                           System\Constant::TABLE_COMPONENT.'.id',
+                           Constant::TABLE_BEHAVIOR.'.component_id')
+                    ->limit(PAGINATION_SIZE, ($pi - 1) * PAGINATION_SIZE)->load();
         return Web\Result::templateResult(array(
                 'models' => $models,
                 'total' => $count,
@@ -78,8 +84,11 @@ class BehaviorController extends Web\Controller
 
     private function getEditTemplateResult($model)
     {
+        $components = System\ComponentModel::find()->load()->toArray(function($item){
+           return array($item->getId(), $item->getName());
+        });
         return Web\Result::templateResult(
-            array('model' => $model),
+            array('model' => $model, 'components'=>$components),
             'ixiangs/user/behavior/edit'
         );
     }

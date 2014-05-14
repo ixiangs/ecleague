@@ -26,7 +26,7 @@ class AccountController extends Web\Controller{
 	
 	public function addPostAction(){
         $lang = $this->context->locale;
-		$m = AccountModel::create($this->request->getAllParameters());
+		$m = AccountModel::create($this->request->getPost('data'));
 
         $vr = $m->validateProperties();
         if ($vr !== true) {

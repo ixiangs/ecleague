@@ -74,7 +74,7 @@ class RoleController extends Web\Controller
             $this->session->set('errors', $this->languages->get('err_system'));
             return Web\Result::redirectResultt($this->router->buildUrl('index'));
         }
-        return Web\Result::redirectResult($this->router->buildUrl('index'));
+        return Web\Result::redirectResult($this->router->buildUrl('list'));
     }
 
     private function getEditTemplateReult($model)

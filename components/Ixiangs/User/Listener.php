@@ -1,6 +1,7 @@
 <?php
 namespace Ixiangs\User;
 
+use Toy\View\Template;
 use Toy\Web\Application;
 
 class Listener
@@ -11,10 +12,11 @@ class Listener
         $context = Application::$context;
         $data = $context->session->get('identity');
         if (!empty($data)) {
-//            $identity = unserialize($data);
-            $context->identity = new Identity(
+            $identity = new Identity(
                 $data['id'], $data['username'], $data['level'], $data['roles'], $data['behaviors']
             );
+            $context->identity = $identity;
+            Template::addHelper('identity', $identity);
         }
     }
 
@@ -27,26 +29,26 @@ class Listener
 
         if ($router->domain->getName() == 'backend') {
             if ($identity) {
-                $uri = $context->request->getUri();
-                $behaviors = BehaviorModel::find()->load();
-                foreach ($behaviors as $behavior) {
-                    $url = $behavior->getUrl();
-                    if ($url) {
-                        if ($url[0] == '/' && substr($url, -1) == '/') {
-                            if (preg_match($url, $uri)) {
-                                if (!$identity->hasBehavior($behavior->getCode())) {
-                                    $response->redirect('/permissiondenied.html');
-                                    $app->quit();
-                                }
-                            }
-                        } elseif ($url == $uri) {
-                            if (!$identity->hasBehavior($behavior->getCode())) {
-                                $response->redirect('/permissiondenied.html');
-                                $app->quit();
-                            }
-                        }
-                    }
-                }
+//                $uri = $context->request->getUri();
+//                $behaviors = BehaviorModel::find()->load();
+//                foreach ($behaviors as $behavior) {
+//                    $url = $behavior->getUrl();
+//                    if ($url) {
+//                        if ($url[0] == '/' && substr($url, -1) == '/') {
+//                            if (preg_match($url, $uri)) {
+//                                if (!$identity->hasBehavior($behavior->getCode())) {
+//                                    $response->redirect('/permissiondenied.html');
+//                                    $app->quit();
+//                                }
+//                            }
+//                        } elseif ($url == $uri) {
+//                            if (!$identity->hasBehavior($behavior->getCode())) {
+//                                $response->redirect('/permissiondenied.html');
+//                                $app->quit();
+//                            }
+//                        }
+//                    }
+//                }
             } else {
                 if (!($router->component == 'ixiangs_user' && $router->controller == 'passport')) {
                     $response->redirect($router->buildUrl('ixiangs_user/passport/login'));

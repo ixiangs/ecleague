@@ -31,7 +31,7 @@
 </head>
 <body>
 <?php echo $this->includeTemplate('topmenu'); ?>
-<?php echo $this->includeTemplate('navmenu'); ?>
+<?php echo $this->includeTemplate('ixiangs/system/menu/nav'); ?>
 
 <div class="main">
     <div class="container">

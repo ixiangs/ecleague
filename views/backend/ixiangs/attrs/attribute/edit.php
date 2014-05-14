@@ -19,10 +19,10 @@ $this->assign('toolbar', array(
     $this->html->dropdownButton(
         $this->html->button('button', $this->locale->_('save'), 'btn btn-primary')
             ->setAttribute('id', 'save_form'))
-        ->addChild(
-            $this->html->anchor($this->locale->_('save_and_new'), 'javascript:void(0)', 'btn btn-primary')
-                ->setAttribute('id', 'save_new')
-        )
+            ->addChild(
+                $this->html->anchor($this->locale->_('save_and_new'), 'javascript:void(0)', 'btn btn-primary')
+                    ->setAttribute('id', 'save_new')
+            )
 ));
 
 $dataTypes = array(

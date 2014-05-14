@@ -23,10 +23,11 @@ class MenuModel extends Orm\Model
     {
         $statements = array();
         foreach ($sorts as $index=>$item) {
-            $statements[] = Helper::update(Constant::TABLE_MENU, array(
-                'position' => $index + 1,
-                'parent_id' => $item['parent_id']? $item['parent_id']: 0
-            ))->eq('id', $item['id']);
+            $statements[] = Helper::update(
+                Constant::TABLE_MENU, array(
+                    'position' => $index + 1,
+                    'parent_id' => $item['parent_id']? $item['parent_id']: 0
+                ))->eq('id', $item['id']);
         }
 
         foreach ($statements as $u) {
@@ -34,18 +35,18 @@ class MenuModel extends Orm\Model
         }
     }
 
-    static private function createUpdatePositionStatement($items, $parentId, &$updates)
-    {
-        foreach ($items as $index => $item) {
-            $updates[] = Helper::update(Constant::TABLE_MENU, array(
-                'position' => $index + 1,
-                'parent_id' => $parentId
-            ))->eq('id', $item['id']);
-            if (array_key_exists('children', $item)) {
-                self::createUpdatePositionStatement($item['children'], $item['id'], $updates);
-            }
-        }
-    }
+//    static private function createUpdatePositionStatement($items, $parentId, &$updates)
+//    {
+//        foreach ($items as $index => $item) {
+//            $updates[] = Helper::update(Constant::TABLE_MENU, array(
+//                'position' => $index + 1,
+//                'parent_id' => $parentId
+//            ))->eq('id', $item['id']);
+//            if (array_key_exists('children', $item)) {
+//                self::createUpdatePositionStatement($item['children'], $item['id'], $updates);
+//            }
+//        }
+//    }
 }
 
 MenuModel::register(array(
@@ -57,6 +58,7 @@ MenuModel::register(array(
         Orm\SerializeProperty::create('name')->setNullable(false),
         Orm\StringProperty::create('url'),
         Orm\IntegerProperty::create('position')->setDefaultValue(99),
-        Orm\BooleanProperty::create('enabled')->setNullable(false)
+        Orm\BooleanProperty::create('enabled')->setNullable(false),
+        Orm\ListProperty::create('behavior_codes')->setNullable(false)
     )
 ));

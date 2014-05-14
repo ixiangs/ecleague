@@ -63,15 +63,12 @@ class Router
                 $action = $arr[3];
                 break;
         }
-        $url = $domain->getStartUrl();
-        $url .= $component;
-        $url .= '_' . $controller;
-        $url .= '_' . $action;
+        $url = $domain->getStartUrl() . $component . '_' . $controller . '_' . $action;
         if (is_array($params)) {
             $url .= '?' . http_build_query($params);
         } elseif (is_string($params) && $params == '*') {
             $query = Application::$context->request->getQuery();
-            if(is_array($query) && count($query) > 0){
+            if (is_array($query) && count($query) > 0) {
                 $url .= '?' . http_build_query($query);
             }
         }
@@ -119,12 +116,12 @@ class Router
         foreach (Configuration::$domains as $v) {
             if (!$v->getDefault() && StringUtil::startsWith($url, $v->getStartUrl())) {
                 $suburl = substr($url, strlen($v->getStartUrl()));
-                if (strlen($suburl) == 0) {
-                    $parts = explode('_', $v->getIndexUrl());
+                if (empty($suburl)) {
+                    $parts = explode('/', $v->getIndexUrl());
                     return array('domain' => $v,
-                        'component' => $parts[0] . '_' . $parts[1],
-                        'controller' => $parts[2],
-                        'action' => $parts[3]);
+                        'component' => $parts[0],
+                        'controller' => $parts[1],
+                        'action' => $parts[2]);
                 } else {
                     $arr = explode('/', $suburl);
                     $parts = explode('_', $arr[0]);

@@ -1,6 +1,7 @@
 <?php
 namespace Ixiangs\System;
 
+use Ixiangs\User\BehaviorModel;
 use Toy\Db\Helper;
 use Toy\Web;
 
@@ -32,7 +33,7 @@ class MenuController extends Web\Controller
     public function sortPostAction()
     {
         $data = $this->request->getPost('data');
-        Helper::withTx(function($db) use($data){
+        Helper::withTx(function ($db) use ($data) {
             MenuModel::sort($data, $db);
         });
 
@@ -94,23 +95,25 @@ class MenuController extends Web\Controller
 
     private function getEditTemplateResult($model)
     {
-        $locale = $this->context->locale;
-        $lid = $locale->getLanguageId();
+        $langId = $this->context->locale->getLanguageId();
         $find = MenuModel::find()->asc('parent_id');
         if ($model->getId()) {
             $find->ne('id', $model->getId());
         }
+        $behaviors = \Ixiangs\User\Helper::getBehaviors()->toArray(function ($item) {
+            return array($item->getCode(), $item->getName());
+        });
 
-        $menus = $find->load()->toArray(function ($item) use ($lid) {
+        $menus = $find->load()->toArray(function ($item) use ($langId) {
             return array(null, array(
                 'id' => $item->getId(),
                 'parentId' => $item->getParentId(),
                 'value' => $item->getId(),
-                'text' => $item->name[$lid],
+                'text' => $item->name[$langId],
             ));
         });
         return Web\Result::templateResult(
-            array('model' => $model, 'menus' => $menus),
+            array('model' => $model, 'menus' => $menus, 'behaviors' => $behaviors),
             'ixiangs/system/menu/edit'
         );
     }

@@ -4,10 +4,11 @@ namespace Ixiangs\Attrs;
 class Constant
 {
     const TABLE_ATTRIBUTE = '{t}attrs_attribute';
-    const TABLE_ATTRIBUTE_GROUP = '{t}attrs_attribute_group';
+    const TABLE_GROUP = '{t}attrs_group';
     const TABLE_ATTRIBUTE_SET = '{t}attrs_attribute_set';
     const TABLE_R_GROUP_ATTRIBUTE = '{t}attrs_r_group_attribute';
     const TABLE_R_SET_GROUP = '{t}attrs_r_set_group';
+    const TABLE_OPTION = '{t}attrs_option';
 
     const INPUT_TYPE_TEXTBOX = 'textbox';
     const INPUT_TYPE_TEXTAREA = 'textarea';

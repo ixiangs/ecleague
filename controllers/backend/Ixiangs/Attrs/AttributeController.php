@@ -50,6 +50,8 @@ class AttributeController extends Web\Controller
 
     public function savePostAction()
     {
+        print_r($_POST);
+        die();
         $locale = $this->context->locale;
         $m = new AttributeModel($this->request->getPost('data'));
 

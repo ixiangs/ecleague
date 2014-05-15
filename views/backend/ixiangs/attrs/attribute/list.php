@@ -35,13 +35,7 @@ $dt->addBooleanColumn($this->locale->_('attrs_required'), 'required', $this->loc
     'small', 'small text-center');
 $dt->addBooleanColumn($this->locale->_('status'), 'enabled', $this->locale->_('enabled'), $this->locale->_('disabled'),
     'small', 'small text-center');
-$dt->addLabelColumn($this->locale->_('memo'), '{memo}', '', 'left')
-    ->setCellRenderer(function($col, $row) use($clang){
-        $col->getCell()->getChild(0)
-            ->removeBindableAttribute('text')
-            ->setAttribute('text', $row->memo[$clang['id']]);
-        return $col->getCell()->renderBegin().$col->getCell()->renderInner().$col->getCell()->renderEnd();
-    });
+$dt->addLabelColumn($this->locale->_('memo'), '{memo}', '', 'left');
 $dt->addLinkColumn('', $this->locale->_('edit'), urldecode($this->router->buildUrl('edit', array('id' => '{id}'))), 'small', 'small edit');
 
 $dt->addLinkButtonColumn('', $this->locale->_('delete'), "deleteConfirm('".urldecode($this->router->buildUrl('delete', array('id'=>'{id}')))."')", 'edit', 'edit');

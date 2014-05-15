@@ -19,7 +19,7 @@ class Collection extends SelectStatement implements \Iterator, \ArrayAccess, \Se
         $this->_itemClass = $itemClass;
         foreach ($source as $row) {
             $m = new $this->_itemClass();
-            $m->fillRow($row);
+            $m->fromDbValues($row);
             $this->source[] = $m;
         }
     }
@@ -41,7 +41,7 @@ class Collection extends SelectStatement implements \Iterator, \ArrayAccess, \Se
         $rows = $cdb->select($this)->rows;
         foreach ($rows as $row) {
             $m = new $this->_itemClass();
-            $m->fillRow($row);
+            $m->fromDbValues($row)->markClean();
             $this->source[] = $m;
         }
         return $this;

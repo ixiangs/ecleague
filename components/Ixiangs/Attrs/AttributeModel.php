@@ -1,14 +1,73 @@
 <?php
 namespace Ixiangs\Attrs;
 
-use Ixiangs\Locale\Localize;
 use Toy\Orm;
 use Toy\Util\ArrayUtil;
 use Toy\View\Html\FormField;
 use Toy\View\Html\Helper;
+use Toy\Db;
 
 class AttributeModel extends Orm\Model
 {
+
+    public function getData($name, $default = null)
+    {
+        if ($name == 'options') {
+            switch ($this->input_type) {
+                case Constant::INPUT_TYPE_SELECT:
+                case Constant::INPUT_TYPE_OPTION_LIST:
+                    if (!array_key_exists('options', $this->data)) {
+                        $this->data['options'] = OptionModel::find()->eq('attribute_id', $this->getId())->load();
+                    }
+                    return $this->data['options'];
+            }
+            return array();
+        }
+        return parent::getData($name, $default);
+    }
+
+    public function insert($db = null)
+    {
+        if (is_null($db)) {
+            return Db\Helper::withTx(function ($tx) {
+                return parent::insert($tx);
+            });
+        } else {
+            try {
+                $db->begin();
+                $result = parent::insert($db);
+                $db->commit();
+                return $result;
+            } catch (\Exception $ex) {
+                $db->rollback();
+                throw $ex;
+            }
+
+        }
+    }
+
+    protected function afterInsert($db)
+    {
+        $options = $this->getOptions();
+        if (count($options) > 0) {
+            Db\Helper::delete(Constant::TABLE_OPTION)->eq('attribute_id' . $this->id)->execute($db);
+            foreach ($options as $option) {
+                $option->insert($db);
+            }
+        }
+    }
+
+    protected function afterUpdate($db)
+    {
+        $options = $this->getOptions();
+        if (count($options) > 0) {
+            Db\Helper::delete(Constant::TABLE_OPTION)->eq('attribute_id' . $this->id)->execute($db);
+            foreach ($options as $option) {
+                $option->insert($db);
+            }
+        }
+    }
+
     public function toFormField()
     {
         $html = Helper::singleton();
@@ -28,7 +87,7 @@ class AttributeModel extends Orm\Model
                 if ($is['multiple']) {
                     $field->getInput()->setAttribute('multiple', 'multiple');
                 }
-                if($is['default_option'] == 'empty'){
+                if ($is['default_option'] == 'empty') {
                     $field->getInput()->setCaption('');
                 }
                 break;
@@ -61,11 +120,9 @@ AttributeModel::register(array(
         Orm\BooleanProperty::create('indexable')->setDefaultValue(false)->setNullable(false),
         Orm\BooleanProperty::create('required')->setDefaultValue(false)->setNullable(false),
         Orm\BooleanProperty::create('enabled')->setDefaultValue(true)->setNullable(false),
-        Orm\BooleanProperty::create('localizable')->setDefaultValue(false)->setNullable(false),
         Orm\IntegerProperty::create('component_id')->setNullable(false),
-        Orm\SerializeProperty::create('label')->setNullable(false),
-        Orm\SerializeProperty::create('memo')->setNullable(false),
-        Orm\SerializeProperty::create('options'),
-        Orm\SerializeProperty::create('input_setting'),
+        Orm\StringProperty::create('label')->setNullable(false),
+        Orm\StringProperty::create('memo')->setNullable(false),
+        Orm\SerializeProperty::create('input_setting')
     )
 ));

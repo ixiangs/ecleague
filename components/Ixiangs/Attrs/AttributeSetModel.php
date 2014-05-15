@@ -8,10 +8,10 @@ class AttributeSetModel extends Orm\Model{
 
     public function getGroups(){
         if(!array_key_exists('groups', $this->data)){
-            $this->data['groups'] = AttributeGroupModel::find()
+            $this->data['groups'] = GroupModel::find()
                 ->join(Constant::TABLE_R_SET_GROUP,
                     Constant::TABLE_R_SET_GROUP.'.group_id',
-                    Constant::TABLE_ATTRIBUTE_GROUP.'.id')
+                    Constant::TABLE_GROUP.'.id')
                 ->eq(Constant::TABLE_R_SET_GROUP.'.set_id', $this->id)
                 ->asc(Constant::TABLE_R_SET_GROUP.'.position')
                 ->load();

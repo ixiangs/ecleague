@@ -11,8 +11,8 @@ class AttributeGroupController extends Web\Controller
     public function listAction()
     {
         $pi = $this->request->getParameter("pageindex", 1);
-        $count = AttributeGroupModel::find()->count();
-        $models = AttributeGroupModel::find()
+        $count = GroupModel::find()->count();
+        $models = GroupModel::find()
             ->limit(PAGINATION_SIZE, ($pi - 1) * PAGINATION_SIZE)
             ->load();
         return Web\Result::templateResult(array(
@@ -24,18 +24,18 @@ class AttributeGroupController extends Web\Controller
 
     public function addAction()
     {
-        return $this->getEditTemplateResult(new AttributeGroupModel());
+        return $this->getEditTemplateResult(new GroupModel());
     }
 
     public function editAction($id)
     {
-        return $this->getEditTemplateResult(AttributeGroupModel::load($id));
+        return $this->getEditTemplateResult(GroupModel::load($id));
     }
 
     public function savePostAction()
     {
         $locale = $this->context->locale;
-        $m = new AttributeGroupModel($this->request->getPost('data'));
+        $m = new GroupModel($this->request->getPost('data'));
 
         $vr = $m->validateProperties();
         if ($vr !== true) {
@@ -61,7 +61,7 @@ class AttributeGroupController extends Web\Controller
     public function deleteAction($id)
     {
         $lang = $this->context->locale;
-        $m = AttributeGroupModel::load($id);
+        $m = GroupModel::load($id);
 
         if (!$m) {
             $this->session->set('errors', $lang->_('err_system'));
@@ -76,7 +76,7 @@ class AttributeGroupController extends Web\Controller
     }
 
     public function layoutAction($id){
-        $model = AttributeGroupModel::load($id);
+        $model = GroupModel::load($id);
         $allAttributes = AttributeModel::find()
             ->eq('component_id', $model->getComponentId())
             ->eq('enabled', true)
@@ -104,7 +104,7 @@ class AttributeGroupController extends Web\Controller
         foreach($attributeIds as $index=>$attributeId){
             $attributes[] = array('id'=>$attributeId, 'position'=>$index + 1);
         }
-        $model = AttributeGroupModel::load($id);
+        $model = GroupModel::load($id);
         $res = Helper::withTx(function($db) use($model, $attributes){
             $model->assignAttribute($attributes, $db);
             return true;

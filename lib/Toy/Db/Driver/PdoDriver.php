@@ -12,6 +12,7 @@ class PdoDriver extends BaseDriver
 
     protected $connection = NULL;
     protected $settings = null;
+    protected $transactionCount = 0;
 
     public function __construct($settings)
     {
@@ -69,6 +70,7 @@ class PdoDriver extends BaseDriver
 
     public function begin()
     {
+        ++$this->transactionCount;
         if (!$this->inTransaction()) {
             if (!$this->connection->beginTransaction()) {
                 $this->handleError($this->connection->errorInfo());
@@ -79,9 +81,12 @@ class PdoDriver extends BaseDriver
 
     public function commit()
     {
-        if ($this->inTransaction()) {
-            if (!$this->connection->commit()) {
-                $this->handleError($this->connection->errorInfo());
+        if ($this->transactionCount > 0) {
+            --$this->transactionCount;
+            if ($this->inTransaction()) {
+                if (!$this->connection->commit()) {
+                    $this->handleError($this->connection->errorInfo());
+                }
             }
         }
         return $this;
@@ -89,6 +94,7 @@ class PdoDriver extends BaseDriver
 
     public function rollback()
     {
+        $this->transactionCount = 0;
         if ($this->inTransaction()) {
             if (!$this->connection->rollback()) {
                 $this->handleError($this->connection->errorInfo());

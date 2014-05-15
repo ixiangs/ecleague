@@ -4,11 +4,8 @@ namespace Ixiangs\Attrs;
 use Toy\Db\Helper;
 use Toy\Orm;
 
-class AttributeGroupModel extends Orm\Model
+class GroupModel extends Orm\Model
 {
-
-    const TABLE_NAME = '{t}attrs_attribute_group';
-
     public function getAttributes()
     {
         if (!array_key_exists('attributes', $this->data)) {
@@ -39,8 +36,8 @@ class AttributeGroupModel extends Orm\Model
     }
 }
 
-AttributeGroupModel::register(array(
-    'table' => Constant::TABLE_ATTRIBUTE_GROUP,
+GroupModel::register(array(
+    'table' => Constant::TABLE_GROUP,
     'properties' => array(
         Orm\IntegerProperty::create('id')->setPrimaryKey(true)->setAutoIncrement(true),
         Orm\SerializeProperty::create('name')->setNullable(false),

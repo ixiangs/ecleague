@@ -144,9 +144,9 @@ class ProductModel extends Orm\Model
         return $result;
     }
 
-    public function fillRow(array $row)
+    public function fromDbValues(array $row)
     {
-        parent::fillRow($row);
+        parent::fromDbValues($row);
         $this->bindAttributeSet($row['attribute_set_id']);
         $props = $this->properties;
         foreach ($this->getExtensionGlobalData() as $field=>$value){

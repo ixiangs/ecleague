@@ -32,7 +32,7 @@ class ProductController extends Web\Controller
         $post = $this->request->getPost();
         $model = Tops::loadModel('catalogue/product')
                     ->bindAttributeSet()
-                    ->fillArray($post['data']);
+                    ->setAllData($post['data']);
         $vr = $model->validateProperties();
 //        print_r($vr);
 //        die();
@@ -60,7 +60,7 @@ class ProductController extends Web\Controller
         $locale = $this->context->locale;
         $m = Tops::loadModel('catalogue/product')
                     ->load($this->request->getPost('id'))
-                    ->fillArray($this->request->getPost('data'));
+                    ->setAllData($this->request->getPost('data'));
 
         $vr = $m->validateProperties();
         if ($vr !== true) {

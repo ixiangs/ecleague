@@ -13,6 +13,7 @@ abstract class BaseProperty extends \Toy\Object
     private $_defaultValue = null;
     private $_insertable = true;
     private $_updateable = true;
+    private $_alwaysDirty = false;
 
     public function __construct($name)
     {
@@ -125,6 +126,17 @@ abstract class BaseProperty extends \Toy\Object
     public function setUpdateable($value)
     {
         $this->_updateable = $value;
+        return $this;
+    }
+
+    public function getAlwaysDirty()
+    {
+        return $this->_alwaysDirty;
+    }
+
+    public function setAlwaysDirty($value)
+    {
+        $this->_alwaysDirty = $value;
         return $this;
     }
 

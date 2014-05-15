@@ -80,7 +80,7 @@ class AttributeSetController extends Web\Controller
 
     public function layoutAction($id){
         $model = AttributeSetModel::load($id);
-        $allGroups = AttributeGroupModel::find()
+        $allGroups = GroupModel::find()
             ->eq('component_id', $model->getComponentId())
             ->eq('enabled', true)
             ->load();

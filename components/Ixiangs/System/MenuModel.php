@@ -8,7 +8,7 @@ class MenuModel extends Orm\Model
 {
     protected function beforeInsert($db)
     {
-        if ($this->isEmptyData('parent_id')) {
+        if ($this->isEmptyProperty('parent_id')) {
             $this->setData('parent_id', 0);
         }
         return parent::beforeInsert($db);

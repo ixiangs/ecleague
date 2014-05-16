@@ -7,7 +7,7 @@ class AccountController extends Web\Controller{
 
 	public function listAction(){
 		$pi = $this->request->getParameter("pageindex", 1);
-		$count = AccountModel::find()->count();
+		$count = AccountModel::find()->executeCount();
 		$models = AccountModel::find()
 							->asc('id')
 							->limit(PAGINATION_SIZE, ($pi-1)*PAGINATION_SIZE)
@@ -34,7 +34,7 @@ class AccountController extends Web\Controller{
             return $this->getEditTemplateResult($m);
         }
 
-        $vr = $m->validateUnique();
+        $vr = $m->checkUnique();
         if ($vr !== true) {
             $this->session->set('errors', $lang->_('user_err_account_exists', $m->getCode()));
             return $this->getEditTemplateResult($m);

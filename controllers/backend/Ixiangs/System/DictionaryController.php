@@ -23,7 +23,7 @@ class DictionaryController extends Web\Controller
             ->asc('code')
             ->limit(PAGINATION_SIZE, ($pi - 1) * PAGINATION_SIZE)
             ->load();
-        $count = $find->resetLimit()->count();
+        $count = $find->resetLimit()->executeCount();
         return Web\Result::templateResult(array(
                 'models' => $models,
                 'language' => $lang,
@@ -55,27 +55,30 @@ class DictionaryController extends Web\Controller
         }
 
         foreach ($models as $m) {
-            $vr = $m->validateProperties();
+            $vr = $m->validate();
             if ($vr !== true) {
                 $this->session->set('errors', $lang->_('err_input_invalid'));
                 return $this->getAddTemplateResult($models);
             }
         }
 
-        try {
-            Helper::withTx(function ($db) use ($models) {
-                foreach ($models as $m) {
-                    if (!$m->insert()) {
-                        throw new \Exception();
-                    }
+        $success = Helper::withTx(function ($tx) use ($models) {
+            foreach ($models as $m) {
+                if (!$m->save($tx)) {
+                    $tx->rollback();
+                    return false;
                 }
-            });
-        } catch (\Exception $ex) {
+            }
+            return true;
+        });
+
+        if($success){
+            return Web\Result::redirectResult($this->router->buildUrl('list', array('languageid' => $lid)));
+        }else{
             $this->session->set('errors', $lang->_('err_system'));
             return $this->getAddTemplateResult($models);
         }
 
-        return Web\Result::redirectResult($this->router->buildUrl('list', array('languageid' => $lid)));
     }
 
     public function editAction($id)
@@ -87,14 +90,14 @@ class DictionaryController extends Web\Controller
     {
         $lang = $this->context->locale;
         $data = $this->request->getPost('data');
-        $m = DictionaryModel::create($data);
-        $vr = $m->validateProperties();
+        $m = DictionaryModel::merge($data['id'], $data);
+        $vr = $m->validate();
         if ($vr !== true) {
             $this->session->set('errors', $lang->_('err_input_invalid'));
             return $this->getEditTemplateResult($m);
         }
 
-        if (!$m->update()) {
+        if (!$m->save()) {
             $this->session->set('errors', $lang->_('err_system'));
             return $this->getEditTemplateResult($m);
         }

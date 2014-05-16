@@ -16,13 +16,17 @@ if($this->request->getQuery('set_id')){
 $this->assign('navigationBar', $nbs);
 
 $this->assign('toolbar', array(
-    $this->html->dropdownButton(
-        $this->html->button('button', $this->locale->_('save'), 'btn btn-primary')
-            ->setAttribute('id', 'save_form'))
-            ->addChild(
-                $this->html->anchor($this->locale->_('save_and_new'), 'javascript:void(0)', 'btn btn-primary')
-                    ->setAttribute('id', 'save_new')
-            )
+    $this->html->button('button', $this->locale->_('save'), 'btn btn-primary')
+            ->setAttribute('data-submit', 'form1')
+//        $this->html->button('button', $this->locale->_('save_and_new'), 'btn btn-success')
+//            ->setAttribute('data-submit', 'form1')
+//        $this->html->button('button', $this->locale->_('save'), 'btn btn-primary')
+//            ->setAttribute('id', 'save_form'))
+//            ->addChild(
+//                $this->html->anchor($this->locale->_('save_and_new'), 'javascript:void(0)', 'btn btn-primary')
+//                    ->setAttribute('id', 'save_new')
+//            )
+
 ));
 
 $dataTypes = array(
@@ -61,11 +65,8 @@ $f->newField($this->locale->_('text'), true,
     $this->html->textbox('label', 'data[labe]', $this->model->getLabel())
         ->addValidateRule('required', true));
 $f->newField($this->locale->_('attrs_indexable'), true,
-    $this->html->select('indexable', 'data[indexable]', $this->model->getEnabled(),
+    $this->html->select('indexable', 'data[indexable]', $this->model->getIndexable(),
         array('1'=>$this->locale->_('yes'), '0'=>$this->locale->_('no'))));
-//$f->newField($this->locale->_('attrs_localizable'), true,
-//    $this->html->select('localizable', 'data[localizable]', $this->model->getLocalizable(),
-//        array('1'=>$this->locale->_('yes'), '0'=>$this->locale->_('no'))));
 
 $f->newField($this->locale->_('enabled'), true,
     $this->html->select('enabled', 'data[enabled]', $this->model->getEnabled(),
@@ -132,26 +133,35 @@ switch($this->model->getInputType()):
     case \Ixiangs\Attrs\Constant::INPUT_TYPE_SELECT:
     case \Ixiangs\Attrs\Constant::INPUT_TYPE_OPTION_LIST:
         $f->beginGroup('tab_option', $this->locale->_('attrs_option'));
-        $options = $this->model->getOptions(array());
+        $options = $this->model->getOptions();
         $f->newField('', false)->setRenderer(function() use($options){
             $res = array('<div class="form-group"><table id="option_table" class="table table-bordered" style="width:auto;">');
             $res[] = '<thead><tr><th>'.$this->locale->_('attrs_option_value').'</th>';
-            $res[] = '<th>'.$this->locale->_('label').'</th>';
+            $res[] = '<th>'.$this->locale->_('text').'</th>';
             $res[] = '<th><a href="javascript:void(0);" id="add_option">'.$this->locale->_('add').'</a></th></tr></thead><tbody>';
             if(count($options) == 0){
-                $res[] = '<tr><td><input type="text" name="options[value][]" value=""/></td>';
-                $res[] = '<td><input type="text" name="options[label][]" value=""/></td>';
+                $res[] = '<tr><td><input type="text" name="new_options[0][value]" value=""/></td>';
+                $res[] = '<td><input type="text" name="new_options[0][label]" value=""/></td>';
                 $res[] = '<td><a href="javascript:void(0);" data-action="delete">'.$this->locale->_('delete').'</a></td>';
                 $res[] = '</tr>';
             }else{
-                foreach($options as $op){
-                    $res[] = '<tr><td><input type="text" name="options[value]['.$op['id'].']" value="'.$op['value'].'"/></td>';
-                    $res[] = '<td><input type="text" name="options[label]['.$op['id'].']" value="'.$op['label'].'"/></td>';
-                    $res[] = '<td><a href="javascript:void(0);" data-id="'.$op['id'].'" data-action="delete">'.$this->locale->_('delete').'</a></td>';
-                    $res[] = '</tr>';
+                foreach($options as $index=>$op){
+                    if($op->getId()){
+                        $res[] = '<tr><td><input type="text" class="option-value" name="edit_options['.$op->getId().'][value]" value="'.$op->getValue().'"/></td>';
+                        $res[] = '<td><input type="text" class="option-value" name="edit_options['.$op->getId().'][label]" value="'.$op->getLabel().'"/></td>';
+                        $res[] = '<td><a href="javascript:void(0);" data-id="'.$op->getId().'" data-action="delete">'.$this->locale->_('delete').'</a></td>';
+                        $res[] = '</tr>';
+                    }else{
+                        $res[] = '<tr><td><input type="text" class="option-value" name="new_options['.$index.'][value]" value="'.$op->getValue().'"/></td>';
+                        $res[] = '<td><input type="text" class="option-value" name="new_options['.$index.'][label]" value="'.$op->getLabel().'"/></td>';
+                        $res[] = '<td><a href="javascript:void(0);" data-action="delete">'.$this->locale->_('delete').'</a></td>';
+                        $res[] = '</tr>';
+                    }
+
                 }
             }
             $res[] .= '</tbody></table>';
+            $res[] .= '<input type="hidden" name="option_values" data-validate-option-required="true" data-validate-option-repeated="true" />';
             $res[] .= '</div>';
             return implode('', $res);
         });
@@ -169,9 +179,49 @@ $this->assign('form', $f);
 $this->beginBlock('footerjs');
 ?>
     <script language="javascript">
-        var curIndex = 0;
-        var optionHtml = '<tr><td><input type="text" name="new_options[value][]" value=""/></td>';
-        optionHtml += '<td><input type="text" name="new_options[label][]" value=""/></td>';
+        Toy.Validation.rules['option-required'] = new (new Class({
+            match: function (field) {
+                var $input = $(field.inputs[0]);
+                var p = $input.attr('data-validate-option-required');
+                return p ? p : false;
+            },
+            check: function (field, params) {
+                var pass = true;
+                $('#option_table input').each(function(){
+                    if($(this).val().trim().length == 0){
+                        pass = false;
+                    }
+                });
+                return pass;
+            },
+            message: function (field, params) {
+                return '<?php echo $this->locale->_('attrs_option_required'); ?>';
+            }
+        }))();
+        Toy.Validation.rules['option_repeated'] = new (new Class({
+            match: function (field) {
+                var $input = $(field.inputs[0]);
+                var p = $input.attr('data-validate-option-repeated');
+                return p ? p : false;
+            },
+            check: function (field, params) {
+                var pass = true;
+                var values = [];
+                $('#option_table .option-value').each(function(){
+                    if(values.contains($(this).val())){
+                        pass = false;
+                    }
+                    values.push($(this).val());
+                });
+                return pass;
+            },
+            message: function (field, params) {
+                return '<?php echo $this->locale->_('attrs_option_repeated'); ?>';
+            }
+        }))();
+        var curIndex = <?php echo count($this->model->options); ?>;
+        var optionHtml = '<tr><td><input type="text" class="option-value" name="new_options[{index}][value]" value=""/></td>';
+        optionHtml += '<td><input type="text" class="option-value" name="new_options[{index}][label]" value=""/></td>';
         optionHtml += '<td><a href="javascript:void(0);" data-action="delete"><?php echo $this->locale->_('delete'); ?></a></td>';
         optionHtml += '</tr>';
 
@@ -180,25 +230,8 @@ $this->beginBlock('footerjs');
             $(this).parents('tr').remove();
         });
         $('#add_option').click(function () {
-            $('#option_table tbody').append(optionHtml);
-        });
-        $('#save_form,#save_new').click(function(){
-            $('#next_action').val($(this).attr('id') == 'save_form'? '': 'new');
-            var pass = true;
-            $('#option_table input').each(function(){
-                if($(this).val().trim().length == 0){
-                    pass = false;
-                }
-            });
-            if(!pass){
-                $('#options').val('');
-                $('#form1').data('validator').validate();
-                return;
-            }
-
-            $('#options').val('1');
-            var trIndex = 0;
-            $('#form1').submit();
+            ++curIndex;
+            $('#option_table tbody').append(optionHtml.substitute({index:curIndex}));
         });
     </script>
 <?php

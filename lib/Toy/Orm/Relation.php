@@ -13,7 +13,8 @@ class Relation
     private $_propertyName = null;
     private $_type = null;
 
-    public function __construct($type, $propertyName, $thatModel, $thatProperty, $thisProperty = null){
+    private function __construct($type, $propertyName, $thatModel, $thatProperty, $thisProperty = null)
+    {
         $this->_type = $type;
         $this->_propertyName = $propertyName;
         $this->_thatModel = $thatModel;
@@ -76,15 +77,18 @@ class Relation
         return $this;
     }
 
-    static public function childRelation($propertyName, $thatModel, $thatProperty, $thisProperty = null){
-        return new self(self::TYPE_CHILD, $thatModel, $thatProperty, $propertyName, $thisProperty);
+    static public function childRelation($propertyName, $thatModel, $thatProperty, $thisProperty = null)
+    {
+        return new self(self::TYPE_CHILD, $propertyName, $thatModel, $thatProperty, $thisProperty);
     }
 
-    static public function parentRelation($propertyName, $thisProperty, $thatModel, $thatProperty = null){
-        return new self(self::TYPE_PARENT, $thatModel, $thatProperty, $propertyName, $thisProperty);
+    static public function parentRelation($propertyName, $thisProperty, $thatModel, $thatProperty = null)
+    {
+        return new self(self::TYPE_PARENT, $propertyName, $thatModel, $thatProperty, $thisProperty);
     }
 
-    static public function childrenRelation($propertyName, $thatModel, $thatProperty, $thisProperty = null){
-        return new self(self::TYPE_CHILDREN, $thatModel, $thatProperty, $propertyName, $thisProperty);
+    static public function childrenRelation($propertyName, $thatModel, $thatProperty, $thisProperty = null)
+    {
+        return new self(self::TYPE_CHILDREN, $propertyName, $thatModel, $thatProperty, $thisProperty);
     }
 }

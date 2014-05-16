@@ -80,7 +80,7 @@ class Object implements \ArrayAccess, \Iterator
         return key($this->data) !== null;
     }
 
-    public function isEmptyData($name)
+    public function isEmptyProperty($name)
     {
         if (!array_key_exists($name, $this->data)) {
             return true;
@@ -88,36 +88,29 @@ class Object implements \ArrayAccess, \Iterator
         return empty($this->data[$name]);
     }
 
-    public function getData()
+    public function getData($name, $default = null)
     {
-        $args = func_get_args();
-        $nums = func_num_args();
-        if($nums == 2){
-            if (array_key_exists($args[0], $this->data)) {
-                $res = $this->data[$args[0]];
-                return is_null($res)? $args[1]: $res;
-            }else{
-                return $args[1];
+        if (array_key_exists($name, $this->data)) {
+            if (is_null($this->data[$name])) {
+                return $default;
             }
-        }elseif($nums == 1){
-            if (array_key_exists($args[0], $this->data)) {
-                return $this->data[$args[0]];
-            }
-            return null;
+            return $this->data[$name];
         }
-
-        return $this->data;
+        return $default;
     }
 
     public function setData($name, $value)
     {
-        $args = func_get_args();
-        $nums = func_num_args();
-        if($nums == 2){
-            $this->data[$args[0]] == $args[1];
-        }elseif($nums == 1 && is_array($args[0])){
-            $this->data = array_merge($this->data, $args[0]);
-        }
+        $this->data[$name] = $value;
+        return $this;
+    }
+
+    public function getAllData(){
+        return $this->data;
+    }
+
+    public function setAllData($value){
+        $this->data = $value;
         return $this;
     }
 

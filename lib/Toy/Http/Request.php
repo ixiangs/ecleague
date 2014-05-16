@@ -75,11 +75,11 @@ class Request implements \ArrayAccess
     public function getBrowserLanguage()
     {
         $others = array(
-            'zh-Hans-CN'=>'zh-CN',
-            'zh-Hans'=>'zh-CN'
+            'zh-Hans-CN' => 'zh-CN',
+            'zh-Hans' => 'zh-CN'
         );
         $arr = explode(",", $_SERVER["HTTP_ACCEPT_LANGUAGE"]);
-        if(array_key_exists($arr[0], $others)){
+        if (array_key_exists($arr[0], $others)) {
             return strtolower($others[$arr[0]]);
         }
         return strtolower($arr[0]);
@@ -163,45 +163,66 @@ class Request implements \ArrayAccess
 
     public function hasParameter($name)
     {
-        if (array_key_exists($name, $_REQUEST)) {
-            return TRUE;
-        }
-        return false;
+        return array_key_exists($name, $_REQUEST);
     }
 
-    public function getParameter()
+    public function getParameter($name, $default = null)
     {
-        $nums = func_num_args();
+        return array_key_exists($name, $_REQUEST) ? $_REQUEST[$name] : $default;
+    }
+
+    public function listParameter()
+    {
         $args = func_get_args();
-        if($nums == 2){
-            return array_key_exists($args[0], $_REQUEST) ? $_REQUEST[$args[0]] : $args[1];
-        }elseif($nums == 1){
-            return array_key_exists($args[0], $_REQUEST) ? $_REQUEST[$args[0]] : null;
+        $result = array();
+        foreach ($args as $arg) {
+            $result[] = array_key_exists($arg, $_REQUEST) ? $_REQUEST[$arg] : null;
         }
+        return $result;
+    }
+
+    public function getAllParameters()
+    {
         return $_REQUEST;
     }
 
-    public function getQuery()
+    public function getQuery($name, $default = null)
     {
-        $nums = func_num_args();
+        return array_key_exists($name, $_GET) ? $_GET[$name] : $default;
+    }
+
+    public function listQuery()
+    {
         $args = func_get_args();
-        if($nums == 2){
-            return array_key_exists($args[0], $_GET) ? $_GET[$args[0]] : $args[1];
-        }elseif($nums == 1){
-            return array_key_exists($args[0], $_GET) ? $_GET[$args[0]] : null;
+        $result = array();
+        foreach ($args as $arg) {
+            $result[] = array_key_exists($arg, $_GET) ? $_GET[$arg] : null;
         }
+        return $result;
+    }
+
+    public function getAllQuery()
+    {
         return $_GET;
     }
 
-    public function getPost()
+    public function getPost($name, $default = null)
     {
-        $nums = func_num_args();
+        return array_key_exists($name, $_POST) ? $_POST[$name] : $default;
+    }
+
+    public function listPost()
+    {
         $args = func_get_args();
-        if($nums == 2){
-            return array_key_exists($args[0], $_POST) ? $_POST[$args[0]] : $args[1];
-        }elseif($nums == 1){
-            return array_key_exists($args[0], $_POST) ? $_POST[$args[0]] : null;
+        $result = array();
+        foreach ($args as $arg) {
+            $result[] = array_key_exists($arg, $_POST) ? $_POST[$arg] : null;
         }
+        return $result;
+    }
+
+    public function getAllPost()
+    {
         return $_POST;
     }
 

@@ -18,7 +18,6 @@ abstract class Model implements \ArrayAccess, \Iterator
     protected $originalData = array();
     protected $data = array();
     protected $newed = false;
-    protected $dirty = false;
     protected $deleted = false;
 
     public function __construct($data = array())
@@ -151,7 +150,7 @@ abstract class Model implements \ArrayAccess, \Iterator
         return array_key_exists($name, $this->relations);
     }
 
-    public function isEmptyData($name)
+    public function isEmptyProperty($name)
     {
         if (!array_key_exists($name, $this->data)) {
             return true;
@@ -171,17 +170,6 @@ abstract class Model implements \ArrayAccess, \Iterator
     public function isNewed()
     {
         return $this->newed;
-    }
-
-    public function isDirty()
-    {
-        if ($this->newed) {
-            return false;
-        }
-        if ($this->deleted) {
-            return false;
-        }
-        return count($this->changedProperties) > 0;
     }
 
     public function isDeleted()
@@ -237,21 +225,23 @@ abstract class Model implements \ArrayAccess, \Iterator
             $thatModel = $relation->getThatModel();
             switch ($type) {
                 case Relation::TYPE_CHILDREN:
-                    if ($relation->getThisProperty()) {
-                        $this->data[$name] = $thatModel::find()->eq($relation->getThatProperty(), $this->data[$relation->getThisProperty]);
-                    } else {
-                        $this->data[$name] = $thatModel::find()->eq($relation->getThatProperty(), $this->getIdValue());
+                    $eqValue = $relation->getThisProperty() ?
+                        $this->data[$relation->getThisProperty()] :
+                        $this->getIdValue();
+                    $find = $thatModel::find();
+                    if (!empty($eqValue)) {
+                        $find->eq($relation->getThatProperty(), $eqValue);
                     }
+                    $this->data[$name] = $find;
                     break;
                 case Relation::TYPE_CHILD:
-                    if ($relation->getThisProperty()) {
-                        $this->data[$name] = $thatModel::find()
-                            ->eq($relation->getThatProperty(), $this->data[$relation->getThisProperty])
-                            ->load()
-                            ->getFirst();
+                    $eqValue = $relation->getThisProperty() ?
+                        $this->data[$relation->getThisProperty()] :
+                        $this->getIdValue();
+                    if (!empty($eqValue)) {
+                        $this->data[$name] = new $thatModel();
                     } else {
-                        $this->data[$name] = $thatModel::find()
-                            ->eq($relation->getThatProperty(), $this->getIdValue())
+                        $this->data[$name] = $thatModel::find()->eq($relation->getThatProperty(), $eqValue)
                             ->load()
                             ->getFirst();
                     }
@@ -295,24 +285,35 @@ abstract class Model implements \ArrayAccess, \Iterator
         return $this->setData($this->idProperty->getName(), $value);
     }
 
+    public function validate()
+    {
+        $result = $this->validateProperties();
+        if (!$result) {
+            return $result;
+        }
+
+        return $this->validateChildren();
+    }
+
     public function validateProperties()
     {
         $result = array();
-        foreach ($this->changedProperties as $propertyName) {
-            $prop = $this->properties[$propertyName];
-            if ($this->newed) {
-                if ($prop->getInsertable()) {
-                    $r = $prop->validate($this->getData($propertyName));
+        if ($this->newed) {
+            foreach ($this->properties as $name => $property) {
+                if ($property->getInsertable()) {
+                    $r = $property->validate($this->getData($name));
                     if ($r !== true) {
-                        $result[] = $propertyName;
+                        $result[] = $name;
                     }
                 }
-
-            } else {
-                if ($prop->getUpdateable()) {
-                    $r = $prop->validate($this->getData($propertyName));
+            }
+        } elseif ($this->isChanged()) {
+            foreach ($this->changedProperties as $name) {
+                $property = $this->properties[$name];
+                if ($property->getUpdateable()) {
+                    $r = $property->validate($this->getData($name));
                     if ($r !== true) {
-                        $result[] = $propertyName;
+                        $result[] = $name;
                     }
                 }
             }
@@ -321,7 +322,36 @@ abstract class Model implements \ArrayAccess, \Iterator
         return empty($result) ? true : $result;
     }
 
-    public function validateUnique($db = null)
+    public function validateChildren()
+    {
+        foreach ($this->relations as $name => $relation) {
+            switch ($relation->getType()) {
+                case Relation::TYPE_CHILDREN:
+                    foreach ($this->data[$name] as $child) {
+                        if (!$child->validateProperties()) {
+                            return false;
+                        }
+                        if (!$child->validateChildren()) {
+                            return false;
+                        }
+                    }
+                    return true;
+                    break;
+                case Relation::TYPE_CHILD:
+                    if (!$this->data[$name]->validateProperties()) {
+                        return false;
+                    }
+                    if (!$this->data[$name]->validateChildren()) {
+                        return false;
+                    }
+                    return true;
+                    break;
+            }
+        }
+        return true;
+    }
+
+    public function checkUnique($db = null)
     {
         $cdb = $db ? $db : Helper::openDb();
         $result = array();
@@ -331,7 +361,7 @@ abstract class Model implements \ArrayAccess, \Iterator
                     $c = static::find()
                         ->eq($n, $this->getData($n))
                         ->limit(1)
-                        ->count($db);
+                        ->count($cdb);
                     if ($c > 0) {
                         $result[] = $n;
                     }
@@ -341,24 +371,37 @@ abstract class Model implements \ArrayAccess, \Iterator
         return empty($result) ? true : $result;
     }
 
-    public function save($db)
+    public function save($db = null)
     {
         $cdb = $db ? $db : Helper::openDb();
 
-        $this->beforeSave($db);
-
+        $result = true;
         if ($this->deleted) {
-            $result = $this->delete($cdb);
-        } elseif ($this->newed) {
-            $result = $this->insert($cdb);
-        } elseif ($this->isChanged()) {
-            $result = $this->update($cdb);
+            $this->beforeDelete($cdb);
+            $this->deleteChildren($cdb);
+            $result = $this->deleteSelf($cdb);
+            $this->afterDelete($cdb);
+        } else {
+            if ($this->newed) {
+                $this->beforeInsert($cdb);
+                $result = $this->insertSelf($cdb);
+                $this->afterInsert($cdb);
+            } elseif ($this->isChanged()) {
+                $this->beforeUpdate($cdb);
+                $result = $this->updateSelf($cdb);
+                $this->afterUpdate($cdb);
+            }
+            if ($result) {
+                $result = $this->saveChildren($cdb);
+            }
         }
 
-        $this->afterSave($cdb);
-        $this->saveChildren($cdb);
-
         return $result;
+    }
+
+    public function delete($db)
+    {
+        return $this->markDeleted()->save($db);
     }
 
     protected function saveChildren($db)
@@ -367,25 +410,64 @@ abstract class Model implements \ArrayAccess, \Iterator
             switch ($relation->getType()) {
                 case Relation::TYPE_CHILDREN:
                     foreach ($this->data[$name] as $child) {
-                        $child->save($db);
+                        if(!$child->save($db)){
+                            return false;
+                        }
                     }
                     break;
                 case Relation::TYPE_CHILD:
-                    $this->data[$name]->save($db);
+                    if($this->data[$name]->save($db)){
+                        return false;
+                    }
+                    break;
+            }
+        }
+        return true;
+    }
+
+    protected function deleteChildren($db)
+    {
+        foreach ($this->relations as $name => $relation) {
+            switch ($relation->getType()) {
+                case Relation::TYPE_CHILDREN:
+                    foreach ($this->data[$name] as $child) {
+                        $child->delete($db);
+                    }
+                    break;
+                case Relation::TYPE_CHILD:
+                    $this->data[$name]->delete($db);
                     break;
             }
         }
     }
 
-    protected function beforeSave($db)
+
+    protected function beforeDelete($db)
     {
     }
 
-    protected function afterSave($db)
+    protected function afterDelete($db)
     {
     }
 
-    protected function insert($db)
+
+    protected function beforeInsert($db)
+    {
+    }
+
+    protected function afterInsert($db)
+    {
+    }
+
+    protected function beforeUpdate($db)
+    {
+    }
+
+    protected function afterUpdate($db)
+    {
+    }
+
+    protected function insertSelf($db)
     {
         $values = array();
         foreach ($this->properties as $n => $p) {
@@ -409,7 +491,7 @@ abstract class Model implements \ArrayAccess, \Iterator
         return $result;
     }
 
-    protected function update($db)
+    protected function updateSelf($db)
     {
         $values = array();
         foreach ($this->properties as $n => $p) {
@@ -426,7 +508,7 @@ abstract class Model implements \ArrayAccess, \Iterator
         return $result;
     }
 
-    protected function delete($db = null)
+    protected function deleteSelf($db = null)
     {
         $result = Helper::delete($this->tableName)
             ->eq($this->idProperty->getName(), $this->getIdValue())

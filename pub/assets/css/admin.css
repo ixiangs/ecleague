@@ -52,10 +52,6 @@
     background: none;
 }
 
-.table > tbody > tr > td {
-    padding: 0px 8px 0px 8px;
-}
-
 table.table th {
     text-align: center;
     font-weight: bold;

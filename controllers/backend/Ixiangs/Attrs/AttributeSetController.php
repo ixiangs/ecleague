@@ -13,7 +13,7 @@ class AttributeSetController extends Web\Controller
     public function listAction()
     {
         $pi = $this->request->getParameter("pageindex", 1);
-        $count = AttributeSetModel::find()->count();
+        $count = AttributeSetModel::find()->executeCount();
         $models = AttributeSetModel::find()
             ->asc('code')
             ->limit(PAGINATION_SIZE, ($pi - 1) * PAGINATION_SIZE)

@@ -10,7 +10,7 @@ class BehaviorController extends Web\Controller
     public function listAction()
     {
         $pi = $this->request->getParameter("pageindex", 1);
-        $count = BehaviorModel::find()->count();
+        $count = BehaviorModel::find()->executeCount();
         $models = BehaviorModel::find()
                     ->select(System\Constant::TABLE_COMPONENT.'.name as component_name', Constant::TABLE_BEHAVIOR.'.*')
                     ->join(System\Constant::TABLE_COMPONENT,
@@ -50,7 +50,7 @@ class BehaviorController extends Web\Controller
                 return $this->getEditTemplateResult($m);
             }
         }else{
-            $vr = $m->validateUnique();
+            $vr = $m->checkUnique();
             if ($vr !== true) {
                 $this->session->set('errors', $lang->_('err_code_exists', $m->getCode()));
                 return $this->getEditTemplateResult($m);

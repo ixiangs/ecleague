@@ -43,7 +43,7 @@ abstract class Controller
                 $rf = new \ReflectionClass($this);
                 $params = $rf->getMethod($method)->getParameters();
                 $arguments = array();
-                foreach ($this->request->getParameter() as $n => $v) {
+                foreach ($this->request->getAllParameters() as $n => $v) {
                     foreach ($params as $p) {
                         if ($p->getName() == $n) {
                             $arguments[] = $v;

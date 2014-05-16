@@ -9,7 +9,7 @@ class DepartmentController extends Web\Controller
     public function listAction()
     {
         $pi = $this->request->getParameter("pageindex", 1);
-        $count = DepartmentModel::find()->count();
+        $count = DepartmentModel::find()->executeCount();
         $models = DepartmentModel::find()->limit(PAGINATION_SIZE, ($pi - 1) * PAGINATION_SIZE)->load();
         return Web\Result::templateResult(array(
                 'models' => $models,
@@ -45,7 +45,7 @@ class DepartmentController extends Web\Controller
                 return $this->getEditTemplateReult($m);
             }
         } else {
-            $vr = $m->validateUnique();
+            $vr = $m->checkUnique();
             if ($vr !== true) {
                 $this->session->set('errors', $lang->_('err_code_exists', $m->getCode()));
                 return $this->getEditTemplateReult($m);

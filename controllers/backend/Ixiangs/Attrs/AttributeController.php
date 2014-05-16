@@ -2,6 +2,7 @@
 namespace Ixiangs\Attrs;
 
 use Ixiangs\System\ComponentModel;
+use Toy\Db\Helper;
 use Toy\Web;
 
 class AttributeController extends Web\Controller
@@ -10,7 +11,7 @@ class AttributeController extends Web\Controller
     public function listAction()
     {
         $pi = $this->request->getParameter("pageindex", 1);
-        $count = AttributeModel::find()->count();
+        $count = AttributeModel::find()->executeCount();
         $models = AttributeModel::find()
             ->asc('name')
             ->limit(PAGINATION_SIZE, ($pi - 1) * PAGINATION_SIZE)
@@ -45,39 +46,61 @@ class AttributeController extends Web\Controller
 
     public function editAction($id)
     {
-        return $this->getEditTemplateResult(AttributeModel::load($id));
+        $model = AttributeModel::load($id);
+        $model->getOptions()->load();
+        return $this->getEditTemplateResult($model);
     }
 
     public function savePostAction()
     {
-        print_r($_POST);
-        die();
         $locale = $this->context->locale;
-        $m = new AttributeModel($this->request->getPost('data'));
-
-        $vr = $m->validateProperties();
-        if ($vr !== true) {
-            $this->session->set('errors', $locale->_('err_input_invalid'));
-            return $this->getEditTemplateResult($m);
-        }
-
-        if ($m->getId()) {
-            if (!$m->update()) {
-                $this->session->set('errors', $locale->_('err_system'));
-                return $this->getEditTemplateResult($m);
-            }
+        $data = $this->request->getPost('data');
+        list($newOptions, $editOptions, $deleteOptions) = $this->request->listPost('new_options', 'edit_options', 'delete_options');
+        if ($data['id']) {
+            $model = AttributeModel::merge($data['id'], $data);
+            $options = $model->getOptions()->load();
         } else {
-            if (!$m->insert()) {
-                $this->session->set('errors', $locale->_('err_system'));
-                return $this->getEditTemplateResult($m);
+            $model = AttributeModel::create($data);
+            $options = $model->getOptions();
+        }
+
+        foreach ($options as $option) {
+            $optionId = $option->getId();
+            if (is_array($deleteOptions) && in_array($optionId, $deleteOptions)) {
+                $option->markDeleted();
+            } elseif (is_array($editOptions) && array_key_exists($optionId, $editOptions)) {
+                $option->setAllData($editOptions[$optionId]);
             }
         }
 
-        if ($this->request->getPost('next_action') == 'new') {
-            return Web\Result::redirectResult($this->router->buildUrl('type'));
+        if (is_array($newOptions)) {
+            foreach ($newOptions as $newOption) {
+                $options->append(OptionModel::create($newOption)->setAttributeId($model->getId()));
+            }
         }
 
-        return Web\Result::redirectResult($this->router->buildUrl('list'));
+        $validated = $model->validate();
+        if ($validated !== true) {
+            $this->session->set('errors', $locale->_('err_input_invalid'));
+            return $this->getEditTemplateResult($model);
+        }
+
+        $success = Helper::withTx(function ($tx) use ($model) {
+            if(!$model->save($tx)){
+                $tx->rollback();
+                return false;
+            }
+            return true;
+        });
+
+        if ($success) {
+            return $this->request->getPost('next_action') == 'new' ?
+                Web\Result::redirectResult($this->router->buildUrl('type')) :
+                Web\Result::redirectResult($this->router->buildUrl('list'));
+        } else {
+            $this->session->set('errors', $locale->_('err_system'));
+            return $this->getEditTemplateResult($model);
+        }
     }
 
     public function deleteAction($id)

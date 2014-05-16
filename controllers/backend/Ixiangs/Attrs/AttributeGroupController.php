@@ -11,7 +11,7 @@ class AttributeGroupController extends Web\Controller
     public function listAction()
     {
         $pi = $this->request->getParameter("pageindex", 1);
-        $count = GroupModel::find()->count();
+        $count = GroupModel::find()->executeCount();
         $models = GroupModel::find()
             ->limit(PAGINATION_SIZE, ($pi - 1) * PAGINATION_SIZE)
             ->load();

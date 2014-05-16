@@ -10,7 +10,7 @@ class LanguageController extends Web\Controller
     public function listAction()
     {
         $pi = $this->request->getParameter("pageindex", 1);
-        $count = LanguageModel::find()->count();
+        $count = LanguageModel::find()->executeCount();
         $models = LanguageModel::find()->limit(PAGINATION_SIZE, ($pi - 1) * PAGINATION_SIZE)->load();
         return Web\Result::templateResult(array(
                 'models' => $models,
@@ -46,7 +46,7 @@ class LanguageController extends Web\Controller
                 return $this->getEditTemplateResult($m);
             }
         } else {
-            $vr = $m->validateUnique();
+            $vr = $m->checkUnique();
             if ($vr !== true) {
                 $this->session->set('errors', $lang->_('locale_err_language_exists', $m->getCode()));
                 return $this->getEditTemplateResult($m);

@@ -11,7 +11,7 @@ class MenuController extends Web\Controller
     public function listAction()
     {
         $pi = $this->request->getParameter("pageindex", 1);
-        $count = MenuModel::find()->count();
+        $count = MenuModel::find()->executeCount();
         $models = MenuModel::find()
             ->limit(PAGINATION_SIZE, ($pi - 1) * PAGINATION_SIZE)
             ->load();

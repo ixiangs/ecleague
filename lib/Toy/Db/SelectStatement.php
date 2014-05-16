@@ -128,7 +128,7 @@ class SelectStatement extends WhereStatement
         return $this->limit;
     }
 
-    public function count($db = null){
+    public function executeCount($db = null){
         $cdb = is_null($db)? Helper::openDb():$db;
         $res = $cdb->select($this->resetSelect()->resetLimit()->resetOrderby()->select('count(*)'));
         return $res->getFirstValue();

@@ -9,7 +9,7 @@ class StaffController extends Web\Controller
     public function listAction()
     {
         $pi = $this->request->getParameter("pageindex", 1);
-        $count = StaffModel::find()->count();
+        $count = StaffModel::find()->executeCount();
         $models = StaffModel::find()
             ->select(Constant::TABLE_STAFF.'.*', Constant::TABLE_DEPARTMENT.'.name as department_name',
                 Constant::TABLE_POSITION.'.name as position_name')
@@ -49,7 +49,7 @@ class StaffController extends Web\Controller
                 return $this->getEditTemplateReult($m);
             }
         } else {
-            $vr = $m->validateUnique();
+            $vr = $m->checkUnique();
             if ($vr !== true) {
                 $this->session->set('errors', $lang->_('err_code_exists', $m->getCode()));
                 return $this->getEditTemplateReult($m);

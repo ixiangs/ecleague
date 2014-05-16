@@ -29,7 +29,7 @@ class ProductController extends Web\Controller
     public function addPostAction()
     {
         $locale = $this->context->locale;
-        $post = $this->request->getPost();
+        $post = $this->request->getAllPost();
         $model = Tops::loadModel('catalogue/product')
                     ->bindAttributeSet()
                     ->setAllData($post['data']);

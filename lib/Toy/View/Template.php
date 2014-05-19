@@ -130,6 +130,14 @@ class Template
         return $tmpl->render($filename);
     }
 
+    public function renderCss($href){
+        return '<link href="'.$href.'" rel="stylesheet">';
+    }
+
+    public function renderJavascript($src){
+        return '<script src="'.$src.'"></script>';
+    }
+
     public function render($path)
     {
         $allPaths = array();

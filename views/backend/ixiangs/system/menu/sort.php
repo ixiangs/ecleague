@@ -13,7 +13,6 @@ $this->assign('toolbar', array(
         ->setEvent('click', 'saveSort()')
 ));
 
-$langId = $this->locale->getLanguageId();
 $this->beginBlock('form');
 ?>
 <div class="row">
@@ -48,7 +47,7 @@ $this->nextBlock('footerjs');
             $nodes = array();
             foreach($this->menus as $menu):
             $nodes[] = sprintf('{ id:%s, pId:%s, name:"%s", open:true}',
-                                $menu->getId(), $menu->getParentId(0), $menu->name[$langId]);
+                                $menu->getId(), $menu->getParentId(0), $menu->name);
             endforeach;
             echo implode(',', $nodes);
             ?>

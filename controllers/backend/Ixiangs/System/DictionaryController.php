@@ -72,9 +72,9 @@ class DictionaryController extends Web\Controller
             return true;
         });
 
-        if($success){
+        if ($success) {
             return Web\Result::redirectResult($this->router->buildUrl('list', array('languageid' => $lid)));
-        }else{
+        } else {
             $this->session->set('errors', $lang->_('err_system'));
             return $this->getAddTemplateResult($models);
         }
@@ -107,15 +107,14 @@ class DictionaryController extends Web\Controller
 
     public function deletePostAction($languageid)
     {
-//        $lang = $this->context->locale;
-//        $m = LanguageModel::deleteBatch($this->request->getPost('ids'));
-//
-//        if (!$m) {
-//            $this->session->set('errors', $lang->_('err_system'));
-//            return Web\Result::redirectResultt($this->router->buildUrl('list'));
-//        }
-//
-//        return Web\Result::redirectResult($this->router->buildUrl('list', array('languageid' => $languageid)), $lang->_('operation_success'));
+        $lang = $this->context->locale;
+        $result = DictionaryModel::batchDelete($this->request->getPost('ids'));
+
+        if (!$result) {
+            $this->session->set('errors', $lang->_('err_system'));
+        }
+
+        return Web\Result::redirectResult($this->request->getRefererUrl());
     }
 
     private function getAddTemplateResult($models)

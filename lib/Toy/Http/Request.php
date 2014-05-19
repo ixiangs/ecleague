@@ -131,6 +131,10 @@ class Request implements \ArrayAccess
         return $result;
     }
 
+    public function getRefererUrl(){
+        return $_SERVER['HTTP_REFERER'];
+    }
+
     public function isGetMethod()
     {
         return strtolower($this->getMethod()) == 'get';

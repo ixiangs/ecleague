@@ -1,7 +1,7 @@
 <?php
 $this->assign('breadcrumb', array(
     $this->html->anchor($this->locale->_('attrs_manage')),
-    $this->html->anchor($this->locale->_('attrs_new_attribute_set'))
+    $this->html->anchor($this->model->id? $this->locale->_('attrs_edit_entity'): $this->locale->_('attrs_new_entity'))
 ));
 
 $this->assign('navigationBar', array(
@@ -13,36 +13,28 @@ $this->assign('toolbar', array(
         ->setAttribute('data-submit', 'form1')
 ));
 
-$f = $this->html->groupedForm()
+$f = $this->html->form()
         ->setAttribute('action', $this->router->buildUrl('save', '*'));
-$f->beginGroup('tab_base', $this->locale->_('base_info'));
 if($this->model->id):
-    $f->addStaticField($this->locale->_('attrs_owner_component'), $this->components[$this->model->getComponentId()]);
+    $f->addStaticField($this->locale->_('attrs_component'), $this->components[$this->model->getComponentId()]);
 else:
-    $f->newField($this->locale->_('attrs_owner_component'), true,
-        $this->html->select('component_id', 'component_id', $this->request->getQuery('component_id'), $this->components)
+    $f->newField($this->locale->_('attrs_component'), true,
+        $this->html->select('component_id', 'data[component_id]', $this->model->getComponentId(), $this->components)
             ->setCaption('')
             ->addValidateRule('required', true));
 endif;
 $f->newField($this->locale->_('code'), true,
     $this->html->textbox('code', 'data[code]', $this->model->getCode())
         ->addValidateRule('required', true));
+$f->newField($this->locale->_('name'), true,
+    $this->html->textbox('name', 'data[name]', $this->model->name)
+        ->addValidateRule('required', true));
+$f->newField($this->locale->_('memo'), true,
+    $this->html->textbox('memo', 'data[memo]', $this->model->memo));
 $f->newField($this->locale->_('enable'), true,
     $this->html->select('enabled', 'data[enabled]', $this->model->getEnabled(), array('1'=>$this->locale->_('yes'), '0'=>$this->locale->_('no')))
         ->addValidateRule('required', true));
-$f->endGroup();
 
-
-foreach($this->locale->getAllLanguages() as $lang):
-    $f->beginGroup('tab_lang_'.$lang['code'], $lang['name']);
-    $f->newField($this->locale->_('name'), true,
-        $this->html->textbox('name_'.$lang['id'], 'data[name]['.$lang['id'].']', $this->model->name[$lang['id']])
-            ->addValidateRule('required', true));
-    $f->newField($this->locale->_('memo'), true,
-        $this->html->textbox('memo_'.$lang['id'], 'data[memo]['.$lang['id'].']', $this->model->memo[$lang['id']])
-            ->addValidateRule('required', true));
-    $f->endGroup();
-endforeach;
 
 $f->addHidden('id', 'data[id]', $this->model->getId());
 $this->assign('form', $f);

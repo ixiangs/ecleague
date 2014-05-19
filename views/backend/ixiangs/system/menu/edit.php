@@ -19,6 +19,9 @@ $f->beginGroup('tab_base', $this->locale->_('base_info'));
 $f->newField($this->locale->_('admin_parent_menu'), true,
     $this->html->treeSelect('parent_id', 'data[parent_id]', $this->model->getParentId(), $this->menus)
         ->setCaption($this->locale->_('admin_root_menu')));
+$f->newField($this->locale->_('name'), true,
+    $this->html->textbox('name', 'data[name]', $this->model->name)
+        ->addValidateRule('required', true));
 $f->newField($this->locale->_('url'), true,
     $this->html->textbox('url', 'data[url]', $this->model->getUrl()));
 $f->newField($this->locale->_('user_behavior_list'), true,
@@ -28,14 +31,6 @@ $f->newField($this->locale->_('enable'), true,
         array('1'=>$this->locale->_('yes'), '0'=>$this->locale->_('no')))
         ->addValidateRule('required', true));
 $f->endGroup();
-
-foreach($this->locale->getAllLanguages() as $lang):
-    $f->beginGroup('tab_lang_'.$lang['code'], $lang['name']);
-    $f->newField($this->locale->_('name'), true,
-        $this->html->textbox('name_'.$lang['id'], 'data[name]['.$lang['id'].']', $this->model->name[$lang['id']])
-        ->addValidateRule('required', true));
-    $f->endGroup();
-endforeach;
 
 $f->addHidden('id', 'data[id]', $this->model->getId());
 $this->assign('form', $f);

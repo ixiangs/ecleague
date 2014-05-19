@@ -69,7 +69,7 @@ table.table thead tr.filter th input {
 
 table.table tbody tr td {
     vertical-align: middle;
-    text-align: center;
+    /*text-align: center;*/
 }
 
 table.table th.index, table.table tbody tr td.index {

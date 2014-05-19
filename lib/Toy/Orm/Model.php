@@ -409,15 +409,19 @@ abstract class Model implements \ArrayAccess, \Iterator
         foreach ($this->relations as $name => $relation) {
             switch ($relation->getType()) {
                 case Relation::TYPE_CHILDREN:
-                    foreach ($this->data[$name] as $child) {
-                        if(!$child->save($db)){
-                            return false;
+                    if (array_key_exists($name, $this->data)) {
+                        foreach ($this->data[$name] as $child) {
+                            if (!$child->save($db)) {
+                                return false;
+                            }
                         }
                     }
                     break;
                 case Relation::TYPE_CHILD:
-                    if($this->data[$name]->save($db)){
-                        return false;
+                    if (array_key_exists($name, $this->data)) {
+                        if ($this->data[$name]->save($db)) {
+                            return false;
+                        }
                     }
                     break;
             }
@@ -583,6 +587,24 @@ abstract class Model implements \ArrayAccess, \Iterator
     static public function create($data = array())
     {
         return new static($data);
+    }
+
+    static public function batchDelete(array $ids, $db = null)
+    {
+        $calledClass = get_called_class();
+        $metadata = self::$metadatas[$calledClass];
+        return Helper::delete($metadata['table'])
+            ->in($metadata['idProperty']->getName(), $ids)
+            ->execute($db);
+    }
+
+    static public function batchUpdate(array $data, array $ids, $db = null)
+    {
+        $calledClass = get_called_class();
+        $metadata = self::$metadatas[$calledClass];
+        return Helper::update($metadata['table'], $data)
+            ->in($metadata['idProperty']->getName(), $ids)
+            ->execute($db);
     }
 
     static private function getUnderlineName($camelCase)

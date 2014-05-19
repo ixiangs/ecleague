@@ -32,9 +32,13 @@ $(function () {
     $('form[data-validate]').each(function () {
         new Toy.Validation.Validator($(this));
     });
+
     $('button[data-submit]').click(function(){
         var $form = $('#' + $(this).attr('data-submit'));
         var args = $(this).attr('data-submit-arguments');
+        var ajax = $(this).attr('data-ajax');
+        var ajaxHandler = $(this).attr('data-ajax-handler');
+        var ajaxReady = $(this).attr('data-ajax-ready');
         if(args){
             args = JSON.decode(args);
             Object.each(args, function(item, key){
@@ -46,7 +50,28 @@ $(function () {
                 }
             });
         }
+        if(ajax){
+            if($form.data('validator')){
+                if(!$form.data('validator').validate()){
+                    return;
+                }
+            }
+            Toy.Widget.ProgressModal.show();
+            $form.submit(function(){
+                $(this).ajaxSubmit({
+                    success:function(responseText, statusText, xhr, form){
+                        Toy.Widget.ProgressModal.hide();
+//                        alert(window[ajaxHandler]);
+                        if(ajaxHandler && window[ajaxHandler]){
+                            window[ajaxHandler](responseText, statusText, xhr, form);
+                        }
+                    }
+                });
+                return false;
+            });
+        }
         $form.submit();
+
     });
 });
 

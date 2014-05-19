@@ -55,10 +55,10 @@ MenuModel::register(array(
         Orm\IntegerProperty::create('id')->setPrimaryKey(true)->setAutoIncrement(true),
         Orm\IntegerProperty::create('component_id'),
         Orm\IntegerProperty::create('parent_id')->setNullable(true),
-        Orm\SerializeProperty::create('name')->setNullable(false),
+        Orm\StringProperty::create('name')->setNullable(false),
         Orm\StringProperty::create('url'),
         Orm\IntegerProperty::create('position')->setDefaultValue(99),
         Orm\BooleanProperty::create('enabled')->setNullable(false),
-        Orm\ListProperty::create('behavior_codes')->setNullable(false)
+        Orm\ListProperty::create('behavior_codes')
     )
 ));

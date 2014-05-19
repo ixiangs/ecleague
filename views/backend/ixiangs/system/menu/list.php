@@ -11,11 +11,7 @@ $this->assign('navigationBar', array(
 $clang = $this->locale->getLanguage();
 $dt = $this->html->grid($this->models);
 $dt->addIndexColumn('#', 'index', 'index');
-$dt->addLabelColumn($this->locale->_('name'), '{name}', 'large', 'left')
-    ->setCellRenderer(function($col, $row) use($clang){
-        $col->getCell()->getChild(0)->removeBindableAttribute('text')->setAttribute('text', $row->name[$clang['id']]);
-        return $col->getCell()->renderBegin().$col->getCell()->renderInner().$col->getCell()->renderEnd();
-    });
+$dt->addLabelColumn($this->locale->_('name'), '{name}', 'large', 'left');
 $dt->addLabelColumn($this->locale->_('url'), '{url}', '', 'left');
 $dt->addBooleanColumn($this->locale->_('status'), 'enabled', $this->locale->_('enabled'), $this->locale->_('disabled').'</span>',
     'small', 'small text-center');

@@ -92,7 +92,7 @@ class AccountModel extends Orm\Model
             }
         }
 
-        return array(true, new Identity($m->id, $m->username, $m->level, $roleCodes, $behaviorCodes));
+        return array(true, new Identity($m->id, $m->username, $m->type, $roleCodes, $behaviorCodes));
     }
 }
 

@@ -18,7 +18,6 @@ class PassportController extends Web\Controller
 
         if ($r === true) {
             $this->session->set('identity', $identity->getAllData());
-            print_r($this->router->buildUrl($this->router->domain->getIndexUrl()));
             return Web\Result::RedirectResult(
                         $this->router->buildUrl($this->router->domain->getIndexUrl()));
         } else {

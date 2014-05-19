@@ -48,25 +48,26 @@ class MenuController extends Web\Controller
     public function savePostAction()
     {
         $locale = $this->context->locale;
-        $m = new MenuModel($this->request->getPost('data'));
+        $data = $this->request->getPost('data');
+        $model = $data['id']? MenuModel::merge($data['id'],$data): MenuModel::create($data);
 
-        $vr = $m->validateProperties();
+        $vr = $model->validateProperties();
         if ($vr !== true) {
             $this->session->set('errors', $locale->_('err_input_invalid'));
-            return $this->getEditTemplateResult($m);
+            return $this->getEditTemplateResult($model);
         }
 
-        if ($m->getId()) {
-            if (!$m->update()) {
-                $this->session->set('errors', $locale->_('err_system'));
-                return $this->getEditTemplateResult($m);
-            }
-        } else {
-            if (!$m->insert()) {
-                $this->session->set('errors', $locale->_('err_system'));
-                return $this->getEditTemplateResult($m);
-            }
-        }
+//        if ($m->getId()) {
+        if (!$model->save()) {
+        $this->session->set('errors', $locale->_('err_system'));
+        return $this->getEditTemplateResult($model);
+    }
+//        } else {
+//            if (!$m->insert()) {
+//                $this->session->set('errors', $locale->_('err_system'));
+//                return $this->getEditTemplateResult($m);
+//            }
+//        }
 
         return Web\Result::redirectResult($this->router->buildUrl('list'));
     }
@@ -79,14 +80,14 @@ class MenuController extends Web\Controller
     public function deleteAction($id)
     {
         $lang = $this->context->locale;
-        $m = MenuModel::load($id);
+        $model = MenuModel::load($id);
 
-        if (!$m) {
+        if (!$model) {
             $this->session->set('errors', $lang->_('err_system'));
             return Web\Result::redirectResultt($this->router->buildUrl('list'));
         }
 
-        if (!$m->delete()) {
+        if (!$model->delete()) {
             $this->session->set('errors', $lang->_('err_system'));
             return Web\Result::redirectResult($this->router->buildUrl('list'));
         }
@@ -95,7 +96,6 @@ class MenuController extends Web\Controller
 
     private function getEditTemplateResult($model)
     {
-        $langId = $this->context->locale->getLanguageId();
         $find = MenuModel::find()->asc('parent_id');
         if ($model->getId()) {
             $find->ne('id', $model->getId());
@@ -104,12 +104,12 @@ class MenuController extends Web\Controller
             return array($item->getCode(), $item->getName());
         });
 
-        $menus = $find->load()->toArray(function ($item) use ($langId) {
+        $menus = $find->load()->toArray(function ($item) {
             return array(null, array(
                 'id' => $item->getId(),
                 'parentId' => $item->getParentId(),
                 'value' => $item->getId(),
-                'text' => $item->name[$langId],
+                'text' => $item->name,
             ));
         });
         return Web\Result::templateResult(

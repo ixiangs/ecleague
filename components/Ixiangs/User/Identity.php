@@ -38,10 +38,16 @@ class Identity{
 	}
 	
 	public function hasBehavior($code){
+        if($this->_level == Constant::TYPE_ADMINISTRATOR){
+            return true;
+        }
 		return in_array($code, $this->_behaviors);
 	}
 
     public function hasAnyBehavior(array $codes){
+        if($this->_level == Constant::TYPE_ADMINISTRATOR){
+            return true;
+        }
         foreach($codes as $code){
             if(in_array($code, $this->_behaviors)){
                 return true;

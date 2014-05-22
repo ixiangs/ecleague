@@ -72,21 +72,6 @@ class FileUtil
         return $result;
     }
 
-    // static public function walkDirectory($dir, \Closure $callback) {
-    // $result = array();
-    // if ($handle = opendir($dir)) {
-    // while (false !== ($file = readdir($handle))) {
-    // if ($callback($file)) {
-    // $info = pathinfo($dir . DS . $file);
-    // $info['path'] = $dir . DS . $file;
-    // $result[] = $info;
-    // }
-    // }
-    // closedir($handle);
-    // }
-    // return $result;
-    // }
-
     static public function checkExists($filename)
     {
         return file_exists($filename);

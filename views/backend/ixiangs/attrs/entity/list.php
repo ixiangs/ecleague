@@ -11,7 +11,7 @@ $this->assign('navigationBar', array(
 $clang = $this->locale->getLanguage();
 $dt = $this->html->grid($this->models);
 $dt->addIndexColumn('#', 'index', 'index');
-$dt->addLabelColumn($this->locale->_('code'), '{code}', 'large', '');
+$dt->addLabelColumn($this->locale->_('attrs_model'), '{model}', 'large', '');
 $dt->addLabelColumn($this->locale->_('name'), '{name}', 'large', '');
 $dt->addLabelColumn($this->locale->_('memo'), '{memo}', '', '')
     ->setCellRenderer(function($col, $row) use($clang){
@@ -21,6 +21,7 @@ $dt->addLabelColumn($this->locale->_('memo'), '{memo}', '', '')
 $dt->addBooleanColumn($this->locale->_('status'), 'enabled', $this->locale->_('enabled'), $this->locale->_('disabled').'</span>',
     'small', 'small text-center');
 $dt->addLinkColumn('', $this->locale->_('edit'), urldecode($this->router->buildUrl('edit', array('id' => '{id}'))), 'small', 'small edit');
+$dt->addLinkColumn('', $this->locale->_('attrs_field'), urldecode($this->router->buildUrl('field/list', array('entityid' => '{id}'))), 'small', 'small edit');
 $dt->addLinkColumn('', $this->locale->_('grouping'), urldecode($this->router->buildUrl('grouping', array('id' => '{id}'))), 'small', 'small edit');
 $this->assign('datatable', $dt);
 

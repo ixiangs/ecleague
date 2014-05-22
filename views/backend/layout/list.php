@@ -28,9 +28,9 @@
                 echo $this->renderBlock('navigationBar');
             elseif($this->navigationBar):
                 $b = $this->navigationBar;
-                foreach($b as $btn){
-                    $btn->setAttribute('class', 'btn btn-default');
-                }
+//                foreach($b as $btn){
+//                    $btn->setAttribute('class', 'btn btn-default');
+//                }
                 $fb = array_shift($b);
                 echo $fb->render();
                 foreach ($b as $btn):
@@ -50,7 +50,6 @@ else:
     ?>
     <div class="row">
         <form id="table_form" method="post">
-            <div class="panel panel-default">
                 <?php
                 if ($this->hasBlock('toolbar') || $this->toolbar):
                     echo '<div class="panel-heading text-right">';
@@ -73,7 +72,6 @@ else:
                     endforeach;
                 endif;
                 ?>
-            </div>
         </form>
     </div>
     <?php

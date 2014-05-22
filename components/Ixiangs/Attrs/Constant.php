@@ -10,6 +10,7 @@ class Constant
     const TABLE_R_SET_GROUP = '{t}attrs_r_set_group';
     const TABLE_OPTION = '{t}attrs_option';
     const TABLE_ENTITY = '{t}attrs_entity';
+    const TABLE_FIELD = '{t}attrs_field';
 
     const INPUT_TYPE_TEXTBOX = 'textbox';
     const INPUT_TYPE_TEXTAREA = 'textarea';

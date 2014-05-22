@@ -4,16 +4,20 @@ namespace Toy\View;
 use Toy\Log\Logger;
 use Toy\Platform\PathUtil;
 use Toy\View\Html\Helper;
+use Toy\View\Html\Document;
 
 class Template
 {
 
     private static $_blocks = array();
     private static $_data = array();
-    private static $_currentBlock = NULL;
+    private static $_currentContentBlock = null;
+    private static $_currentScriptBlock = null;
+    protected $document = null;
 
     public function __construct($data = array())
     {
+        $this->document = Document::singleton();
         if (is_array($data)) {
             self::$_data = array_merge(self::$_data, $data);
         }
@@ -85,20 +89,20 @@ class Template
     protected function beginBlock($name = 'default')
     {
         ob_start();
-        self::$_currentBlock = $name;
+        self::$_currentContentBlock = $name;
         return $this;
     }
 
     protected function endBlock()
     {
-        if ($this->hasBlock(self::$_currentBlock)) {
-            $content = self::$_blocks[self::$_currentBlock];
+        if ($this->hasBlock(self::$_currentContentBlock)) {
+            $content = self::$_blocks[self::$_currentContentBlock];
             $content .= ob_get_clean();
-            self::$_blocks[self::$_currentBlock] = $content;
+            self::$_blocks[self::$_currentContentBlock] = $content;
         } else {
-            self::$_blocks[self::$_currentBlock] = ob_get_clean();
+            self::$_blocks[self::$_currentContentBlock] = ob_get_clean();
         }
-        self::$_currentBlock = NULL;
+        self::$_currentContentBlock = null;
         return $this;
     }
 
@@ -124,18 +128,52 @@ class Template
         return array_key_exists($name, self::$_blocks);
     }
 
+    public function beginScript($name){
+        ob_start();
+        self::$_currentScriptBlock = $name;
+        return $this;
+    }
+
+    public function endScript(){
+        $this->document->addScriptBlock(self::$_currentScriptBlock, ob_get_clean());
+        return $this;
+    }
+
     protected function includeTemplate($filename, $data = array())
     {
         $tmpl = new self($data);
         return $tmpl->render($filename);
     }
 
-    public function renderCss($href){
-        return '<link href="'.$href.'" rel="stylesheet">';
+    public function renderScriptBlocks(){
+        $result = array();
+        foreach($this->document->getScriptBlocks() as $script){
+            $result[] = $script;
+        }
+        return implode("\n", $result);
     }
 
-    public function renderJavascript($src){
-        return '<script src="'.$src.'"></script>';
+    public function renderReferenceScripts(){
+        $result = array();
+        foreach($this->document->getReferenceScripts() as $script){
+            $attributes = array();
+            foreach($script['attributes'] as $name=>$value){
+                $attributes[] = $name.'"'.$value.'"';
+            }
+            $result[] = '<script src="'.$script['address'].'" '.implode(' ', $attributes).'></script>';
+        }
+        return implode("\n", $result);
+    }
+
+    public function renderReferenceCss(){
+        $result = array();
+        foreach($this->document->getReferenceCss() as $css){
+            $attributes = array();
+            foreach($css['attributes'] as $name=>$value){
+                $attributes[] = $name.'"'.$value.'"';
+            }
+            $result[] = '<link href="'.$css['address'].'" '.implode(' ', $attributes).' ref="stylesheet">';
+        }
     }
 
     public function render($path)

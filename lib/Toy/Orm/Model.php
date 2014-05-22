@@ -539,6 +539,38 @@ abstract class Model implements \ArrayAccess, \Iterator
         return $this;
     }
 
+    static public function propertiesToFields($includes = null, $ignores = null, $withTable = true)
+    {
+        $metadata = self::$metadatas[get_called_class()];
+        $table = $withTable ? $metadata['table'] . '.' : '';
+        $_includes = $includes ? is_array($includes) ? $includes : array($includes) : null;
+        $_ignores = $ignores ? is_array($ignores) ? $ignores : array($ignores) : null;
+        $result = array();
+        foreach ($metadata['properties'] as $name => $prop) {
+            if ($_includes && !in_array($name, $_includes)) {
+                continue;
+            }
+            if ($_ignores && in_array($name, $_ignores)) {
+                continue;
+            }
+            $result[] = $table . $name;
+        }
+
+        return $result;
+    }
+
+    static public function propertyToField($name, $withTable = true)
+    {
+        $metadata = self::$metadatas[get_called_class()];
+        $table = $withTable ? $metadata['table'] . '.' : '';
+        if (array_key_exists($name, $metadata['properties'])) {
+            return $table . $name;
+        }
+
+
+        return $name;
+    }
+
     static public function load($id, $db = null)
     {
         $calledClass = get_called_class();
@@ -571,17 +603,21 @@ abstract class Model implements \ArrayAccess, \Iterator
         return false;
     }
 
-    static public function find()
+    static public function find($allFields = true)
     {
         $calledClass = get_called_class();
         $metadata = self::$metadatas[$calledClass];
         $table = $metadata['table'];
-        $fields = array();
-        foreach ($metadata['properties'] as $prop) {
-            $fields[] = $table . '.' . $prop->getName();
-        }
         $result = new Collection($calledClass);
-        return $result->select($fields)->from($table);
+        if ($allFields) {
+            $fields = array();
+            foreach ($metadata['properties'] as $prop) {
+                $fields[] = $table . '.' . $prop->getName();
+            }
+            $result->select($fields);
+        }
+
+        return $result->from($table);
     }
 
     static public function create($data = array())

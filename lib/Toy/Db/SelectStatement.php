@@ -36,8 +36,9 @@ class SelectStatement extends WhereStatement
         return $this;
     }
 
-    public function join($table, $leftField, $rightField, $type = 'inner')
+    public function join($leftField, $rightField, $type = 'inner')
     {
+        $table = explode('.', $leftField)[0];
         $this->joins[] = array($type, $table, $leftField, $rightField);
         return $this;
     }

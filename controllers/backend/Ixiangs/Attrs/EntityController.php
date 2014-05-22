@@ -13,7 +13,6 @@ class EntityController extends Web\Controller
         $pi = $this->request->getParameter("pageindex", 1);
         $count = EntityModel::find()->executeCount();
         $models = EntityModel::find()
-            ->asc('code')
             ->limit(PAGINATION_SIZE, ($pi - 1) * PAGINATION_SIZE)
             ->load();
         return Web\Result::templateResult(array(
@@ -68,6 +67,13 @@ class EntityController extends Web\Controller
             return Web\Result::redirectResult($this->router->buildUrl('list'));
         }
         return Web\Result::redirectResult($this->router->buildUrl('list'));
+    }
+
+    public function fieldsGetAction($id){
+        $fields = EntityModel::create($id)->getFields()->load();
+        return Web\Result::templateResult(array(
+            'fields'=>$fields
+        ));
     }
 
     public function groupsGetAction($id)

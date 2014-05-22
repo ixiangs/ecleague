@@ -26,6 +26,8 @@ $this->beginBlock('form');
             </div>
             <input type="hidden" name="data" id="data" value=""/>
         </div>
+        <input type="hidden" name="entity_id" value="<?php echo $this->entity->getId(); ?>"/>
+        <input type="hidden" name="component_id" value="<?php echo $this->entity->getComponentId(); ?>"/>
     </form>
     <div id="group_dialog" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog">
@@ -37,17 +39,15 @@ $this->beginBlock('form');
                 'action'=>$this->router->buildUrl('save-group', '*')
             ));
         $f->newField($this->locale->_('name'), true,
-            $this->html->textbox('name', 'data[name]')
+            $this->html->textbox('group_name', 'group_name')
                 ->addValidateRule('required', true));
-        $f->addHidden('group_id', 'data[id]', '');
-        $f->addHidden('entity_id', 'data[entity_id]', $this->entity->getId());
-        $f->addHidden('component_id', 'data[component_id]', $this->entity->getComponentId());
+        $f->addHidden('group_id', 'group_id', '');
         echo $f->render();
         ?>
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal"><?php echo $this->locale->_('close') ?></button>
-        <button type="button" class="btn btn-primary" data-submit="group_form" data-ajax="true" data-ajax-handler="handleGroupSaved"><?php echo $this->locale->_('save') ?></button>
+        <button type="button" class="btn btn-primary" id="save_group"><?php echo $this->locale->_('save') ?></button>
     </div>
     </div>
     </div>
@@ -61,8 +61,12 @@ $this->nextBlock('footerjs');
 ?>
     <script language="javascript">
         var groupTree = {
-            edit: { enable: true, showRemoveBtn: false, showRenameBtn: false },
-            data: { simpleData: { enable: true }}
+            edit: { enable: true,
+                    showRemoveBtn: true,
+                    showRenameBtn: false,
+                    removeTitle:"<?php echo $this->locale->_('delete'); ?>" },
+            data: { simpleData: { enable: true }},
+            callback:{onRemove: onRemoveGroup}
         };
         var groupNodes =[
             <?php
@@ -83,7 +87,9 @@ $this->nextBlock('footerjs');
         ];
 
         var attributeTree = {
-            edit: { enable: true, showRemoveBtn: false, showRenameBtn: false },
+            edit: { enable: true,
+                    showRemoveBtn: false,
+                    showRenameBtn: false },
             data: { simpleData: { enable: true }}
         };
         var attributeNodes =[
@@ -103,14 +109,33 @@ $this->nextBlock('footerjs');
         $(document).ready(function(){
             $.fn.zTree.init($("#group_tree"), groupTree, groupNodes);
             $.fn.zTree.init($("#attribute_tree"), attributeTree, attributeNodes);
+            $('#save_group').click(onEditGroup);
         });
 
         function handleGroupSaved(responseText, statusText, xhr, form){
             var zTree = $.fn.zTree.getZTreeObj('group_tree');
             nodes = zTree.getSelectedNodes(),
             treeNode = nodes[0];
-            zTree.addNodes(treeNode, {id:responseText.data.id, pId:0, isParent:true, name:responseText.data.name});
+            zTree.addNodes(treeNode, {id:responseText.data.id, pId:0, isParent:true, name:responseText.data.name, open:true});
             $('#group_dialog').modal('hide');
+        }
+
+        function onRemoveGroup(event, treeId, treeNode){
+            $('#form1').append('<input type="hidden" name="delete_group[]" value="' + treeNode.id + '" />')
+        }
+
+        function onEditGroup(){
+            var $form = $('#group_form');
+            var gname = $form.find('#group_name').val();
+            var gid = $form.find('#group_id').val();
+            var validator = $form.data('validator');
+            if(validator.validate()){
+                if(gid){
+                    $('#form1').append('<input type="hidden" name="new_group_names[]" value="' + gname + '" />')
+                }else{
+                    $('#form1').append('<input type="hidden" name="edit_group_names[]" value="' + gname + '" />')
+                }
+            }
         }
 
         function saveSort(){

@@ -8,22 +8,23 @@
 
     <link href="<?php echo CSS_URL; ?>bootstrap.css" rel="stylesheet">
     <link href="<?php echo CSS_URL; ?>bootstrap-theme.css" rel="stylesheet">
-    <link href="<?php echo CSS_URL; ?>jquery-ui.css" rel="stylesheet">
+<!--    <link href="--><?php //echo CSS_URL; ?><!--jquery-ui.css" rel="stylesheet">-->
     <link href="<?php echo CSS_URL; ?>font-awesome.css" rel="stylesheet">
 <!--    <link href="/pub/assets/css/jquery-ui.css" rel="stylesheet">-->
     <link href="<?php echo CSS_URL; ?>base-admin.css" rel="stylesheet">
     <link href="<?php echo CSS_URL; ?>base-admin-responsive.css" rel="stylesheet">
-    <?php echo $this->renderBlock('headcss'); ?>
+    <?php echo $this->renderReferenceCss(); ?>
     <link href="<?php echo CSS_URL; ?>admin.css" rel="stylesheet">
+
     <script src="<?php echo JS_URL; ?>libs.js"></script>
     <script src="<?php echo JS_URL; ?>datepicker/bootstrap-datepicker.js"></script>
     <script src="<?php echo JS_URL; ?>datepicker/locales/bootstrap-datepicker.zh-CN.js"></script>
-    <script src="<?php echo JS_URL; ?>jquery-ui.js"></script>
+<!--    <script src="--><?php //echo JS_URL; ?><!--jquery-ui.js"></script>-->
     <script src="<?php echo JS_URL; ?>toy/core.js"></script>
     <script src="<?php echo JS_URL; ?>toy/html.js"></script>
     <script src="<?php echo JS_URL; ?>toy/locale.js"></script>
     <script src="<?php echo JS_URL; ?>common.js"></script>
-    <?php echo $this->renderBlock('headjs'); ?>
+    <?php echo $this->renderReferenceScripts(); ?>
     <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
     <!--[if lt IE 9]>
     <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
@@ -57,6 +58,6 @@
     </div> <!-- /container -->
 
 </div>
-<?php echo $this->renderBlock('footerjs'); ?>
+<?php echo $this->renderScriptBlocks(); ?>
 </body>
 </html>

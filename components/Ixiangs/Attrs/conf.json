@@ -1,0 +1,31 @@
+{
+    "name": "IXiangs_Attrs",
+    "version": "0.0.0.1",
+    "author": "IXiangs Studio",
+    "website": "ixiangs.com",
+    "breadcrumbs": {
+        "backend": {
+            "root": {
+                "text": "{@_ attrs_manage}"
+            },
+            "entity_list": {
+                "text": "{@_ attrs_entity_list}"
+            },
+            "entity_add": {
+                "text": "{@_ attrs_entity_new}"
+            },
+            "entity_edit": {
+                "text": "{@_ attrs_entity_edit}"
+            },
+            "field_list": {
+                "text": "{@_ attrs_field_list}"
+            },
+            "field_add": {
+                "text": "{@_ attrs_field_new}"
+            },
+            "field_edit": {
+                "text": "{@_ attrs_field_edit}"
+            }
+        }
+    }
+}

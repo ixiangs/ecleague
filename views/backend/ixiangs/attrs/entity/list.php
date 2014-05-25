@@ -1,11 +1,6 @@
 <?php
-$this->assign('breadcrumb', array(
-    $this->html->anchor($this->locale->_('attrs_manage')),
-    $this->html->anchor($this->locale->_('attrs_entity'))
-));
-
 $this->assign('navigationBar', array(
-    $this->html->anchor($this->locale->_('attrs_new_entity'), $this->router->buildUrl('add'))
+    $this->html->anchor($this->locale->_('attrs_entity_new'), $this->router->buildUrl('add'))
 ));
 
 $clang = $this->locale->getLanguage();

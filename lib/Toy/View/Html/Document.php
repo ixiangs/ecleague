@@ -7,6 +7,7 @@ class Document
     protected $referenceCss = array();
     protected $scriptBlocks = array();
     protected $metadatas = array();
+    protected $breadcrumbs = array();
 
     private function __construct()
     {
@@ -58,6 +59,23 @@ class Document
             'address' => $address,
             'attributes' => $attributes
         );
+        return $this;
+    }
+
+    public function getBreadcrumbs()
+    {
+        return $this->breadcrumbs;
+    }
+
+    public function setBreadcrumbs($value)
+    {
+        $this->breadcrumbs = $value;
+        return $this;
+    }
+
+    public function addBreadcrumbs($text, $url = '#')
+    {
+        $this->breadcrumbs[] = array('text'=>$text, 'url'=>$url);
         return $this;
     }
 

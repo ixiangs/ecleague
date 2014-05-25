@@ -2,7 +2,7 @@
 namespace Toy\Web;
 
 use Toy\View;
-use Toy\Web\Interfaces\IRenderer;
+use Toy\View\Html\Document;
 
 class Renderer
 {
@@ -22,12 +22,15 @@ class Renderer
                 $controller = $router->controller;
                 $domain = strtolower($router->domain->getName());
                 View\Configuration::$templateDirectories = array($domain);
+                Document::singleton()->setBreadcrumbs(Application::getRequestComponent()->getActionBreadcrumb());
+
                 $tmpl = new View\Template(array_merge(array(
                     'router'=>$context->router,
                     'request'=>$context->request,
                     'session'=>$context->session,
                     'applicationContext'=>$context
                 ), $result->data));
+
                 $path = $result->path? $result->path: str_replace('_', '/', $component.'/'.$controller . '/' . $action);
                 $paths = array(
                     $lang . '/' . $path,

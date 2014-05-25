@@ -4,6 +4,7 @@
     "author":"IXiangs Studio",
     "website":"ixiangs.com",
     "listeners":{
-        "webOnStart":"\\Ixiangs\\System\\Listener::webOnStart"
+        "webOnStart":"\\Ixiangs\\System\\Listener::webOnStart",
+        "webPostRender":"\\Ixiangs\\System\\Listener::webPostRender"
     }
 }

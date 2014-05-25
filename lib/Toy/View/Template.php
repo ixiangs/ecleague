@@ -128,13 +128,15 @@ class Template
         return array_key_exists($name, self::$_blocks);
     }
 
-    public function beginScript($name){
+    public function beginScript($name)
+    {
         ob_start();
         self::$_currentScriptBlock = $name;
         return $this;
     }
 
-    public function endScript(){
+    public function endScript()
+    {
         $this->document->addScriptBlock(self::$_currentScriptBlock, ob_get_clean());
         return $this;
     }
@@ -145,34 +147,49 @@ class Template
         return $tmpl->render($filename);
     }
 
-    public function renderScriptBlocks(){
+    public function renderBreadcrumbs()
+    {
+        $result = array('<ol class="breadcrumb">');
+        foreach ($this->document->getBreadcrumbs() as $item) {
+            $result[] = sprintf('<li><a href="%s">%s</a></li>',
+                array_key_exists('url', $item)? $item['url']: '#',
+                $item['text']);
+        }
+        $result[] = '</ol>';
+        return implode('', $result);
+    }
+
+    public function renderScriptBlocks()
+    {
         $result = array();
-        foreach($this->document->getScriptBlocks() as $script){
+        foreach ($this->document->getScriptBlocks() as $script) {
             $result[] = $script;
         }
         return implode("\n", $result);
     }
 
-    public function renderReferenceScripts(){
+    public function renderReferenceScripts()
+    {
         $result = array();
-        foreach($this->document->getReferenceScripts() as $script){
+        foreach ($this->document->getReferenceScripts() as $script) {
             $attributes = array();
-            foreach($script['attributes'] as $name=>$value){
-                $attributes[] = $name.'"'.$value.'"';
+            foreach ($script['attributes'] as $name => $value) {
+                $attributes[] = $name . '"' . $value . '"';
             }
-            $result[] = '<script src="'.$script['address'].'" '.implode(' ', $attributes).'></script>';
+            $result[] = '<script src="' . $script['address'] . '" ' . implode(' ', $attributes) . '></script>';
         }
         return implode("\n", $result);
     }
 
-    public function renderReferenceCss(){
+    public function renderReferenceCss()
+    {
         $result = array();
-        foreach($this->document->getReferenceCss() as $css){
+        foreach ($this->document->getReferenceCss() as $css) {
             $attributes = array();
-            foreach($css['attributes'] as $name=>$value){
-                $attributes[] = $name.'"'.$value.'"';
+            foreach ($css['attributes'] as $name => $value) {
+                $attributes[] = $name . '"' . $value . '"';
             }
-            $result[] = '<link href="'.$css['address'].'" '.implode(' ', $attributes).' ref="stylesheet">';
+            $result[] = '<link href="' . $css['address'] . '" ' . implode(' ', $attributes) . ' ref="stylesheet">';
         }
     }
 

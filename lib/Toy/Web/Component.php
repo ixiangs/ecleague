@@ -41,16 +41,24 @@ class Component
     }
 
     public function getActionBreadcrumb(){
+        $result = array();
         if($this->_breadcrumbs){
             $router = Application::$context->router;
             $domain = $router->domain->getName();
-            $action = $router->component.'_'.$router->controller.'_'.$router->action;
-            if(array_key_exists($domain, $this->_breadcrumbs) &&
-                array_key_exists($action, $this->_breadcrumbs[$domain])){
-                return $this->_breadcrumbs[$domain][$action];
+            if(array_key_exists($domain, $this->_breadcrumbs)){
+                $breadcrumbs = $this->_breadcrumbs[$domain];
+                if(array_key_exists('root', $breadcrumbs)){
+                    $result[] = $breadcrumbs['root'];
+                }
+                if(array_key_exists($router->controller, $breadcrumbs)){
+                    $result[] = $breadcrumbs[$router->controller];
+                }
+                if(array_key_exists($router->controller.'_'.$router->action, $breadcrumbs)){
+                    $result[] = $breadcrumbs[$router->controller.'_'.$router->action];
+                }
             }
         }
-        return null;
+        return $result;
     }
 
     public function getListeners(){

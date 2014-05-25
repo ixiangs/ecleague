@@ -1,9 +1,4 @@
 <?php
-$this->assign('breadcrumb', array(
-    $this->html->anchor($this->locale->_('attrs_manage')),
-    $this->html->anchor($this->model->id? $this->locale->_('attrs_edit_entity'): $this->locale->_('attrs_new_entity'))
-));
-
 $this->assign('navigationBar', array(
     $this->html->anchor($this->locale->_('back'), $this->router->buildUrl('list'))
 ));

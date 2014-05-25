@@ -12,13 +12,9 @@ class FieldController extends Web\Controller
     {
         $entity = EntityModel::load($entityid);
         $fields = $entity->getFields()->load();
-        $attributes = AttributeModel::find()
-            ->eq('component_id', $entity->getComponentId())
-            ->load();
         return Web\Result::templateResult(array(
-            'fields' => $fields,
-            'entity'=>$entity,
-            'attributes'=>$attributes
+            'models' => $fields,
+            'entity'=>$entity
         ));
     }
 

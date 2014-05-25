@@ -1,27 +1,9 @@
 <?php $this->beginBlock('content'); ?>
 <?php echo $this->includeTemplate('alert'); ?>
     <div class="row breadcrumb-row">
-        <ol class="breadcrumb col-md-6">
-            <?php
-            if ($this->breadcrumb):
-                foreach ($this->breadcrumb as $item):
-                    echo '<li>' . $item->render() . '</li>';
-                endforeach;
-            else:
-                $requestComponent = \Toy\Web\Application::getRequestComponent();
-                $breadcrumbs = $requestComponent->getActionBreadcrumb();
-                if($breadcrumbs):
-                    foreach($breadcrumbs as $item):
-                        $text = $item['text'];
-                        if($text[0] == '@'):
-                            $text = $this->locale->_(substr($text, 1));
-                        endif;
-                        echo '<li>' . $text . '</li>';
-                    endforeach;
-                endif;
-            endif;
-            ?>
-        </ol>
+        <div class="col-md-6">
+        <?php echo $this->renderBreadcrumbs(); ?>
+        </div>
         <div class="pull-right">
             <?php
             if ($this->hasBlock('navigationBar')):

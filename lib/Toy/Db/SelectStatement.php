@@ -11,14 +11,14 @@ class SelectStatement extends WhereStatement
     protected $offset = 0;
     protected $limit = 0;
 
-    public function __construct($table = null, array $fields = array()){
+    public function __construct($table = null, array $fields = array())
+    {
         $this->table = $table;
         $this->fields = $fields;
     }
 
     public function select()
     {
-        $this->fields = [];
         $args = func_get_args();
         if (func_num_args() == 1 && is_array($args[0])) {
             $this->fields = array_merge($this->fields, $args[0]);
@@ -129,14 +129,16 @@ class SelectStatement extends WhereStatement
         return $this->limit;
     }
 
-    public function executeCount($db = null){
-        $cdb = is_null($db)? Helper::openDb():$db;
+    public function executeCount($db = null)
+    {
+        $cdb = is_null($db) ? Helper::openDb() : $db;
         $res = $cdb->select($this->resetSelect()->resetLimit()->resetOrderby()->select('count(*)'));
         return $res->getFirstValue();
     }
 
-    public function execute($db = null){
-        $cdb = is_null($db)? Helper::openDb():$db;
+    public function execute($db = null)
+    {
+        $cdb = is_null($db) ? Helper::openDb() : $db;
         return $cdb->select($this);
     }
 }

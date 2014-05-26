@@ -26,6 +26,14 @@ abstract class Controller
         $this->router = $ctx->router;
     }
 
+    public function ready(){
+
+    }
+
+    public function finish(){
+
+    }
+
     public function execute($action)
     {
         $m = ucfirst(strtolower(ArrayUtil::get($_SERVER, 'REQUEST_METHOD', 'get')));

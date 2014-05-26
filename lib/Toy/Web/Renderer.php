@@ -22,8 +22,6 @@ class Renderer
                 $controller = $router->controller;
                 $domain = strtolower($router->domain->getName());
                 View\Configuration::$templateDirectories = array($domain);
-                Document::singleton()->setBreadcrumbs(Application::getRequestComponent()->getActionBreadcrumb());
-
                 $tmpl = new View\Template(array_merge(array(
                     'router'=>$context->router,
                     'request'=>$context->request,

@@ -1,10 +1,4 @@
 <?php
-$this->assign('breadcrumb', array(
-    $this->html->anchor($this->locale->_('attrs_manage')),
-    $this->html->anchor($this->entity->getName()),
-    $this->html->anchor($this->locale->_('grouping'))
-));
-
 $this->assign('navigationBar', array(
     $this->html->anchor($this->locale->_('back'), $this->router->buildUrl('list'))
 ));

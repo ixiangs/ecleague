@@ -3,6 +3,7 @@ namespace Ixiangs\Attrs;
 
 use Ixiangs\System\ComponentModel;
 use Toy\Db\Helper;
+use Toy\View\Html\Document;
 use Toy\Web;
 
 class EntityController extends Web\Controller
@@ -82,10 +83,10 @@ class EntityController extends Web\Controller
         $groups = GroupModel::find()
             ->eq('entity_id', $entity->getId())
             ->load();
-        $attributes = AttributeModel::find()
-            ->eq('component_id', $entity->getComponentId())
+        $attributes = FieldModel::find()
+            ->eq('entity_id', $entity->getId)
             ->load();
-
+        Document::singleton()->addBreadcrumbs($entity->getName(), $this->router->buildUrl('list'));
         return Web\Result::templateResult(
             array('entity' => $entity,
                 'groups' => $groups,

@@ -52,4 +52,14 @@ class Result{
     static public function redirectResult($url, $msg = null, $status = 302){
         return new self('redirect', array('url'=>$url, 'message'=>$msg, 'status'=>$status));
     }
+
+    static public function historyResult($action, $default = null){
+        $history = Application::$context->history;
+        $record = $history->find(Application::$context->router->buildAction($action));
+        if($record){
+            return self::redirectResult(Application::$context->router->buildUrl($record['action'], $record['arguments']));
+        }else{
+            return self::redirectResult($default);
+        }
+    }
 }

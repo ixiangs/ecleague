@@ -18,8 +18,8 @@ else:
             ->setCaption('')
             ->addValidateRule('required', true));
 endif;
-$f->newField($this->locale->_('code'), true,
-    $this->html->textbox('code', 'data[code]', $this->model->getCode())
+$f->newField($this->locale->_('attrs_model'), true,
+    $this->html->textbox('model', 'data[model]', $this->model->getModel())
         ->addValidateRule('required', true));
 $f->newField($this->locale->_('name'), true,
     $this->html->textbox('name', 'data[name]', $this->model->name)

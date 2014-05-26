@@ -1,7 +1,6 @@
 <?php
 namespace Ixiangs\Attrs;
 
-use Toy\Db\Helper;
 use Toy\Orm;
 
 class FieldModel extends Orm\Model

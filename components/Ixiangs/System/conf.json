@@ -5,6 +5,7 @@
     "website":"ixiangs.com",
     "listeners":{
         "webOnStart":"\\Ixiangs\\System\\Listener::webOnStart",
-        "webPostRender":"\\Ixiangs\\System\\Listener::webPostRender"
+        "webPostRender":"\\Ixiangs\\System\\Listener::webPostRender",
+        "webPostRoute":"\\Ixiangs\\System\\Listener::webPostRoute"
     }
 }

@@ -1,6 +1,7 @@
 <?php
 namespace Ixiangs\System;
 
+use Toy\View\Html\Document;
 use Toy\View\Template;
 use Toy\Web\Application;
 
@@ -14,6 +15,13 @@ class Listener
         $l->initialize($lang);
         Template::addHelper('locale', $l);
         $context->locale = $l;
+    }
+
+    static public function webPostRoute($app, $argument){
+        $component = Application::getRequestComponent();
+        if($component){
+            Document::singleton()->setBreadcrumbs($component->getActionBreadcrumb());
+        }
     }
 
     static public function webPostRender($app, $argument){

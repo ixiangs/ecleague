@@ -17,6 +17,9 @@
             "entity_edit": {
                 "text": "{@_ attrs_entity_edit}"
             },
+            "entity_groups": {
+                "text": "{@_ attrs_field_grouping}"
+            },
             "field_list": {
                 "text": "{@_ attrs_field_list}"
             },

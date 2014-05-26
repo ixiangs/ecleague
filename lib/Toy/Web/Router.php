@@ -24,8 +24,7 @@ class Router
         $this->action = $arr['action'];
     }
 
-    public function buildUrl($url = "", $params = NULL)
-    {
+    public function buildAction($url  = ""){
         list($len, $domain, $component, $controller, $action) = array(0, null, null, null, null);
         if (!empty($url)) {
             $arr = explode('/', $url);
@@ -63,7 +62,49 @@ class Router
                 $action = $arr[3];
                 break;
         }
-        $url = $domain->getStartUrl() . $component . '_' . $controller . '_' . $action;
+        return $domain->getStartUrl() . $component . '_' . $controller . '_' . $action;
+    }
+
+    public function buildUrl($url = "", $params = NULL)
+    {
+//        list($len, $domain, $component, $controller, $action) = array(0, null, null, null, null);
+//        if (!empty($url)) {
+//            $arr = explode('/', $url);
+//            $len = count($arr);
+//        }
+//        switch ($len) {
+//            case 0 :
+//                $domain = $this->domain;
+//                $component = $this->component;
+//                $controller = $this->controller;
+//                $action = $this->action;
+//                break;
+//            case 1 :
+//                $domain = $this->domain;
+//                $component = $this->component;
+//                $controller = $this->controller;
+//                $action = $arr[0];
+//                break;
+//            case 2 :
+//                $domain = $this->domain;
+//                $component = $this->component;
+//                $controller = $arr[0];
+//                $action = $arr[1];
+//                break;
+//            case 3 :
+//                $domain = $this->domain;
+//                $component = $arr[0];
+//                $controller = $arr[1];
+//                $action = $arr[2];
+//                break;
+//            case 4 :
+//                $domain = Configuration::$domains[$arr[0]];
+//                $component = $arr[1];
+//                $controller = $arr[2];
+//                $action = $arr[3];
+//                break;
+//        }
+        $url =  $this->buildAction($url);//$domain->getStartUrl() . $component . '_' . $controller . '_' . $action;
         if (is_array($params)) {
             $url .= '?' . http_build_query($params);
         } elseif (is_string($params) && $params == '*') {

@@ -13,7 +13,10 @@ class Handler
         include_once $controllerPath;
         $inst = new $controllerClass();
         $inst->initialize(Application::$context);
-        return $inst->execute($router->action);
+        $inst->ready();
+        $result = $inst->execute($router->action);
+        $inst->finish();
+        return $result;
     }
 
 }

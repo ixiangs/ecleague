@@ -116,6 +116,8 @@ class Application
         self::$context->handler = new $cls();
         $cls = Configuration::$rendererClass;
         self::$context->renderer = new $cls();
+        $cls = Configuration::$historyClass;
+        self::$context->history = new $cls();
 
         self::singleton()->initialize()->start()->route()->handle()->render()->finish();
     }

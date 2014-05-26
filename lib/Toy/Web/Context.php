@@ -9,6 +9,7 @@ class Context {
     public $router = null;
     public $handler = null;
     public $renderer = null;
+    public $history = null;
     public $result = null;
     public $items = array();
 

@@ -110,8 +110,9 @@ class PdoDriver extends BaseDriver
 
     public function execute($sql, $parameters = array())
     {
+        $sql = str_replace('{t}', Configuration::$tablePrefix, $sql);
         $this->log($sql, $parameters);
-        $statement = $this->connection->prepare(str_replace('{t}', Configuration::$tablePrefix, $sql));
+        $statement = $this->connection->prepare($sql);
         if ($statement === false) {
             $this->handleError($this->connection->errorInfo());
         }
@@ -126,8 +127,9 @@ class PdoDriver extends BaseDriver
 
     public function fetch($sql, $parameters = array())
     {
+        $sql = str_replace('{t}', Configuration::$tablePrefix, $sql);
         $this->log($sql, $parameters);
-        $statement = $this->connection->prepare(str_replace('{t}', Configuration::$tablePrefix, $sql));
+        $statement = $this->connection->prepare($sql);
         if ($statement === false) {
             $this->handleError($this->connection->errorInfo());
         }

@@ -1,17 +1,14 @@
 <?php
-$this->assign('breadcrumb', array(
-    $this->html->anchor($this->locale->_('attrs_manage')),
-    $this->html->anchor($this->locale->_('attrs_attribute_list'))
-));
-
 $this->assign('navigationBar', array(
-    $this->html->anchor($this->locale->_('add'), $this->router->buildUrl('type'))
+    $this->html->anchor($this->locale->_('attrs_attribute_new'), $this->router->buildUrl('choose'))
 ));
 
 $clang = $this->locale->getLanguage();
 $dt = $this->html->grid($this->models);
 $dt->addIndexColumn('#', 'index', 'index');
-$dt->addLabelColumn($this->locale->_('name'), '{name}', 'large', 'left');
+$dt->addLabelColumn($this->locale->_('name'), '{name}');
+$dt->addLabelColumn($this->locale->_('attrs_component'), '{component_name}', 'large')
+        ->setEmptyText($this->locale->_('attrs_common'));
 $dt->addOptionColumn($this->locale->_('attrs_data_type'), '{data_type}', array(
     \Ixiangs\Attrs\Constant::DATA_TYPE_ARRAY=>$this->locale->_('attrs_data_type_array'),
     \Ixiangs\Attrs\Constant::DATA_TYPE_BOOLEAN=>$this->locale->_('attrs_data_type_boolean'),
@@ -29,15 +26,9 @@ $dt->addOptionColumn($this->locale->_('attrs_input_type'), '{input_type}',  arra
     \Ixiangs\Attrs\Constant::INPUT_TYPE_TEXTAREA=>$this->locale->_('attrs_input_type_textarea'),
     \Ixiangs\Attrs\Constant::INPUT_TYPE_EDITOR=>$this->locale->_('attrs_input_type_editor')
 ), 'small', 'small text-center');
-$dt->addBooleanColumn($this->locale->_('attrs_indexable'), 'indexable', $this->locale->_('yes'), $this->locale->_('no'),
-    'small', 'small text-center');
-$dt->addBooleanColumn($this->locale->_('attrs_required'), 'required', $this->locale->_('yes'), $this->locale->_('no'),
-    'small', 'small text-center');
 $dt->addBooleanColumn($this->locale->_('status'), 'enabled', $this->locale->_('enabled'), $this->locale->_('disabled'),
     'small', 'small text-center');
-$dt->addLabelColumn($this->locale->_('memo'), '{memo}', '', 'left');
 $dt->addLinkColumn('', $this->locale->_('edit'), urldecode($this->router->buildUrl('edit', array('id' => '{id}'))), 'small', 'small edit');
-
 $dt->addLinkButtonColumn('', $this->locale->_('delete'), "deleteConfirm('".urldecode($this->router->buildUrl('delete', array('id'=>'{id}')))."')", 'edit', 'edit');
 $this->assign('datatable', $dt);
 

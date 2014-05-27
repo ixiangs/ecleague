@@ -10,27 +10,13 @@
     },
     "breadcrumbs": {
         "backend": {
-            "ixiangs_system": {
-                "text": "{@_ system_manage}"
-            },
-            "language_list": {
-                "text": "{@_ locale_language_list}"
-            },
-            "language_add": {
-                "text": "{@_ locale_language_new}"
-            },
-            "language_edit": {
-                "text": "{@_ locale_language_edit}"
-            },
-            "dictionary_list": {
-                "text": "{@_ locale_dictionary_list}"
-            },
-            "dictionary_add": {
-                "text": "{@_ locale_dictionary_new}"
-            },
-            "dictionary_edit": {
-                "text": "{@_ locale_dictionary_edit}"
-            }
+            "ixiangs_system": "{@_ system_manage}",
+            "language_list":  "{@_ locale_language_list}",
+            "language_add":  "{@_ locale_language_new}",
+            "language_edit": "{@_ locale_language_edit}",
+            "dictionary_list":  "{@_ locale_dictionary_list}",
+            "dictionary_add":  "{@_ locale_dictionary_new}",
+            "dictionary_edit": "{@_ locale_dictionary_edit}"
         }
     }
 }

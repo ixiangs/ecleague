@@ -13,5 +13,15 @@ class B extends A
 
 }
 
-B::test();
+class C{
+    public $name;
+}
 
+$c1 = new C();
+$c2 = $c1;
+
+$c1->name = 'ronald';
+$c2->name = 'hello';
+
+var_dump($c1);
+var_dump($c2);

@@ -5,30 +5,18 @@
     "website": "ixiangs.com",
     "breadcrumbs": {
         "backend": {
-            "ixiangs_attrs": {
-                "text": "{@_ attrs_manage}"
-            },
-            "entity_list": {
-                "text": "{@_ attrs_entity_list}"
-            },
-            "entity_add": {
-                "text": "{@_ attrs_entity_new}"
-            },
-            "entity_edit": {
-                "text": "{@_ attrs_entity_edit}"
-            },
-            "entity_groups": {
-                "text": "{@_ attrs_field_grouping}"
-            },
-            "field_list": {
-                "text": "{@_ attrs_field_list}"
-            },
-            "field_add": {
-                "text": "{@_ attrs_field_new}"
-            },
-            "field_edit": {
-                "text": "{@_ attrs_field_edit}"
-            }
+            "ixiangs_attrs":  "{@_ attrs_manage}",
+            "entity_list":  "{@_ attrs_entity_list}",
+            "entity_add": "{@_ attrs_entity_new}",
+            "entity_edit":  "{@_ attrs_entity_edit}",
+            "entity_groups":  "{@_ attrs_field_grouping}",
+            "field_list":  "{@_ attrs_field_list}",
+            "field_add": "{@_ attrs_field_new}",
+            "field_edit":  "{@_ attrs_field_edit}",
+            "attribute_list": "{@_ attrs_attribute_list}",
+            "attribute_add": "{@_ attrs_attribute_new}",
+            "attribute_edit": "{@_ attrs_attribute_edit}",
+            "attribute_choose": "{@_ attrs_attribute_choose_type}"
         }
     }
 }

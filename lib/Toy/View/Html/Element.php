@@ -30,6 +30,11 @@ class Element
         return $this;
     }
 
+    public function getChild($index)
+    {
+        return $this->children[$index];
+    }
+
     public function getChildren()
     {
         return $this->children;
@@ -38,6 +43,13 @@ class Element
     public function setChildren($value)
     {
         $this->children = $value;
+        return $this;
+    }
+
+    public function appendChild()
+    {
+        $args = func_get_args();
+        $this->children = array_merge($this->children, $args);
         return $this;
     }
 
@@ -80,6 +92,12 @@ class Element
     public function getBoundAttribute()
     {
         return $this->boundAttributes;
+    }
+
+    public function setBoundAttribute(array $value)
+    {
+        $this->boundAttributes = $value;
+        return $this;
     }
 
     public function getAttribute()
@@ -180,18 +198,6 @@ class Element
         }
 
         return implode(' ', $arr);
-    }
-
-    public function addChild()
-    {
-        $args = func_get_args();
-        $this->children = array_merge($this->children, $args);
-        return $this;
-    }
-
-    public function getChild($index)
-    {
-        return $this->children[$index];
     }
 
     public function renderBegin()

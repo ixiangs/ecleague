@@ -9,7 +9,7 @@ class LinkColumn extends GridColumn
         parent::__construct();
         $link = new Element('a', array('class' => 'btn btn-link'));
         $link->addBindableAttribute('href', 'text', 'onclick');
-        $this->getCell()->addChild($link);
+        $this->getCell()->appendChild($link);
     }
 
     public function renderCell($row, $index)

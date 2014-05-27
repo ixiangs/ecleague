@@ -24,17 +24,6 @@ class GridColumn
         $this->foot = new Element('td');
     }
 
-    public function getDefaultText()
-    {
-        return $this->defaultText;
-    }
-
-    public function setDefaultText($value)
-    {
-        $this->defaultText = $value;
-        return $this;
-    }
-
     public function getHead()
     {
         return $this->head;

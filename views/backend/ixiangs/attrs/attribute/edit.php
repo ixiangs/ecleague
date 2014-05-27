@@ -1,32 +1,11 @@
 <?php
-$langId = $this->locale->getLanguageId();
-$this->assign('breadcrumb', array(
-    $this->html->anchor($this->locale->_('attrs_manage')),
-    $this->html->anchor($this->locale->_('attrs_add_attribute'))
+$this->assign('navigationBar', array(
+    $this->html->anchor($this->locale->_('back'), $this->router->getHistoryUrl('list'))
 ));
-
-$nbs = array();
-if($this->request->getQuery('set_id')){
-    $nbs[] = $this->html->anchor($this->locale->_('back'), $this->router->buildUrl('attribute-set/groups', array(
-        'id'=>$this->request->getQuery('set_id')
-    )));
-}else{
-    $nbs[] = $this->html->anchor($this->locale->_('back'), $this->router->buildUrl('list'));
-}
-$this->assign('navigationBar', $nbs);
 
 $this->assign('toolbar', array(
     $this->html->button('button', $this->locale->_('save'), 'btn btn-primary')
             ->setAttribute('data-submit', 'form1')
-//        $this->html->button('button', $this->locale->_('save_and_new'), 'btn btn-success')
-//            ->setAttribute('data-submit', 'form1')
-//        $this->html->button('button', $this->locale->_('save'), 'btn btn-primary')
-//            ->setAttribute('id', 'save_form'))
-//            ->addChild(
-//                $this->html->anchor($this->locale->_('save_and_new'), 'javascript:void(0)', 'btn btn-primary')
-//                    ->setAttribute('id', 'save_new')
-//            )
-
 ));
 
 $dataTypes = array(
@@ -53,7 +32,7 @@ $f->newField('')->setRenderer(function($field) use($dataTypes, $inputTypes){
     $res = array('<div class="form-group">');
     $res[] = '<label class="control-label col-md-4" style="padding-left:0">'.$this->locale->_('attrs_data_type').':'.$dataTypes[$this->model->getDataType()].'</label>';
     $res[] = '<label class="control-label col-md-4" style="padding-left:0">'.$this->locale->_('attrs_input_type').':'.$inputTypes[$this->model->getInputType()].'</label>';
-    $res[] = '<label class="control-label col-md-4" style="padding-left:0">'.$this->locale->_('attrs_component').':'.$this->component->getName().'</label>';
+    $res[] = '<label class="control-label col-md-4" style="padding-left:0">'.$this->locale->_('attrs_component').':'.(is_null($this->component)? $this->locale->_('attrs_common'): $this->component->getName()).'</label>';
     $res[] = '</div>';
     return implode('', $res);
 });
@@ -62,15 +41,15 @@ $f->newField($this->locale->_('name'), true,
     $this->html->textbox('name', 'data[name]', $this->model->getName())
         ->addValidateRule('required', true));
 $f->newField($this->locale->_('text'), true,
-    $this->html->textbox('label', 'data[labe]', $this->model->getLabel())
+    $this->html->textbox('label', 'data[label]', $this->model->getLabel())
         ->addValidateRule('required', true));
-$f->newField($this->locale->_('attrs_indexable'), true,
-    $this->html->select('indexable', 'data[indexable]', $this->model->getIndexable(),
-        array('1'=>$this->locale->_('yes'), '0'=>$this->locale->_('no'))));
-
-$f->newField($this->locale->_('enabled'), true,
-    $this->html->select('enabled', 'data[enabled]', $this->model->getEnabled(),
-        array('1'=>$this->locale->_('yes'), '0'=>$this->locale->_('no'))));
+//$f->newField($this->locale->_('attrs_indexable'), true,
+//    $this->html->select('indexable', 'data[indexable]', $this->model->getIndexable(),
+//        array('1'=>$this->locale->_('yes'), '0'=>$this->locale->_('no'))));
+//
+//$f->newField($this->locale->_('enabled'), true,
+//    $this->html->select('enabled', 'data[enabled]', $this->model->getEnabled(),
+//        array('1'=>$this->locale->_('yes'), '0'=>$this->locale->_('no'))));
 
 $vs = array_merge(array(
     'min_value'=>'',
@@ -172,11 +151,10 @@ endswitch;
 $f->addHidden('data_type', 'data[data_type]', $this->model->getDataType());
 $f->addHidden('input_type', 'data[input_type]', $this->model->getInputType());
 $f->addHidden('component_id', 'data[component_id]', $this->model->getComponentId());
-$f->addHidden('next_action', 'next_action', '');
 $f->addHidden('id', 'data[id]', $this->model->getId());
 
 $this->assign('form', $f);
-$this->beginBlock('footerjs');
+$this->beginScript('attrsEditAttibute');
 ?>
     <script language="javascript">
         Toy.Validation.rules['option-required'] = new (new Class({
@@ -235,5 +213,5 @@ $this->beginBlock('footerjs');
         });
     </script>
 <?php
-$this->endBlock();
+$this->endScript();
 echo $this->includeTemplate('layout\form');

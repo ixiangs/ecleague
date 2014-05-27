@@ -17,6 +17,7 @@ $f->newField($this->locale->_('code'), true,
 $f->newField($this->locale->_('text'), true,
     $this->html->textbox('labels_'.$index, 'labels['.$index.']', $model->getLabel())
     ->addValidateRule('required', true));
+$f->addHidden('language_id', 'language_id', $this->language->getId());
 endforeach;
 $this->assign('form', $f);
 

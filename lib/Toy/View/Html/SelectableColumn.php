@@ -9,8 +9,8 @@ class SelectableColumn extends GridColumn
         parent::__construct();
         $checkbox = new Element('input', array('type' => 'checkbox', 'class' => 'selectable'));
         $checkbox->addBindableAttribute('value', 'id', 'name');
-        $this->getCell()->addChild($checkbox);
-        $this->getHead()->addChild(new Element('input', array('type' => 'checkbox', 'class' => 'selectable-head')));
+        $this->getCell()->appendChild($checkbox);
+        $this->getHead()->appendChild(new Element('input', array('type' => 'checkbox', 'class' => 'selectable-head')));
     }
 
     public function renderCell($row, $index)

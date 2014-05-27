@@ -50,13 +50,13 @@ class Component
             if (array_key_exists($domain, $this->_breadcrumbs)) {
                 $breadcrumbs = $this->_breadcrumbs[$domain];
                 if (array_key_exists($router->component, $breadcrumbs)) {
-                    $result[] = $breadcrumbs[$router->component];
+                    $result[] = array('text'=>$breadcrumbs[$router->component]);
                 }
                 if (array_key_exists($router->controller, $breadcrumbs)) {
-                    $result[] = $breadcrumbs[$router->controller];
+                    $result[] = array('text'=>$breadcrumbs[$router->controller]);
                 }
                 if (array_key_exists($router->controller . '_' . $router->action, $breadcrumbs)) {
-                    $result[] = $breadcrumbs[$router->controller . '_' . $router->action];
+                    $result[] = array('text'=>$breadcrumbs[$router->controller . '_' . $router->action]);
                 }
             }
         }

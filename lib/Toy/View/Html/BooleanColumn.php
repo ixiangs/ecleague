@@ -11,7 +11,7 @@ class BooleanColumn extends GridColumn
     public function __construct()
     {
         parent::__construct();
-        $this->getCell()->addChild(new Element('span'));
+        $this->getCell()->appendChild(new Element('span'));
     }
 
     public function setFieldName($value)

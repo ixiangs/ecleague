@@ -1,9 +1,4 @@
 <?php
-$this->assign('breadcrumb', array(
-    $this->html->anchor($this->locale->_('attrs_manage')),
-    $this->html->anchor($this->locale->_('attrs_add_attribute'))
-));
-
 $nbs = array();
 if($this->request->getQuery('set_id')){
     $nbs[] = $this->html->anchor($this->locale->_('back'), $this->router->buildUrl('attribute-set/groups', array(
@@ -22,10 +17,10 @@ $f = $this->html->form()->setAttribute(array(
     'action'=>$this->router->buildUrl('add'),
     'method'=>'get')
 );
-$f->newField($this->locale->_('attrs_select_component'), true,
-                $this->html->select('component_id', 'component_id', $this->request->getQuery('component_id'), $this->components)
-                    ->setCaption('')
-                    ->addValidateRule('required', true));
+
+$f->newField($this->locale->_('attrs_component'), true,
+                $this->html->select('component_id', 'component_id', $this->request->getQuery('component_id'), $this->components));
+//                    ->addValidateRule('required', true));
 $f->newField($this->locale->_('attrs_data_type'), true,
     $this->html->select('data_type', 'data_type', null, array(
     \Ixiangs\Attrs\Constant::DATA_TYPE_STRING=>$this->locale->_('attrs_data_type_string'),

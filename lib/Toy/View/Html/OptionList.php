@@ -48,9 +48,9 @@ class OptionList extends InputElement
             $this->setAttribute('value', $option);
             if (is_array($val) && in_array($option, $val)) {
                 $this->setAttribute('checked', 'checked');
-                $html[] = sprintf('<label class="checkbox-inline col-md-2"><input %s/>%s</label>', $this->renderAttribute(), $text);
+                $html[] = sprintf('<label class="checkbox-inline col-md-2"><input %s/>%s</label>', $this->renderAttributes(), $text);
             } else {
-                $html[] = sprintf('<label class="checkbox-inline col-md-2"><input %s/>%s</label>', $this->renderAttribute(), $text);
+                $html[] = sprintf('<label class="checkbox-inline col-md-2"><input %s/>%s</label>', $this->renderAttributes(), $text);
             }
             $this->removeAttribute('checked');
         }

@@ -9,7 +9,7 @@ class CheckboxColumn extends GridColumn
         parent::__construct();
         $checkbox = new Element('input');
         $checkbox->setAttribute('type', 'checkbox')->addBindableAttribute('value', 'id', 'name');
-        $this->getCell()->addChild($checkbox);
+        $this->getCell()->appendChild($checkbox);
     }
 
     public function renderCell($row, $index)

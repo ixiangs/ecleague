@@ -13,7 +13,9 @@ class AttributeController extends Web\Controller
         $pi = $this->request->getParameter("pageindex", 1);
         $count = AttributeModel::find()->executeCount();
         $models = AttributeModel::find()
-            ->asc('name')
+            ->select(ComponentModel::propertyToField('name') . ' AS component_name')
+            ->join(ComponentModel::propertyToField('id'), AttributeModel::propertyToField('component_id'), 'left')
+            ->asc(AttributeModel::propertyToField('component_id'))
             ->limit(PAGINATION_SIZE, ($pi - 1) * PAGINATION_SIZE)
             ->load();
         return Web\Result::templateResult(array(
@@ -23,12 +25,14 @@ class AttributeController extends Web\Controller
         );
     }
 
-    public function typeAction()
+    public function chooseAction()
     {
         $components = ComponentModel::find()->load()
             ->toArray(function ($item) {
                 return array($item->getId(), $item->getName());
             });
+        $components[0] = $this->context->locale->_('attrs_common');
+        ksort($components);
         return Web\Result::templateResult(array(
             'components' => $components
         ));
@@ -86,7 +90,7 @@ class AttributeController extends Web\Controller
         }
 
         $success = Helper::withTx(function ($tx) use ($model) {
-            if(!$model->save($tx)){
+            if (!$model->save($tx)) {
                 $tx->rollback();
                 return false;
             }
@@ -94,9 +98,7 @@ class AttributeController extends Web\Controller
         });
 
         if ($success) {
-            return $this->request->getPost('next_action') == 'new' ?
-                Web\Result::redirectResult($this->router->buildUrl('type')) :
-                Web\Result::redirectResult($this->router->buildUrl('list'));
+            return Web\Result::redirectResult($this->router->getHistoryUrl('list'));
         } else {
             $this->session->set('errors', $locale->_('err_system'));
             return $this->getEditTemplateResult($model);
@@ -106,18 +108,17 @@ class AttributeController extends Web\Controller
     public function deleteAction($id)
     {
         $lang = $this->context->locale;
-        $m = Tops::loadModel('attrs/attribute')->load($id);
-
-        if (!$m) {
+        $model = AttributeModel::load($id);
+        $result = Helper::withTx(function ($tx) use ($model) {
+            if (!$model->delete($tx)) {
+                return false;
+            }
+            return true;
+        });
+        if (!$result) {
             $this->session->set('errors', $lang->_('err_system'));
-            return Web\Result::redirectResultt($this->router->buildUrl('list'));
         }
-
-        if (!$m->delete()) {
-            $this->session->set('errors', $lang->_('err_system'));
-            return Web\Result::redirectResult($this->router->buildUrl('list'));
-        }
-        return Web\Result::redirectResult($this->router->buildUrl('list'));
+        return Web\Result::redirectResult($this->router->getHistoryUrl('list'));
     }
 
 //    public function optionsAction($id)
@@ -169,9 +170,13 @@ class AttributeController extends Web\Controller
 
     private function getEditTemplateResult($model)
     {
-        $c = ComponentModel::load($model->getComponentId());
+        $component = null;
+        if (!empty($this->component_id)) {
+            $component = ComponentModel::load($model->getComponentId());
+        }
+
         return Web\Result::templateResult(
-            array('model' => $model, 'component' => $c),
+            array('model' => $model, 'component' => $component),
             'ixiangs/attrs/attribute/edit'
         );
     }

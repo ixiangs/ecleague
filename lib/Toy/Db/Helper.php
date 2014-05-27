@@ -43,17 +43,20 @@ class Helper
         }
     }
 
-    static public function withTx(\Closure $callback, $name = null)
+    static public function withTx(\Closure $handler, \Closure $error = null, $name = null)
     {
         try {
             $db = self::createDb($name);
             $db->open();
             $db->begin();
-            $result = $callback($db);
+            $result = $handler($db);
             $db->commit();
             return $result;
         } catch (\Exception $ex) {
             $db->rollback();
+            if(!is_null($error)){
+                return $error($ex);
+            }
             throw $ex;
         } finally {
             $db->close();

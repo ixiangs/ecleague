@@ -399,7 +399,7 @@ abstract class Model implements \ArrayAccess, \Iterator
         return $result;
     }
 
-    public function delete($db)
+    public function delete($db = null)
     {
         return $this->markDeleted()->save($db);
     }
@@ -434,17 +434,22 @@ abstract class Model implements \ArrayAccess, \Iterator
         foreach ($this->relations as $name => $relation) {
             switch ($relation->getType()) {
                 case Relation::TYPE_CHILDREN:
+                    if (!array_key_exists($name, $this->data)) {
+                        $this->getData($name)->load();
+                    }
                     foreach ($this->data[$name] as $child) {
                         $child->delete($db);
                     }
                     break;
                 case Relation::TYPE_CHILD:
+                    if (!array_key_exists($name, $this->data)) {
+                        $this->getData($name);
+                    }
                     $this->data[$name]->delete($db);
                     break;
             }
         }
     }
-
 
     protected function beforeDelete($db)
     {
@@ -453,7 +458,6 @@ abstract class Model implements \ArrayAccess, \Iterator
     protected function afterDelete($db)
     {
     }
-
 
     protected function beforeInsert($db)
     {

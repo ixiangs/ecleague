@@ -17,7 +17,7 @@ class ButtonColumn extends GridColumn
                 ->addBindableAttribute('onclick', 'text');
         }
 
-        $this->getCell()->addChild($button);
+        $this->getCell()->appendChild($button);
     }
 
     public function renderCell($row, $index)

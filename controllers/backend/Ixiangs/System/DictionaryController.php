@@ -16,10 +16,10 @@ class DictionaryController extends Web\Controller
         $find = DictionaryModel::find()->eq('language_id', $lid);
         list($code, $label) = $this->request->listQuery('code', 'label');
         if ($code) {
-            $find->like('code', '%' . $code. '%');
+            $find->like('code', '%' . $code . '%');
         }
         if ($label) {
-            $find->like('label', '%' . $label. '%');
+            $find->like('label', '%' . $label . '%');
         }
         $models = $find
             ->asc('code')
@@ -43,14 +43,14 @@ class DictionaryController extends Web\Controller
     public function addPostAction()
     {
         $lang = $this->context->locale;
-        list($codes, $labels, $lid) = $this->request->listPost('codes', 'labels', 'languageid');
+        list($codes, $labels, $languageId) = $this->request->listPost('codes', 'labels', 'language_id');
         $models = array();
 
         foreach ($codes as $index => $code) {
             $models[] = new DictionaryModel(array(
                 'code' => $code,
                 'label' => $labels[$index],
-                'language_id' => $lid
+                'language_id' => $languageId
             ));
         }
 
@@ -73,7 +73,7 @@ class DictionaryController extends Web\Controller
         });
 
         if ($success) {
-            return Web\Result::redirectResult($this->router->getHistoryUrl('list', array('languageid' => $lid)));
+            return Web\Result::redirectResult($this->router->getHistoryUrl('list', array('languageid' => $languageId)));
         } else {
             $this->session->set('errors', $lang->_('err_system'));
             return $this->getAddTemplateResult($models);
@@ -127,10 +127,9 @@ class DictionaryController extends Web\Controller
 
     private function getEditTemplateResult($model)
     {
-        $lid = $this->request->getParameter('languageid');
+        $languageId = $this->request->getQuery('languageid');
         return Web\Result::templateResult(
-            array('model' => $model,
-                'language' => LanguageModel::load($lid)),
+            array('model' => $model, 'language' => LanguageModel::load($languageId)),
             'ixiangs/system/dictionary/edit'
         );
     }

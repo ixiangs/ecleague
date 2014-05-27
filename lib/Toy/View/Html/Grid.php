@@ -53,7 +53,7 @@ class Grid extends Element
         $col = new LabelColumn();
         $col->getHead()->setAttribute(array('class' => $headCss, 'text' => $headText));
         $col->getCell()->setAttribute('class', $cellCss)
-            ->getChild(0)->setAttribute(array('text' => $cellText));
+                ->getChild(0)->setAttribute(array('text' => $cellText));
         $this->addColumn($col);
         return $col;
     }
@@ -166,6 +166,7 @@ class Grid extends Element
         foreach ($this->_dataSource as $index => $dataRow) {
             $cells = array();
             foreach ($this->_columns as $col) {
+//                $col->getCell()->getChild(0)->setAttribute('data-aaa', rand(1000, 9999));
                 $cells[] = $col->renderCell($dataRow, $index);
             }
             $body[] = $cells;

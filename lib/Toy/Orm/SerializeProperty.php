@@ -11,7 +11,7 @@ class SerializeProperty extends BaseProperty
 
     public function fromDbValue($value)
     {
-        if(empty($value)){
+        if (empty($value)) {
             return array();
         }
         return unserialize($value);

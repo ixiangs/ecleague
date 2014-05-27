@@ -152,7 +152,7 @@ class Template
         $result = array('<ol class="breadcrumb">');
         foreach ($this->document->getBreadcrumbs() as $item) {
             $result[] = sprintf('<li><a href="%s">%s</a></li>',
-                array_key_exists('url', $item)? $item['url']: '#',
+                array_key_exists('url', $item) ? $item['url'] : '#',
                 $item['text']);
         }
         $result[] = '</ol>';
@@ -189,8 +189,9 @@ class Template
             foreach ($css['attributes'] as $name => $value) {
                 $attributes[] = $name . '"' . $value . '"';
             }
-            $result[] = '<link href="' . $css['address'] . '" ' . implode(' ', $attributes) . ' ref="stylesheet">';
+            $result[] = '<link href="' . $css['address'] . '" ' . implode(' ', $attributes) . ' rel="stylesheet">';
         }
+        return implode("\n", $result);
     }
 
     public function render($path)

@@ -35,8 +35,9 @@ class Select extends InputElement
         return $this->options;
     }
 
-    public function renderBegin(){
-        if(array_key_exists('value', $this->attributes)){
+    public function renderBegin()
+    {
+        if (array_key_exists('value', $this->attributes)) {
             $this->value = $this->attributes['value'];
             $this->removeAttribute('value');
         }

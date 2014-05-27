@@ -2,13 +2,17 @@
 
 namespace Toy\Db;
 
-abstract class BaseStatement {
+abstract class BaseStatement
+{
 
     protected $parameters = array();
 
-    protected function __construct(){}
+    protected function __construct()
+    {
+    }
 
-    public function getParameters(){
+    public function getParameters()
+    {
         return $this->parameters;
     }
 }

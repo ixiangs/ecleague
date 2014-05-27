@@ -74,9 +74,10 @@ final class ArrayUtil
         return false;
     }
 
-    static public function splice(array $arr, array $removes, array $news){
-        foreach($removes as $rk){
-            if(array_key_exists($rk, $arr)){
+    static public function splice(array $arr, array $removes, array $news)
+    {
+        foreach ($removes as $rk) {
+            if (array_key_exists($rk, $arr)) {
                 unset($arr[$rk]);
             }
         }
@@ -88,14 +89,14 @@ final class ArrayUtil
         $args = func_get_args();
         $nums = func_num_args();
         $arr = $args[0];
-        for($i = 1; $i < $nums; $i++){
+        for ($i = 1; $i < $nums; $i++) {
             $result = array();
             $function = $args[$i];
             foreach ($arr as $index => $item) {
                 list($v, $k) = $function($item, $index);
-                if(empty($k)){
+                if (empty($k)) {
                     $result[] = $v;
-                }else{
+                } else {
                     $result[$k] = $v;
                 }
             }

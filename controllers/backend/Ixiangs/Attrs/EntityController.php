@@ -70,27 +70,20 @@ class EntityController extends Web\Controller
         return Web\Result::redirectResult($this->router->buildUrl('list'));
     }
 
-    public function fieldsGetAction($id){
-        $fields = EntityModel::create($id)->getFields()->load();
-        return Web\Result::templateResult(array(
-            'fields'=>$fields
-        ));
-    }
-
-    public function groupsGetAction($id)
+    public function groupsGetAction($entityid)
     {
-        $entity = EntityModel::load($id);
+        $entity = EntityModel::load($entityid);
         $groups = GroupModel::find()
             ->eq('entity_id', $entity->getId())
             ->load();
-        $attributes = FieldModel::find()
-            ->eq('entity_id', $entity->getId)
+        $fields = FieldModel::find()
+            ->eq('entity_id', $entity->getId())
             ->load();
         Document::singleton()->addBreadcrumbs($entity->getName(), $this->router->buildUrl('list'));
         return Web\Result::templateResult(
             array('entity' => $entity,
                 'groups' => $groups,
-                'attributes' => $attributes)
+                'fields' => $fields)
         );
     }
 
@@ -103,7 +96,6 @@ class EntityController extends Web\Controller
         $vr = $model->validateProperties();
         if ($vr !== true) {
             $this->session->set('errors', $locale->_('err_input_invalid'));
-            return $this->getEditTemplateResult($model);
             return Web\Result::jsonResult(array(
                 'success'=>'0',
                 'message'=>$locale->_('err_input_invalid')

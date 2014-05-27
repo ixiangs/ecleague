@@ -7,6 +7,7 @@ class Grid extends Element
     private $_columns = array();
     private $_dataSource = null;
     private $_rowSelectable = false;
+    protected $hiddens = array();
     protected $headVisible = true;
     protected $footVisible = false;
 
@@ -84,9 +85,9 @@ class Grid extends Element
         $col->getHead()->setAttribute('class', $headCss);
         $col->getCell()->setAttribute('class', $cellCss)
             ->getChild(0)->setAttribute(array(
-            'name' => $checkboxName,
-            'value' => $checkboxValue,
-            'id' => $checkboxId));
+                'name' => $checkboxName,
+                'value' => $checkboxValue,
+                'id' => $checkboxId));
         $this->addColumn($col);
         return $col;
     }
@@ -98,9 +99,9 @@ class Grid extends Element
         $col->getHead()->setAttribute('class', $headCss);
         $col->getCell()->setAttribute('class', $cellCss)
             ->getChild(0)->setAttribute(array(
-            'name' => $checkboxName,
-            'value' => $checkboxValue,
-            'id' => $checkboxId));
+                'name' => $checkboxName,
+                'value' => $checkboxValue,
+                'id' => $checkboxId));
         $this->addColumn($col);
         return $col;
     }
@@ -135,6 +136,13 @@ class Grid extends Element
         return $col;
     }
 
+    public function addHidden($id, $name, $value = null)
+    {
+        $f = new Element('input', array('type' => 'hidden', 'id' => $id, 'name' => $name, 'value' => $value));
+        $this->hiddens[] = $f;
+        return $f;
+    }
+
     public function render()
     {
         $head = array();
@@ -149,10 +157,10 @@ class Grid extends Element
 
         foreach ($this->_columns as $col) {
             $s = $col->renderFilter();
-            if(!empty($s)){
+            if (!empty($s)) {
                 $hasFilter = true;
             }
-            $filters[] = '<th>'.$s.'</th>';
+            $filters[] = '<th>' . $s . '</th>';
         }
 
         foreach ($this->_dataSource as $index => $dataRow) {
@@ -167,8 +175,8 @@ class Grid extends Element
         $result[] = '<thead><tr>';
         $result[] = implode('', $head);
         $result[] = '</tr>';
-        if($hasFilter){
-            $result[] = '<tr class="filter">'.implode('', $filters).'</tr>';
+        if ($hasFilter) {
+            $result[] = '<tr class="filter">' . implode('', $filters) . '</tr>';
         }
         $result[] = '</thead><tbody>';
         foreach ($body as $row) {
@@ -176,6 +184,9 @@ class Grid extends Element
         }
         $result[] = '</tbody>';
         $result[] = $this->renderEnd();
+        foreach ($this->hiddens as $hidden) {
+            $result[] = $hidden->render();
+        }
         return implode('', $result);
     }
 }

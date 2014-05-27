@@ -8,9 +8,7 @@
 
     <link href="<?php echo CSS_URL; ?>bootstrap.css" rel="stylesheet">
     <link href="<?php echo CSS_URL; ?>bootstrap-theme.css" rel="stylesheet">
-<!--    <link href="--><?php //echo CSS_URL; ?><!--jquery-ui.css" rel="stylesheet">-->
     <link href="<?php echo CSS_URL; ?>font-awesome.css" rel="stylesheet">
-<!--    <link href="/pub/assets/css/jquery-ui.css" rel="stylesheet">-->
     <link href="<?php echo CSS_URL; ?>base-admin.css" rel="stylesheet">
     <link href="<?php echo CSS_URL; ?>base-admin-responsive.css" rel="stylesheet">
     <?php echo $this->renderReferenceCss(); ?>
@@ -19,7 +17,6 @@
     <script src="<?php echo JS_URL; ?>libs.js"></script>
     <script src="<?php echo JS_URL; ?>datepicker/bootstrap-datepicker.js"></script>
     <script src="<?php echo JS_URL; ?>datepicker/locales/bootstrap-datepicker.zh-CN.js"></script>
-<!--    <script src="--><?php //echo JS_URL; ?><!--jquery-ui.js"></script>-->
     <script src="<?php echo JS_URL; ?>toy/core.js"></script>
     <script src="<?php echo JS_URL; ?>toy/html.js"></script>
     <script src="<?php echo JS_URL; ?>toy/locale.js"></script>

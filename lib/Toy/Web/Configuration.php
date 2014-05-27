@@ -8,7 +8,6 @@ class Configuration
     static public $handlerClass = '\Toy\Web\Handler';
     static public $rendererClass = '\Toy\Web\Renderer';
     static public $routerClass = '\Toy\Web\Router';
-    static public $historyClass = '\Toy\Web\History';
     static public $sessionClass = '\Toy\Http\Session';
     static public $requestClass = '\Toy\Http\Request';
     static public $responseClass = '\Toy\Http\Response';

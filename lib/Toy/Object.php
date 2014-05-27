@@ -7,7 +7,9 @@ class Object implements \ArrayAccess, \Iterator
 
     protected $data = array();
 
-    public function __construct($data = array()){}
+    public function __construct($data = array())
+    {
+    }
 
     public function __get($name)
     {
@@ -105,11 +107,13 @@ class Object implements \ArrayAccess, \Iterator
         return $this;
     }
 
-    public function getAllData(){
+    public function getAllData()
+    {
         return $this->data;
     }
 
-    public function setAllData($value){
+    public function setAllData($value)
+    {
         $this->data = $value;
         return $this;
     }

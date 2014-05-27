@@ -17,8 +17,8 @@ class Component
         $this->_author = $settings['author'];
         $this->_version = $settings['version'];
         $this->_website = $settings['website'];
-        $this->_breadcrumbs = array_key_exists('breadcrumbs', $settings)? $settings['breadcrumbs']: null;
-        $this->_listeners = array_key_exists('listeners', $settings)? $settings['listeners']: null;
+        $this->_breadcrumbs = array_key_exists('breadcrumbs', $settings) ? $settings['breadcrumbs'] : null;
+        $this->_listeners = array_key_exists('listeners', $settings) ? $settings['listeners'] : null;
     }
 
     public function getName()
@@ -36,32 +36,35 @@ class Component
         return $this->_version;
     }
 
-    public function getWebsite(){
+    public function getWebsite()
+    {
         return $this->_website;
     }
 
-    public function getActionBreadcrumb(){
+    public function getActionBreadcrumb()
+    {
         $result = array();
-        if($this->_breadcrumbs){
+        if ($this->_breadcrumbs) {
             $router = Application::$context->router;
             $domain = $router->domain->getName();
-            if(array_key_exists($domain, $this->_breadcrumbs)){
+            if (array_key_exists($domain, $this->_breadcrumbs)) {
                 $breadcrumbs = $this->_breadcrumbs[$domain];
-                if(array_key_exists('root', $breadcrumbs)){
-                    $result[] = $breadcrumbs['root'];
+                if (array_key_exists($router->component, $breadcrumbs)) {
+                    $result[] = $breadcrumbs[$router->component];
                 }
-                if(array_key_exists($router->controller, $breadcrumbs)){
+                if (array_key_exists($router->controller, $breadcrumbs)) {
                     $result[] = $breadcrumbs[$router->controller];
                 }
-                if(array_key_exists($router->controller.'_'.$router->action, $breadcrumbs)){
-                    $result[] = $breadcrumbs[$router->controller.'_'.$router->action];
+                if (array_key_exists($router->controller . '_' . $router->action, $breadcrumbs)) {
+                    $result[] = $breadcrumbs[$router->controller . '_' . $router->action];
                 }
             }
         }
         return $result;
     }
 
-    public function getListeners(){
+    public function getListeners()
+    {
         return $this->_listeners;
     }
 }

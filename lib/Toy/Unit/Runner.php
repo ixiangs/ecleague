@@ -51,7 +51,7 @@ class Runner
     {
         $parts = pathinfo($filename);
         $className = $parts['filename'];
-        if(array_key_exists('ignores', $this->_settings) && in_array($className, $this->_settings['ignores'])){
+        if (array_key_exists('ignores', $this->_settings) && in_array($className, $this->_settings['ignores'])) {
             return;
         }
         include_once $filename;

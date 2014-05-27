@@ -57,24 +57,23 @@ class LanguageController extends Web\Controller
             }
         }
 
-        return Web\Result::redirectResult($this->router->buildUrl('list'));
+        return Web\Result::redirectResult($this->router->getHistoryUrl('list'));
     }
 
     public function deleteAction($id)
     {
         $lang = $this->context->locale;
-        $m = LanguageModel::load($id);
+        $model = LanguageModel::load($id);
 
-        if (!$m) {
+        if ($model) {
+            if (!$model->delete()) {
+                $this->session->set('errors', $lang->_('err_system'));
+            }
+        }else{
             $this->session->set('errors', $lang->_('err_system'));
-            return Web\Result::redirectResultt($this->router->buildUrl('list'));
         }
 
-        if (!$m->delete()) {
-            $this->session->set('errors', $lang->_('err_system'));
-            return Web\Result::redirectResult($this->router->buildUrl('list'));
-        }
-        return Web\Result::redirectResult($this->router->buildUrl('list'));
+        return Web\Result::redirectResult($this->router->getHistoryUrl('list'));
     }
 
     public function importAction()

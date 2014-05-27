@@ -1,49 +1,54 @@
 <?php
 
-class SqliteTestCase extends Toy\Unit\TestCase{
+class SqliteTestCase extends Toy\Unit\TestCase
+{
 
     private $_db = null;
 
-    public function __construct(){
-        $this->_db = new \Toy\Db\Driver\PdoDriver(array('dsn' => 'sqlite:'.dirname(__FILE__).DS.'testdb.db3'));
+    public function __construct()
+    {
+        $this->_db = new \Toy\Db\Driver\PdoDriver(array('dsn' => 'sqlite:' . dirname(__FILE__) . DS . 'testdb.db3'));
         $this->_db->open();
     }
 
-    public function testInsert(){
+    public function testInsert()
+    {
         $is = new \Toy\Db\InsertStatement('people', array(
-            'fullname'=>'ronald',
-            'age'=>20,
-            'gender'=>1,
-            'address'=>'china'
+            'fullname' => 'ronald',
+            'age' => 20,
+            'gender' => 1,
+            'address' => 'china'
         ));
         $this->_db->insert($is);
         $this->assertTrue($this->_db->getLastInsertId() > 0);
     }
 
-    public function testUpdate(){
+    public function testUpdate()
+    {
         $is = new \Toy\Db\InsertStatement('people', array(
-            'fullname'=>'ronald',
-            'age'=>20,
-            'gender'=>1,
-            'address'=>'china'
+            'fullname' => 'ronald',
+            'age' => 20,
+            'gender' => 1,
+            'address' => 'china'
         ));
         $this->_db->insert($is);
 
         $lid = $this->_db->getLastInsertId();
         $us = new \Toy\Db\UpdateStatement('people', array(
-            'fullname'=>'ronald'.$lid,
-            'age'=>20 + $lid
+            'fullname' => 'ronald' . $lid,
+            'age' => 20 + $lid
         ));
         $us->eq('id', $lid);
         $this->_db->update($us);
     }
 
-    public function testDelete(){
+    public function testDelete()
+    {
         $is = new \Toy\Db\InsertStatement('people', array(
-            'fullname'=>'ronald',
-            'age'=>20,
-            'gender'=>1,
-            'address'=>'china'
+            'fullname' => 'ronald',
+            'age' => 20,
+            'gender' => 1,
+            'address' => 'china'
         ));
         $this->_db->insert($is);
 
@@ -53,7 +58,8 @@ class SqliteTestCase extends Toy\Unit\TestCase{
         $this->_db->delete($us);
     }
 
-    public function testSelect(){
+    public function testSelect()
+    {
         $ss = new \Toy\Db\SelectStatement('people');
         $rs1 = $this->_db->select($ss);
         $rs2 = $this->_db->fetch('SELECT * FROM people');

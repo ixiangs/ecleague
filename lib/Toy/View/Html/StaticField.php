@@ -8,7 +8,7 @@ class StaticField extends FormField
     {
         parent::__construct($label);
         $this->input = new Element('p', array(
-           'class'=>'form-control-static'
+            'class' => 'form-control-static'
         ));
     }
 

@@ -1,6 +1,6 @@
 <?php
 $this->assign('navigationBar', array(
-    $this->html->anchor($this->locale->_('back'), $this->router->buildUrl('entity/list')),
+    $this->html->anchor($this->locale->_('back'), $this->router->getHistoryUrl('entity/list')),
     $this->html->anchor($this->locale->_('attrs_field_new'), $this->router->buildUrl('add', '*'))
 ));
 

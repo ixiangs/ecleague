@@ -1,9 +1,4 @@
 <?php
-$this->assign('breadcrumb', array(
-    $this->html->anchor($this->locale->_('locale_manage')),
-    $this->html->anchor($this->locale->_($this->router->action == 'add' ? "locale_add_language" : "locale_edit_language"))
-));
-
 $this->assign('navigationBar', array(
     $this->html->anchor($this->locale->_('back'), $this->router->buildUrl('list'))
 ));

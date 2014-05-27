@@ -7,24 +7,61 @@ use Toy\Util\StringUtil;
 class Router
 {
 
+    private static $_SESSION_KEY = '__route_histories';
+
     public $domain = null;
     public $component = null;
     public $controller = null;
     public $action = null;
+    private $_histories = null;
+    private $_session = null;
+
+    public function __construct()
+    {
+        $this->_session = Application::$context->session;
+    }
+
+    public function getHistories()
+    {
+        return $this->_histories;
+    }
+
+    public function getHistoryUrl($action, $defaultArgs = null)
+    {
+        $baction = $this->buildAction($action);
+        foreach ($this->_histories as $history) {
+            if ($history['action'] == $baction) {
+                return $history['url'];
+            }
+        }
+        return $this->buildUrl($action, $defaultArgs);
+    }
 
     public function route($url = null)
     {
-        if (empty($url)) {
-            $url = $_SERVER['REQUEST_URI'];
-        }
+        $url = empty($url)? $_SERVER['REQUEST_URI']: $url;
         $arr = $this->parseUrl($url);
         $this->domain = $arr['domain'];
         $this->component = $arr['component'];
         $this->controller = $arr['controller'];
         $this->action = $arr['action'];
+
+        if (is_null($this->_histories)) {
+            $this->_histories = $this->_session->get(self::$_SESSION_KEY, array());
+        }
+
+        array_unshift($this->_histories, array(
+            'action' => sprintf('%s%s_%s_%s', $this->domain->getStartUrl(), $this->component, $this->controller, $this->action),
+            'url' => $url));
+        if (count($this->_histories) >= 10) {
+            unset($this->_histories[10]);
+        }
+        $this->_session->set(self::$_SESSION_KEY, $this->_histories);
+        return $this;
     }
 
-    public function buildAction($url  = ""){
+    public function buildAction($url = "")
+    {
         list($len, $domain, $component, $controller, $action) = array(0, null, null, null, null);
         if (!empty($url)) {
             $arr = explode('/', $url);
@@ -67,44 +104,7 @@ class Router
 
     public function buildUrl($url = "", $params = NULL)
     {
-//        list($len, $domain, $component, $controller, $action) = array(0, null, null, null, null);
-//        if (!empty($url)) {
-//            $arr = explode('/', $url);
-//            $len = count($arr);
-//        }
-//        switch ($len) {
-//            case 0 :
-//                $domain = $this->domain;
-//                $component = $this->component;
-//                $controller = $this->controller;
-//                $action = $this->action;
-//                break;
-//            case 1 :
-//                $domain = $this->domain;
-//                $component = $this->component;
-//                $controller = $this->controller;
-//                $action = $arr[0];
-//                break;
-//            case 2 :
-//                $domain = $this->domain;
-//                $component = $this->component;
-//                $controller = $arr[0];
-//                $action = $arr[1];
-//                break;
-//            case 3 :
-//                $domain = $this->domain;
-//                $component = $arr[0];
-//                $controller = $arr[1];
-//                $action = $arr[2];
-//                break;
-//            case 4 :
-//                $domain = Configuration::$domains[$arr[0]];
-//                $component = $arr[1];
-//                $controller = $arr[2];
-//                $action = $arr[3];
-//                break;
-//        }
-        $url =  $this->buildAction($url);//$domain->getStartUrl() . $component . '_' . $controller . '_' . $action;
+        $url = $this->buildAction($url);
         if (is_array($params)) {
             $url .= '?' . http_build_query($params);
         } elseif (is_string($params) && $params == '*') {

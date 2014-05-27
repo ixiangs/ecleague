@@ -7,5 +7,30 @@
         "webOnStart":"\\Ixiangs\\System\\Listener::webOnStart",
         "webPostRender":"\\Ixiangs\\System\\Listener::webPostRender",
         "webPostRoute":"\\Ixiangs\\System\\Listener::webPostRoute"
+    },
+    "breadcrumbs": {
+        "backend": {
+            "ixiangs_system": {
+                "text": "{@_ system_manage}"
+            },
+            "language_list": {
+                "text": "{@_ locale_language_list}"
+            },
+            "language_add": {
+                "text": "{@_ locale_language_new}"
+            },
+            "language_edit": {
+                "text": "{@_ locale_language_edit}"
+            },
+            "dictionary_list": {
+                "text": "{@_ locale_dictionary_list}"
+            },
+            "dictionary_add": {
+                "text": "{@_ locale_dictionary_new}"
+            },
+            "dictionary_edit": {
+                "text": "{@_ locale_dictionary_edit}"
+            }
+        }
     }
 }

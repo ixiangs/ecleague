@@ -4,7 +4,7 @@ $this->assign('navigationBar', array(
 ));
 
 $this->assign('toolbar', array(
-    $this->html->button('button', $this->locale->_('attrs_new_group'), 'btn btn-success')
+    $this->html->button('button', $this->locale->_('attrs_group_new'), 'btn btn-success')
         ->setAttribute(array('data-toggle'=>"modal",'data-target'=>"#group_dialog")),
     $this->html->button('button', $this->locale->_('save'), 'btn btn-primary')
 ));
@@ -47,16 +47,15 @@ $this->beginBlock('form');
     </div>
     </div>
 <?php
-$this->nextBlock('headcss');
-echo $this->renderCss(CSS_URL.'ztree/zTreeStyle.css');
-$this->nextBlock('headjs');
-echo $this->renderJavascript(JS_URL.'jquery.ztree.js');
-$this->nextBlock('footerjs');
+$this->endBlock();
+$this->document->addReferenceCss('ztree', CSS_URL.'ztree/zTreeStyle.css');
+$this->document->addReferenceScript('ztree',  JS_URL.'jquery.ztree.js');
+$this->beginScript('attrsFieldGroup');
 ?>
     <script language="javascript">
         var groupTree = {
             edit: { enable: true,
-                    showRemoveBtn: true,
+                    showRemoveBtn: false,
                     showRenameBtn: false,
                     removeTitle:"<?php echo $this->locale->_('delete'); ?>" },
             data: { simpleData: { enable: true }},
@@ -68,11 +67,11 @@ $this->nextBlock('footerjs');
             foreach($this->groups as $group):
                 $nodes[] = sprintf('{ id:%s, name:"%s", isParent:true, open:true}',
                                     $group->getId(), $group->name);
-                $groupAttributes = $group->getAttributeIds();
-                foreach($this->attributes as $attribute):
-                    if(in_array($attribute->getId(), $groupAttributes)):
+                $groupFields = $group->getFieldIds();
+                foreach($this->fields as $field):
+                    if(in_array($field->getId(), $groupFields)):
                         $nodes[] = sprintf('{ id:%s, pId:%s, name:"%s", open:true}',
-                                        $attribute->getId(), $group->getId(), $attribute->name);
+                                        $field->getId(), $group->getId(), $field->getName());
                 endif;
                 endforeach;
             endforeach;
@@ -89,12 +88,8 @@ $this->nextBlock('footerjs');
         var attributeNodes =[
             <?php
             $nodes = array();
-            $entityAttributes = $this->entity->getAttributeIds();
-            foreach($this->attributes as $attribute):
-                if(!in_array($attribute->getId(), $entityAttributes)):
-                    $nodes[] = sprintf('{ id:%s, name:"%s"}',
-                                    $attribute->getId(), $attribute->name);
-            endif;
+            foreach($this->fields as $field):
+                    $nodes[] = sprintf('{ id:%s, name:"%s"}', $field->getId(), $field->getName());
             endforeach;
             echo implode(',', $nodes);
             ?>
@@ -130,6 +125,7 @@ $this->nextBlock('footerjs');
                     $('#form1').append('<input type="hidden" name="edit_group_names[]" value="' + gname + '" />')
                 }
             }
+
         }
 
         function saveSort(){
@@ -145,5 +141,5 @@ $this->nextBlock('footerjs');
         }
     </script>
 <?php
-$this->endBlock();
+$this->endScript();
 echo $this->includeTemplate('layout\form');

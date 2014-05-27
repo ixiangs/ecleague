@@ -11,10 +11,11 @@ class Configuration
     static public $connectionSettings = array();
     static public $logger = null;
 
-	static public function addConnection($name, $settings, $default = true){
-		self::$connectionSettings[$name] = $settings;
-        if($default){
+    static public function addConnection($name, $settings, $default = true)
+    {
+        self::$connectionSettings[$name] = $settings;
+        if ($default) {
             self::$defaultConnection = $name;
         }
-	}
+    }
 }

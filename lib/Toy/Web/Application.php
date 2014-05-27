@@ -8,7 +8,7 @@ use Toy\Http\Request, Toy\Http\Response, Toy\Http\Session;
 class Application
 {
 
-    const WEB_ON_INITIALIZ = 'webOnInitialize';
+    const WEB_ON_INITIALIZE = 'webOnInitialize';
     const WEB_ON_START = 'webOnStart';
     const WEB_PRE_ROUTE = 'webPreRoute';
     const WEB_POST_ROUTE = 'webPostRoute';
@@ -21,7 +21,7 @@ class Application
     protected function __construct()
     {
         Event\Configuration::addEvent(
-            Application::WEB_ON_INITIALIZ,
+            Application::WEB_ON_INITIALIZE,
             Application::WEB_ON_START,
             Application::WEB_PRE_ROUTE,
             Application::WEB_POST_ROUTE,
@@ -37,7 +37,7 @@ class Application
         $cls = Configuration::$initializerClass;
         $initer = new $cls();
         $initer->initialize();
-        Event\Dispatcher::dispatch(Application::WEB_ON_INITIALIZ, $this);
+        Event\Dispatcher::dispatch(Application::WEB_ON_INITIALIZE, $this);
         return $this;
     }
 
@@ -84,12 +84,12 @@ class Application
         $this->finish();
     }
 
-//    static public $settings = array();
     static public $components = array();
     static public $context = null;
     private static $_instance = NULL;
 
-    static function getRequestComponent(){
+    static function getRequestComponent()
+    {
         return self::$components[self::$context->router->component];
     }
 
@@ -104,20 +104,24 @@ class Application
     static public function run()
     {
         self::$context = new Context();
+
         $cls = Configuration::$requestClass;
         self::$context->request = new $cls();
+
         $cls = Configuration::$responseClass;
         self::$context->response = new $cls();
+
         $cls = Configuration::$sessionClass;
         self::$context->session = new $cls();
+
         $cls = Configuration::$routerClass;
         self::$context->router = new $cls();
+
         $cls = Configuration::$handlerClass;
         self::$context->handler = new $cls();
+
         $cls = Configuration::$rendererClass;
         self::$context->renderer = new $cls();
-        $cls = Configuration::$historyClass;
-        self::$context->history = new $cls();
 
         self::singleton()->initialize()->start()->route()->handle()->render()->finish();
     }

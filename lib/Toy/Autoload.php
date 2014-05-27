@@ -20,6 +20,7 @@ class Autoload
     }
 
     static private $_instance = NULL;
+
     static private function singleton()
     {
         if (!self::$_instance) {

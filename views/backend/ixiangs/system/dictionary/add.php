@@ -1,16 +1,10 @@
 <?php
-$this->assign('breadcrumb', array(
-    $this->html->anchor($this->locale->_('locale_manage')),
-    $this->html->anchor($this->language->getName()),
-    $this->html->anchor($this->locale->_('locale_new_dictionary'))
-));
-
 $this->assign('navigationBar', array(
-    $this->html->anchor($this->locale->_('back'), $this->router->buildUrl('list', array('languageid'=>$this->language->getId()))),
+    $this->html->anchor($this->locale->_('back'), $this->router->getHistoryUrl('list', array('languageid'=>$this->language->getId()))),
 ));
 
 $this->assign('toolbar', array(
-    $this->html->button('button', $this->locale->_('new'), 'btn btn-success')->setAttribute('id', 'new'),
+    $this->html->button('button', $this->locale->_('add'), 'btn btn-success')->setAttribute('id', 'add'),
     $this->html->button('button', $this->locale->_('save'), 'btn btn-primary')->setAttribute('data-submit', 'form1')
 ));
 
@@ -26,7 +20,7 @@ $f->newField($this->locale->_('text'), true,
 endforeach;
 $this->assign('form', $f);
 
-$this->beginBlock('footerjs');
+$this->beginScript('newDictionaryItem');
 ?>
     <script language="javascript">
         var curIndex = <?php echo $len; ?>;
@@ -42,7 +36,7 @@ $this->beginBlock('footerjs');
             '<button type="button" class="btn btn-default" id="delete_{index}" onclick="javascript:deleteField({index});"><?php echo $this->locale->_('delete'); ?></button>' +
             '</div>';
 
-        $('#new').click(function () {
+        $('#add').click(function () {
             $('<hr/>').appendTo('#form1');
             var h = $(fieldHtml.substitute({
                 'index':curIndex
@@ -61,6 +55,6 @@ $this->beginBlock('footerjs');
         }
     </script>
 <?php
-$this->endBlock();
+$this->endScript();
 
 echo $this->includeTemplate('layout\form');

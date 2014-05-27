@@ -2,6 +2,7 @@
 namespace Ixiangs\System;
 
 use Toy\Db\Helper;
+use Toy\View\Html\Document;
 use Toy\Web;
 
 class DictionaryController extends Web\Controller
@@ -13,17 +14,19 @@ class DictionaryController extends Web\Controller
         $pi = $this->request->getParameter("pageindex", 1);
         $lang = LanguageModel::load($lid);
         $find = DictionaryModel::find()->eq('language_id', $lid);
-        if ($this->request->getParameter('kwcode')) {
-            $find->like('code', '%' . $this->request->getParameter('kwcode') . '%');
+        list($code, $label) = $this->request->listQuery('code', 'label');
+        if ($code) {
+            $find->like('code', '%' . $code. '%');
         }
-        if ($this->request->getParameter('kwlabel')) {
-            $find->like('label', '%' . $this->request->getParameter('kwlabel') . '%');
+        if ($label) {
+            $find->like('label', '%' . $label. '%');
         }
         $models = $find
             ->asc('code')
             ->limit(PAGINATION_SIZE, ($pi - 1) * PAGINATION_SIZE)
             ->load();
-        $count = $find->resetLimit()->executeCount();
+        $count = $find->executeCount();
+        Document::singleton()->addBreadcrumbs($lang->getName(), $this->router->getHistoryUrl('language/list'));
         return Web\Result::templateResult(array(
                 'models' => $models,
                 'language' => $lang,
@@ -32,18 +35,15 @@ class DictionaryController extends Web\Controller
         );
     }
 
-    public function addAction()
+    public function addAction($languageid)
     {
-        $lid = $this->request->getParameter('languageid');
         return $this->getAddTemplateResult(array(new DictionaryModel()));
     }
 
     public function addPostAction()
     {
         $lang = $this->context->locale;
-        $codes = $this->request->getParameter('codes');
-        $labels = $this->request->getParameter('labels');
-        $lid = $this->request->getParameter('languageid');
+        list($codes, $labels, $lid) = $this->request->listPost('codes', 'labels', 'languageid');
         $models = array();
 
         foreach ($codes as $index => $code) {
@@ -73,7 +73,7 @@ class DictionaryController extends Web\Controller
         });
 
         if ($success) {
-            return Web\Result::redirectResult($this->router->buildUrl('list', array('languageid' => $lid)));
+            return Web\Result::redirectResult($this->router->getHistoryUrl('list', array('languageid' => $lid)));
         } else {
             $this->session->set('errors', $lang->_('err_system'));
             return $this->getAddTemplateResult($models);
@@ -90,19 +90,19 @@ class DictionaryController extends Web\Controller
     {
         $lang = $this->context->locale;
         $data = $this->request->getPost('data');
-        $m = DictionaryModel::merge($data['id'], $data);
-        $vr = $m->validate();
+        $model = DictionaryModel::merge($data['id'], $data);
+        $vr = $model->validate();
         if ($vr !== true) {
             $this->session->set('errors', $lang->_('err_input_invalid'));
             return $this->getEditTemplateResult($m);
         }
 
-        if (!$m->save()) {
+        if (!$model->save()) {
             $this->session->set('errors', $lang->_('err_system'));
             return $this->getEditTemplateResult($m);
         }
 
-        return Web\Result::redirectResult($this->router->buildUrl('list', array('languageid' => $languageid)));
+        return Web\Result::redirectResult($this->router->getHistoryUrl('list', array('languageid' => $languageid)));
     }
 
     public function deletePostAction($languageid)

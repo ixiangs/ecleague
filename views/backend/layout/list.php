@@ -20,15 +20,6 @@
                     echo $btn->render();
                 endforeach;
             endif;
-            if ($this->hasBlock('toolbar')):
-                echo $this->renderBlock('toolbar');
-            endif;
-            if ($this->toolbar):
-                foreach ($this->toolbar as $act):
-                    echo '&nbsp;&nbsp;';
-                    echo $act->render();
-                endforeach;
-            endif;
             ?>
         </div>
     </div>
@@ -43,7 +34,7 @@ else:
         <form id="table_form" method="post">
                 <?php
                 if ($this->hasBlock('toolbar') || $this->toolbar):
-                    echo '<div class="panel-heading text-right">';
+                    echo '<div class="panel panel-default"><div class="panel-heading text-right">';
 
                     if ($this->hasBlock('toolbar')):
                         echo $this->renderBlock('toolbar');
@@ -57,10 +48,8 @@ else:
                     echo '</div>';
                 endif;
                 echo $this->datatable->render();
-                if($this->tableHiddens):
-                    foreach($this->tableHiddens as $th):
-                        echo $th->render();
-                    endforeach;
+                if ($this->hasBlock('toolbar') || $this->toolbar):
+                    echo '</div>';
                 endif;
                 ?>
         </form>

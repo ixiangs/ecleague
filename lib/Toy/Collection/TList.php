@@ -5,7 +5,8 @@ trait TList
 {
     use TEnumerator;
 
-    public function getSource(){
+    public function getSource()
+    {
         return $this->source;
     }
 
@@ -123,9 +124,9 @@ trait TList
         $result = array();
         foreach ($this->source as $index => $item) {
             list($k, $v) = $function($item, $index);
-            if($k){
+            if ($k) {
                 $result[$k] = $v;
-            }else{
+            } else {
                 $result[] = $v;
             }
         }

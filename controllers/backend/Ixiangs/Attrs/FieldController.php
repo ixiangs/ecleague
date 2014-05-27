@@ -9,11 +9,6 @@ use Toy\Web;
 class FieldController extends Web\Controller
 {
 
-    public function ready()
-    {
-//
-    }
-
     public function listAction($entityid)
     {
         $fields = FieldModel::find()
@@ -80,6 +75,8 @@ class FieldController extends Web\Controller
 
     private function getEditTemplateResult($model)
     {
+        $entity = EntityModel::load($model->getEntityId());
+        Document::singleton()->addBreadcrumbs($entity->getName(), $this->router->getHistoryUrl('list'));
         $attributes = AttributeModel::find()
             ->eq('component_id', $model->getComponentId())
             ->load()

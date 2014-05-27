@@ -11,7 +11,7 @@ class Initializer
     public function initialize()
     {
         PathUtil::scanCurrent(Configuration::$componentDirectory, function ($dir1, $info1) {
-            PathUtil::scanCurrent($dir1, function ($dir2, $info2) use($info1){
+            PathUtil::scanCurrent($dir1, function ($dir2, $info2) use ($info1) {
                 PathUtil::scanCurrent($dir2, function ($file, $fileinfo) use ($info1, $info2) {
                     if (array_key_exists('extension', $fileinfo) && $fileinfo['extension'] == 'json') {
                         $content = FileUtil::readFile($file);

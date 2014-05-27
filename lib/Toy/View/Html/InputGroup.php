@@ -50,11 +50,11 @@ class InputGroup extends Element
     {
         $res = '';
         if (!is_null($this->_leftAddon)) {
-            if($this->_leftAddon instanceof ButtonGroup){
+            if ($this->_leftAddon instanceof ButtonGroup) {
                 $res .= '<div class="input-group-btn">';
                 $res .= $this->_leftAddon->render();
                 $res .= '</div>';
-            }elseif ($this->_leftAddon instanceof Element) {
+            } elseif ($this->_leftAddon instanceof Element) {
                 $res .= '<span  class="input-group-btn">';
                 $res .= $this->_leftAddon->render();
                 $res .= '</span >';
@@ -64,11 +64,11 @@ class InputGroup extends Element
         }
         $res .= $this->_input->render();
         if (!is_null($this->_rightAddon)) {
-            if($this->_rightAddon instanceof ButtonGroup){
+            if ($this->_rightAddon instanceof ButtonGroup) {
                 $res .= '<div class="input-group-btn">';
                 $res .= $this->_leftAddon->render();
                 $res .= '</div>';
-            }elseif ($this->_rightAddon instanceof Element) {
+            } elseif ($this->_rightAddon instanceof Element) {
                 $res .= '<span  class="input-group-btn">';
                 $res .= $this->_rightAddon->render();
                 $res .= '</span >';

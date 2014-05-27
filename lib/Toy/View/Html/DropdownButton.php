@@ -26,7 +26,7 @@ class DropdownButton extends Element
     public function renderInner()
     {
         $res = $this->button->render();
-        $res .= '<button type="button" class="'.$this->button->getAttribute('class').' dropdown-toggle" data-toggle="dropdown"><span class="caret"></span><span class="sr-only">Toggle Dropdown</span></button>';
+        $res .= '<button type="button" class="' . $this->button->getAttribute('class') . ' dropdown-toggle" data-toggle="dropdown"><span class="caret"></span><span class="sr-only">Toggle Dropdown</span></button>';
         $res .= $this->renderChildren();
         return $res;
     }
@@ -35,7 +35,7 @@ class DropdownButton extends Element
     {
         $res = '<ul class="dropdown-menu" role="menu">';
         foreach ($this->children as $child) {
-            $res .= '<li>'.$child->render().'</li>';
+            $res .= '<li>' . $child->render() . '</li>';
         }
         return $res . '</ul>';
     }

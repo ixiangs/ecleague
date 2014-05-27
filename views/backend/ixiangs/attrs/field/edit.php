@@ -1,6 +1,6 @@
 <?php
 $this->assign('navigationBar', array(
-    $this->html->anchor($this->locale->_('back'), $this->router->buildUrl('list'))
+    $this->html->anchor($this->locale->_('back'), $this->router->getHistoryUrl('list'))
 ));
 
 $this->assign('toolbar', array(

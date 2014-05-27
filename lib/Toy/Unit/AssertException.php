@@ -1,6 +1,7 @@
 <?php
 namespace Toy\Unit;
 
-class AssertException extends \Exception{
-    
+class AssertException extends \Exception
+{
+
 }

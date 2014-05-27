@@ -75,7 +75,7 @@ class Document
 
     public function addBreadcrumbs($text, $url = '#')
     {
-        $this->breadcrumbs[] = array('text'=>$text, 'url'=>$url);
+        $this->breadcrumbs[] = array('text' => $text, 'url' => $url);
         return $this;
     }
 

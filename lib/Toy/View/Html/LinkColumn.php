@@ -14,7 +14,7 @@ class LinkColumn extends GridColumn
 
     public function renderCell($row, $index)
     {
-        if(!is_null($this->cellRenderer)){
+        if (!is_null($this->cellRenderer)) {
             return call_user_func_array($this->cellRenderer, array($this, $row, $index));
         }
 

@@ -23,13 +23,13 @@ class Renderer
                 $domain = strtolower($router->domain->getName());
                 View\Configuration::$templateDirectories = array($domain);
                 $tmpl = new View\Template(array_merge(array(
-                    'router'=>$context->router,
-                    'request'=>$context->request,
-                    'session'=>$context->session,
-                    'applicationContext'=>$context
+                    'router' => $context->router,
+                    'request' => $context->request,
+                    'session' => $context->session,
+                    'applicationContext' => $context
                 ), $result->data));
 
-                $path = $result->path? $result->path: str_replace('_', '/', $component.'/'.$controller . '/' . $action);
+                $path = $result->path ? $result->path : str_replace('_', '/', $component . '/' . $controller . '/' . $action);
                 $paths = array(
                     $lang . '/' . $path,
                     $path
@@ -40,7 +40,7 @@ class Renderer
                 $response->write($result->content);
                 break;
             case 'redirect' :
-                if($result->message){
+                if ($result->message) {
                     $context->session->set('infos', $result->message);
                 }
                 $response->redirect($result->url);

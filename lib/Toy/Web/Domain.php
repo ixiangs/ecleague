@@ -34,7 +34,8 @@ class Domain
         return $this->_indexUrl;
     }
 
-    public function getLoginUrl(){
+    public function getLoginUrl()
+    {
         return $this->_loginUrl;
     }
 

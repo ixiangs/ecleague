@@ -10,10 +10,10 @@ include_once 'Toy\Autoload.php';
 \Toy\Autoload::register();
 
 \Toy\Log\Configuration::$outputSettings = array(
-	'console'=>array(
-		'class'=>'\Toy\Log\Output\ConsoleOutput'
-	)
+    'console' => array(
+        'class' => '\Toy\Log\Output\ConsoleOutput'
+    )
 );
 \Toy\Log\Configuration::$defaultOutput = 'console';
 
-\Toy\Unit\Runner::run(array('directory' => TEST_PATH, 'output'=>'console'));
+\Toy\Unit\Runner::run(array('directory' => TEST_PATH, 'output' => 'console'));

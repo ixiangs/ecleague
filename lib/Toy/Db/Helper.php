@@ -60,19 +60,23 @@ class Helper
         }
     }
 
-    static public function insert($table, array $values = array()){
+    static public function insert($table, array $values = array())
+    {
         return new InsertStatement($table, $values);
     }
 
-    static public function update($table, array $values = array()){
+    static public function update($table, array $values = array())
+    {
         return new UpdateStatement($table, $values);
     }
 
-    static public function delete($table){
+    static public function delete($table)
+    {
         return new DeleteStatement($table);
     }
 
-    static public function select($table, array $fields = array()){
+    static public function select($table, array $fields = array())
+    {
         return new SelectStatement($table, $fields);
     }
 }

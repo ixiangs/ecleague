@@ -1,11 +1,7 @@
 <?php
-$this->assign('breadcrumb', array(
-    $this->html->anchor($this->locale->_('locale_manage'))
-));
-
 $this->assign('navigationBar', array(
-    $this->html->anchor($this->locale->_('locale_add_language'), $this->router->buildUrl('add')),
-    $this->html->anchor($this->locale->_('locale_import_dictionary'), $this->router->buildUrl('import'))
+    $this->html->anchor($this->locale->_('locale_language_new'), $this->router->buildUrl('add')),
+    $this->html->anchor($this->locale->_('locale_dictionary_import'), $this->router->buildUrl('import'))
 ));
 
 $dt = $this->html->grid($this->models);
@@ -18,7 +14,7 @@ $dt->addLabelColumn($this->locale->_('locale_currency_symbol'), '{currency_symbo
 $dt->addLabelColumn($this->locale->_('locale_short_date_format'), '{short_date_format}', '', 'text-center');
 $dt->addLabelColumn($this->locale->_('locale_long_date_format'), '{long_date_format}', '', 'text-center');
 $dt->addLinkColumn('', $this->locale->_('edit'), urldecode($this->router->buildUrl('edit', array('id' => '{id}'))), 'small', 'small edit');
-$dt->addLinkColumn('', $this->locale->_('locale_dictionary'), urldecode($this->router->buildUrl('dictionary/list', array('languageid' => '{id}'))), 'small', 'small edit');
+$dt->addLinkColumn('', $this->locale->_('locale_dictionary_list'), urldecode($this->router->buildUrl('dictionary/list', array('languageid' => '{id}'))), 'small', 'small edit');
 $this->assign('datatable', $dt);
 
 $p = $this->html->pagination($this->total, PAGINATION_SIZE, PAGINATION_RANGE);

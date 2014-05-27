@@ -1,6 +1,7 @@
 <?php
 namespace Toy\Web;
 
-class Exception extends \Exception {
+class Exception extends \Exception
+{
 
 }

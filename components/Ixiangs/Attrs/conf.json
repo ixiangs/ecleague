@@ -5,7 +5,7 @@
     "website": "ixiangs.com",
     "breadcrumbs": {
         "backend": {
-            "root": {
+            "ixiangs_attrs": {
                 "text": "{@_ attrs_manage}"
             },
             "entity_list": {

@@ -26,11 +26,13 @@ abstract class Controller
         $this->router = $ctx->router;
     }
 
-    public function ready(){
+    public function ready()
+    {
 
     }
 
-    public function finish(){
+    public function finish()
+    {
 
     }
 

@@ -13,10 +13,10 @@ class BehaviorController extends Web\Controller
         $count = BehaviorModel::find()->executeCount();
         $models = BehaviorModel::find()
                     ->select(System\Constant::TABLE_COMPONENT.'.name as component_name', Constant::TABLE_BEHAVIOR.'.*')
-                    ->join(System\Constant::TABLE_COMPONENT,
-                           System\Constant::TABLE_COMPONENT.'.id',
-                           Constant::TABLE_BEHAVIOR.'.component_id')
-                    ->limit(PAGINATION_SIZE, ($pi - 1) * PAGINATION_SIZE)->load();
+                    ->select(System\ComponentModel::propertyToField('name', 'component_name'))
+                    ->join(System\ComponentModel::propertyToField('id'), BehaviorModel::propertyToField('component_id'))
+                    ->limit(PAGINATION_SIZE, ($pi - 1) * PAGINATION_SIZE)
+                    ->load();
         return Web\Result::templateResult(array(
                 'models' => $models,
                 'total' => $count,
@@ -37,32 +37,29 @@ class BehaviorController extends Web\Controller
     public function savePostAction()
     {
         $lang = $this->context->locale;
-        $m = new BehaviorModel($this->request->getPost('data'));
-        $vr = $m->validateProperties();
+        $data = $this->request->getPost('data');
+        $model = $data['id'] ? BehaviorModel::merge($data['id'], $data) : RoleModel::create($data);
+
+        $vr = $model->validateProperties();
         if ($vr !== true) {
-            $this->session->set('errors', $lang->_('err_input_invalid'));
-            return $this->getEditTemplateResult($m);
+            $this->session->set('errors', $this->_('err_input_invalid'));
+            return $this->getEditTemplateReult($model);
         }
 
-        if($m->getId()){
-            if (!$m->update()) {
-                $this->session->set('errors', $lang->_('err_system'));
-                return $this->getEditTemplateResult($m);
-            }
-        }else{
-            $vr = $m->checkUnique();
+        if ($model->isNewed()) {
+            $vr = $model->checkUnique();
             if ($vr !== true) {
-                $this->session->set('errors', $lang->_('err_code_exists', $m->getCode()));
-                return $this->getEditTemplateResult($m);
+                $this->session->set('errors', $lang->_('err_code_exists', $model->getCode()));
+                return $this->getEditTemplateReult($model);
             }
-            if (!$m->insert()) {
-                $this->session->set('errors', $lang->_('err_system'));
-                return $this->getEditTemplateResult($m);
-            }
-
         }
 
-        return Web\Result::redirectResult($this->router->buildUrl('list'));
+        if (!$model->save()) {
+            $this->session->set('errors', $this->_('err_system'));
+            return $this->getEditTemplateReult($model);;
+        }
+
+        return Web\Result::redirectResult($this->router->getHistoryUrl('list'));
     }
 
     public function deleteAction($id)

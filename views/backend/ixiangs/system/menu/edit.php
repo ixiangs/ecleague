@@ -1,12 +1,6 @@
 <?php
-$this->assign('breadcrumb', array(
-    $this->html->anchor($this->locale->_('admin_menu_manage')),
-    $this->router->action == 'add'? $this->html->anchor($this->locale->_('admin_add_menu')):
-        $this->html->anchor($this->locale->_('admin_edit_menu'))
-));
-
 $this->assign('navigationBar', array(
-    $this->html->anchor($this->locale->_('back'), $this->router->buildUrl('list'))
+    $this->html->anchor($this->locale->_('back'), $this->router->getHistoryUrl('list'))
 ));
 
 $this->assign('toolbar', array(
@@ -16,7 +10,7 @@ $this->assign('toolbar', array(
 $f = $this->html->groupedForm()
         ->setAttribute('action', $this->router->buildUrl('save', '*'));
 $f->beginGroup('tab_base', $this->locale->_('base_info'));
-$f->newField($this->locale->_('admin_parent_menu'), true,
+$f->newField($this->locale->_('system_parent_menu'), true,
     $this->html->treeSelect('parent_id', 'data[parent_id]', $this->model->getParentId(), $this->menus)
         ->setCaption($this->locale->_('admin_root_menu')));
 $f->newField($this->locale->_('name'), true,

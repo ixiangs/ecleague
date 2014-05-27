@@ -1,11 +1,6 @@
 <?php
-$this->assign('breadcrumb', array(
-    $this->html->anchor($this->locale->_('user_manage')),
-    $this->html->anchor($this->locale->_('user_account_list'))
-));
-
 $this->assign('navigationBar', array(
-    $this->html->anchor($this->locale->_('add'), $this->router->buildUrl('add'))
+    $this->html->anchor($this->locale->_('user_account_new'), $this->router->buildUrl('add'))
 ));
 
 $dt = $this->html->grid($this->models);

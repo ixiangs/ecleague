@@ -3,89 +3,79 @@ namespace Ixiangs\User;
 
 use Toy\Web;
 
-class AccountController extends Web\Controller{
+class AccountController extends Web\Controller
+{
 
-	public function listAction(){
-		$pi = $this->request->getParameter("pageindex", 1);
-		$count = AccountModel::find()->executeCount();
-		$models = AccountModel::find()
-							->asc('id')
-							->limit(PAGINATION_SIZE, ($pi-1)*PAGINATION_SIZE)
-							->load();
-		return Web\Result::TemplateResult(array(
-			'models'=>$models,
-			'roles' => RoleModel::find()->execute()->combineColumns('id', 'code'),
-			'total'=>$count,
-			'pageIndex'=>$pi)
-		);
-	}
-	
-	public function addAction(){
-		return $this->getEditTemplateResult(AccountModel::create());
-	}	
-	
-	public function addPostAction(){
+    public function listAction()
+    {
+        $pi = $this->request->getParameter("pageindex", 1);
+        $count = AccountModel::find()->executeCount();
+        $models = AccountModel::find()
+            ->asc('id')
+            ->limit(PAGINATION_SIZE, ($pi - 1) * PAGINATION_SIZE)
+            ->load();
+        return Web\Result::TemplateResult(array(
+                'models' => $models,
+                'roles' => RoleModel::find()->execute()->combineColumns('id', 'code'),
+                'total' => $count,
+                'pageIndex' => $pi)
+        );
+    }
+
+    public function addAction()
+    {
+        return $this->getEditTemplateResult(AccountModel::create());
+    }
+
+    public function editAction($id)
+    {
+        return $this->getEditTemplateResult(AccountModel::load($id));
+    }
+
+    public function savePostAction()
+    {
         $lang = $this->context->locale;
-		$m = AccountModel::create($this->request->getPost('data'));
+        $data = $this->request->getPost('data');
+        $model = $data['id'] ? AccountModel::merge($data['id'], $data) : AccountModel::create($data);
 
-        $vr = $m->validateProperties();
+        $vr = $model->validateProperties();
         if ($vr !== true) {
             $this->session->set('errors', $lang->_('err_input_invalid'));
-            return $this->getEditTemplateResult($m);
+            return $this->getEditTemplateResult($model);
         }
 
-        $vr = $m->checkUnique();
-        if ($vr !== true) {
-            $this->session->set('errors', $lang->_('user_err_account_exists', $m->getCode()));
-            return $this->getEditTemplateResult($m);
+        if ($model->isNew()) {
+            $vr = $model->checkUnique();
+            if ($vr !== true) {
+                $this->session->set('errors', $lang->_('user_err_account_exists', $model->getCode()));
+                return $this->getEditTemplateResult($model);
+            }
         }
 
-        if (!$m->insert()) {
+        if (!$model->save()) {
             $this->session->set('errors', $lang->_('err_system'));
-            return $this->getEditTemplateResult($m);
+            return $this->getEditTemplateResult($model);
         }
 
-        return Web\Result::RedirectResult($this->router->buildUrl('list'));
-	}	
+        return Web\Result::RedirectResult($this->router->getHistoryUrl('list'));
+    }
 
-	public function editAction($id){
-		$m = AccountModel::load($id);
-		return $this->getEditTemplateResult($m);
-	}
-	
-	public function editPostAction(){
-        $lang = $this->context->locale;
-		$m = AccountModel::merge($this->request->getParameter('id'), $this->request->getAllParameters());
-		$m->setRoleIds($this->request->getParameter('role_ids', array()));
-        $vr = $m->validateProperties();
-		if($vr !== true){
-			$this->session->set('errors', $lang->_('err_input_invalid'));
-			return $this->getEditTemplateResult($m);
-		}
-		
-		if(!$m->update()){
-			$this->session->set('errors', $lang->_('err_system'));
-			return $this->getEditTemplateResult($m);			
-		}
+    public function deleteAction($id)
+    {
+        $model = AccountModel::load($id);
 
-        return Web\Result::RedirectResult($this->router->buildUrl('list'));
-	}
-	
-	public function deleteAction($id){
-		$m = AccountModel::load($id);
-		
-		if(!$m){
-			$this->session->set('errors', $this->languages->get('err_system'));
-            return Web\Result::RedirectResult($this->router->buildUrl('list'));
-		}
-		
-		if(!$m->delete()){
-			$this->session->set('errors', $this->languages->get('err_system'));
-            return Web\Result::RedirectResult($this->router->buildUrl('list'));
-		}
-        return Web\Result::RedirectResult($this->router->buildUrl('list'));
-	}
-	
+        if ($model) {
+            if (!$model->delete()) {
+                $this->session->set('errors', $this->languages->get('err_system'));
+            }
+        } else {
+            $this->session->set('errors', $this->languages->get('err_system'));
+        }
+
+
+        return Web\Result::RedirectResult($this->router->getHistoryUrl('list'));
+    }
+
 //	public function profileAction($id){
 //		return $this->getProfileTemplateResult(ProfileModel::load($id));
 //	}
@@ -111,7 +101,7 @@ class AccountController extends Web\Controller{
 //		$to = $this->router->buildUrl('index');
 //		return new RedirectResult(\Toy\Joy::history()->find($to, $to));
 //	}
-	
+
 //	public function exportContactsAction(){
 //		$profiles = ProfileModel::find()
 //									->andFilter('chinese_name notnull')
@@ -183,14 +173,15 @@ class AccountController extends Web\Controller{
 //			'user/account/profile'
 //		);
 //	}
-	
-	private function getEditTemplateResult($model){
+
+    private function getEditTemplateResult($model)
+    {
         return Web\Result::TemplateResult(
-			array(
-				'model'=>$model,
-				'roles' => RoleModel::find()->execute()->combineColumns('id', 'name')
-			),
-			'ixiangs/user/account/edit'
-		);		
-	}
+            array(
+                'model' => $model,
+                'roles' => RoleModel::find()->execute()->combineColumns('id', 'name')
+            ),
+            'ixiangs/user/account/edit'
+        );
+    }
 }

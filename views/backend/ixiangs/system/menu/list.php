@@ -1,8 +1,4 @@
 <?php
-$this->assign('breadcrumb', array(
-    $this->html->anchor($this->locale->_('admin_menu_manage'))
-));
-
 $this->assign('navigationBar', array(
     $this->html->anchor($this->locale->_('add'), $this->router->buildUrl('add')),
     $this->html->anchor($this->locale->_('sort'), $this->router->buildUrl('sort'))

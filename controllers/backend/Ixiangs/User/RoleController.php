@@ -28,37 +28,32 @@ class RoleController extends Web\Controller
         return $this->getEditTemplateReult(RoleModel::load($id));
     }
 
-
     public function savePostAction()
     {
         $lang = $this->context->locale;
-        $m = new RoleModel($this->request->getPost('data'));
+        $data = $this->request->getPost('data');
+        $model = $data['id'] ? RoleModel::merge($data['id'], $data) : RoleModel::create($data);
 
-        $vr = $m->validateProperties();
+        $vr = $model->validateProperties();
         if ($vr !== true) {
             $this->session->set('errors', $this->_('err_input_invalid'));
-            return $this->getEditTemplateReult($m);
+            return $this->getEditTemplateReult($model);
         }
 
-        if ($m->getId()) {
-            if (!$m->update()) {
-                $this->session->set('errors', $lang->_('err_system'));
-                return $this->getEditTemplateReult($m);
-            }
-        } else {
-            $vr = $m->checkUnique();
+        if ($model->isNewed()) {
+            $vr = $model->checkUnique();
             if ($vr !== true) {
-                $this->session->set('errors', $lang->_('err_code_exists', $m->getCode()));
-                return $this->getEditTemplateReult($m);
-            }
-
-            if (!$m->insert()) {
-                $this->session->set('errors', $this->_('err_system'));
-                return $this->getEditTemplateReult($m);;
+                $this->session->set('errors', $lang->_('err_code_exists', $model->getCode()));
+                return $this->getEditTemplateReult($model);
             }
         }
 
-        return Web\Result::redirectResult($this->router->buildUrl('list'));
+        if (!$model->save()) {
+            $this->session->set('errors', $this->_('err_system'));
+            return $this->getEditTemplateReult($model);;
+        }
+
+        return Web\Result::redirectResult($this->router->getHistoryUrl('list'));
     }
 
     public function deleteAction($id)

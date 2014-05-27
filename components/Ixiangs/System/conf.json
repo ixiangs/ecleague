@@ -16,7 +16,9 @@
             "language_edit": "{@_ locale_language_edit}",
             "dictionary_list":  "{@_ locale_dictionary_list}",
             "dictionary_add":  "{@_ locale_dictionary_new}",
-            "dictionary_edit": "{@_ locale_dictionary_edit}"
+            "menu_list": "{@_ system_menu_list}",
+            "menu_add": "{@_ system_menu_new}",
+            "menu_edit": "{@_ system_menu_edit}"
         }
     }
 }

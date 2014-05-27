@@ -1,18 +1,14 @@
 <?php
-$this->assign('breadcrumb', array(
-    $this->html->anchor($this->locale->_('user_manage')),
-    $this->html->anchor($this->locale->_($this->router->action == 'add' ? "user_new_account" : "user_edit_account"))
-));
-
 $this->assign('navigationBar', array(
-    $this->html->anchor($this->locale->_('back'), $this->router->buildUrl('list'))
+    $this->html->anchor($this->locale->_('back'), $this->router->getHistoryUrl('list'))
 ));
 
 $this->assign('toolbar', array(
     $this->html->button('button', $this->locale->_('save'), 'btn btn-primary')->setAttribute('data-submit', 'form1')
 ));
 
-$f = $this->html->form();
+$f = $this->html->form()
+            ->setAttribute('action', $this->router->buildUrl('save'));
 if($this->router->action == 'add'):
 $f->newField($this->locale->_('username'), true,
     $this->html->textbox('username', 'data[username]', $this->model->getUsername())

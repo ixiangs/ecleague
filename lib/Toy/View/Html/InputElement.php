@@ -16,7 +16,7 @@ abstract class InputElement extends Element
         return $this;
     }
 
-    public function renderAttributes()
+    public function renderAttribute()
     {
         foreach ($this->validateRules as $name => $rule) {
             $this->setAttribute('data-validate-' . $name, $rule['value'] === true ? 'true' : $rule['value']);
@@ -24,6 +24,6 @@ abstract class InputElement extends Element
                 $this->setAttribute('data-validate-' . $name . '-msg', $rule['message']);
             }
         }
-        return parent::renderAttributes();
+        return parent::renderAttribute();
     }
 }

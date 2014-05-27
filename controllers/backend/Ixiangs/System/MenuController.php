@@ -49,7 +49,7 @@ class MenuController extends Web\Controller
     {
         $locale = $this->context->locale;
         $data = $this->request->getPost('data');
-        $model = $data['id']? MenuModel::merge($data['id'],$data): MenuModel::create($data);
+        $model = $data['id'] ? MenuModel::merge($data['id'], $data) : MenuModel::create($data);
 
         $vr = $model->validateProperties();
         if ($vr !== true) {
@@ -59,9 +59,9 @@ class MenuController extends Web\Controller
 
 //        if ($m->getId()) {
         if (!$model->save()) {
-        $this->session->set('errors', $locale->_('err_system'));
-        return $this->getEditTemplateResult($model);
-    }
+            $this->session->set('errors', $locale->_('err_system'));
+            return $this->getEditTemplateResult($model);
+        }
 //        } else {
 //            if (!$m->insert()) {
 //                $this->session->set('errors', $locale->_('err_system'));
@@ -100,7 +100,7 @@ class MenuController extends Web\Controller
         if ($model->getId()) {
             $find->ne('id', $model->getId());
         }
-        $behaviors = \Ixiangs\User\Helper::getBehaviors()->toArray(function ($item) {
+        $behaviors = BehaviorModel::find()->load()->toArray(function ($item) {
             return array($item->getCode(), $item->getName());
         });
 

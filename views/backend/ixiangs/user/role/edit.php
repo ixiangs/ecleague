@@ -1,10 +1,4 @@
 <?php
-$this->assign('breadcrumb', array(
-    $this->html->anchor($this->locale->_('user_manage')),
-    $this->html->anchor($this->locale->_('user_role_list'), $this->router->buildUrl('list')),
-    $this->html->anchor($this->locale->_($this->router->action == 'add' ? "add" : "edit"))
-));
-
 $this->assign('navigationBar', array(
     $this->html->anchor($this->locale->_('back'), $this->router->buildUrl('list'))
 ));

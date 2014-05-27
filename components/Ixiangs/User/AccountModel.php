@@ -17,15 +17,15 @@ class AccountModel extends Orm\Model
         return $this->password == EncryptUtil::encryptPassword($other);
     }
 
-    public function activate()
-    {
-        return static::create(array('id' => $this->id, 'status' => self::STATUS_ACTIVATED))->update(array('status'));
-    }
-
-    public function freeze()
-    {
-        return static::create(array('id' => $this->id, 'status' => self::STATUS_DISABLED))->update(array('status'));
-    }
+//    public function activate()
+//    {
+//        return static::create(array('id' => $this->id, 'status' => self::STATUS_ACTIVATED))->update(array('status'));
+//    }
+//
+//    public function freeze()
+//    {
+//        return static::create(array('id' => $this->id, 'status' => self::STATUS_DISABLED))->update(array('status'));
+//    }
 
     static public function updatePassword($id, $old, $new, $db = null)
     {

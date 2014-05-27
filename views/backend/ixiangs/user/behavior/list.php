@@ -12,7 +12,7 @@ $dt = $this->html->grid($this->models);
 $dt->addIndexColumn('#', 'index', 'index');
 $dt->addLabelColumn($this->locale->_('code'), '{code}', 'large', 'left');
 $dt->addLabelColumn($this->locale->_('name'), '{name}', '', 'left');
-$dt->addLabelColumn($this->locale->_('user_component_name'), '{component_name}', '', 'left');
+$dt->addLabelColumn($this->locale->_('user_component'), '{component_name}', '', 'left');
 //$dt->addLabelColumn($this->locale->_('url'), '{url}');
 $dt->addBooleanColumn($this->locale->_('status'), 'enabled', $this->locale->_('enabled'), $this->locale->_('disabled').'</span>',
     'small', 'small text-center');

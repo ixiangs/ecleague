@@ -297,24 +297,40 @@ abstract class Model implements \ArrayAccess, \Iterator
 
     public function validateProperties()
     {
-        $result = array();
         if ($this->newed) {
-            foreach ($this->properties as $name => $property) {
-                if ($property->getInsertable()) {
-                    $r = $property->validate($this->getData($name));
-                    if ($r !== true) {
-                        $result[] = $name;
-                    }
+            return $this->validateInsert();
+        } elseif ($this->isChanged()) {
+            return $this->validateUpdate();
+        }
+
+        return true;
+    }
+
+    protected function validateInsert()
+    {
+        $result = array();
+        foreach ($this->properties as $name => $property) {
+            if ($property->getInsertable()) {
+                $r = $property->validate($this->getData($name));
+                if ($r !== true) {
+                    $result[] = $name;
                 }
             }
-        } elseif ($this->isChanged()) {
-            foreach ($this->changedProperties as $name) {
-                $property = $this->properties[$name];
-                if ($property->getUpdateable()) {
-                    $r = $property->validate($this->getData($name));
-                    if ($r !== true) {
-                        $result[] = $name;
-                    }
+        }
+
+        return empty($result) ? true : $result;
+    }
+
+    protected function validateUpdate()
+    {
+        $result = array();
+
+        foreach ($this->changedProperties as $name) {
+            $property = $this->properties[$name];
+            if ($property->getUpdateable()) {
+                $r = $property->validate($this->getData($name));
+                if ($r !== true) {
+                    $result[] = $name;
                 }
             }
         }
@@ -563,12 +579,13 @@ abstract class Model implements \ArrayAccess, \Iterator
         return $result;
     }
 
-    static public function propertyToField($name, $withTable = true)
+    static public function propertyToField($name, $as = null, $withTable = true)
     {
         $metadata = self::$metadatas[get_called_class()];
         $table = $withTable ? $metadata['table'] . '.' : '';
+        $as = $as? ' AS '.$as: '';
         if (array_key_exists($name, $metadata['properties'])) {
-            return $table . $name;
+            return $table . $name .$as;
         }
 
 

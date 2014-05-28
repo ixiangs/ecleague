@@ -6,7 +6,7 @@ $this->assign('navigationBar', array(
 $dt = $this->html->grid($this->models);
 $dt->addIndexColumn('#', 'index', 'index');
 $dt->addLabelColumn($this->locale->_('name'), '{name}', 'middle', 'left');
-$dt->addLabelColumn($this->locale->_('description'), '{description}', '', 'left');
+$dt->addLabelColumn($this->locale->_('memo'), '{memo}', '', 'left');
 $dt->addLinkColumn('', $this->locale->_('edit'), urldecode($this->router->buildUrl('edit', array('id'=>'{id}'))), 'edit', 'edit');
 $dt->addLinkButtonColumn('', $this->locale->_('delete'), "deleteConfirm('".urldecode($this->router->buildUrl('delete', array('id'=>'{id}')))."')", 'edit', 'edit');
 $this->assign('datatable', $dt);

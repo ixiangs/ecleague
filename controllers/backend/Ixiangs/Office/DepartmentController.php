@@ -1,6 +1,7 @@
 <?php
 namespace Ixiangs\Office;
 
+use Ixiangs\Attrs\EntityModel;
 use Toy\Web;
 
 class DepartmentController extends Web\Controller
@@ -27,53 +28,39 @@ class DepartmentController extends Web\Controller
         return $this->getEditTemplateReult(DepartmentModel::load($id));
     }
 
-
     public function savePostAction()
     {
         $lang = $this->context->locale;
-        $m = new DepartmentModel($this->request->getPost('data'));
+        $data = $this->request->getPost('data');
+        $model = $data['id'] ? DepartmentModel::merge($data['id'], $data) : DepartmentModel::create($data);
 
-        $vr = $m->validateProperties();
+        $vr = $model->validateProperties();
         if ($vr !== true) {
             $this->session->set('errors', $lang->_('err_input_invalid'));
-            return $this->getEditTemplateReult($m);
+            return $this->getEditTemplateReult($model);
         }
 
-        if ($m->getId()) {
-            if (!$m->update()) {
-                $this->session->set('errors', $lang->_('err_system'));
-                return $this->getEditTemplateReult($m);
-            }
-        } else {
-            $vr = $m->checkUnique();
-            if ($vr !== true) {
-                $this->session->set('errors', $lang->_('err_code_exists', $m->getCode()));
-                return $this->getEditTemplateReult($m);
-            }
-
-            if (!$m->insert()) {
-                $this->session->set('errors', $this->_('err_system'));
-                return $this->getEditTemplateReult($m);;
-            }
+        if (!$model->save()) {
+            $this->session->set('errors', $lang->_('err_system'));
+            return $this->getEditTemplateReult($model);
         }
 
-        return Web\Result::redirectResult($this->router->buildUrl('list'));
+        return Web\Result::redirectResult($this->router->getHistoryUrl('list'));
     }
 
     public function deleteAction($id)
     {
-        $m = DepartmentModel::load($id);
+        $model = DepartmentModel::load($id);
 
-        if (!$m) {
+        if ($model) {
+            if (!$model->delete()) {
+                $this->session->set('errors', $this->languages->get('err_system'));
+            }
+        } else {
             $this->session->set('errors', $this->languages->get('err_system'));
-            return Web\Result::redirectResult($this->router->buildUrl('index'));
         }
 
-        if (!$m->delete()) {
-            $this->session->set('errors', $this->languages->get('err_system'));
-            return Web\Result::redirectResultt($this->router->buildUrl('index'));
-        }
-        return Web\Result::redirectResult($this->router->buildUrl('index'));
+        return Web\Result::redirectResult($this->router->getHistoryUrl('index'));
     }
 
     private function getEditTemplateReult($model)

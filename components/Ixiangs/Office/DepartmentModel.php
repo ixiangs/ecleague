@@ -3,18 +3,19 @@ namespace Ixiangs\Office;
 
 use Toy\Orm;
 
-class DepartmentModel extends Orm\Model{
+class DepartmentModel extends Orm\Model
+{
 
 }
 
 DepartmentModel::register(array(
-    'table'=>Constant::TABLE_DEPARTMENT,
-    'properties'=>array(
+    'table' => Constant::TABLE_DEPARTMENT,
+    'properties' => array(
         Orm\IntegerProperty::create('id')->setPrimaryKey(true)->setAutoIncrement(true),
         Orm\StringProperty::create('name'),
-        Orm\StringProperty::create('description')
+        Orm\StringProperty::create('memo')
     ),
-    'relations'=>array(
-        new Orm\Relation('staffs', '\Ixiangs\Office\StaffModel', 'department_id')
+    'relations' => array(
+        Orm\Relation::childrenRelation('staffs', '\Ixiangs\Office\StaffModel', 'entity_id')
     )
 ));

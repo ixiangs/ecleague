@@ -70,18 +70,22 @@ class FieldController extends Web\Controller
             $this->session->set('errors', $lang->_('err_system'));
         }
 
-        return Web\Result::redirectResult($this->router->buildUrl('list', array('entityid' => $model->getEntityId())));
+        return Web\Result::redirectResult($this->router->getHistoryUrl('list', array('entityid' => $model->getEntityId())));
     }
 
     private function getEditTemplateResult($model)
     {
+        $locale = $this->context->locale;
         $entity = EntityModel::load($model->getEntityId());
         Document::singleton()->addBreadcrumbs($entity->getName(), $this->router->getHistoryUrl('list'));
         $attributes = AttributeModel::find()
-            ->eq('component_id', $model->getComponentId())
+            ->select(ComponentModel::propertyToField('name', 'component_name'))
+            ->join(ComponentModel::propertyToField('id'), AttributeModel::propertyToField('component_id'), 'left')
             ->load()
-            ->toArray(function ($item) {
-                return array($item->getId(), $item->getName());
+            ->toArray(function ($item) use($locale) {
+                $name =  $item->getName();
+                $name .= $item->component_name? '('.$item->component_name.')': '('.$locale->_('attrs_common').')';
+                return array($item->getId(), $name);
             });
         return Web\Result::templateResult(
             array('model' => $model, 'attributes' => $attributes),

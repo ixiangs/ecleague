@@ -8,7 +8,7 @@ class BehaviorModel extends Orm\Model
 
 }
 
-BehaviorModel::register(array(
+BehaviorModel::registerMetadata(array(
     'table' => Constant::TABLE_BEHAVIOR,
     'properties' => array(
         Orm\IntegerProperty::create('id')->setPrimaryKey(true)->setAutoIncrement(true),

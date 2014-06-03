@@ -49,7 +49,7 @@ class MenuModel extends Orm\Model
 //    }
 }
 
-MenuModel::register(array(
+MenuModel::registerMetadata(array(
     'table' => Constant::TABLE_MENU,
     'properties' => array(
         Orm\IntegerProperty::create('id')->setPrimaryKey(true)->setAutoIncrement(true),

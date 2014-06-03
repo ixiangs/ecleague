@@ -7,4 +7,5 @@ class Constant
     const TABLE_MENU = '{t}system_menu';
     const TABLE_LANGUAGE = '{t}system_language';
     const TABLE_DICTIONARY = '{t}system_dictionary';
+    const TABLE_SETTING = '{t}system_setting';
 } 

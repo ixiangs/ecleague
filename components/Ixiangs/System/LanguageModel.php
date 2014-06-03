@@ -7,7 +7,7 @@ class LanguageModel extends Orm\Model{
 
 }
 
-LanguageModel::register(array(
+LanguageModel::registerMetadata(array(
     'table'=>Constant::TABLE_LANGUAGE,
     'properties'=>array(
         Orm\IntegerProperty::create('id')->setPrimaryKey(true)->setAutoIncrement(true),

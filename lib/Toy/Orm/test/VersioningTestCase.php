@@ -5,7 +5,7 @@ class VersioningModel extends \Toy\Orm\Versioning\Model
 
 }
 
-\Toy\Orm\Versioning\Entity::register('VersioningModel', array(
+\Toy\Orm\Versioning\Entity::registerMetadata('VersioningModel', array(
     'table' => 'versioning',
     'properties' => array(
         \Toy\Orm\IntegerProperty::create('id')->setPrimaryKey(true)->setAutoIncrement(true),

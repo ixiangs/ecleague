@@ -6,8 +6,8 @@ use Toy\Db\InsertStatement;
 use Toy\Db\UpdateStatement;
 use Toy\Orm;
 
-use Ixiangs\Attrs;
-use Ixiangs\Attrs\Model\AttributeModel;
+use Ixiangs\Entities;
+use Ixiangs\Entities\Model\AttributeModel;
 use Ixiangs\Locale\Localize;
 
 class ProductModel extends Orm\Model
@@ -166,7 +166,7 @@ class ProductModel extends Orm\Model
     }
 }
 
-Orm\Model::register('Ixiangs\Catalogue\Model\ProductModel', array(
+Orm\Model::registerMetadata('Ixiangs\Catalogue\Model\ProductModel', array(
     'table' => ProductModel::TABLE_NAME,
     'properties' => array(
         Orm\IntegerProperty::create('id')->setPrimaryKey(true)->setAutoIncrement(true),

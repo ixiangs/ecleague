@@ -7,7 +7,7 @@ class DictionaryModel extends Orm\Model{
 
 }
 
-DictionaryModel::register(array(
+DictionaryModel::registerMetadata(array(
     'table'=>Constant::TABLE_DICTIONARY,
     'properties'=>array(
         Orm\IntegerProperty::create('id')->setPrimaryKey(true)->setAutoIncrement(true),

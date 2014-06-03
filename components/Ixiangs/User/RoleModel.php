@@ -10,7 +10,7 @@ class RoleModel extends Orm\Model{
 	}
 }
 
-RoleModel::register(array(
+RoleModel::registerMetadata(array(
     'table'=>Constant::TABLE_ROLE,
     'properties'=>array(
         Orm\IntegerProperty::create('id')->setPrimaryKey(true)->setAutoIncrement(true),

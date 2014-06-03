@@ -8,7 +8,7 @@ class DepartmentModel extends Orm\Model
 
 }
 
-DepartmentModel::register(array(
+DepartmentModel::registerMetadata(array(
     'table' => Constant::TABLE_DEPARTMENT,
     'properties' => array(
         Orm\IntegerProperty::create('id')->setPrimaryKey(true)->setAutoIncrement(true),

@@ -5,7 +5,7 @@ class PeopleModel extends \Toy\Orm\Model
 
 }
 
-PeopleModel::register(array(
+PeopleModel::registerMetadata(array(
     'table' => 'people',
     'properties' => array(
         \Toy\Orm\IntegerProperty::create('id')->setPrimaryKey(true)->setAutoIncrement(true),

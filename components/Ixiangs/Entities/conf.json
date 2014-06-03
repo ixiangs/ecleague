@@ -1,0 +1,22 @@
+{
+    "name": "IXiangs_Entities",
+    "version": "0.0.0.1",
+    "author": "IXiangs Studio",
+    "website": "ixiangs.com",
+    "breadcrumbs": {
+        "backend": {
+            "ixiangs_entities":  "{@_ entities_manage}",
+            "entity_list":  "{@_ entities_entity_list}",
+            "entity_add": "{@_ entities_entity_new}",
+            "entity_edit":  "{@_ entities_entity_edit}",
+            "entity_groups":  "{@_ entities_field_grouping}",
+            "field_list":  "{@_ entities_field_list}",
+            "field_add": "{@_ entities_field_new}",
+            "field_edit":  "{@_ entities_field_edit}",
+            "attribute_list": "{@_ entities_attribute_list}",
+            "attribute_add": "{@_ entities_attribute_new}",
+            "attribute_edit": "{@_ entities_attribute_edit}",
+            "attribute_choose": "{@_ entities_attribute_choose_type}"
+        }
+    }
+}

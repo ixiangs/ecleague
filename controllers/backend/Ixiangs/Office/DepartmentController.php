@@ -1,7 +1,7 @@
 <?php
 namespace Ixiangs\Office;
 
-use Ixiangs\Attrs\EntityModel;
+use Ixiangs\Entities\EntityModel;
 use Toy\Web;
 
 class DepartmentController extends Web\Controller

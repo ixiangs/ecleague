@@ -7,7 +7,7 @@ class StaffModel extends Orm\Model{
 
 }
 
-StaffModel::register(array(
+StaffModel::registerMetadata(array(
     'table'=>Constant::TABLE_STAFF,
     'properties'=>array(
         Orm\IntegerProperty::create('id')->setPrimaryKey(true)->setAutoIncrement(true),

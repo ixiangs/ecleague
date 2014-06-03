@@ -95,7 +95,7 @@ class ProductController extends Web\Controller
 
     private function getEditTemplateResult($model)
     {
-        $attrTree = \Ixiangs\Attrs\Helper::getAttributeTree(1);
+        $attrTree = \Ixiangs\Entities\Helper::getAttributeTree(1);
         return Web\Result::templateResult(
             array('model' => $model, 'attributeSet'=>$attrTree),
             'catalogue/product/edit'

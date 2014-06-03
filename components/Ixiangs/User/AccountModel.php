@@ -96,7 +96,7 @@ class AccountModel extends Orm\Model
     }
 }
 
-AccountModel::register(array(
+AccountModel::registerMetadata(array(
     'table' => Constant::TABLE_ACCOUNT,
     'properties' => array(
         Orm\IntegerProperty::create('id')->setPrimaryKey(true)->setAutoIncrement(true),

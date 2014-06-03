@@ -7,7 +7,7 @@ class PositionModel extends Orm\Model{
 
 }
 
-PositionModel::register(array(
+PositionModel::registerMetadata(array(
     'table'=>Constant::TABLE_POSITION,
     'properties'=>array(
         Orm\IntegerProperty::create('id')->setPrimaryKey(true)->setAutoIncrement(true),

@@ -8,7 +8,7 @@ class ComponentModel extends Orm\Model
 
 }
 
-ComponentModel::register(array(
+ComponentModel::registerMetadata(array(
     'table' => Constant::TABLE_COMPONENT,
     'properties' => array(
         Orm\IntegerProperty::create('id')->setPrimaryKey(true)->setAutoIncrement(true),

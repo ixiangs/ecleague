@@ -16,6 +16,7 @@ EntityModel::registerMetadata(array(
         Orm\IntegerProperty::create('component_id')->setNullable(false),
         Orm\StringProperty::create('model')->setNullable(false),
         Orm\StringProperty::create('name')->setNullable(false),
+        Orm\StringProperty::create('table_name')->setNullable(false),
         Orm\ListProperty::create('attribute_ids'),
         Orm\BooleanProperty::create('enabled')->setDefaultValue(true)->setNullable(true),
         Orm\StringProperty::create('memo')

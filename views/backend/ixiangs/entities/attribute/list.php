@@ -7,7 +7,7 @@ $clang = $this->locale->getLanguage();
 $dt = $this->html->grid($this->models);
 $dt->addIndexColumn('#', 'index', 'index');
 $dt->addLabelColumn($this->locale->_('name'), '{name}');
-$dt->addLabelColumn($this->locale->_('entities_component'), '{component_name}', 'large')
+$dt->addLabelColumn($this->locale->_('source'), '{component_name}', 'large')
         ->setEmptyText($this->locale->_('entities_common'));
 $dt->addOptionColumn($this->locale->_('entities_data_type'), '{data_type}', array(
     \Ixiangs\Entities\Constant::DATA_TYPE_ARRAY=>$this->locale->_('entities_data_type_array'),

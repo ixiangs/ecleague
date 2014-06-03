@@ -18,6 +18,18 @@ else:
             ->setCaption('')
             ->addValidateRule('required', true));
 endif;
+$f->newField($this->locale->_('entities_primary_key'), true,
+    $this->html->select('primary_key', 'data[primary_key]', $this->model->getPrimaryKey(),
+        array('1' => $this->locale->_('yes'), '0' => $this->locale->_('no'))));
+$f->newField($this->locale->_('entities_auto_increment'), true,
+    $this->html->select('auto_increment', 'data[auto_increment]', $this->model->getAutoIncrement(),
+        array('1' => $this->locale->_('yes'), '0' => $this->locale->_('no'))));
+$f->newField($this->locale->_('entities_insertable'), true,
+    $this->html->select('insertable', 'data[insertable]', $this->model->getInsertable(),
+        array('1' => $this->locale->_('yes'), '0' => $this->locale->_('no'))));
+$f->newField($this->locale->_('entities_updateable'), true,
+    $this->html->select('updateable', 'data[updateable]', $this->model->getUpdateable(),
+        array('1' => $this->locale->_('yes'), '0' => $this->locale->_('no'))));
 $f->newField($this->locale->_('entities_required'), true,
     $this->html->select('required', 'data[required]', $this->model->getRequired(),
         array('1' => $this->locale->_('yes'), '0' => $this->locale->_('no'))));

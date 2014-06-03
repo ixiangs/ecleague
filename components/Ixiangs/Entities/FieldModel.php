@@ -22,6 +22,10 @@ FieldModel::registerMetadata(array(
         Orm\IntegerProperty::create('entity_id')->setNullable(false),
         Orm\IntegerProperty::create('attribute_id')->setNullable(false),
         Orm\BooleanProperty::create('required')->setNullable(false)->setDefaultValue(false),
-        Orm\BooleanProperty::create('indexable')->setNullable(false)->setDefaultValue(false)
+        Orm\BooleanProperty::create('indexable')->setNullable(false)->setDefaultValue(false),
+        Orm\BooleanProperty::create('primary_key')->setNullable(false)->setDefaultValue(false),
+        Orm\BooleanProperty::create('insertable')->setNullable(false)->setDefaultValue(true),
+        Orm\BooleanProperty::create('updateable')->setNullable(false)->setDefaultValue(true),
+        Orm\BooleanProperty::create('auto_increment')->setNullable(false)->setDefaultValue(false)
     )
 ));

@@ -2,17 +2,12 @@
 namespace Toy\Orm;
 
 use Toy\Db\Helper;
-use Toy\Db\SelectStatement;
 
 abstract class Model implements \ArrayAccess, \Iterator
 {
 
     private static $_camelCaseToUnderline = array();
 
-//    protected $tableName = '';
-//    protected $properties = array();
-//    protected $relations = array();
-//    protected $idProperty = null;
     protected $metadata = null;
     protected $changedProperties = array();
     protected $originalData = array();
@@ -59,6 +54,7 @@ abstract class Model implements \ArrayAccess, \Iterator
             $pn = self::getUnderlineName(substr($name, 3));
             return $this->setData($pn, $arguments[0]);
         }
+        return null;
     }
 
     public function offsetExists($offset)
@@ -105,58 +101,6 @@ abstract class Model implements \ArrayAccess, \Iterator
     {
         return key($this->data) !== null;
     }
-
-//    public function getTableName()
-//    {
-//        return $this->tableName;
-//    }
-//
-//    public function getIdProperty()
-//    {
-//        return $this->idProperty;
-//    }
-//
-//    public function getProperty($name)
-//    {
-//        return $this->properties[$name];
-//    }
-//
-//    public function getProperties()
-//    {
-//        return $this->properties;
-//    }
-//
-//    public function addProperty(BaseProperty $value)
-//    {
-//        $this->properties[$value->getName()] = $value;
-//        if ($value->getPrimaryKey()) {
-//            $this->idProperty = $value;
-//        }
-//        return $this;
-//    }
-//
-//    public function hasProperty($name)
-//    {
-//        return array_key_exists($name, $this->properties);
-//    }
-//
-//    public function getRelations()
-//    {
-//        return $this->relations;
-//    }
-//
-//    public function hasRelation($name)
-//    {
-//        return array_key_exists($name, $this->relations);
-//    }
-
-//    public function isEmptyProperty($name)
-//    {
-//        if (!array_key_exists($name, $this->data)) {
-//            return true;
-//        }
-//        return empty($this->data[$name]);
-//    }
 
     public function isChanged()
     {
@@ -219,7 +163,7 @@ abstract class Model implements \ArrayAccess, \Iterator
             return $this->data[$name];
         }
 
-        if ($this->metadata->hadRelation($name)) {
+        if ($this->metadata->hasRelation($name)) {
             $relation = $this->metadata->getRelation($name);
             $type = $relation->getType();
             $thatModel = $relation->getThatModel();
@@ -500,7 +444,7 @@ abstract class Model implements \ArrayAccess, \Iterator
 
 
         if ($this->metadata->getPrimaryKey()->getAutoIncrement()) {
-            $id = Helper::insert($this->tableName, $values)->executeLastInsertId($db);
+            $id = Helper::insert($this->metadata->getTableName(), $values)->executeLastInsertId($db);
             if ($id > 0) {
                 $this->setIdValue($id);
                 $result = true;

@@ -1,13 +1,20 @@
 <?php
 namespace Ixiangs\Entities;
 
+use Toy\Orm\BooleanProperty;
+use Toy\Orm\DateTimeProperty;
+use Toy\Orm\EmailProperty;
+use Toy\Orm\FloatProperty;
+use Toy\Orm\IntegerProperty;
+use Toy\Orm\SerializeProperty;
+use Toy\Orm\StringProperty;
 use Toy\View\Html;
 use Toy\Web\Application;
 
 class Helper
 {
 
-    public function buildHtmlForm($model, $form = null)
+    static public function buildHtmlForm($model, $form = null)
     {
         $class = get_class($model);
         $entity = EntityModel::find()->eq('model', $class)->load()->getFirst();
@@ -27,7 +34,7 @@ class Helper
                 $fieldIds = $group->field_ids;
                 $form->beginGroup('group_' . $group->id, $group->name);
                 foreach ($fields as $field) {
-                    if (in_array($field->id, $fieldIds)) {
+                    if (($field->getInsertable() || $field->getUpdateable()) && in_array($field->id, $fieldIds)) {
                         $form->addField(self::buildHtmlField($html, $field, $options));
                     }
                 }
@@ -38,12 +45,14 @@ class Helper
                 $form = $html->form()->setAttribute('action', Application::$context->router->buildUrl('save'));
             }
             foreach ($fields as $field) {
-                $htmlField = self::buildHtmlField($html, $field, $options);
-                $htmlField->getInput()->setAttribute('value', $model->getData($field->name));
-                $form->addField($htmlField);
+                if (($field->getInsertable() || $field->getUpdateable())) {
+                    $htmlField = self::buildHtmlField($html, $field, $options);
+                    $htmlField->getInput()->setAttribute('value', $model->getData($field->name));
+                    $form->addField($htmlField);
+                }
             }
         }
-        $idProperty = $model->getIdProperty();
+        $idProperty = $model->getMetadata()->getPrimaryKey();
         $form->addHidden($idProperty->getName(), 'data[' . $idProperty->getName() . ']', $model->getIdValue());
         return $form;
     }
@@ -94,5 +103,46 @@ class Helper
         }
         $htmlField->setInput($htmlInput);
         return $htmlField;
+    }
+
+    static public function getModelMetadata($model)
+    {
+        $entity = EntityModel::find()->eq('model', $model)->load()->getFirst();
+        $fields = $entity->getFields()->load();
+        $result = array('table' => $entity->getTableName(), 'properties' => array());
+        $property = null;
+        foreach ($fields as $field) {
+            switch ($field->getDataType()) {
+                case Constant::DATA_TYPE_STRING:
+                    $property = StringProperty::create($field->getName());
+                    break;
+                case Constant::DATA_TYPE_NUMBER:
+                    $property = FloatProperty::create($field->getName());
+                    break;
+                case Constant::DATA_TYPE_INTEGER:
+                    $property = IntegerProperty::create($field->getName());
+                    break;
+                case Constant::DATA_TYPE_BOOLEAN:
+                    $property = BooleanProperty::create($field->getName());
+                    break;
+                case Constant::DATA_TYPE_EMAIL:
+                    $property = EmailProperty::create($field->getName());
+                    break;
+                case Constant::DATA_TYPE_ARRAY:
+                    $property = SerializeProperty::create($field->getName());
+                    break;
+                case Constant::DATA_TYPE_DATE:
+                    $property = DateTimeProperty::create($field->getName());
+                    break;
+            }
+            $property->setNullable(!$field->getRequired());
+            $property->setPrimaryKey($field->getPrimaryKey());
+            $property->setAutoIncrement($field->getAutoIncrement());
+            $property->setInsertable($field->getInsertable());
+            $property->setUpdateable($field->getUpdateable());
+            $result['properties'][] = $property;
+        }
+
+        return $result;
     }
 } 

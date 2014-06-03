@@ -94,12 +94,12 @@ class DictionaryController extends Web\Controller
         $vr = $model->validate();
         if ($vr !== true) {
             $this->session->set('errors', $lang->_('err_input_invalid'));
-            return $this->getEditTemplateResult($m);
+            return $this->getEditTemplateResult($model);
         }
 
         if (!$model->save()) {
             $this->session->set('errors', $lang->_('err_system'));
-            return $this->getEditTemplateResult($m);
+            return $this->getEditTemplateResult($model);
         }
 
         return Web\Result::redirectResult($this->router->getHistoryUrl('list', array('languageid' => $languageid)));

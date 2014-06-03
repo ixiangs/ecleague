@@ -18,7 +18,7 @@ $f = $this->html->form()->setAttribute(array(
     'method'=>'get')
 );
 
-$f->newField($this->locale->_('entities_component'), true,
+$f->newField($this->locale->_('source'), true,
                 $this->html->select('component_id', 'component_id', $this->request->getQuery('component_id'), $this->components));
 //                    ->addValidateRule('required', true));
 $f->newField($this->locale->_('entities_data_type'), true,

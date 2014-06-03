@@ -24,6 +24,9 @@ $f->newField($this->locale->_('entities_model'), true,
 $f->newField($this->locale->_('name'), true,
     $this->html->textbox('name', 'data[name]', $this->model->name)
         ->addValidateRule('required', true));
+$f->newField($this->locale->_('dbtable'), true,
+    $this->html->textbox('table_name', 'data[table_name]', $this->model->table_name)
+        ->addValidateRule('required', true));
 $f->newField($this->locale->_('memo'), true,
     $this->html->textbox('memo', 'data[memo]', $this->model->memo));
 $f->newField($this->locale->_('enable'), true,

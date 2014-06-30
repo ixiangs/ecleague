@@ -34,7 +34,7 @@ class DepartmentController extends Web\Controller
         $data = $this->request->getPost('data');
         $model = $data['id'] ? DepartmentModel::merge($data['id'], $data) : DepartmentModel::create($data);
 
-        $vr = $model->validateProperties();
+        $vr = $model->validate();
         if ($vr !== true) {
             $this->session->set('errors', $lang->_('err_input_invalid'));
             return $this->getEditTemplateReult($model);

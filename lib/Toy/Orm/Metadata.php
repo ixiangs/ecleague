@@ -11,7 +11,7 @@ class Metadata
 
     protected $tableName = '';
     protected $properties = array();
-    protected $relations = array();
+//    protected $relations = array();
     protected $primaryKey = null;
 
     private function __construct($tableName, $properties, $relations = array())
@@ -24,9 +24,9 @@ class Metadata
             }
         }
 
-        foreach ($relations as $relation) {
-            $this->relations[$relation->getPropertyName()] = $relation;
-        }
+//        foreach ($relations as $relation) {
+//            $this->relations[$relation->getPropertyName()] = $relation;
+//        }
 
     }
 
@@ -73,20 +73,20 @@ class Metadata
         return $this;
     }
 
-    public function getAllRelations()
-    {
-        return $this->relations;
-    }
-
-    public function getRelation($name)
-    {
-        return $this->relations[$name];
-    }
-
-    public function hasRelation($name)
-    {
-        return array_key_exists($name, $this->relations);
-    }
+//    public function getAllRelations()
+//    {
+//        return $this->relations;
+//    }
+//
+//    public function getRelation($name)
+//    {
+//        return $this->relations[$name];
+//    }
+//
+//    public function hasRelation($name)
+//    {
+//        return array_key_exists($name, $this->relations);
+//    }
 
     static public function get($class)
     {

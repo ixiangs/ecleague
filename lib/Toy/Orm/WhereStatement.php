@@ -1,12 +1,5 @@
 <?php
-/**
- * Created by PhpStorm.
- * Auth: ixiangs
- * Date: 14-3-12
- * Time: 下午11:58
- */
-
-namespace Toy\Db;
+namespace Toy\Orm\Db;
 
 abstract class WhereStatement extends BaseStatement
 {

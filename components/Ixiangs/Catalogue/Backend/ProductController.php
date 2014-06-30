@@ -33,7 +33,7 @@ class ProductController extends Web\Controller
         $model = Tops::loadModel('catalogue/product')
                     ->bindAttributeSet()
                     ->setAllData($post['data']);
-        $vr = $model->validateProperties();
+        $vr = $model->validate();
 //        print_r($vr);
 //        die();
         if ($vr !== true) {
@@ -62,7 +62,7 @@ class ProductController extends Web\Controller
                     ->load($this->request->getPost('id'))
                     ->setAllData($this->request->getPost('data'));
 
-        $vr = $m->validateProperties();
+        $vr = $m->validate();
         if ($vr !== true) {
             $this->session->set('errors', $locale->_('err_input_invalid'));
             return $this->getEditTemplateResult($m, null);

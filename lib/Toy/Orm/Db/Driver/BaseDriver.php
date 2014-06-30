@@ -1,5 +1,5 @@
 <?php
-namespace Toy\Db\Driver;
+namespace Toy\Orm\Db\Driver;
 
 abstract class BaseDriver
 {

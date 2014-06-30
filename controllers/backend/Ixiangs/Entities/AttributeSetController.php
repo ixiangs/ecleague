@@ -35,7 +35,7 @@ class AttributeSetController extends Web\Controller
         $locale = $this->context->locale;
         $m = new AttributeSetModel($this->request->getPost('data'));
 
-        $vr = $m->validateProperties();
+        $vr = $m->validate();
         if ($vr !== true) {
             $this->session->set('errors', $locale->_('err_input_invalid'));
             return $this->getEditTemplateResult($m);

@@ -1,8 +1,6 @@
 <?php
 namespace Toy\Orm;
 
-use Toy\Db\Helper;
-
 abstract class Model implements \ArrayAccess, \Iterator
 {
 
@@ -18,10 +16,6 @@ abstract class Model implements \ArrayAccess, \Iterator
     public function __construct($data = array())
     {
         $this->metadata = Metadata::get(get_class($this));
-//        $this->tableName = $m['table'];
-//        $this->idProperty = $m['idProperty'];
-//        $this->properties = $m['properties'];
-//        $this->relations = $m['relations'];
         foreach ($this->metadata->getAllProperties() as $property) {
             $this->data[$property->getName()] = $property->getDefaultValue();
         }
@@ -163,41 +157,6 @@ abstract class Model implements \ArrayAccess, \Iterator
             return $this->data[$name];
         }
 
-        if ($this->metadata->hasRelation($name)) {
-            $relation = $this->metadata->getRelation($name);
-            $type = $relation->getType();
-            $thatModel = $relation->getThatModel();
-            switch ($type) {
-                case Relation::TYPE_CHILDREN:
-                    $eqValue = $relation->getThisProperty() ?
-                        $this->data[$relation->getThisProperty()] :
-                        $this->getIdValue();
-                    $find = $thatModel::find();
-                    if (!empty($eqValue)) {
-                        $find->eq($relation->getThatProperty(), $eqValue);
-                    }
-                    $this->data[$name] = $find;
-                    break;
-                case Relation::TYPE_CHILD:
-                    $eqValue = $relation->getThisProperty() ?
-                        $this->data[$relation->getThisProperty()] :
-                        $this->getIdValue();
-                    if (!empty($eqValue)) {
-                        $this->data[$name] = new $thatModel();
-                    } else {
-                        $this->data[$name] = $thatModel::find()->eq($relation->getThatProperty(), $eqValue)
-                            ->load()
-                            ->getFirst();
-                    }
-                    break;
-                case Relation::TYPE_PARENT:
-                    $this->data[$name] = $thatModel::load($this->data[$relation->getThisProperty]);
-                    break;
-            }
-
-            return $this->data[$name];
-        }
-
         return $default;
     }
 
@@ -229,21 +188,12 @@ abstract class Model implements \ArrayAccess, \Iterator
 
     public function validate()
     {
-        $result = $this->validateProperties();
-        if (!$result) {
-            return $result;
-        }
-
-        return $this->validateChildren();
-    }
-
-    public function validateProperties()
-    {
         if ($this->newed) {
             return $this->validateInsert();
         } elseif ($this->isChanged()) {
             return $this->validateUpdate();
         }
+
 
         return true;
     }
@@ -280,35 +230,6 @@ abstract class Model implements \ArrayAccess, \Iterator
         return empty($result) ? true : $result;
     }
 
-    public function validateChildren()
-    {
-        foreach ($this->metadata->getAllRelations() as $name => $relation) {
-            switch ($relation->getType()) {
-                case Relation::TYPE_CHILDREN:
-                    foreach ($this->data[$name] as $child) {
-                        if (!$child->validateProperties()) {
-                            return false;
-                        }
-                        if (!$child->validateChildren()) {
-                            return false;
-                        }
-                    }
-                    return true;
-                    break;
-                case Relation::TYPE_CHILD:
-                    if (!$this->data[$name]->validateProperties()) {
-                        return false;
-                    }
-                    if (!$this->data[$name]->validateChildren()) {
-                        return false;
-                    }
-                    return true;
-                    break;
-            }
-        }
-        return true;
-    }
-
     public function checkUnique($db = null)
     {
         $cdb = $db ? $db : Helper::openDb();
@@ -331,26 +252,14 @@ abstract class Model implements \ArrayAccess, \Iterator
 
     public function save($db = null)
     {
-        $cdb = $db ? $db : Helper::openDb();
-
         $result = true;
         if ($this->deleted) {
-            $this->beforeDelete($cdb);
-            $this->deleteChildren($cdb);
-            $result = $this->deleteSelf($cdb);
-            $this->afterDelete($cdb);
+            $result = $this->delete($db);
         } else {
             if ($this->newed) {
-                $this->beforeInsert($cdb);
-                $result = $this->insertSelf($cdb);
-                $this->afterInsert($cdb);
+                $result = $this->insert($db);
             } elseif ($this->isChanged()) {
-                $this->beforeUpdate($cdb);
-                $result = $this->updateSelf($cdb);
-                $this->afterUpdate($cdb);
-            }
-            if ($result) {
-                $result = $this->saveChildren($cdb);
+                $result = $this->update($db);
             }
         }
 
@@ -359,54 +268,13 @@ abstract class Model implements \ArrayAccess, \Iterator
 
     public function delete($db = null)
     {
-        return $this->markDeleted()->save($db);
-    }
-
-    protected function saveChildren($db)
-    {
-        foreach ($this->metadata->getAllRelations() as $name => $relation) {
-            switch ($relation->getType()) {
-                case Relation::TYPE_CHILDREN:
-                    if (array_key_exists($name, $this->data)) {
-                        foreach ($this->data[$name] as $child) {
-                            if (!$child->save($db)) {
-                                return false;
-                            }
-                        }
-                    }
-                    break;
-                case Relation::TYPE_CHILD:
-                    if (array_key_exists($name, $this->data)) {
-                        if ($this->data[$name]->save($db)) {
-                            return false;
-                        }
-                    }
-                    break;
-            }
-        }
-        return true;
-    }
-
-    protected function deleteChildren($db)
-    {
-        foreach ($this->metadata->getAllRelations() as $name => $relation) {
-            switch ($relation->getType()) {
-                case Relation::TYPE_CHILDREN:
-                    if (!array_key_exists($name, $this->data)) {
-                        $this->getData($name)->load();
-                    }
-                    foreach ($this->data[$name] as $child) {
-                        $child->delete($db);
-                    }
-                    break;
-                case Relation::TYPE_CHILD:
-                    if (!array_key_exists($name, $this->data)) {
-                        $this->getData($name);
-                    }
-                    $this->data[$name]->delete($db);
-                    break;
-            }
-        }
+        $cdb = $db ? $db : Helper::openDb();
+        $this->beforeDelete($cdb);
+        $result = Helper::delete($this->metadata->getTableName())
+            ->eq($this->metadata->getPrimaryKey()->getName(), $this->getIdValue())
+            ->execute($db);
+        $this->afterDelete($cdb);
+        return $result;
     }
 
     protected function beforeDelete($db)
@@ -433,8 +301,10 @@ abstract class Model implements \ArrayAccess, \Iterator
     {
     }
 
-    protected function insertSelf($db)
+    protected function insert($db)
     {
+        $cdb = $db ? $db : Helper::openDb();
+        $this->beforeInsert($cdb);
         $values = array();
         foreach ($this->metadata->getAllProperties() as $n => $p) {
             if ($p->getInsertable()) {
@@ -454,11 +324,14 @@ abstract class Model implements \ArrayAccess, \Iterator
         } else {
             $result = Helper::insert($this->metadata->getTableName(), $values)->execute($db);
         }
+        $this->afterInsert($cdb);
         return $result;
     }
 
-    protected function updateSelf($db)
+    protected function update($db)
     {
+        $cdb = $db ? $db : Helper::openDb();
+        $this->beforeUpdate($cdb);
         $values = array();
         foreach ($this->metadata->getAllProperties() as $n => $p) {
             if ($p->getUpdateable()) {
@@ -471,34 +344,8 @@ abstract class Model implements \ArrayAccess, \Iterator
         $result = Helper::update($this->metadata->getTableName(), $values)
             ->eq($this->metadata->getPrimaryKey()->getName(), $this->getIdValue())
             ->execute($db);
+        $this->afterUpdate($cdb);
         return $result;
-    }
-
-    protected function deleteSelf($db = null)
-    {
-        $result = Helper::delete($this->metadata->getTableName())
-            ->eq($this->metadata->getPrimaryKey()->getName(), $this->getIdValue())
-            ->execute($db);
-        return $result;
-    }
-
-    public function toDbValues()
-    {
-        $result = array();
-        foreach ($this->metadata->getAllProperties() as $n => $p) {
-            $result[$n] = $p->toDbValue($this->data[$n]);
-        }
-        return $result;
-    }
-
-    public function fromDbValues(array $row)
-    {
-        $props = $this->metadata->getAllProperties();
-        foreach ($row as $field => $value) {
-            $this->data[$field] = array_key_exists($field, $props) ? $props[$field]->fromDbValue($value) : $value;
-        }
-        $this->originalData = $this->data;
-        return $this;
     }
 
     static public function propertiesToFields($includes = null, $ignores = null, $withTable = true)
@@ -571,7 +418,7 @@ abstract class Model implements \ArrayAccess, \Iterator
         $calledClass = get_called_class();
         $metadata = Metadata::get($calledClass);
         $table = $metadata->getTableName();
-        $result = new Collection($calledClass);
+        $result = new Queryable($calledClass);
         if ($allFields) {
             $fields = array();
             foreach ($metadata->getAllProperties() as $prop) {

@@ -38,9 +38,9 @@ class Helper
         return new Pagination($total, $ps, $pr);
     }
 
-    public function dropdownButton($button, $attrs = array('class' => "btn-group"))
+    public function dropdown($button, $attrs = array('class' => "btn-group"))
     {
-        return new DropdownButton($button, $attrs);
+        return new Dropdown($button, $attrs);
     }
 
     public function buttonGroup($buttons = array())

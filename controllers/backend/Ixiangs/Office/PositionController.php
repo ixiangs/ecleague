@@ -33,7 +33,7 @@ class PositionController extends Web\Controller
         $lang = $this->context->locale;
         $m = new PositionModel($this->request->getPost('data'));
 
-        $vr = $m->validateProperties();
+        $vr = $m->validate();
         if ($vr !== true) {
             $this->session->set('errors', $this->_('err_input_invalid'));
             return $this->getEditTemplateReult($m);

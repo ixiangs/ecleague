@@ -39,7 +39,7 @@ class EntityController extends Web\Controller
         $data = $this->request->getPost('data');
         $model = $data['id'] ? EntityModel::merge($data['id'], $data) : EntityModel::create($data);
 
-        $vr = $model->validateProperties();
+        $vr = $model->validate();
         if ($vr !== true) {
             $this->session->set('errors', $locale->_('err_input_invalid'));
             return $this->getEditTemplateResult($model);
@@ -93,7 +93,7 @@ class EntityController extends Web\Controller
         $data = $this->request->getPost('data');
         $model = $data['id'] ? GroupModel::merge($data['id'], $data) : GroupModel::create($data);
 
-        $vr = $model->validateProperties();
+        $vr = $model->validate();
         if ($vr !== true) {
             $this->session->set('errors', $locale->_('err_input_invalid'));
             return Web\Result::jsonResult(array(

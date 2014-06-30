@@ -38,7 +38,7 @@ class AccountController extends Web\Controller
         $data = $this->request->getPost('data');
         $model = $data['id'] ? AccountModel::merge($data['id'], $data) : AccountModel::create($data);
 
-        $vr = $model->validateProperties();
+        $vr = $model->validate();
         if ($vr !== true) {
             $this->session->set('errors', $lang->_('err_input_invalid'));
             return $this->getEditTemplateResult($model);

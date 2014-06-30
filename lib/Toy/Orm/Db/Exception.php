@@ -1,5 +1,5 @@
 <?php
-namespace Toy\Event;
+namespace Toy\Orm\Db;
 
 class Exception extends \Exception
 {

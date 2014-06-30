@@ -12,10 +12,6 @@ class StaticField extends FormField
         ));
     }
 
-//    public function getInput(){
-//        return $this->input;
-//    }
-
     protected function renderInput()
     {
         return $this->input->render();

@@ -7,10 +7,9 @@ class Element
 {
 
     private $_tag = null;
-    protected $children = array();
-    protected $bindableAttributes = array();
-    protected $boundAttributes = array();
     protected $renderer = null;
+    protected $children = array();
+    protected $events = array();
     protected $attributes = array();
 
     public function __construct($tag, $attrs = array())
@@ -46,7 +45,7 @@ class Element
         return $this;
     }
 
-    public function appendChild()
+    public function addChild()
     {
         $args = func_get_args();
         $this->children = array_merge($this->children, $args);
@@ -61,42 +60,6 @@ class Element
     public function setRenderer(\Closure $value)
     {
         $this->renderer = $value;
-        return $this;
-    }
-
-    public function addBindableAttribute()
-    {
-        $args = func_get_args();
-        $this->bindableAttributes = array_merge($this->bindableAttributes, $args);
-        return $this;
-    }
-
-    public function removeBindableAttribute()
-    {
-        $args = func_get_args();
-        foreach ($args as $arg) {
-            $k = array_search($arg, $this->bindableAttributes);
-            unset($this->bindableAttributes[$k]);
-            if (array_key_exists($arg, $this->boundAttributes)) {
-                unset($this->boundAttributes[$arg]);
-            }
-        }
-        return $this;
-    }
-
-    public function getBindableAttribute()
-    {
-        return $this->bindableAttributes;
-    }
-
-    public function getBoundAttribute()
-    {
-        return $this->boundAttributes;
-    }
-
-    public function setBoundAttribute(array $value)
-    {
-        $this->boundAttributes = $value;
         return $this;
     }
 
@@ -158,45 +121,34 @@ class Element
         $args = func_get_args();
         $nums = func_num_args();
         if ($nums == 2) {
-            $this->attributes['on' . $args[0]] = 'javascript:' . $args[1];
+            $this->events[$args[0]] = $args[1];
         } elseif ($nums == 1 && is_array($args[0])) {
             foreach ($args as $k => $v) {
-                $this->attributes['on' . $k] = 'javascript:' . $v;
+                $this->events[$args[$k]] = $v;
             }
         }
         return $this;
     }
 
-    public function bindAttribute($data)
-    {
-        $this->boundAttributes = array();
-        foreach ($this->bindableAttributes as $k) {
-            if (array_key_exists($k, $this->attributes)) {
-                $this->boundAttributes[$k] = StringUtil::substitute($this->attributes[$k], $data);
-            }
-        }
-        return $this;
-    }
-
-    public function renderAttribute()
+    public function renderAttribute($data = array())
     {
         $arr = array();
-        foreach ($this->boundAttributes as $k => $v) {
+        foreach ($this->attributes as $k => $v) {
             if ($k != 'text') {
                 if (!empty($v)) {
-                    $arr[] = $k . '="' . $v . '"';
+                    $arr[] = $k . '="' .
+                        ($v[0] == '@'? StringUtil::substitute(substr($v, 1), $data): $v) . '"';
                 }
             }
         }
-
-        foreach ($this->attributes as $k => $v) {
-            if ($k != 'text' && !array_key_exists($k, $this->boundAttributes)) {
-                if (!empty($v)) {
-                    $arr[] = $k . '="' . $v . '"';
-                }
+        foreach ($this->events as $k => $v) {
+            if (!empty($v)) {
+                $arr[] = 'on'.strtolower($k) . '="' .
+                    ($v[0] == '@'?
+                        'javascript:'.StringUtil::substitute(substr($v, 1), $data):
+                        'javascript:'.$v) . '"';
             }
         }
-
         return implode(' ', $arr);
     }
 
@@ -210,28 +162,27 @@ class Element
         return '</' . $this->_tag . '>';
     }
 
-    public function renderInner()
+    public function renderInner($data = array())
     {
         $res = '';
-        if (array_key_exists('text', $this->boundAttributes)) {
-            $res = $this->boundAttributes['text'];
-        } elseif (array_key_exists('text', $this->attributes)) {
-            $res = $this->attributes['text'];
+        if (array_key_exists('text', $this->attributes)) {
+            $txt = $this->attributes['text'];
+            $res = $txt[0] == '@'? StringUtil::substitute(substr($txt, 1), $data): $txt;
         }
-        $res .= $this->renderChildren();
+        $res .= $this->renderChildren($data);
         return $res;
     }
 
-    protected function renderChildren()
+    protected function renderChildren($data = array())
     {
         $res = '';
         foreach ($this->children as $child) {
-            $res .= $child->render();
+            $res .= $child->render($data);
         }
         return $res;
     }
 
-    public function render()
+    public function render($data = array())
     {
         if (!is_null($this->renderer)) {
             $r = call_user_func($this->renderer, $this);
@@ -240,11 +191,11 @@ class Element
 
         switch ($this->_tag) {
             case 'input':
-                return '<' . $this->_tag . ' ' . $this->renderAttribute() . '/>';
+                return '<' . $this->_tag . ' ' . $this->renderAttribute($data) . '/>';
             case 'text':
                 return $this->attributes['text'];
             default:
-                return $this->renderBegin() . $this->renderInner() . $this->renderEnd();
+                return $this->renderBegin() . $this->renderInner($data) . $this->renderEnd();
         }
     }
 }

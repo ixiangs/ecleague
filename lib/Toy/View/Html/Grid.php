@@ -1,13 +1,16 @@
 <?php
 namespace Toy\View\Html;
 
+use Toy\Util\StringUtil;
+
 class Grid extends Element
 {
 
-    private $_columns = array();
-    private $_dataSource = null;
-    private $_rowSelectable = false;
-    protected $hiddens = array();
+    protected $columns = array();
+    protected $dataSource = null;
+    protected $checkboxVisible = false;
+    protected $checkboxValue = '';
+    protected $sequenceVisible = true;
     protected $headVisible = true;
     protected $footVisible = false;
 
@@ -24,149 +27,178 @@ class Grid extends Element
 
     public function setDataSource($value)
     {
-        $this->_dataSource = $value;
+        $this->dataSource = $value;
         return $this;
     }
 
     public function getColumns()
     {
-        return $this->_columns;
+        return $this->columns;
     }
 
     public function addColumn($col)
     {
-        $this->_columns[] = $col;
+        $this->columns[] = $col;
         return $this;
     }
 
-    public function addIndexColumn($headText, $headCss = null, $cellCss = null)
+    public function createColumn($headText = null, $headCss = null, $cellCss = null)
     {
-        $col = new IndexColumn();
-        $col->getHead()->setAttribute(array('class' => $headCss, 'text' => $headText));
-        $col->getCell()->setAttribute('class', $cellCss);
+        $col = new GridColumn($headText, $headCss, $cellCss);
         $this->addColumn($col);
         return $col;
+    }
+
+    public function getCheckboxVisible(){
+        return $this->checkboxVisible;
+    }
+
+    public function setCheckboxVisible($value){
+        $this->checkboxVisible = $value;
+        return $this;
+    }
+
+    public function getCheckboxValue(){
+        return $this->checkboxValue;
+    }
+
+    public function setCheckboxValue($value){
+        $this->checkboxValue = $value;
+        return $this;
+    }
+
+    public function getSequenceVisible(){
+        return $this->sequenceVisible;
+    }
+
+    public function setSequenceVisible($value){
+        $this->sequenceVisible = $value;
+        return $this;
     }
 
     public function addLabelColumn($headText, $cellText, $headCss = null, $cellCss = null)
     {
-        $col = new LabelColumn();
-        $col->getHead()->setAttribute(array('class' => $headCss, 'text' => $headText));
-        $col->getCell()->setAttribute('class', $cellCss)
-                ->getChild(0)->setAttribute(array('text' => $cellText));
-        $this->addColumn($col);
+        $span = new Element('span', array('text'=>$cellText));
+        $col = $this->createColumn($headText, $headCss, $cellCss);
+        $col->getCell()->addChild($span);
         return $col;
     }
 
-    public function addOptionColumn($headText, $cellText, $options, $headCss = null, $cellCss = null)
-    {
-        $col = new OptionColumn();
-        $col->setOptions($options);
-        $col->getHead()->setAttribute(array('class' => $headCss, 'text' => $headText));
-        $col->getCell()->setAttribute('class', $cellCss)
-            ->getChild(0)->setAttribute('text', $cellText);
-        $this->addColumn($col);
-        return $col;
-    }
+//    public function addOptionColumn($headText, $cellText, $options, $headCss = null, $cellCss = null)
+//    {
+//        $col = new OptionColumn();
+//        $col->setOptions($options);
+//        $col->getHead()->setAttribute(array('class' => $headCss, 'text' => $headText));
+//        $col->getCell()->setAttribute('class', $cellCss)
+//            ->getChild(0)->setAttribute('text', $cellText);
+//        $this->addColumn($col);
+//        return $col;
+//    }
 
     public function addLinkColumn($headText, $cellText, $link, $headCss = null, $cellCss = null)
     {
-        $col = new LinkColumn();
-        $col->getHead()->setAttribute(array('class' => $headCss, 'text' => $headText));
-        $col->getCell()->setAttribute('class', $cellCss)
-            ->getChild(0)->setAttribute(array('text' => $cellText, 'href' => $link));
-        $this->addColumn($col);
-        return $col;
-    }
-
-    public function addCheckboxColumn($checkboxName, $checkboxValue, $checkboxId, $headCss = null, $cellCss = null)
-    {
-        $col = new CheckboxColumn();
-        $col->getHead()->setAttribute('class', $headCss);
-        $col->getCell()->setAttribute('class', $cellCss)
-            ->getChild(0)->setAttribute(array(
-                'name' => $checkboxName,
-                'value' => $checkboxValue,
-                'id' => $checkboxId));
-        $this->addColumn($col);
-        return $col;
-    }
-
-    public function addSelectableColumn($checkboxName, $checkboxValue, $checkboxId, $headCss = null, $cellCss = null)
-    {
-        $this->_rowSelectable = true;
-        $col = new SelectableColumn();
-        $col->getHead()->setAttribute('class', $headCss);
-        $col->getCell()->setAttribute('class', $cellCss)
-            ->getChild(0)->setAttribute(array(
-                'name' => $checkboxName,
-                'value' => $checkboxValue,
-                'id' => $checkboxId));
-        $this->addColumn($col);
-        return $col;
-    }
-
-    public function addBooleanColumn($headText, $fieldName, $trueText, $falseText, $headCss = null, $cellCss = null)
-    {
-        $col = new BooleanColumn();
-        $col->getHead()->setAttribute(array('class' => $headCss, 'text' => $headText));
-        $col->getCell()->setAttribute('class', $cellCss);
-        $col->setFieldName($fieldName)->setTrueText($trueText)->setFalseText($falseText);
-        $this->addColumn($col);
+        $span = new Element('a', array('text'=>$cellText, 'href'=>$link));
+        $col = $this->createColumn($headText, $headCss, $cellCss);
+        $col->getCell()->addChild($span);
         return $col;
     }
 
     public function addButtonColumn($headText, $cellText, $script, $headCss = null, $cellCss = null)
     {
-        $col = new ButtonColumn();
-        $col->getHead()->setAttribute(array('class' => $headCss, 'text' => $headText));
-        $col->getCell()->setAttribute('class', $cellCss)
-            ->getChild(0)->setAttribute(array('text' => $cellText, 'onclick' => $script));
-        $this->addColumn($col);
+        $span = new Element('button', array(
+            'type'=>'button',
+            'text'=>$cellText));
+        $span->setEvent('click', $script);
+        $col = $this->createColumn($headText, $headCss, $cellCss);
+        $col->getCell()->addChild($span);
         return $col;
     }
 
-    public function addLinkButtonColumn($headText, $cellText, $script, $headCss = null, $cellCss = null)
-    {
-        $col = new ButtonColumn('link');
-        $col->getHead()->setAttribute(array('class' => $headCss, 'text' => $headText));
-        $col->getCell()->setAttribute('class', $cellCss)
-            ->getChild(0)->setAttribute(array('text' => $cellText, 'onclick' => $script));
-        $this->addColumn($col);
-        return $col;
-    }
+//    public function addCheckboxColumn($checkboxName, $checkboxValue, $checkboxId, $headText, $headCss = null, $cellCss = null)
+//    {
+//        $span = new Element('input', array(
+//            'type'=>'checkbox',
+//            'id'=>$checkboxId,
+//            'name'=>$checkboxName,
+//            'value'=>$checkboxValue));
+//        $col = $this->createColumn($headText, $headCss, $cellCss);
+//        $col->getCell()->addChild($span);
+//        return $col;
+//    }
 
-    public function addHidden($id, $name, $value = null)
-    {
-        $f = new Element('input', array('type' => 'hidden', 'id' => $id, 'name' => $name, 'value' => $value));
-        $this->hiddens[] = $f;
-        return $f;
-    }
+//    public function addBooleanColumn($headText, $fieldName, $trueText, $falseText, $headCss = null, $cellCss = null)
+//    {
+//        $col = new BooleanColumn();
+//        $col->getHead()->setAttribute(array('class' => $headCss, 'text' => $headText));
+//        $col->getCell()->setAttribute('class', $cellCss);
+//        $col->setFieldName($fieldName)->setTrueText($trueText)->setFalseText($falseText);
+//        $this->addColumn($col);
+//        return $col;
+//    }
+//
+//    public function addButtonColumn($headText, $cellText, $script, $headCss = null, $cellCss = null)
+//    {
+//        $col = new ButtonColumn();
+//        $col->getHead()->setAttribute(array('class' => $headCss, 'text' => $headText));
+//        $col->getCell()->setAttribute('class', $cellCss)
+//            ->getChild(0)->setAttribute(array('text' => $cellText, 'onclick' => $script));
+//        $this->addColumn($col);
+//        return $col;
+//    }
+//
+//    public function addLinkButtonColumn($headText, $cellText, $script, $headCss = null, $cellCss = null)
+//    {
+//        $col = new ButtonColumn('link');
+//        $col->getHead()->setAttribute(array('class' => $headCss, 'text' => $headText));
+//        $col->getCell()->setAttribute('class', $cellCss)
+//            ->getChild(0)->setAttribute(array('text' => $cellText, 'onclick' => $script));
+//        $this->addColumn($col);
+//        return $col;
+//    }
+
+//    public function addHidden($id, $name, $value = null)
+//    {
+//        $f = new Element('input', array('type' => 'hidden', 'id' => $id, 'name' => $name, 'value' => $value));
+//        $this->hiddens[] = $f;
+//        return $f;
+//    }
 
     public function render()
     {
-        $head = array();
+        $heads = array();
         $filters = array();
         $body = array();
-        $footer = array();
-        $hasFilter = false;
+//        $footer = array();
 
-        foreach ($this->_columns as $col) {
-            $head[] = $col->renderHead();
+        if($this->checkboxVisible){
+            $heads[] = '<th class="check-column-head"></th>';
         }
 
-        foreach ($this->_columns as $col) {
+        if($this->sequenceVisible){
+            $heads[] = '<th></th>';
+        }
+
+        foreach ($this->columns as $col) {
+            $heads[] = $col->renderHead();
+        }
+
+        foreach ($this->columns as $col) {
             $s = $col->renderFilter();
             if (!empty($s)) {
-                $hasFilter = true;
+                $filters[] = '<th>' . $s . '</th>';
             }
-            $filters[] = '<th>' . $s . '</th>';
         }
 
-        foreach ($this->_dataSource as $index => $dataRow) {
+        foreach ($this->dataSource as $index => $dataRow) {
             $cells = array();
-            foreach ($this->_columns as $col) {
-//                $col->getCell()->getChild(0)->setAttribute('data-aaa', rand(1000, 9999));
+            foreach ($this->columns as $col) {
+                if($this->checkboxVisible){
+                    $heads[] = '<td><input type="checkbox" class="check-column-cell" value="'.StringUtil::substitute($this->checkboxValue, $dataRow).'"/></td>';
+                }
+
+                if($this->sequenceVisible){
+                    $heads[] = '<td>'.($index + 1).'</td>';
+                }
                 $cells[] = $col->renderCell($dataRow, $index);
             }
             $body[] = $cells;
@@ -174,9 +206,9 @@ class Grid extends Element
 
         $result = array($this->renderBegin());
         $result[] = '<thead><tr>';
-        $result[] = implode('', $head);
+        $result[] = implode('', $heads);
         $result[] = '</tr>';
-        if ($hasFilter) {
+        if (count($filters) > 0) {
             $result[] = '<tr class="filter">' . implode('', $filters) . '</tr>';
         }
         $result[] = '</thead><tbody>';
@@ -185,9 +217,6 @@ class Grid extends Element
         }
         $result[] = '</tbody>';
         $result[] = $this->renderEnd();
-        foreach ($this->hiddens as $hidden) {
-            $result[] = $hidden->render();
-        }
         return implode('', $result);
     }
 }

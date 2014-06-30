@@ -1,7 +1,7 @@
 <?php
 namespace Toy\View\Html;
 
-class DropdownButton extends Element
+class Dropdown extends Element
 {
 
     private $button = null;

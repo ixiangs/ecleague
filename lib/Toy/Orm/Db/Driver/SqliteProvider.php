@@ -1,5 +1,5 @@
 <?php
-namespace Toy\Db;
+namespace Toy\Orm\Db;
 
 use Toy\Db;
 use Toy\Util\ArrayUtil;

@@ -1,9 +1,10 @@
 <?php
 
-namespace Toy\Db;
+namespace Toy\Orm;
 
-
-use Toy\Db\UpdateStatement;
+use Toy\Orm\Db\InsertStatement;
+use Toy\Orm\Db\UpdateStatement;
+use Toy\Orm\Db\DeleteStatement;
 
 class Helper
 {

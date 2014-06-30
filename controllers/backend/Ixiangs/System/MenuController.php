@@ -51,7 +51,7 @@ class MenuController extends Web\Controller
         $data = $this->request->getPost('data');
         $model = $data['id'] ? MenuModel::merge($data['id'], $data) : MenuModel::create($data);
 
-        $vr = $model->validateProperties();
+        $vr = $model->validate();
         if ($vr !== true) {
             $this->session->set('errors', $locale->_('err_input_invalid'));
             return $this->getEditTemplateResult($model);

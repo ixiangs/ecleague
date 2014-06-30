@@ -24,7 +24,7 @@ class OrmTestCase extends Toy\Unit\TestCase
     public function __construct()
     {
         $this->_people = PeopleModel::create();
-        $this->_db = \Toy\Db\Helper::openDb();
+        $this->_db = \Toy\Orm\Helper::openDb();
     }
 
     public function testEntity()
@@ -48,11 +48,11 @@ class OrmTestCase extends Toy\Unit\TestCase
         $this->assertTrue($nid > 0);
 
         $m = PeopleModel::create(array('fullname' => 'test', 'age' => 30, 'address' => 'shunde'));
-        $m->insert();
-        $m->setAddress('foshan')->update();
+        $m->save();
+        $m->setAddress('foshan')->save();
 
         $m = PeopleModel::create(array('fullname' => 'delete', 'age' => 30, 'address' => 'shunde'));
-        $m->insert();
+        $m->save();
         $m->delete();
 
         $m = PeopleModel::load($nid);

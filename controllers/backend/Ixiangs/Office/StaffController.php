@@ -37,7 +37,7 @@ class StaffController extends Web\Controller
         $lang = $this->context->locale;
         $m = new StaffModel($this->request->getPost('data'));
 
-        $vr = $m->validateProperties();
+        $vr = $m->validate();
         if ($vr !== true) {
             $this->session->set('errors', $lang->_('err_input_invalid'));
             return $this->getEditTemplateReult($m);

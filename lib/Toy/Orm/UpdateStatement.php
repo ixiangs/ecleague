@@ -1,6 +1,6 @@
 <?php
 
-namespace Toy\Db;
+namespace Toy\Orm\Db;
 
 class UpdateStatement extends WhereStatement
 {

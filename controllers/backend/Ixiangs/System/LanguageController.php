@@ -34,7 +34,7 @@ class LanguageController extends Web\Controller
         $lang = $this->context->locale;
         $m = new LanguageModel($this->request->getPost('data'));
 
-        $vr = $m->validateProperties();
+        $vr = $m->validate();
         if ($vr !== true) {
             $this->session->set('errors', $lang->_('err_input_invalid'));
             return $this->getEditTemplateResult($m);

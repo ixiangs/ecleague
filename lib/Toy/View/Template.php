@@ -147,23 +147,25 @@ class Template
         return $tmpl->render($filename);
     }
 
-    public function renderBreadcrumbs()
-    {
-        $result = array('<ol class="breadcrumb">');
-        foreach ($this->document->getBreadcrumbs() as $item) {
-            $result[] = sprintf('<li><a href="%s">%s</a></li>',
-                array_key_exists('url', $item) ? $item['url'] : '#',
-                $item['text']);
-        }
-        $result[] = '</ol>';
-        return implode('', $result);
-    }
+//    public function renderBreadcrumbs()
+//    {
+//        $result = array('<ol class="breadcrumb">');
+//        foreach ($this->document->getBreadcrumbs() as $item) {
+//            $result[] = sprintf('<li><a href="%s">%s</a></li>',
+//                array_key_exists('url', $item) ? $item['url'] : '#',
+//                $item['text']);
+//        }
+//        $result[] = '</ol>';
+//        return implode('', $result);
+//    }
 
     public function renderScriptBlocks()
     {
         $result = array();
         foreach ($this->document->getScriptBlocks() as $script) {
-            $result[] = $script;
+            if (!empty($script)) {
+                $result[] = $script;
+            }
         }
         return implode("\n", $result);
     }
@@ -172,11 +174,13 @@ class Template
     {
         $result = array();
         foreach ($this->document->getReferenceScripts() as $script) {
-            $attributes = array();
-            foreach ($script['attributes'] as $name => $value) {
-                $attributes[] = $name . '"' . $value . '"';
+            if (!empty($script)) {
+                $attributes = array();
+                foreach ($script['attributes'] as $name => $value) {
+                    $attributes[] = $name . '"' . $value . '"';
+                }
+                $result[] = '<script src="' . $script['address'] . '" ' . implode(' ', $attributes) . '></script>';
             }
-            $result[] = '<script src="' . $script['address'] . '" ' . implode(' ', $attributes) . '></script>';
         }
         return implode("\n", $result);
     }
@@ -185,11 +189,13 @@ class Template
     {
         $result = array();
         foreach ($this->document->getReferenceCss() as $css) {
-            $attributes = array();
-            foreach ($css['attributes'] as $name => $value) {
-                $attributes[] = $name . '"' . $value . '"';
+            if (!empty($css)) {
+                $attributes = array();
+                foreach ($css['attributes'] as $name => $value) {
+                    $attributes[] = $name . '"' . $value . '"';
+                }
+                $result[] = '<link href="' . $css['address'] . '" ' . implode(' ', $attributes) . ' rel="stylesheet">';
             }
-            $result[] = '<link href="' . $css['address'] . '" ' . implode(' ', $attributes) . ' rel="stylesheet">';
         }
         return implode("\n", $result);
     }

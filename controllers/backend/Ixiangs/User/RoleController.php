@@ -34,7 +34,7 @@ class RoleController extends Web\Controller
         $data = $this->request->getPost('data');
         $model = $data['id'] ? RoleModel::merge($data['id'], $data) : RoleModel::create($data);
 
-        $vr = $model->validateProperties();
+        $vr = $model->validate();
         if ($vr !== true) {
             $this->session->set('errors', $this->_('err_input_invalid'));
             return $this->getEditTemplateReult($model);

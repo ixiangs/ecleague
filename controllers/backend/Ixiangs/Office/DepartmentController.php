@@ -45,7 +45,7 @@ class DepartmentController extends Web\Controller
             return $this->getEditTemplateReult($model);
         }
 
-        return Web\Result::redirectResult($this->router->getHistoryUrl('list'));
+        return Web\Result::redirectResult($this->router->findHistory('list'));
     }
 
     public function deleteAction($id)
@@ -60,7 +60,7 @@ class DepartmentController extends Web\Controller
             $this->session->set('errors', $this->languages->get('err_system'));
         }
 
-        return Web\Result::redirectResult($this->router->getHistoryUrl('index'));
+        return Web\Result::redirectResult($this->router->findHistory('index'));
     }
 
     private function getEditTemplateReult($model)

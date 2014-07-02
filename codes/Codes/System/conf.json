@@ -1,0 +1,19 @@
+{
+    "name": "IXiangs_System",
+    "version": "0.0.0.1",
+    "author": "IXiangs Studio",
+    "website": "ixiangs.com",
+    "listeners": {
+        "webOnStart": "\\Codes\\System\\Listener::webOnStart",
+        "webPostRender": "\\Codes\\System\\Listener::webPostRender",
+        "webPostRoute": "\\Codes\\System\\Listener::webPostRoute"
+    },
+    "breadcrumbs": {
+        "backend": {
+            "system": "system_manage",
+            "menu_list": "system_menu_list",
+            "menu_add": "system_menu_new",
+            "menu_edit": "system_menu_edit"
+        }
+    }
+}

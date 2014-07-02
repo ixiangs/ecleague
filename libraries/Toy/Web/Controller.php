@@ -12,6 +12,7 @@ abstract class Controller
     protected $response = null;
     protected $session = null;
     protected $router = null;
+    protected $localize = null;
 
     public function __construct()
     {
@@ -24,6 +25,7 @@ abstract class Controller
         $this->response = $ctx->response;
         $this->session = $ctx->session;
         $this->router = $ctx->router;
+        $this->localize = $ctx->localize;
     }
 
     public function ready()

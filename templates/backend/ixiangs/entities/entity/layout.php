@@ -1,25 +1,25 @@
 <?php
-$langId = $this->locale->getLanguageId();
+$langId = $this->localize->getLanguageId();
 $this->assign('breadcrumb', array(
-    $this->html->anchor($this->locale->_('entities_manage')),
+    $this->html->anchor($this->localize->_('entities_manage')),
     $this->html->anchor($this->model->name[$langId]),
-    $this->html->anchor($this->locale->_('layout')
+    $this->html->anchor($this->localize->_('layout')
 )));
 
 $this->assign('navigationBar', array(
-    $this->html->anchor($this->locale->_('back'), $this->router->buildUrl('list'))
+    $this->html->anchor($this->localize->_('back'), $this->router->buildUrl('list'))
 ));
 
 $this->assign('toolbar', array(
-    $this->html->button('button', $this->locale->_('save'), 'btn btn-primary')->setAttribute('id', 'save')
+    $this->html->button('button', $this->localize->_('save'), 'btn btn-primary')->setAttribute('id', 'save')
 ));
 
-$locale = $this->locale;
+$locale = $this->localize;
 $f = $this->html->form();
 $f->newField('')->setRenderer(function($field) use($langId){
     $aids = array();
     $res = array('<div class="form-group"><div class="col-md-6"><div class="panel panel-default">');
-    $res[] = '<div class="panel-heading">'.$this->locale->_('entities_assigned_group').'</div>';
+    $res[] = '<div class="panel-heading">'.$this->localize->_('entities_assigned_group').'</div>';
     $res[] = '<div class="panel-body"><ul id="assigned_group" class="sortable" style="min-height:40px;">';
     foreach($this->selectedGroups as $attr){
         $res[] = '<li class="ui-state-default" data-id="'.$attr->getId().'">'.$attr->name[$langId].'</li>';
@@ -27,7 +27,7 @@ $f->newField('')->setRenderer(function($field) use($langId){
     }
     $res[] = '</ul></div></div></div>';
     $res[] = '<div class="col-md-6"><div class="panel panel-default">';
-    $res[] = '<div class="panel-heading">'.$this->locale->_('entities_assignable_group').'</div>';
+    $res[] = '<div class="panel-heading">'.$this->localize->_('entities_assignable_group').'</div>';
     $res[] = '<div class="panel-body"><ul id="assignable_attributes" class="sortable" style="min-height:40px;">';
     foreach($this->unselectedGroups as $attr){
         $res[] = '<li class="ui-state-default" data-id="'.$attr->getId().'">';
@@ -58,7 +58,7 @@ $this->assign('form', $f);
             });
 
             if(!passed){
-                alert('<?php echo $this->locale->_('entities_err_set_not_empty'); ?>');
+                alert('<?php echo $this->localize->_('entities_err_set_not_empty'); ?>');
             }else{
                 $f.submit();
             }

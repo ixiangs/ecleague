@@ -1,24 +1,24 @@
 <?php
 $this->assign('breadcrumb', array(
-    $this->html->anchor($this->locale->_('locale_manage')),
+    $this->html->anchor($this->localize->_('locale_manage')),
     $this->html->anchor($this->language->getName()),
-    $this->html->anchor($this->locale->_('locale_edit_dictionary')),
+    $this->html->anchor($this->localize->_('locale_edit_dictionary')),
 ));
 
 $this->assign('navigationBar', array(
-    $this->html->anchor($this->locale->_('back'), $this->router->buildUrl('list', array('languageid'=>$this->language->getId()))),
+    $this->html->anchor($this->localize->_('back'), $this->router->buildUrl('list', array('languageid'=>$this->language->getId()))),
 ));
 
 $this->assign('toolbar', array(
-    $this->html->button('button', $this->locale->_('save'), 'btn btn-primary')->setAttribute('data-submit', 'form1')
+    $this->html->button('button', $this->localize->_('save'), 'btn btn-primary')->setAttribute('data-submit', 'form1')
 ));
 
 $f = $this->html->form();
 $len = count($this->models);
-$f->newField($this->locale->_('code'), true,
+$f->newField($this->localize->_('code'), true,
     $this->html->textbox('code', 'data[code]', $this->model->getCode())
         ->addValidateRule('required', true));
-$f->newField($this->locale->_('text'), true,
+$f->newField($this->localize->_('text'), true,
     $this->html->textbox('label', 'data[label]', $this->model->getLabel()))
     ->addValidateRule('required', true);
 $f->addHidden('language_id', 'data[language_id]', $this->model->getLanguageId());

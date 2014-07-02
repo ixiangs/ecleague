@@ -1,6 +1,8 @@
 <?php
 namespace Toy\Orm\Sql;
 
+use Toy\Orm\Db\Helper;
+
 class SelectStatement extends WhereStatement
 {
 
@@ -129,16 +131,27 @@ class SelectStatement extends WhereStatement
         return $this->limit;
     }
 
-    public function executeCount($db = null)
-    {
-        $cdb = is_null($db) ? Helper::openDb() : $db;
-        $res = $cdb->select($this->resetSelect()->resetLimit()->resetOrderby()->select('count(*)'));
-        return $res->getFirstValue();
-    }
-
-    public function execute($db = null)
+    public function fetch($db = null)
     {
         $cdb = is_null($db) ? Helper::openDb() : $db;
         return $cdb->select($this);
+    }
+
+    public function fetchCount($db = null)
+    {
+        $this->fields = array('count(*)');
+        $this->resetOrderby();
+//        $cdb = is_null($db) ? Helper::openDb() : $db;
+        return $this->fetchFirstValue($db);
+    }
+
+    public function fetchFirstRow($db = null)
+    {
+        return $this->fetch($db)->getFirstRow();
+    }
+
+    public function fetchFirstValue($db = null)
+    {
+        return $this->fetch($db)->getFirstValue();
     }
 }

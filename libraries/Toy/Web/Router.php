@@ -10,6 +10,7 @@ class Router
     private static $_SESSION_KEY = '__route_histories';
 
     public $domain = null;
+    public $component = null;
     public $controller = null;
     public $action = null;
     private $_histories = null;
@@ -38,9 +39,10 @@ class Router
 
     public function route($url = null)
     {
-        $url = empty($url)? $_SERVER['REQUEST_URI']: $url;
+        $url = empty($url) ? $_SERVER['REQUEST_URI'] : $url;
         $arr = $this->parseUrl($url);
         $this->domain = $arr['domain'];
+        $this->component = $arr['component'];
         $this->controller = $arr['controller'];
         $this->action = $arr['action'];
 
@@ -49,7 +51,7 @@ class Router
         }
 
         array_unshift($this->_histories, array(
-            'action' => sprintf('%s%s/%s', $this->domain->getStartUrl(), $this->controller, $this->action),
+            'action' => sprintf('%s%s/%s/%s', $this->domain->getStartUrl(), $this->component, $this->controller, $this->action),
             'url' => $url));
         if (count($this->_histories) >= 10) {
             unset($this->_histories[10]);
@@ -60,7 +62,7 @@ class Router
 
     public function buildAction($url = "")
     {
-        list($len, $domain, $controller, $action) = array(0, null, null, null);
+        list($len, $domain, $component, $controller, $action) = array(0, null, null, null, null);
         if (!empty($url)) {
             $arr = explode('/', $url);
             $len = count($arr);
@@ -68,26 +70,36 @@ class Router
         switch ($len) {
             case 0 :
                 $domain = $this->domain;
+                $component = $this->component;
                 $controller = $this->controller;
                 $action = $this->action;
                 break;
             case 1 :
                 $domain = $this->domain;
+                $component = $this->component;
                 $controller = $this->controller;
                 $action = $arr[0];
                 break;
             case 2 :
                 $domain = $this->domain;
+                $component = $this->component;
                 $controller = $arr[0];
                 $action = $arr[1];
                 break;
             case 3 :
+                $domain = $this->domain;
+                $component = $arr[0];
+                $controller = $arr[1];
+                $action = $arr[2];
+                break;
+            case 4 :
                 $domain = Configuration::$domains[$arr[0]];
+                $component = $arr[1];
                 $controller = $arr[2];
                 $action = $arr[3];
                 break;
         }
-        return $domain->getStartUrl() . '_' . $controller . '_' . $action;
+        return $domain->getStartUrl() . $component . '/' . $controller . '/' . $action;
     }
 
     public function buildUrl($url = "", $params = NULL)
@@ -112,22 +124,25 @@ class Router
         if ($url == $defaultDomain->getStartUrl()) {
             $parts = explode('/', $defaultDomain->getIndexUrl());
             return array('domain' => $defaultDomain,
-                'controller' => $parts[0],
-                'action' => $parts[1]);
+                'component' => $parts[0],
+                'controller' => $parts[2],
+                'action' => $parts[3]);
         }
 
         //如果使用URL参数专递
         $parts = $this->parseQuery($url);
         if (array_key_exists('query', $parts)) {
             $query = $parts['query'];
-            if (ArrayUtil::hasAllKeys($query, array('domain', 'controller', 'action'))) {
+            if (ArrayUtil::hasAllKeys($query, array('domain', 'component', 'controller', 'action'))) {
                 return array(
                     'domain' => Configuration::$domains[$query['domain']],
+                    'component' => $query['component'],
                     'controller' => $query['controller'],
                     'action' => $query['action']);
-            } elseif (ArrayUtil::hasAllKeys($query, array('controller', 'action'))) {
+            } elseif (ArrayUtil::hasAllKeys($query, array('component', 'controller', 'action'))) {
                 return array(
                     'domain' => $defaultDomain,
+                    'component' => $query['component'],
                     'controller' => $query['controller'],
                     'action' => $query['action']);
             }
@@ -145,13 +160,15 @@ class Router
                 if (empty($suburl)) {
                     $parts = explode('/', $v->getIndexUrl());
                     return array('domain' => $v,
-                        'controller' => $parts[0],
-                        'action' => $parts[1]);
+                        'component' => $parts[0],
+                        'controller' => $parts[1],
+                        'action' => $parts[2]);
                 } else {
                     $arr = explode('/', $suburl);
                     return array('domain' => $v,
-                        'controller' => $parts[0],
-                        'action' => $parts[1]);
+                        'component' => $arr[0],
+                        'controller' => $arr[1],
+                        'action' => $arr[2]);
                 }
             }
         }
@@ -160,8 +177,9 @@ class Router
         $suburl = stristr($url, $defaultDomain->getStartUrl());
         $arr = explode('/', $suburl);
         return array('domain' => $v,
-            'controller' => $parts[0],
-            'action' => $parts[1]);
+            'component' => $arr[0],
+            'controller' => $arr[1],
+            'action' => $arr[2]);
     }
 
     private function parseQuery($url)

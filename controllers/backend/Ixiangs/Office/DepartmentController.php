@@ -30,7 +30,7 @@ class DepartmentController extends Web\Controller
 
     public function savePostAction()
     {
-        $lang = $this->context->locale;
+        $lang = $this->context->localize;
         $data = $this->request->getPost('data');
         $model = $data['id'] ? DepartmentModel::merge($data['id'], $data) : DepartmentModel::create($data);
 

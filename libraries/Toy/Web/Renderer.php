@@ -2,7 +2,7 @@
 namespace Toy\Web;
 
 use Toy\View;
-use Toy\View\Html\Document;
+use Toy\Html\Document;
 
 class Renderer
 {
@@ -11,30 +11,16 @@ class Renderer
     {
         $context = Application::$context;
         $result = $context->result;
-        $request = $context->request;
         $response = $context->response;
         $router = $context->router;
         switch ($result->getType()) {
             case 'template' :
-                $lang = $request->getBrowserLanguage();
                 $action = $router->action;
+                $component = $router->component;
                 $controller = $router->controller;
-                $domain = strtolower($router->domain->getName());
-                View\Configuration::$templateDirectories = array($domain);
-                $tmpl = new View\Template(array_merge(array(
-                    'router' => $router,
-                    'request' => $request,
-                    'session' => $context->session,
-                    'localize' => $context->localize,
-                    'applicationContext' => $context
-                ), $result->data));
-
-                $path = $result->path ? $result->path : str_replace('_', '/', $controller . '/' . $action);
-                $paths = array(
-                    $lang . '/' . $path,
-                    $path
-                );
-                $response->write($tmpl->render($paths));
+                $path = $result->path ? $result->path : str_replace('_', '/', $component.'/'.$controller . '/' . $action);
+                $temp = new Template($result->data);
+                $response->write($temp->render($path));
                 break;
             case 'content' :
                 $response->write($result->content);

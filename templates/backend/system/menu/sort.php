@@ -1,15 +1,15 @@
 <?php
 $this->assign('breadcrumb', array(
-    $this->html->anchor($this->locale->_('admin_menu_manage')),
-    $this->html->anchor($this->locale->_('sort'))
+    $this->html->anchor($this->localize->_('admin_menu_manage')),
+    $this->html->anchor($this->localize->_('sort'))
 ));
 
 $this->assign('navigationBar', array(
-    $this->html->anchor($this->locale->_('back'), $this->router->buildUrl('list'))
+    $this->html->anchor($this->localize->_('back'), $this->router->buildUrl('list'))
 ));
 
 $this->assign('toolbar', array(
-    $this->html->button('button', $this->locale->_('save'), 'btn btn-primary')
+    $this->html->button('button', $this->localize->_('save'), 'btn btn-primary')
         ->setEvent('click', 'saveSort()')
 ));
 
@@ -23,9 +23,9 @@ $this->beginBlock('form');
 </div>
 <?php
 $this->nextBlock('headcss');
-echo '<link href="/pub/assets/css/ztree/zTreeStyle.css" rel="stylesheet">';
+echo '<link href="/static/css/ztree/zTreeStyle.css" rel="stylesheet">';
 $this->nextBlock('headjs');
-echo '<script src="/pub/assets/js/jquery.ztree.js"></script>';
+echo '<script src="/static/js/jquery.ztree.js"></script>';
 $this->nextBlock('footerjs');
 ?>
     <script language="javascript">

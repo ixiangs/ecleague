@@ -1,21 +1,22 @@
 <?php
-const PAGINATION_SIZE = 20;
-const PAGINATION_RANGE = 10;
 
-if (preg_match('/^\/pub\/|\.ico|\.html$/', $_SERVER["REQUEST_URI"])) {
+
+if (preg_match('/^\/static\/|\.ico|\.html$/', $_SERVER["REQUEST_URI"])) {
     return false;
 } else {
     date_default_timezone_set('PRC');
+    define('PAGINATION_SIZE', 20);
+    define('PAGINATION_RANGE', 10);
     define('DS', DIRECTORY_SEPARATOR);
     define('ROOT_PATH', dirname(__FILE__) . DS);
     define('TEMPLATE_PATH', ROOT_PATH . 'templates' . DS);
-    define('CODE_PATH', ROOT_PATH . 'code' . DS);
+    define('CODE_PATH', ROOT_PATH . 'codes' . DS);
     define('LIBRARY_PATH', ROOT_PATH . 'libraries' . DS);
     define('TEMP_PATH', ROOT_PATH . 'temp' . DS);
-    define('JS_URL', '/pub/assets/js/');
-    define('CSS_URL', '/pub/assets/css/');
-    define('IMG_URL', '/pub/assets/img/');
-    set_include_path(get_include_path() . PATH_SEPARATOR . LIBRARY_PATH . PATH_SEPARATOR, CODE_PATH);
+    define('JS_URL', '/static/js/');
+    define('CSS_URL', '/static/css/');
+    define('IMG_URL', '/static/img/');
+    set_include_path(get_include_path() . PATH_SEPARATOR . LIBRARY_PATH . PATH_SEPARATOR . CODE_PATH);
 
     include_once 'Toy\Platform\FileUtil.php';
     include_once 'Toy\Platform\PathUtil.php';
@@ -32,11 +33,11 @@ if (preg_match('/^\/pub\/|\.ico|\.html$/', $_SERVER["REQUEST_URI"])) {
     ));
 
     \Toy\Web\Configuration::$trace = true;
+    \Toy\Web\Configuration::$languagePath = ROOT_PATH.'languages'.DS;
+    \Toy\Web\Configuration::$templateRoot = TEMPLATE_PATH;
+    \Toy\Web\Configuration::$componentDirectory = ROOT_PATH.'codes'.DS.'Codes';
     \Toy\Web\Configuration::addDomain('frontend', 'Frontend', '/', '/', '/', TRUE);
-    \Toy\Web\Configuration::addDomain('backend', 'Backend', '/admin/', 'ixiangs_admin/main/dashboard', 'ixiangs_admin/account/login');
-
-    \Toy\View\Configuration::$trace = true;
-    \Toy\View\Configuration::$templateRoot = TEMPLATE_PATH;
+    \Toy\Web\Configuration::addDomain('backend', 'Backend', '/admin/', 'admin/index/login', 'admin/index/login');
 
     \Toy\Web\Application::run();
 }

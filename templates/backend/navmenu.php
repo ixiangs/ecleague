@@ -4,7 +4,7 @@
             <div class="collapse subnav-collapse">
                 <ul class="mainnav">
                     <?php
-                    $langId = $this->locale->getLanguageId();
+                    $langId = $this->localize->getLanguageId();
                     $menus = \Ixiangs\System\MenuModel::find()
                         ->eq('enabled', true)
                         ->asc('parent_id', 'position')
@@ -53,7 +53,7 @@
                         return $res;
                     }
 
-                    //_recursionMenu($this->menus, 0, $clang['id'], $this->locale, $this->router);
+                    //_recursionMenu($this->menus, 0, $clang['id'], $this->localize, $this->router);
                     ?>
                 </ul>
             </div>

@@ -3,6 +3,7 @@ namespace Toy\Orm;
 
 use Toy\Collection\TEnumerator;
 use Toy\Collection\TList;
+use Toy\Orm\Db\Helper;
 use Toy\Orm\Sql\SelectStatement;
 
 class Query extends SelectStatement implements \Iterator, \ArrayAccess, \SeekableIterator, \Serializable, \Countable
@@ -36,8 +37,7 @@ class Query extends SelectStatement implements \Iterator, \ArrayAccess, \Seekabl
 
     public function load($db = null)
     {
-        $cdb = $db ? $db : Helper::openDb();
-        $rows = $cdb->select($this)->rows;
+        $rows = $this->fetch($db)->rows;
         foreach ($rows as $row) {
             $m = new $this->_modelClass();
             $m->setAllData($row)->markClean();

@@ -12,7 +12,11 @@ class Configuration
     static public $sessionClass = '\Toy\Http\Session';
     static public $requestClass = '\Toy\Http\Request';
     static public $responseClass = '\Toy\Http\Response';
-//    static public $componentDirectory = null;
+    static public $languagePath = null;
+    static public $templateExtensions = array('.php');
+    static public $templateRoot = '';
+//    static public $templateDirectories = null;
+    static public $componentDirectory = null;
 //    static public $controllerDirectory = null;
 //    static public $indexUrl = '/';
     static public $logger = null;

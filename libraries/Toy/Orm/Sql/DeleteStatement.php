@@ -2,6 +2,8 @@
 
 namespace Toy\Orm\Sql;
 
+use Toy\Orm\Db\Helper;
+
 class DeleteStatement extends WhereStatement
 {
 

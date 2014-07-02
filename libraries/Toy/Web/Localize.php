@@ -1,6 +1,9 @@
 <?php
 namespace Toy\Web;
 
+use Toy\Platform\FileUtil;
+use Toy\Platform\PathUtil;
+
 class Localize implements \ArrayAccess
 {
 
@@ -8,8 +11,13 @@ class Localize implements \ArrayAccess
     private $_languages = array();
     private $_currentLanguage = null;
 
-    private function __construct()
+    public function __construct()
     {
+        $data = FileUtil::readJson(Configuration::$languagePath . 'languages.json');
+        foreach ($data as $line) {
+            $this->_languages[$line['code']] = $line;
+        }
+        $this->loadDictionary('zh-CN');
     }
 
     public function __get($name)
@@ -29,17 +37,6 @@ class Localize implements \ArrayAccess
             }
         }
         return '';
-    }
-
-    public function getCurrentLanguage()
-    {
-        return $this->_currentLanguage;
-    }
-
-    public function setCurrentLanguage($value)
-    {
-        $this->_currentLanguage = $value;
-        return $this;
     }
 
     public function getLanguages()
@@ -64,6 +61,19 @@ class Localize implements \ArrayAccess
         }
     }
 
+    public function loadDictionary($languageCode)
+    {
+        $this->_dictionaries = array();
+        PathUtil::scanCurrent(Configuration::$languagePath . $languageCode,
+            function ($path, $info) {
+                $data = FileUtil::readCsv($path);
+                foreach($data as $line){
+                    $this->_dictionaries[$line[0]] = $line[1];
+                }
+            });
+        return $this;
+    }
+
     public function offsetExists($offset)
     {
         return array_key_exists($offset, $this->_dictionaries);
@@ -82,30 +92,5 @@ class Localize implements \ArrayAccess
     public function offsetUnset($offset)
     {
         unset($this->_dictionaries[$offset]);
-    }
-
-    public function initialize()
-    {
-//        $rows = LanguageModel::find()->load();
-//        foreach ($rows as $row) {
-//            $this->_languages[strtolower($row->getCode())] = $row->getAllData();
-//        }
-//        $this->_currentLanguage = $this->_languages[$lang];
-//
-//        $this->_dictionaries = DictionaryModel::find()
-//            ->eq('language_id', $this->_currentLanguage['id'])->load()
-//            ->toArray(function ($item) {
-//                return array($item->getCode(), $item->getLabel());
-//            });
-    }
-
-    private static $_instance = NULL;
-
-    static public function singleton()
-    {
-        if (is_null(self::$_instance)) {
-            self::$_instance = new self();
-        }
-        return self::$_instance;
     }
 }

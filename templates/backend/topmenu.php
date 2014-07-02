@@ -36,7 +36,7 @@
                         <b class="caret"></b>
                     </a>
 
-                    <ul class="dropdown-menu">
+                    <ul class="dropdown-menu" role="menu">
                         <li><a href="javascript:;">My Profile</a></li>
                         <li><a href="javascript:;">My Groups</a></li>
                         <li class="divider"></li>

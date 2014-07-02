@@ -1,12 +1,12 @@
 <?php
 $this->assign('navigationBar', array(
-    $this->html->anchor($this->locale->_('back'), $this->router->buildUrl('list'))
+    $this->html->anchor($this->localize->_('back'), $this->router->buildUrl('list'))
 ));
 
 $this->assign('toolbar', array(
-    $this->html->button('button', $this->locale->_('entities_group_new'), 'btn btn-success')
+    $this->html->button('button', $this->localize->_('entities_group_new'), 'btn btn-success')
         ->setAttribute(array('data-toggle'=>"modal",'data-target'=>"#group_dialog")),
-    $this->html->button('button', $this->locale->_('save'), 'btn btn-primary')
+    $this->html->button('button', $this->localize->_('save'), 'btn btn-primary')
 ));
 $this->beginBlock('form');
 ?>
@@ -32,7 +32,7 @@ $this->beginBlock('form');
             ->setAttribute(array(
                 'action'=>$this->router->buildUrl('save-group', '*')
             ));
-        $f->newField($this->locale->_('name'), true,
+        $f->newField($this->localize->_('name'), true,
             $this->html->textbox('group_name', 'group_name')
                 ->addValidateRule('required', true));
         $f->addHidden('group_id', 'group_id', '');
@@ -40,8 +40,8 @@ $this->beginBlock('form');
         ?>
     </div>
     <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal"><?php echo $this->locale->_('close') ?></button>
-        <button type="button" class="btn btn-primary" id="save_group"><?php echo $this->locale->_('save') ?></button>
+        <button type="button" class="btn btn-default" data-dismiss="modal"><?php echo $this->localize->_('close') ?></button>
+        <button type="button" class="btn btn-primary" id="save_group"><?php echo $this->localize->_('save') ?></button>
     </div>
     </div>
     </div>
@@ -57,7 +57,7 @@ $this->beginScript('attrsFieldGroup');
             edit: { enable: true,
                     showRemoveBtn: false,
                     showRenameBtn: false,
-                    removeTitle:"<?php echo $this->locale->_('delete'); ?>" },
+                    removeTitle:"<?php echo $this->localize->_('delete'); ?>" },
             data: { simpleData: { enable: true }},
             callback:{onRemove: onRemoveGroup}
         };

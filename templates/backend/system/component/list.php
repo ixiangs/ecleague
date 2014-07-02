@@ -1,21 +1,21 @@
 <?php
 $this->assign('breadcrumb', array(
-    $this->html->anchor($this->locale->_('admin_component_manage'))
+    $this->html->anchor($this->localize->_('admin_component_manage'))
 ));
 
-$clang = $this->locale->getLanguage();
+$clang = $this->localize->getLanguage();
 $dt = $this->html->grid($this->models);
 $dt->addIndexColumn('#', 'index', 'index');
-$dt->addLabelColumn($this->locale->_('code'), '{code}', 'middle', 'left');
-$dt->addLabelColumn($this->locale->_('name'), '{name}', 'large', 'left');
-$dt->addLabelColumn($this->locale->_('version'), '{version}', 'small', 'text-center');
-$dt->addLinkColumn($this->locale->_('author'), '{author}', 'http://{website}', 'middle', 'text-center')
+$dt->addLabelColumn($this->localize->_('code'), '{code}', 'middle', 'left');
+$dt->addLabelColumn($this->localize->_('name'), '{name}', 'large', 'left');
+$dt->addLabelColumn($this->localize->_('version'), '{version}', 'small', 'text-center');
+$dt->addLinkColumn($this->localize->_('author'), '{author}', 'http://{website}', 'middle', 'text-center')
     ->getCell()->getChild(0)->setAttribute('target', '_blank');
-$dt->addLabelColumn($this->locale->_('description'), '{description}', '', 'left');
+$dt->addLabelColumn($this->localize->_('description'), '{description}', '', 'left');
 
-//$dt->addBooleanColumn($this->locale->_('status'), 'enabled', $this->locale->_('enabled'), $this->locale->_('disabled').'</span>',
+//$dt->addBooleanColumn($this->localize->_('status'), 'enabled', $this->localize->_('enabled'), $this->localize->_('disabled').'</span>',
 //    'small', 'small text-center');
-//$dt->addLinkColumn('', $this->locale->_('edit'), urldecode($this->router->buildUrl('edit', array('id' => '{id}'))), 'small', 'small edit');
+//$dt->addLinkColumn('', $this->localize->_('edit'), urldecode($this->router->buildUrl('edit', array('id' => '{id}'))), 'small', 'small edit');
 
 $this->assign('datatable', $dt);
 

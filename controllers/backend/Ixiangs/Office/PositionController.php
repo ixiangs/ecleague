@@ -30,7 +30,7 @@ class PositionController extends Web\Controller
 
     public function savePostAction()
     {
-        $lang = $this->context->locale;
+        $lang = $this->context->localize;
         $m = new PositionModel($this->request->getPost('data'));
 
         $vr = $m->validate();

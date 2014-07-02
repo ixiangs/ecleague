@@ -16,25 +16,13 @@ class Application
     const WEB_POST_RENDER = 'webPostRender';
     const WEB_ON_END = 'webOnEnd';
 
-    protected function __construct()
-    {
-//        Event\Configuration::addEvent(
-//            Application::WEB_ON_INITIALIZE,
-//            Application::WEB_ON_START,
-//            Application::WEB_PRE_ROUTE,
-//            Application::WEB_POST_ROUTE,
-//            Application::WEB_PRE_HANDLER,
-//            Application::WEB_POST_HANDLER,
-//            Application::WEB_PRE_RENDER,
-//            Application::WEB_POST_RENDER,
-//            Application::WEB_ON_END);
-    }
+    protected function __construct(){}
 
     protected function initialize()
     {
         $cls = Configuration::$initializerClass;
-//        $initer = new $cls();
-//        $initer->initialize();
+        $initer = new $cls();
+        $initer->initialize();
         Event::dispatch(Application::WEB_ON_INITIALIZE, $this);
         return $this;
     }

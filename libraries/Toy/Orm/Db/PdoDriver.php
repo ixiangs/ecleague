@@ -1,9 +1,8 @@
 <?php
 namespace Toy\Orm\Db;
 
-use \Toy\Orm\Configuration;
-use \Toy\Orm\Exception;
-use \Toy\Orm\Result;
+use Toy\Orm\Configuration;
+use Toy\Orm\Exception;
 use Toy\Log\Logger;
 
 class PdoDriver extends BaseDriver

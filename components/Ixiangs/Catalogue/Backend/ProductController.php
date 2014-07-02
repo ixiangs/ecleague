@@ -28,7 +28,7 @@ class ProductController extends Web\Controller
 
     public function addPostAction()
     {
-        $locale = $this->context->locale;
+        $locale = $this->context->localize;
         $post = $this->request->getAllPost();
         $model = Tops::loadModel('catalogue/product')
                     ->bindAttributeSet()
@@ -57,7 +57,7 @@ class ProductController extends Web\Controller
 
     public function editPostAction()
     {
-        $locale = $this->context->locale;
+        $locale = $this->context->localize;
         $m = Tops::loadModel('catalogue/product')
                     ->load($this->request->getPost('id'))
                     ->setAllData($this->request->getPost('data'));
@@ -78,7 +78,7 @@ class ProductController extends Web\Controller
 
     public function deleteAction($id)
     {
-        $lang = $this->context->locale;
+        $lang = $this->context->localize;
         $m = Tops::loadModel('catalogue/product')->load($id);
 
         if (!$m) {

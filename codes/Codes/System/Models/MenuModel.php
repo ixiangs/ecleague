@@ -34,19 +34,6 @@ class MenuModel extends Orm\Model
             $db->update($u);
         }
     }
-
-//    static private function createUpdatePositionStatement($items, $parentId, &$updates)
-//    {
-//        foreach ($items as $index => $item) {
-//            $updates[] = Helper::update(Constant::TABLE_MENU, array(
-//                'position' => $index + 1,
-//                'parent_id' => $parentId
-//            ))->eq('id', $item['id']);
-//            if (array_key_exists('children', $item)) {
-//                self::createUpdatePositionStatement($item['children'], $item['id'], $updates);
-//            }
-//        }
-//    }
 }
 
 MenuModel::registerMetadata(array(

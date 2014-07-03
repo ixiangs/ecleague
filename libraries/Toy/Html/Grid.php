@@ -109,8 +109,8 @@ class Grid extends Element
 
     public function addButtonColumn($headText, $cellText, $script, $headCss = null, $cellCss = null)
     {
-        $span = new Element('button', array(
-            'type' => 'button',
+        $span = new Element('a', array(
+            'href'=>'javascript:',
             'text' => $cellText));
         $span->setEvent('click', $script);
         $col = $this->createColumn($headText, $headCss, $cellCss);
@@ -175,11 +175,11 @@ class Grid extends Element
 //        $footer = array();
 
         if ($this->checkboxVisible) {
-            $heads[] = '<th class="column-checkbox-head"></th>';
+            $heads[] = '<th class="checkbox-head"></th>';
         }
 
         if ($this->sequenceVisible) {
-            $heads[] = '<th class="column-sequence-head"></th>';
+            $heads[] = '<th class="sequence-head">#</th>';
         }
 
         foreach ($this->columns as $col) {
@@ -189,18 +189,18 @@ class Grid extends Element
         foreach ($this->columns as $col) {
             $s = $col->renderFilter();
             if (!empty($s)) {
-                $filters[] = '<th class="column-filter-head">' . $s . '</th>';
+                $filters[] = '<th class="filter-head">' . $s . '</th>';
             }
         }
 
         foreach ($this->dataSource as $index => $dataRow) {
             $cells = array();
             if ($this->checkboxVisible) {
-                $cells[] = '<td class="column-checkbox-cell"><input type="checkbox" value="' . StringUtil::substitute($this->checkboxValue, $dataRow) . '"/></td>';
+                $cells[] = '<td class="checkbox-cell"><input type="checkbox" value="' . StringUtil::substitute($this->checkboxValue, $dataRow) . '"/></td>';
             }
 
             if ($this->sequenceVisible) {
-                $cells[] = '<td class="column-sequence-cell"><span>' . ($index + 1) . '</span></td>';
+                $cells[] = '<td class="sequence-cell"><span>' . ($index + 1) . '</span></td>';
             }
             foreach ($this->columns as $col) {
                 $cells[] = $col->renderCell($dataRow, $index);
@@ -212,11 +212,11 @@ class Grid extends Element
         $result[] = '<thead><tr>' . implode('', $heads) . '</tr>';
         if (count($filters) > 0) {
             if ($this->checkboxVisible) {
-                array_unshift($filters, '<th class="column-checkbox-head"></th>');
+                array_unshift($filters, '<th class="checkbox-head"></th>');
             }
 
             if ($this->sequenceVisible) {
-                array_unshift($filters, '<th class="column-checkbox-head"></th>');
+                array_unshift($filters, '<th class="checkbox-head"></th>');
             }
             $result[] = '<tr class="row-filter">' . implode('', $filters) . '</tr>';
         }

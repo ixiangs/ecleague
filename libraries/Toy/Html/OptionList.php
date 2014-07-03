@@ -43,7 +43,7 @@ class OptionList extends InputElement
         $val = $this->getAttribute('value');
         $this->removeAttribute('value', 'class');
         $this->setAttribute('type', $this->_multiple ? 'checkbox' : 'radio');
-        $html = array('<div class="form-control form-option-list">');
+//        $html = array('<div class="form-control form-option-list">');
         foreach ($this->_options as $option => $text) {
             $this->setAttribute('value', $option);
             if (is_array($val) && in_array($option, $val)) {
@@ -54,7 +54,7 @@ class OptionList extends InputElement
             }
             $this->removeAttribute('checked');
         }
-        $html[] = '<div class="clearfix"></div></div>';
+//        $html[] = '<div class="clearfix"></div></div>';
         return implode('', $html);
     }
 }

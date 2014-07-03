@@ -1,5 +1,5 @@
 {
-    "name": "IXiangs_User",
+    "name": "User",
     "version": "0.0.0.1",
     "author": "IXiangs Studio",
     "website": "ixiangs.com",
@@ -11,7 +11,7 @@
         "backend": {
             "user": "user_manage",
             "account_list": "user_account_list",
-            "account_new": "user_account_new",
+            "account_add": "user_account_new",
             "account_edit": "user_account_edit",
             "role_list": "user_role_list",
             "role_add": "user_role_new",

@@ -84,8 +84,10 @@ class FormField extends Element
         }
 
         $html = array($this->renderBegin());
-        $html[] = '<label class="control-label">' . $this->label . '</label>';
+        $html[] = '<label class="col-lg-2 control-label">' . $this->label . '</label>';
+        $html[] = '<div class="col-lg-10">';
         $html[] = $this->input->render();
+        $html[] = '</div>';
         $html[] = $this->renderEnd();
 
         return implode('', $html);

@@ -183,7 +183,7 @@ class AccountController extends Web\Controller
                 'model' => $model,
                 'roles' => RoleModel::find()->fetch()->combineColumns('id', 'name')
             ),
-            'ixiangs/user/account/edit'
+            'user/account/edit'
         );
     }
 }

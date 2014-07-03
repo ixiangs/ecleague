@@ -9,7 +9,7 @@ class Form extends Element
 
     public function __construct($id = 'form1', $method = 'post')
     {
-        parent::__construct('form', array('class' => 'form', 'id' => $id, 'method' => $method, 'data-validate' => 'true'));
+        parent::__construct('form', array('class' => 'form-horizontal', 'id' => $id, 'method' => $method, 'data-validate' => 'true'));
     }
 
     public function getHiddens()

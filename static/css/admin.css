@@ -1,3 +1,9 @@
+.mainbar .bread-crumb {
+    padding-top: 3px;
+    border-top: none;
+    margin-top: 0px;
+}
+
 .widget-header .breadcrumb {
     padding: 0 0 0 10px;
     margin-bottom: 0;
@@ -72,7 +78,7 @@ table.table tbody tr td {
     /*text-align: center;*/
 }
 
-table.table th.index, table.table tbody tr td.index {
+table.table th.sequence-head, table.table tbody tr td.sequence-cell {
     width: 40px;
     text-align: center;
 }

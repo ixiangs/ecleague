@@ -4,17 +4,15 @@ $this->assign('breadcrumb', array(
     $this->html->anchor($this->localize->_($this->router->action == 'add' ? "user_new_behavior" : "user_edit_behavior"))
 ));
 
-$this->assign('navigationBar', array(
-    $this->html->anchor($this->localize->_('back'), $this->router->buildUrl('list'))
-));
-
 $this->assign('toolbar', array(
+    $this->html->anchor($this->localize->_('back'), $this->router->buildUrl('list'))
+        ->setAttribute('class', 'btn btn-default'),
     $this->html->button('button', $this->localize->_('save'), 'btn btn-primary')->setAttribute('data-submit', 'form1')
 ));
 
 $f = $this->html->form()
     ->setAttribute('action', $this->router->buildUrl('save', '*'));
-$f->newField($this->localize->_('owner_component'), true,
+$f->newField($this->localize->_('component'), true,
     $this->html->select('component_id', 'data[component_id]', $this->model->getComponentId(), $this->components)
         ->setCaption('')
         ->addValidateRule('required', true));

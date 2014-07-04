@@ -4,7 +4,7 @@ Toy.Validation.Validator = new Class({
     Implements: [Options, Events],
     form: null,
     options: {
-        autoSubmit: true,
+        autoSubmit: false,
         validateOnChange: true,
         validateOnSubmit: true,
         fieldContainer: '.form-group',
@@ -16,20 +16,19 @@ Toy.Validation.Validator = new Class({
 
     initialize: function (frm, options) {
         this.setOptions(options);
-        this.form = $(frm);
+        this.form = frm;
 
         this.reload();
 
         if (this.options.autoSubmit) {
-            this.form.submit(function (event) {
+            this.form.addEvent('submit', function (event) {
                 if (!this.validate()) {
                     event.preventDefault();
                 }
             }.bind(this));
         }
 
-
-        this.form.data('validator', this);
+        this.form.store('validator', this);
     },
 
     reload: function () {
@@ -38,7 +37,7 @@ Toy.Validation.Validator = new Class({
         inputs = {};
         Toy.Validation.selectors.each(function (selector) {
             selector(this).each(function (item) {
-                var n = $(item).attr('name');
+                var n = $(item).get('name');
                 if (n) {
                     if (!Object.keys(inputs).contains(n)) {
                         inputs[n] = [];
@@ -127,39 +126,45 @@ Toy.Validation.Field = new Class({
 
 Toy.Validation.selectors = [
     function (validator) {
-        return validator.form.find('input[type="text"],input[type="hidden"],input[type="checkbox"],input[type="raido"],input[type="email"],input[type="password"],input[type="file"],select,textarea').get();
+        return validator.form.getElements('input[type="text"],input[type="hidden"],input[type="checkbox"],input[type="raido"],input[type="email"],input[type="password"],input[type="file"],select,textarea');
     }
 ];
 
 Toy.Validation.renderers = [
     function (field, errors) {
-        var $input = $(field.inputs[0]);
+        var $input = field.inputs[0];
+        var ops = field.validator.options;
         var newErrorElement = function (rule) {
-            var eid = $input.attr('name').replace(/\[/g, '').replace(/\]/g, '') + '_' + rule;
-            var result = $('#' + eid);
-            if (result.length == 0) {
-                result = $('<small class="help-block" id="' + eid + '"></small>');
-                $input.parent().append(result);
+            var eid = $input.get('name').replace(/\[/g, '').replace(/\]/g, '') + '_' + rule;
+            var result = $(eid);
+            if (!result) {
+                result = Elements.from('<small class="help-block" id="' + eid + '"></small>');
+                $input.getParent().adopt(result);
             }
             return result;
         };
 
         var renderFailure = function () {
-            $input.parents(field.validator.options.fieldContainer).removeClass(field.validator.options.successClass)
-                .addClass(field.validator.options.failureClass);
+            $input.getParents(ops.fieldContainer).each(function (item) {
+                item.removeClass(ops.successClass)
+                    .addClass(ops.failureClass);
+            });
             Object.each(errors, function (msg, rule) {
-                newErrorElement(rule).text(msg).addClass(field.validator.options.errorClass).css('display', '');
+                newErrorElement(rule).set('text', msg)
+                    .addClass(ops.errorClass)
+                    .setStyle('display', '');
             });
         };
 
         var renderSuccess = function () {
-            $input.parents(field.validator.options.fieldContainer).removeClass(field.validator.options.failureClass)
-                .addClass(field.validator.options.successClass)
-                .find('.' + field.validator.options.errorClass).get().each(function (item) {
-                    $(item).css('display', 'none');
+            $input.getParents(ops.fieldContainer).each(function (item) {
+                item.removeClass(ops.failureClass)
+                    .addClass(ops.successClass);
+                item.getElements('.' + ops.errorClass).each(function (item) {
+                    item.setStyle('display', 'none');
                 });
+            });
         };
-
         renderSuccess();
         if (Object.getLength(errors) > 0) {
             renderFailure();
@@ -172,258 +177,257 @@ Toy.Validation.rules = {
     'required': new (new Class({
         match: function (field) {
             return field.inputs.some(function (item) {
-                var $item = $(item);
-                return $item.attr('data-validate-required') || $item.attr('required');
+                return item.get('data-validate-required') || item.get('required');
             }) ? true : false;
         },
         check: function (field, params) {
-            var $input = $(field.inputs[0]);
-            var tn = $input.prop('tagName');
+            var $input = field.inputs[0];
+            var tn = $input.get('tag').toUpperCase();
             switch (tn) {
                 case 'INPUT':
-                    var ty = $input.attr('type');
+                    var ty = $input.get('type');
                     switch (ty) {
                         case 'text':
                         case 'email':
                         case 'password':
                         case 'number':
                         case 'hidden':
-                            return $input.val().length > 0;
+                            return $input.get('value').length > 0;
                         case 'radio':
                         case 'checkbox':
                             for (var i = 0; i < field.inputs.length; i++) {
-                                if ($(field.inputs[i]).prop('checked') == true) {
+                                if (field.inputs[i].get('checked') == true) {
                                     return true;
                                 }
                             }
                             return false;
                         case 'file':
-                            return $input.val().length > 0;
+                            return $input.get('value').length > 0;
                     }
                     break;
                 case 'SELECT':
-                    return $input.val().trim().length > 0;
+                    return $input.get('value').trim().length > 0;
                     break;
                 case 'TEXTAREA':
-                    return $input.val().length > 0;
+                    return $input.get('value').length > 0;
                     break;
             }
         },
         message: function (field, params) {
-            var msg = $(field.inputs[0]).attr('date-validate-required-msg');
-            return msg ? msg : Toy.Locale.get('Validate.required');
+            var msg = field.inputs[0].get('date-validate-required-msg');
+            return msg ? msg : Locale.get('Validate.required');
         }
     }))(),
 
     'integer': new (new Class({
         match: function (field) {
-            return $(field.inputs[0]).attr('data-validate-integer') ? true : false;
+            return field.inputs[0].get('data-validate-integer') ? true : false;
         },
         check: function (field, params) {
-            var $input = $(field.inputs[0]);
-            return $input.val() == '' ? true : $input.val().test(/^[1-9][0-9]*$/);
+            var $input = field.inputs[0];
+            return $input.get('value') == '' ? true : $input.get('value').test(/^[1-9][0-9]*$/);
         },
         message: function (field, params) {
-            var msg = $(field.inputs[0]).get('date-validate-integer-msg');
-            return msg ? msg : Toy.Locale.get('Validate.integer');
+            var msg = field.inputs[0].get('date-validate-integer-msg');
+            return msg ? msg : Locale.get('Validate.integer');
         }
     }))(),
 
     'number': new (new Class({
         match: function (field) {
-            var $input = $(field.inputs[0]);
-            return ($input.attr('data-validate-number') || $input.attr('type') == 'number') ? true : false;
+            var $input = field.inputs[0];
+            return ($input.get('data-validate-number') || $input.get('type') == 'number') ? true : false;
         },
         check: function (field, params) {
-            var $input = $(field.inputs[0]);
-            return $input.val() == '' ? true : $input.val().test(/^-?(?:\d+|\d{1,3}(?:,\d{3})+)?(?:\.\d+)?$/);
+            var $input = field.inputs[0];
+            return $input.get('value') == '' ? true : $input.get('value').test(/^-?(?:\d+|\d{1,3}(?:,\d{3})+)?(?:\.\d+)?$/);
         },
         message: function (field, params) {
-            var msg = $(field.inputs[0]).attr('date-validate-number-msg');
-            return msg ? msg : Toy.Locale.get('Validate.number');
+            var msg = field.inputs[0].get('date-validate-number-msg');
+            return msg ? msg : Locale.get('Validate.number');
         }
     }))(),
 
     'digits': new (Class({
         match: function (field) {
-            return $(field.inputs[0]).attr('data-validate-digits') != null ? true : false;
+            return field.inputs[0].get('data-validate-digits') != null ? true : false;
         },
         check: function (field, params) {
-            var $input = $(field.inputs[0]);
-            return $input.val() == '' ? true : $input.val().test(/^\d+$/);
+            var $input = field.inputs[0];
+            return $input.get('value') == '' ? true : $input.get('value').test(/^\d+$/);
         },
         message: function (field, params) {
-            var msg = $(field.inputs[0]).get('date-validate-digits-msg');
-            return msg ? msg : Toy.Locale.get('Validate.digits');
+            var msg = field.inputs[0].get('date-validate-digits-msg');
+            return msg ? msg : Locale.get('Validate.digits');
         }
     }))(),
 
     'email': new (Class({
         match: function (field) {
-            var $input = $(field.inputs[0]);
-            return ($input.attr('type') == 'email' || $input.attr('data-validate-email')) ? true : false;
+            var $input = field.inputs[0];
+            return ($input.get('type') == 'email' || $input.get('data-validate-email')) ? true : false;
         },
         check: function (field, params) {
-            var $input = $(field.inputs[0]);
-            return $input.val() == '' ? true : $input.val().test(/^((([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+(\.([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+)*)|((\x22)((((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(([\x01-\x08\x0b\x0c\x0e-\x1f\x7f]|\x21|[\x23-\x5b]|[\x5d-\x7e]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(\\([\x01-\x09\x0b\x0c\x0d-\x7f]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]))))*(((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(\x22)))@((([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.)+(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))$/i);
+            var $input = field.inputs[0];
+            return $input.get('value') == '' ? true : $input.get('value').test(/^((([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+(\.([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+)*)|((\x22)((((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(([\x01-\x08\x0b\x0c\x0e-\x1f\x7f]|\x21|[\x23-\x5b]|[\x5d-\x7e]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(\\([\x01-\x09\x0b\x0c\x0d-\x7f]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]))))*(((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(\x22)))@((([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.)+(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))$/i);
         },
         message: function (field, params) {
-            var $input = $(field.inputs[0]);
-            var msg = $input.attr('date-validate-email-msg');
-            return msg ? msg : Toy.Locale.get('Validate.email');
+            var $input = field.inputs[0];
+            var msg = $input.get('date-validate-email-msg');
+            return msg ? msg : Locale.get('Validate.email');
         }
     }))(),
 
     'letter': new (new Class({
         match: function (field) {
-            var $input = $(field.inputs[0]);
-            return $input.attr('data-validate-letter') != null ? true : false;
+            var $input = field.inputs[0];
+            return $input.get('data-validate-letter') != null ? true : false;
         },
         check: function (field, params) {
-            var $input = $(field.inputs[0]);
-            return $input.val() == '' ? true : $input.val().test(/^[a-zA-Z0-9_\-]+$/);
+            var $input = field.inputs[0];
+            return $input.get('value') == '' ? true : $input.get('value').test(/^[a-zA-Z0-9_\-]+$/);
         },
         message: function (field, params) {
             var msg = input[0].get('date-validate-letter-msg');
-            return msg ? msg : Toy.Locale.get('Validate.letter');
+            return msg ? msg : Locale.get('Validate.letter');
         }
     }))(),
 
     'minlength': new (new Class({
         match: function (field) {
-            var $input = $(field.inputs[0]);
-            var p = $input.attr('data-validate-minlength') || $input.attr('minlength');
+            var $input = field.inputs[0];
+            var p = $input.get('data-validate-minlength') || $input.get('minlength');
             return p ? p : false;
         },
         check: function (field, params) {
-            var $input = $(field.inputs[0]);
-            return $input.val() == '' ? true : $input.val().length >= parseInt(params);
+            var $input = field.inputs[0];
+            return $input.get('value') == '' ? true : $input.get('value').length >= parseInt(params);
         },
         message: function (field, params) {
-            var $input = $(field.inputs[0]);
-            var msg = $input.attr('date-validate-minlength-msg');
+            var $input = field.inputs[0];
+            var msg = $input.get('date-validate-minlength-msg');
             return msg ?
                 msg.substitute({"len": params}) :
-                Toy.Locale.get('Validate.minlength').substitute({"len": params});
+                Locale.get('Validate.minlength').substitute({"len": params});
         }
     }))(),
 
     'maxlength': new (new Class({
         match: function (field) {
-            var $input = $(field.inputs[0]);
-            var p = $input.attr('data-validate-maxlength') || $input.attr('maxlength');
+            var $input = field.inputs[0];
+            var p = $input.get('data-validate-maxlength') || $input.get('maxlength');
             return p ? p : false;
         },
         check: function (field, params) {
-            var $input = $(field.inputs[0]);
-            return $input.val() == '' ? true : $input.val().length <= parseInt(params);
+            var $input = field.inputs[0];
+            return $input.get('value') == '' ? true : $input.get('value').length <= parseInt(params);
         },
         message: function (field, params) {
             var msg = input[0].get('date-validate-maxlength-msg');
             return msg ?
                 msg.substitute({"len": params}) :
-                Toy.Locale.get('Validate.maxlength').substitute({"len": params});
+                Locale.get('Validate.maxlength').substitute({"len": params});
         }
     }))(),
 
     'minvalue': new (new Class({
         match: function (field) {
-            var $input = $(field.inputs[0]);
-            var p = $input.attr('data-validate-minvalue');
+            var $input = field.inputs[0];
+            var p = $input.get('data-validate-minvalue');
             return p ? p : false;
         },
         check: function (field, params) {
-            var $input = $(field.inputs[0]);
-            if ($input.val() == '') {
+            var $input = field.inputs[0];
+            if ($input.get('value') == '') {
                 return true;
             }
-            return parseFloat($input.val()) >= parseFloat(params);
+            return parseFloat($input.get('value')) >= parseFloat(params);
         },
         message: function (field, params) {
             var $input = $(field.inputs[0]);
             var msg = $input.attr('date-validate-minvalue-msg');
             return msg ?
                 msg.substitute({"val": params}) :
-                Toy.Locale.get('Validate.minvalue').substitute({"val": params});
+                Locale.get('Validate.minvalue').substitute({"val": params});
         }
     }))(),
 
     'maxvalue': new (new Class({
         match: function (field) {
-            var $input = $(field.inputs[0]);
-            var p = $input.attr('data-validate-minvalue');
+            var $input = field.inputs[0];
+            var p = $input.get('data-validate-minvalue');
             return p ? p : false;
         },
         check: function (field, params) {
-            var $input = $(field.inputs[0]);
-            if ($input.val() == '') {
+            var $input = field.inputs[0];
+            if ($input.get('value') == '') {
                 return true;
             }
-            return parseFloat($input.val()) <= parseFloat(params);
+            return parseFloat($input.get('value')) <= parseFloat(params);
         },
         message: function (field, params) {
-            var $input = $(field.inputs[0]);
-            var msg = $input.attr('date-validate-maxvalue-msg');
+            var $input = field.inputs[0];
+            var msg = $input.get('date-validate-maxvalue-msg');
             return msg ?
                 msg.substitute({"val": params}) :
-                Toy.Locale.get('Validate.maxvalue').substitute({"val": params});
+                Locale.get('Validate.maxvalue').substitute({"val": params});
         }
     }))(),
 
     'regexp': new (new Class({
         match: function (field) {
-            var $input = $(field.inputs[0]);
-            var p = $input.attr('data-validate-regexp');
+            var $input = field.inputs[0];
+            var p = $input.get('data-validate-regexp');
             return p ? p : false;
         },
         check: function (field, params) {
-            var $input = $(field.inputs[0]);
-            return new RegExp(params).test($input.getValue());
+            var $input = field.inputs[0];
+            return new RegExp(params).test($input.get('value'));
         },
         message: function (field, params) {
-            var $input = $(field.inputs[0]);
-            var msg = $input.attr('date-validate-regexp-msg');
-            return msg ? msg : Toy.Locale.get('Validate.regexp');
+            var $input = field.inputs[0];
+            var msg = $input.get('date-validate-regexp-msg');
+            return msg ? msg : Locale.get('Validate.regexp');
         }
     }))(),
 
     'equalto': new (new Class({
         match: function (field) {
-            var $input = $(field.inputs[0]);
-            var p = $input.attr('data-validate-equalto');
+            var $input = field.inputs[0];
+            var p = $input.get('data-validate-equalto');
             return p ? p : false;
         },
         check: function (field, params) {
-            var $input = $(field.inputs[0]);
-            return $input.val() == $(params).val();
+            var $input = field.inputs[0];
+            return $input.get('value') == $(params).get('value');
         },
         message: function (field, params) {
-            var $input = $(field.inputs[0]);
-            var msg = $input.attr('date-validate-equalto-msg');
-            return msg ? msg : Toy.Locale.get('Validate.equalto');
+            var $input = field.inputs[0];
+            var msg = $input.get('date-validate-equalto-msg');
+            return msg ? msg : Locale.get('Validate.equalto');
         }
     }))(),
 
     'greatto': new (new Class({
         match: function (field) {
-            var $input = $(field.inputs[0]);
-            var p = $input.attr('data-validate-greatto');
+            var $input = field.inputs[0];
+            var p = $input.get('data-validate-greatto');
             return p ? p : false;
         },
         check: function (field, params) {
-            var $input = $(field.inputs[0]);
-            if ($input.val().trim().length == 0) {
+            var $input = field.inputs[0];
+            if ($input.get('value').trim().length == 0) {
                 return true;
             }
-            if ($(params).val().trim().length == 0) {
+            if ($(params).get('value').trim().length == 0) {
                 return true;
             }
-            return $input.val() > $(params).val();
+            return $input.get('value') > $(params).get('value');
         },
         message: function (field, params) {
-            var $input = $(field.inputs[0]);
-            var msg = $input.attr('data-validate-greatto-msg');
-            return msg ? msg : Toy.Locale.get('Validate.greatto');
+            var $input = field.inputs[0];
+            var msg = $input.get('data-validate-greatto-msg');
+            return msg ? msg : Locale.get('Validate.greatto');
         }
     }))()
 };
@@ -431,8 +435,8 @@ Toy.Validation.rules = {
 Toy.Widget = {};
 Toy.Widget.ProgressModal = {
 
-    show: function(){
-        if($('#progress_modal').length == 0){
+    show: function () {
+        if ($('#progress_modal').length == 0) {
             element = '<div id="progress_modal" class="modal fade" role="dialog" tabindex="-1">'
                 + '<div class="modal-dialog" style="margin-top: 20%;"><div class="modal-content">'
                 + '<div class="progress progress-striped active">'
@@ -440,15 +444,15 @@ Toy.Widget.ProgressModal = {
                 + '</div></div></div></div></div>';
             $(element).appendTo('body')
             $('#progress_modal').modal({
-                'show':false,
-                'keyboard':false,
-                'backdrop':'static'
+                'show': false,
+                'keyboard': false,
+                'backdrop': 'static'
             });
         }
         $('#progress_modal').modal('show');
     },
 
-    hide: function(){
+    hide: function () {
         $('#progress_modal').modal('hide');
     }
 }

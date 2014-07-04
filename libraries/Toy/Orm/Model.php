@@ -1,6 +1,8 @@
 <?php
 namespace Toy\Orm;
 
+use Toy\Orm\Db\Helper;
+
 abstract class Model implements \ArrayAccess, \Iterator
 {
 
@@ -312,7 +314,6 @@ abstract class Model implements \ArrayAccess, \Iterator
             }
         }
 
-
         if ($this->metadata->getPrimaryKey()->getAutoIncrement()) {
             $id = Helper::insert($this->metadata->getTableName(), $values)->executeLastInsertId($db);
             if ($id > 0) {
@@ -346,6 +347,16 @@ abstract class Model implements \ArrayAccess, \Iterator
             ->execute($db);
         $this->afterUpdate($cdb);
         return $result;
+    }
+
+    public function fillRow(array $row)
+    {
+        $props = $this->metadata->getProperties();
+        foreach ($row as $field => $value) {
+            $this->data[$field] = array_key_exists($field, $props) ? $props[$field]->fromDbValue($value) : $value;
+        }
+        $this->originalData = $this->data;
+        return $this;
     }
 
     static public function propertiesToFields($includes = null, $ignores = null, $withTable = true)
@@ -393,11 +404,10 @@ abstract class Model implements \ArrayAccess, \Iterator
         $row = Helper::select($table, $fields)
             ->eq($metadata->getPrimaryKey()->getName(), $id)
             ->limit(1)
-            ->execute($db)
-            ->getFirstRow();
+            ->fetchFirstRow($db);
         if ($row != null) {
             $inst = new $calledClass();
-            $inst->fromDbValues($row)->markClean();
+            $inst->fillRow($row)->markClean();
             return $inst;
         }
         return false;

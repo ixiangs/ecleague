@@ -1,4 +1,4 @@
-//Toy = {};
+Toy = {};
 //
 //Toy.Request = new Class({
 //    Implements: [Events, Options],

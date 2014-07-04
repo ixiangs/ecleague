@@ -18,7 +18,7 @@ class GridColumn{
 
     public function __construct($headText, $headCss = null, $cellCss = null){
         $this->head = new Element('th', array('text'=>$headText, 'class'=>$headCss));
-        $this->cell = new Element('td', array('class'=>$headCss));
+        $this->cell = new Element('td', array('class'=>$cellCss));
         $this->foot = new Element('td');
     }
 

@@ -17,8 +17,8 @@
             "role_add": "user_role_new",
             "role_edit": "user_role_edit",
             "behavior_list": "user_behavior_list",
-            "behavior_add": "user_behavior_list",
-            "behavior_edit": "user_behavior_list"
+            "behavior_add": "user_behavior_new",
+            "behavior_edit": "user_behavior_edit"
         }
     }
 }

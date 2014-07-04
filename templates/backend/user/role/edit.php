@@ -1,9 +1,7 @@
 <?php
-$this->assign('navigationBar', array(
-    $this->html->anchor($this->localize->_('back'), $this->router->buildUrl('list'))
-));
-
 $this->assign('toolbar', array(
+    $this->html->anchor($this->localize->_('back'), $this->router->buildUrl('list'))
+            ->setAttribute('class', 'btn btn-default'),
     $this->html->button('button', $this->localize->_('save'), 'btn btn-primary')->setAttribute('data-submit', 'form1')
 ));
 

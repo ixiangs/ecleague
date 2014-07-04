@@ -1,16 +1,18 @@
 <?php
-$this->assign('navigationBar', array(
-    $this->html->anchor($this->localize->_('user_role_new'), $this->router->buildUrl('add'))
+$this->assign('toolbar', array(
+    $this->html->anchor($this->localize->_('new'), $this->router->buildUrl('add'))
 ));
 
 $dt = $this->html->grid($this->models);
-$dt->addIndexColumn('#', 'index', 'index');
-$dt->addLabelColumn($this->localize->_('code'), '{code}', 'large', 'left');
-$dt->addLabelColumn($this->localize->_('name'), '{name}', '', 'left');
-$dt->addBooleanColumn($this->localize->_('enable'), 'enabled', $this->localize->_('yes'), $this->localize->_('no'),
-    'small');
-$dt->addLinkColumn('', $this->localize->_('edit'), urldecode($this->router->buildUrl('edit', array('id'=>'{id}'))), 'edit', 'edit');
-$dt->addLinkButtonColumn('', $this->localize->_('delete'), "deleteConfirm('".urldecode($this->router->buildUrl('delete', array('id'=>'{id}')))."')", 'edit', 'edit');
+//$dt->addIndexColumn('#', 'index', 'index');
+$dt->addLabelColumn($this->localize->_('code'), '@{code}', 'large', 'left');
+$dt->addLabelColumn($this->localize->_('name'), '@{name}', '', 'left');
+$dt->addStatusColumn($this->localize->_('enable'), '@{enabled}', array(
+        1=>'<span class="label label-success">'.$this->localize->_('yes').'</span>',
+        0=>'<span class="label label-danger">'.$this->localize->_('no').'</span>'),
+    'small', 'small text-center');
+$dt->addLinkColumn('', $this->localize->_('edit'), '@'.urldecode($this->router->buildUrl('edit', array('id'=>'{id}'))), 'edit', 'edit');
+$dt->addButtonColumn('', $this->localize->_('delete'), "@deleteConfirm('".urldecode($this->router->buildUrl('delete', array('id'=>'{id}')))."')", 'edit', 'edit');
 $this->assign('datatable', $dt);
 
 $p = $this->html->pagination($this->total, PAGINATION_SIZE, PAGINATION_RANGE);

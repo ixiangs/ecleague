@@ -14,7 +14,7 @@
     <script src="/static/js/bootstrap.min.js"></script>
     <script src="/static/js/toy/core.js"></script>
     <script src="/static/js/toy/html.js"></script>
-    <script src="/static/js/toy/locale.js"></script>
+    <script src="/static/js/locale.js"></script>
     <script src="/static/js/common.js"></script>
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>

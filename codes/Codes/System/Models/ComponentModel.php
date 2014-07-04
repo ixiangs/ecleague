@@ -1,6 +1,7 @@
 <?php
-namespace Ixiangs\System;
+namespace Codes\System\Models;
 
+use Codes\System\Constant;
 use Toy\Orm;
 
 class ComponentModel extends Orm\Model

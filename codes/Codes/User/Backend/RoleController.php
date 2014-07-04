@@ -1,6 +1,8 @@
 <?php
 namespace Codes\User\Backend;
 
+use Codes\User\Models\BehaviorModel;
+use Codes\User\Models\RoleModel;
 use Toy\Web;
 
 class RoleController extends Web\Controller
@@ -9,11 +11,11 @@ class RoleController extends Web\Controller
     public function listAction()
     {
         $pi = $this->request->getParameter("pageindex", 1);
-        $count = RoleModel::find()->executeCount();
+        $count = RoleModel::find()->fetchCount();
         $models = RoleModel::find()->limit(PAGINATION_SIZE, ($pi - 1) * PAGINATION_SIZE)->load();
         return Web\Result::templateResult(array(
                 'models' => $models,
-                'behaviors' => BehaviorModel::find()->execute()->combineColumns('id', 'code'),
+                'behaviors' => BehaviorModel::find()->fetch()->combineColumns('id', 'code'),
                 'total' => $count)
         );
     }
@@ -77,8 +79,8 @@ class RoleController extends Web\Controller
         return Web\Result::templateResult(
             array(
                 'model' => $model,
-                'behaviors' => BehaviorModel::find()->asc('code')->execute()->combineColumns('id', 'name')),
-            'ixiangs/user/role/edit'
+                'behaviors' => BehaviorModel::find()->asc('code')->fetch()->combineColumns('id', 'name')),
+            'user/role/edit'
         );
     }
 }

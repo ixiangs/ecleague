@@ -91,3 +91,4 @@ select_all,全选
 unselect_all,全不选
 dashboard,首页
 type,类型
+component,组件

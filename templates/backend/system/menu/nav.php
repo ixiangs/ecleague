@@ -4,7 +4,7 @@
 <div class="collapse subnav-collapse">
 <ul class="mainnav">
 <?php
-    $allMenus = \Codes\System\Models\MenuModel::find()
+    $allMenus = \Components\System\Models\MenuModel::find()
         ->eq('enabled', true)
         ->asc('parent_id', 'position')
         ->load();

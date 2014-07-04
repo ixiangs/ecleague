@@ -9,13 +9,13 @@ $dt = $this->html->grid($this->models);
 $dt->addLabelColumn($this->localize->_('username'), '@{username}', 'middle', 'middle');
 $dt->addLabelColumn($this->localize->_('email'), '@{email}');
 $dt->addStatusColumn($this->localize->_('type'), '@{type}', array(
-        \Codes\User\Constant::TYPE_ADMINISTRATOR=>$this->localize->_('user_type_admin'),
-        \Codes\User\Constant::TYPE_NORMAL=>$this->localize->_('user_type_normal')),
+        \Components\User\Constant::TYPE_ADMINISTRATOR=>$this->localize->_('user_type_admin'),
+        \Components\User\Constant::TYPE_NORMAL=>$this->localize->_('user_type_normal')),
     'small', 'small text-center');
 $dt->addStatusColumn($this->localize->_('status'), '@{status}', array(
-        \Codes\User\Constant::STATUS_ACCOUNT_ACTIVATED=>'<span class="label label-success">'.$this->localize->_('user_status_activated').'</span>',
-        \Codes\User\Constant::STATUS_ACCOUNT_NONACTIVATED=>'<span class="label label-warning">'.$this->localize->_('user_status_nonactivated').'</span>',
-        \Codes\User\Constant::STATUS_ACCOUNT_DISABLED=>'<span class="label label-danger">'.$this->localize->_('disabled').'</span>'),
+        \Components\User\Constant::STATUS_ACCOUNT_ACTIVATED=>'<span class="label label-success">'.$this->localize->_('user_status_activated').'</span>',
+        \Components\User\Constant::STATUS_ACCOUNT_NONACTIVATED=>'<span class="label label-warning">'.$this->localize->_('user_status_nonactivated').'</span>',
+        \Components\User\Constant::STATUS_ACCOUNT_DISABLED=>'<span class="label label-danger">'.$this->localize->_('disabled').'</span>'),
     'small', 'small text-center');
 $dt->addLinkColumn('', $this->localize->_('edit'), '@'.urldecode($this->router->buildUrl('edit', array('id'=>'{id}'))), 'edit', 'edit');
 $dt->addButtonColumn('', $this->localize->_('delete'), "@deleteConfirm('".urldecode($this->router->buildUrl('delete', array('id'=>'{id}')))."')", 'edit', 'edit');

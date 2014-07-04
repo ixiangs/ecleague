@@ -1,8 +1,6 @@
 <?php
 namespace Toy;
 
-use Toy\Platform\PathUtil;
-
 class Autoload
 {
 
@@ -11,7 +9,6 @@ class Autoload
         $subPath = str_replace(array('\\', '_'), ' ', $className);
         $subPath = str_replace(' ', DIRECTORY_SEPARATOR, ucwords(trim($subPath))) . '.php';
         return include_once $subPath;
-
     }
 
     static public function register()

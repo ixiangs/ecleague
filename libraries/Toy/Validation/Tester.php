@@ -26,12 +26,12 @@ class Tester
             return TRUE;
         }
 
-        return preg_match("/^[1-9]\d*|[0-9]$/", $value) > 0;
+        return preg_match("/^[1-9]\\d*|[0-9]$/", $value) > 0;
     }
 
     static public function testDigit($value)
     {
-        return preg_match("/^\d+$/", $value) > 0;
+        return preg_match("/^\\d+$/", $value) > 0;
     }
 
     static public function testNumeric($value)
@@ -104,7 +104,7 @@ class Tester
 
     static public function testRegex($value, $pattern)
     {
-        return preg_match($this->getPattern(), $value) > 0;
+        return preg_match($pattern, $value) > 0;
     }
 
 }

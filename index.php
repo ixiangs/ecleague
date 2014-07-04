@@ -35,7 +35,7 @@ if (preg_match('/^\/static\/|\.ico|\.html$/', $_SERVER["REQUEST_URI"])) {
     \Toy\Web\Configuration::$trace = true;
     \Toy\Web\Configuration::$languagePath = ROOT_PATH.'languages'.DS;
     \Toy\Web\Configuration::$templateRoot = TEMPLATE_PATH;
-    \Toy\Web\Configuration::$componentDirectory = ROOT_PATH.'codes'.DS.'Codes';
+    \Toy\Web\Configuration::$componentDirectory = ROOT_PATH.'codes'.DS.'Components';
     \Toy\Web\Configuration::addDomain('frontend', 'Frontend', '/', '/', '/', TRUE);
     \Toy\Web\Configuration::addDomain('backend', 'Backend', '/admin/', 'admin/index/login', 'admin/index/login');
 

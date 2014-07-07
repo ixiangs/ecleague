@@ -1,0 +1,17 @@
+{
+    "name": "Realty",
+    "version": "0.0.0.1",
+    "author": "IXiangs Studio",
+    "website": "ixiangs.com",
+    "breadcrumbs": {
+        "backend": {
+            "realty": "realty_manage",
+            "developer_list": "realty_developer_list",
+            "developer_add": "realty_developer_new",
+            "developer_edit": "realty_developer_edit",
+            "uptown_list": "realty_uptown_list",
+            "uptown_add": "realty_uptown_new",
+            "uptown_edit": "realty_uptown_edit"
+        }
+    }
+}

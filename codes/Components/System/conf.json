@@ -1,19 +1,16 @@
 {
-    "name": "IXiangs_System",
+    "name": "System",
     "version": "0.0.0.1",
     "author": "IXiangs Studio",
     "website": "ixiangs.com",
     "listeners": {
-        "webOnStart": "\\Components\\System\\Listener::webOnStart",
-        "webPostRender": "\\Components\\System\\Listener::webPostRender",
-        "webPostRoute": "\\Components\\System\\Listener::webPostRoute"
+        "webOnStart": "\\Components\\System\\Listener::webOnStart"
     },
     "breadcrumbs": {
         "backend": {
             "system": "system_manage",
-            "menu_list": "system_menu_list",
-            "menu_add": "system_menu_new",
-            "menu_edit": "system_menu_edit"
+            "component_list": "system_component_list",
+            "setting_edit": "system_setting"
         }
     }
 }

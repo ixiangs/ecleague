@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?php echo $this->renderBlock('title', $this->localize->_('website_title')); ?></title>
+    <title><?php echo $this->system->getWebsiteTitle(); ?></title>
     <link href="<?php echo CSS_URL; ?>bootstrap.css" rel="stylesheet">
     <link href="<?php echo CSS_URL; ?>font-awesome.css" rel="stylesheet">
     <link href="<?php echo CSS_URL; ?>style.css" rel="stylesheet">

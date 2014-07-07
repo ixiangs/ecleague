@@ -46,6 +46,7 @@ class Select extends InputElement
 
     public function renderInner()
     {
+        $html = array();
         if (!is_null($this->caption)) {
             if (is_string($this->caption)) {
                 $html[] = '<option value="">' . $this->caption . '</option>';

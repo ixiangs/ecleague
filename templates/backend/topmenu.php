@@ -8,7 +8,9 @@
                         data-target=".bs-navbar-collapse"><span>Menu</span></button>
                 <a href="#" class="pull-left menubutton hidden-xs"><i class="fa fa-bars"></i></a>
                 <!-- Site name for smallar screens -->
-                <a href="index.html" class="navbar-brand">Mood<span class="bold">Strap</span></a>
+                <a href="index.html" class="navbar-brand">
+                    <?php echo $this->system->getWebsiteTitle(); ?>
+                </a>
             </div>
 
             <!-- Navigation starts -->

@@ -70,43 +70,49 @@ class AccountModel extends Orm\Model
         $roleIds = $m->getRoleIds();
 
         if (count($roleIds) > 0) {
-            $roles = RoleModel::find()->in('id', $roleIds)->eq('enabled', 1)
-                ->load()
-                ->toArray(function ($item) {
-                    return array($item->getCode(), $item->getBehaviorIds());
-                });
-            $roleCodes = array_keys($roles);
-            if (count($roleCodes) > 0) {
-                $behaviorIds = array();
-                foreach ($roles as $code => $bidArr) {
-                    if (!empty($bidArr)) {
-                        $behaviorIds = array_merge($behaviorIds, $bidArr);
-                    }
-                }
-                $behaviorCodes = BehaviorModel::find()
-                    ->in('id', $behaviorIds)
-                    ->eq('enabled', 1)
-                    ->select('code')
+            if ($roleIds[0] == '*') {
+                $roleCodes = '*';
+                $behaviorCodes = '*';
+            } else {
+                $roles = RoleModel::find()->in('id', $roleIds)->eq('enabled', 1)
                     ->load()
                     ->toArray(function ($item) {
-                        return array(null, $item->getCode());
+                        return array($item->getCode(), $item->getBehaviorIds());
                     });
+                $roleCodes = array_keys($roles);
+                if (count($roleCodes) > 0) {
+                    $behaviorIds = array();
+                    foreach ($roles as $code => $bidArr) {
+                        if (!empty($bidArr)) {
+                            $behaviorIds = array_merge($behaviorIds, $bidArr);
+                        }
+                    }
+                    $behaviorCodes = BehaviorModel::find()
+                        ->in('id', $behaviorIds)
+                        ->eq('enabled', 1)
+                        ->select('code')
+                        ->load()
+                        ->toArray(function ($item) {
+                            return array(null, $item->getCode());
+                        });
+                }
             }
         }
 
-        return array(true, new Identity($m->id, $m->username, $m->type, $roleCodes, $behaviorCodes));
+        return array(true, new Identity($m->id, $m->username,
+            $m->getDomains(), $roleCodes, $behaviorCodes));
     }
 }
 
 AccountModel::registerMetadata(array(
-    'table' => Constant::TABLE_ACCOUNT,
-    'properties' => array(
-        Orm\IntegerProperty::create('id')->setPrimaryKey(true)->setAutoIncrement(true),
-        Orm\StringProperty::create('username')->setUnique(true)->setUpdateable(false),
-        Orm\StringProperty::create('password')->setUpdateable(false),
-        Orm\StringProperty::create('email'),
-        Orm\IntegerProperty::create('status'),
-        Orm\IntegerProperty::create('type'),
-        Orm\ListProperty::create('role_ids')
-    ))
+        'table' => Constant::TABLE_ACCOUNT,
+        'properties' => array(
+            Orm\IntegerProperty::create('id')->setPrimaryKey(true)->setAutoIncrement(true),
+            Orm\StringProperty::create('username')->setUnique(true)->setUpdateable(false),
+            Orm\StringProperty::create('password')->setUpdateable(false),
+            Orm\StringProperty::create('email'),
+            Orm\IntegerProperty::create('status'),
+            Orm\ListProperty::create('domains'),
+            Orm\ListProperty::create('role_ids')
+        ))
 );

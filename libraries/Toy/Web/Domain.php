@@ -8,16 +8,21 @@ class Domain
     private $_namespace = '';
     private $_startUrl = '';
     private $_indexUrl = '';
-//    private $_loginUrl = '';
+    private $_loginUrl = '';
     private $_default = false;
+    private $_authorizationRequired = false;
 
-    public function __construct($name, $namespace, $startUrl, $indexUrl, $loginUrl = '', $default = false)
+    public function __construct($name, $namespace,
+                                $startUrl, $indexUrl,
+                                $loginUrl = '',$authorizationRequired = false,
+                                $default = false)
     {
         $this->_name = $name;
         $this->_namespace = $namespace;
         $this->_startUrl = $startUrl;
         $this->_indexUrl = $indexUrl;
-//        $this->_loginUrl = $loginUrl;
+        $this->_loginUrl = $loginUrl;
+        $this->_authorizationRequired = $authorizationRequired;
         $this->_default = $default;
     }
 
@@ -41,10 +46,15 @@ class Domain
         return $this->_indexUrl;
     }
 
-//    public function getLoginUrl()
-//    {
-//        return $this->_loginUrl;
-//    }
+    public function getAuthorizationRequired()
+    {
+        return $this->_authorizationRequired;
+    }
+
+    public function getLoginUrl()
+    {
+        return $this->_loginUrl;
+    }
 
     public function getDefault()
     {

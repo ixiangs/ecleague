@@ -15,18 +15,18 @@ class Configuration
     static public $languagePath = null;
     static public $templateExtensions = array('.php');
     static public $templateRoot = '';
-//    static public $templateDirectories = null;
     static public $componentDirectory = null;
-//    static public $controllerDirectory = null;
-//    static public $indexUrl = '/';
     static public $logger = null;
     static public $trace = false;
     static public $defaultDomain = null;
     static public $domains = array();
 
-    static public function addDomain($name, $namespace, $startUrl, $indexUrl, $loginUrl = '', $default = false)
+    static public function addDomain($name, $namespace,
+                                     $startUrl, $indexUrl,
+                                     $loginUrl = '', $authorizationRequired = false,
+                                     $default = false)
     {
-        $d = new Domain($name, $namespace, $startUrl, $indexUrl, $loginUrl, $default);
+        $d = new Domain($name, $namespace, $startUrl, $indexUrl, $loginUrl, $authorizationRequired, $default);
         self::$domains[$name] = $d;
         if ($default) {
             self::$defaultDomain = $name;

@@ -18,7 +18,4 @@ class Constant
     const STATUS_ACCOUNT_ACTIVATED = 1;
     const STATUS_ACCOUNT_NONACTIVATED = 2;
     const STATUS_ACCOUNT_DISABLED = 3;
-
-    const TYPE_ADMINISTRATOR = 1;
-    const TYPE_NORMAL = 2;
 } 

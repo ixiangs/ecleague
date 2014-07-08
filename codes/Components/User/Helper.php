@@ -15,7 +15,7 @@ class Helper {
 
     static public function getNormalAccouns(){
         return AccountModel::find()
-                ->eq(AccountModel::propertyToField('type'), Constant::TYPE_NORMAL)
+                ->eq(AccountModel::propertyToField('type'), Constant::TYPE_ACCOUNT_FRONTEND)
                 ->load();
     }
 } 

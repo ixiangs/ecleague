@@ -26,17 +26,17 @@ $f->newField($this->localize->_('password'), true,
     $this->html->textbox('password', 'data[password]', '')
     ->addValidateRule('required', true));
 endif;
-$f->newField($this->localize->_('type'), true,
-    $this->html->select('type', 'data[type]', $this->model->getLevel(), array(
-        \Components\User\Constant::TYPE_ADMINISTRATOR=>$this->localize->_('user_type_admin'),
-        \Components\User\Constant::TYPE_NORMAL=>$this->localize->_('user_type_normal')
-    )));
 $f->newField($this->localize->_('status'), true,
     $this->html->select('status', 'data[status]', $this->model->getStatus(), array(
         \Components\User\Constant::STATUS_ACCOUNT_ACTIVATED=>$this->localize->_('user_status_activated'),
         \Components\User\Constant::STATUS_ACCOUNT_NONACTIVATED=>$this->localize->_('user_status_nonactivated'),
         \Components\User\Constant::STATUS_ACCOUNT_DISABLED=>$this->localize->_('disabled')
     )));
+$domains = \Toy\Util\ArrayUtil::toArray(\Toy\Web\Configuration::$domains, function($item){
+   return array($item->getName(), $item->getName());
+});
+$f->newField($this->localize->_('user_domain'), true,
+    $this->html->optionList('domains', 'data[domains][]', $this->model->getDomains(), $domains));
 $f->newField($this->localize->_('user_role_list'), true,
     $this->html->optionList('role_ids', 'data[role_ids][]', $this->model->getRoleIds(), $this->roles));
 $f->addHidden('id', 'data[id]', $this->model->getId());

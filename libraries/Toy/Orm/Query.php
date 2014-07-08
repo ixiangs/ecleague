@@ -40,7 +40,7 @@ class Query extends SelectStatement implements \Iterator, \ArrayAccess, \Seekabl
         $rows = $this->fetch($db)->rows;
         foreach ($rows as $row) {
             $m = new $this->_modelClass();
-            $m->setAllData($row)->markClean();
+            $m->fromDbRow($row)->markClean();
             $this->source[] = $m;
         }
         return $this;

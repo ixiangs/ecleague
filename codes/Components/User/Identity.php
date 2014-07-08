@@ -7,14 +7,16 @@ class Identity{
 	private $_username = null;
 	private $_roles = null;
 	private $_behaviors = null;
-	private $_level = null;
+	private $_domains = null;
+    private $_items = null;
 
-	public function __construct($id, $username, $level, $roles, $behaviors){
+	public function __construct($id, $username, $domains, $roles, $behaviors, $items = array()){
 		$this->_id = $id;
 		$this->_username = $username;
-		$this->_level = $level;
+		$this->_domains = $domains;
 		$this->_roles = $roles;
 		$this->_behaviors = $behaviors;
+        $this->_items = $items;
 	}
 
 	public function getId(){
@@ -36,16 +38,52 @@ class Identity{
 	public function getBehaviors(){
 		return $this->_behaviors;
 	}
+
+    public function getDomains(){
+        return $this->_domains;
+    }
+
+    public function getItem($name){
+        return $this->_items[$name];
+    }
+
+    public function setItem($name, $value){
+        $this->_items[$name] = $value;
+        return $this;
+    }
+
+    public function hasDomain($domain){
+        return in_array($domain, $this->_domains);
+    }
+
+    public function hasRole($code){
+        if($this->_roles == '*'){
+            return true;
+        }
+        return in_array($code, $this->_roles);
+    }
+
+    public function hasAnyRole($codes){
+        if($this->_roles == '*'){
+            return true;
+        }
+        foreach($codes as $code){
+            if(in_array($code, $this->_roles)){
+                return true;
+            }
+        }
+        return false;
+    }
 	
 	public function hasBehavior($code){
-        if($this->_level == Constant::TYPE_ADMINISTRATOR){
+        if($this->_behaviors == '*'){
             return true;
         }
 		return in_array($code, $this->_behaviors);
 	}
 
     public function hasAnyBehavior($codes){
-        if($this->_level == Constant::TYPE_ADMINISTRATOR){
+        if($this->_behaviors == '*'){
             return true;
         }
         foreach($codes as $code){
@@ -62,7 +100,16 @@ class Identity{
             'username'=>$this->_username,
             'roles'=>$this->_roles,
             'behaviors'=>$this->_behaviors,
-            'level'=>$this->_level
+            'domains'=>$this->_domains,
+            'items'=>$this->_items
         );
+    }
+
+    public function isAuthenticated(){
+        return !empty($this->_id);
+    }
+
+    static public function guest(){
+        return new self(null, null, array(), array(), array());
     }
 }

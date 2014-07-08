@@ -353,7 +353,7 @@ abstract class Model implements \ArrayAccess, \Iterator
         return $result;
     }
 
-    public function fillRow(array $row)
+    public function fromDbRow(array $row)
     {
         $props = $this->metadata->getProperties();
         foreach ($row as $field => $value) {
@@ -411,7 +411,7 @@ abstract class Model implements \ArrayAccess, \Iterator
             ->fetchFirstRow($db);
         if ($row != null) {
             $inst = new $calledClass();
-            $inst->fillRow($row)->markClean();
+            $inst->fromDbRow($row)->markClean();
             return $inst;
         }
         return false;

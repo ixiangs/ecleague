@@ -18,3 +18,4 @@ user_err_password,用户名与密码不匹配
 user_err_username,用户名不存在
 user_type_admin,管理员
 user_type_normal,普通会员
+user_domain,域

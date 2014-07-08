@@ -16,7 +16,7 @@
     <script src="<?php echo JS_URL; ?>toy/core.js"></script>
     <script src="<?php echo JS_URL; ?>toy/html.js"></script>
 <!--    <script src="--><?php //echo JS_URL; ?><!--toy/locale.js"></script>-->
-    <script src="<?php echo JS_URL; ?>common.js"></script>
+    <script src="<?php echo JS_URL; ?>backend.js"></script>
     <?php echo $this->renderReferenceScripts(); ?>
     <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
     <!--[if lt IE 9]>

@@ -20,6 +20,18 @@ function deleteSelectedRow(fid, url) {
 }
 
 window.addEvent('domready', function () {
+    $$('a.menubutton(0)').addEvent('click', function () {
+        var mainbar = $$('.mainbar(0)');
+        var ml = mainbar.getStyle('margin-left').toString().toInt();
+        if (ml > 0) {
+            $$('.sidebar(0)').setStyle('display', 'none');
+            mainbar.setStyle('margin-left', '0px');
+        } else {
+            $$('.sidebar(0)').setStyle('display', 'block');
+            mainbar.setStyle('margin-left', '230px');
+        }
+    });
+
     $$('form[data-validate]').each(function (item) {
         new Toy.Validation.Validator(item);
     });
@@ -41,7 +53,7 @@ window.addEvent('domready', function () {
                 }
             });
         }
-        if(ajax){
+        if (ajax) {
 //            if($form.store('validator')){
 //                if(!$form.retrieve('validator').validate()){
 //                    return;
@@ -60,8 +72,8 @@ window.addEvent('domready', function () {
 //                });
 //                return false;
 //            });
-        }else{
-            if($form.retrieve('validator').validate()){
+        } else {
+            if ($form.retrieve('validator').validate()) {
                 $form.submit();
             }
         }

@@ -19,6 +19,7 @@ ArticleModel::registerMetadata(array(
         Orm\StringProperty::create('title')->setNullable(false),
         Orm\StringProperty::create('content')->setNullable(false),
         Orm\IntegerProperty::create('start_time')->setDefaultValue(0),
-        Orm\IntegerProperty::create('end_time')->setDefaultValue(0)
+        Orm\IntegerProperty::create('end_time')->setDefaultValue(0),
+        Orm\IntegerProperty::create('status')->setDefaultValue(0)
     )
 ));

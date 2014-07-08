@@ -8,4 +8,8 @@ class Constant
     const TABLE_CATEGORY = '{t}content_category';
     const TABLE_ARTICLE = '{t}content_article';
 
+    const STATUS_ARTICLE_PUBLISHED = 1;
+    const STATUS_ARTICLE_UNPUBLISHED = 2;
+    const STATUS_ARTICLE_DRAFT = 3;
+    const STATUS_ARTICLE_DISABLED = 4;
 } 

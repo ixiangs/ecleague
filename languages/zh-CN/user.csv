@@ -5,6 +5,7 @@ user_behavior_edit,编辑操作
 user_role_list,角色列表
 user_account_list,账号列表
 user_account_new,新建账号
+user_account_edit,编辑账号
 user_status_activated,已激活
 user_status_nonactivated,未激活
 user_status_freezed,已冻结

@@ -4,6 +4,15 @@
                 <span><?php echo $this->localize->_('dashboard'); ?></span></a>
         </li>
         <li class="has_sub">
+            <a href="#"> <span><?php echo $this->localize->_('content_manage'); ?></span>
+                <span class="pull-right"><i class="fa fa-chevron-left"></i></span></a>
+            <ul>
+                <li><a href="<?php echo $this->router->buildUrl('content/article/list'); ?>"><?php echo $this->localize->_('content_article_list'); ?></a></li>
+                <li><a href="<?php echo $this->router->buildUrl('content/category/list'); ?>"><?php echo $this->localize->_('content_category_list'); ?></a></li>
+                <li><a href="<?php echo $this->router->buildUrl('content/publisher/list'); ?>"><?php echo $this->localize->_('content_publisher_list'); ?></a></li>
+            </ul>
+        </li>
+        <li class="has_sub">
             <a href="#"> <span><?php echo $this->localize->_('realty_manage'); ?></span>
                 <span class="pull-right"><i class="fa fa-chevron-left"></i></span></a>
             <ul>

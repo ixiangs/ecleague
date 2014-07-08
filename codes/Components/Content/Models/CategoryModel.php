@@ -15,7 +15,7 @@ CategoryModel::registerMetadata(array(
         Orm\IntegerProperty::create('id')->setPrimaryKey(true)->setAutoIncrement(true),
         Orm\IntegerProperty::create('parent_id')->setNullable(false),
         Orm\IntegerProperty::create('publisher_id')->setNullable(false),
-        Orm\IntegerProperty::create('creator_id')->setNullable(false),
+        Orm\IntegerProperty::create('user_id')->setNullable(false),
         Orm\StringProperty::create('name')->setNullable(false)
     )
 ));

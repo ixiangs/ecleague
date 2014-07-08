@@ -59,11 +59,11 @@ class UptownController extends Web\Controller
             }
         }
 
-        $b = Helper::withDb(function($db){
+        $b = Helper::withDb(function ($db) use ($model) {
             return $model->save($db);
         });
 
-        if($b){
+        if ($b) {
             $this->session->set('errors', $this->_('err_system'));
             return $this->getEditTemplateReult($model);
         }
@@ -104,7 +104,7 @@ class UptownController extends Web\Controller
             });
 
         return Web\Result::templateResult(
-            array('model' => $model, 'accounts'=>$accounts, 'developers' => $developers),
+            array('model' => $model, 'accounts' => $accounts, 'developers' => $developers),
             'realty/uptown/edit'
         );
     }

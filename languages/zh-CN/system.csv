@@ -7,6 +7,7 @@ description,描述
 account,账号
 enable,启用
 login,登录
+user,用户
 username,用户名
 password,密码
 repassword,确认密码
@@ -56,5 +57,5 @@ offline,离线
 website_title,网站标题
 website_description,网站描述
 system_manage,系统管理
-system_setting,系统设置
+system_setting,网站设置
 system_component_list,组件列表

@@ -1,0 +1,16 @@
+publisher,发布者
+content_title,标题
+content_manage,内容管理
+content_article_list,文章列表
+content_article_new,新建文章
+content_article_edit,编辑文章
+content_category_list,分类列表
+content_category_new,新建分类
+content_category_edit,编辑分类
+content_publisher_list,发布者列表
+content_publisher_new,新建发布者
+content_publisher_edit,编辑发布者
+content_status_published,已发布
+content_status_unpublished,未发布
+content_status_draft,草稿
+content_status_disabled,禁用

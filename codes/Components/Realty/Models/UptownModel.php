@@ -39,7 +39,7 @@ UptownModel::registerMetadata(array(
     'properties' => array(
         Orm\IntegerProperty::create('id')->setPrimaryKey(true)->setAutoIncrement(true),
         Orm\IntegerProperty::create('developer_id')->setNullable(false),
-        Orm\IntegerProperty::create('user_id')->setNullable(false),
+        Orm\IntegerProperty::create('user_id')->setNullable(false)->setUpdateable(false),
         Orm\StringProperty::create('name')->setNullable(false),
         Orm\StringProperty::create('address')->setNullable(false)
     )

@@ -3,6 +3,8 @@ namespace Components\Realty\Backend;
 
 use Components\Realty\Models\DeveloperModel;
 use Components\Realty\Models\UptownModel;
+use Components\User;
+use Toy\Orm\Db\Helper;
 use Toy\Web;
 
 class UptownController extends Web\Controller
@@ -13,11 +15,11 @@ class UptownController extends Web\Controller
         $pi = $this->request->getParameter("pageindex", 1);
         $count = UptownModel::find()->fetchCount();
         $models = UptownModel::find()
-                    ->select(DeveloperModel::propertyToField('name', 'developer_name'))
-                    ->select(UptownModel::propertiesToFields())
-                    ->join(DeveloperModel::propertyToField('id'), UptownModel::propertyToField('developer_id'))
-                    ->limit(PAGINATION_SIZE, ($pi - 1) * PAGINATION_SIZE)
-                    ->load();
+            ->select(DeveloperModel::propertyToField('name', 'developer_name'))
+            ->select(UptownModel::propertiesToFields())
+            ->join(DeveloperModel::propertyToField('id'), UptownModel::propertyToField('developer_id'))
+            ->limit(PAGINATION_SIZE, ($pi - 1) * PAGINATION_SIZE)
+            ->load();
         return Web\Result::templateResult(array(
                 'models' => $models,
                 'total' => $count,
@@ -57,11 +59,14 @@ class UptownController extends Web\Controller
             }
         }
 
-        if (!$model->save()) {
-            $this->session->set('errors', $this->_('err_system'));
-            return $this->getEditTemplateReult($model);;
-        }
+        $b = Helper::withDb(function($db){
+            return $model->save($db);
+        });
 
+        if($b){
+            $this->session->set('errors', $this->_('err_system'));
+            return $this->getEditTemplateReult($model);
+        }
         return Web\Result::redirectResult($this->router->findHistory('list'));
     }
 
@@ -84,11 +89,22 @@ class UptownController extends Web\Controller
 
     private function getEditTemplateResult($model)
     {
-        $developers = DeveloperModel::find()->load()->toArray(function($item){
-           return array($item->getId(), $item->getName());
+        $developers = DeveloperModel::find()->load()->toArray(function ($item) {
+            return array($item->getId(), $item->getName());
         });
+        $existsIds = UptownModel::find()
+            ->select('user_id')
+            ->fetch()
+            ->getColumnValues('user_id');
+        $accounts = User\Helper::getNormalAccouns()
+            ->filter(function ($item) use ($existsIds) {
+                return !in_array($item->getId(), $existsIds);
+            })->toArray(function ($item) {
+                return array($item->getId(), $item->getUsername());
+            });
+
         return Web\Result::templateResult(
-            array('model' => $model, 'developers'=>$developers),
+            array('model' => $model, 'accounts'=>$accounts, 'developers' => $developers),
             'realty/uptown/edit'
         );
     }

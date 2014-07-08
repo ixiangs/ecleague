@@ -10,6 +10,11 @@ trait TList
         return $this->source;
     }
 
+    public function setSource($value){
+        $this->source = $value;
+        return $this;
+    }
+
     public function getItem($offset)
     {
         return $this->source[$offset];

@@ -16,7 +16,9 @@ class Application
     const WEB_POST_RENDER = 'webPostRender';
     const WEB_ON_END = 'webOnEnd';
 
-    protected function __construct(){}
+    protected function __construct()
+    {
+    }
 
     protected function initialize()
     {

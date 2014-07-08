@@ -107,6 +107,10 @@ abstract class Model implements \ArrayAccess, \Iterator
         return count($this->changedProperties) > 0;
     }
 
+    public function propertyIsChanged($name){
+        return in_array($name, $this->changedProperties);
+    }
+
     public function isNewed()
     {
         return $this->newed;

@@ -3,7 +3,7 @@ namespace Components\Realty\Backend;
 
 use Components\Realty\Models\DeveloperModel;
 use Components\Realty\Models\UptownModel;
-use Components\User;
+use Components\Auth;
 use Toy\Orm\Db\Helper;
 use Toy\Web;
 
@@ -47,7 +47,7 @@ class UptownController extends Web\Controller
 
         $vr = $model->validate();
         if ($vr !== true) {
-            $this->session->set('errors', $this->_('err_input_invalid'));
+            $this->session->set('errors', $lang->_('err_input_invalid'));
             return $this->getEditTemplateReult($model);
         }
 
@@ -59,12 +59,12 @@ class UptownController extends Web\Controller
             }
         }
 
-        $b = Helper::withDb(function ($db) use ($model) {
+        $b = Helper::withTx(function ($db) use ($model) {
             return $model->save($db);
         });
 
-        if ($b) {
-            $this->session->set('errors', $this->_('err_system'));
+        if (!$b) {
+            $this->session->set('errors', $lang->_('err_system'));
             return $this->getEditTemplateReult($model);
         }
         return Web\Result::redirectResult($this->router->findHistory('list'));
@@ -89,15 +89,19 @@ class UptownController extends Web\Controller
 
     private function getEditTemplateResult($model)
     {
-        $developers = DeveloperModel::find()->load()->toArray(function ($item) {
-            return array($item->getId(), $item->getName());
-        });
+        $developers = DeveloperModel::find()->load()
+            ->toArray(function ($item) {
+                return array($item->getId(), $item->getName());
+            });
         $existsIds = UptownModel::find()
-            ->select('user_id')
+            ->select('account_id')
             ->fetch()
-            ->getColumnValues('user_id');
-        $accounts = User\Helper::getNormalAccouns()
+            ->getColumnValues('account_id');
+        $accounts = Auth\Models\AccountModel::find()->load()
             ->filter(function ($item) use ($existsIds) {
+                if(in_array('backend', $item->getDomains())){
+                    return false;
+                }
                 return !in_array($item->getId(), $existsIds);
             })->toArray(function ($item) {
                 return array($item->getId(), $item->getUsername());

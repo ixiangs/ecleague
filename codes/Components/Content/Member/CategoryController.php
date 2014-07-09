@@ -2,7 +2,7 @@
 namespace Components\Content\Member;
 
 use Components\Content\Models\CategoryModel;
-use Components\User\Models\RoleModel;
+use Components\Auth\Models\RoleModel;
 use Toy\Web;
 
 class CategoryController extends Web\Controller

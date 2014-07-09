@@ -1,6 +1,7 @@
 {
-    "code": "ixiangs_realty",
-    "name": "Realty",
+    "id": "ixiangs_realty",
+    "code": "realty",
+    "name": "房地产组件",
     "version": "0.0.0.1",
     "author": "IXiangs Studio",
     "website": "ixiangs.com",

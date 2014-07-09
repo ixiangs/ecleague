@@ -6,10 +6,10 @@
  * Time: 上午11:48
  */
 
-namespace Components\User;
+namespace Components\Auth;
 
 
-use Components\User\Models\AccountModel;
+use Components\Auth\Models\AccountModel;
 
 class Helper {
 

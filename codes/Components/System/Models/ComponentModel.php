@@ -12,7 +12,7 @@ class ComponentModel extends Orm\Model
 ComponentModel::registerMetadata(array(
     'table' => Constant::TABLE_COMPONENT,
     'properties' => array(
-        Orm\IntegerProperty::create('id')->setPrimaryKey(true)->setAutoIncrement(true),
+        Orm\StringProperty::create('id')->setPrimaryKey(true),
         Orm\StringProperty::create('code')->setNullable(false)->setUnique(true),
         Orm\StringProperty::create('name'),
         Orm\StringProperty::create('author'),

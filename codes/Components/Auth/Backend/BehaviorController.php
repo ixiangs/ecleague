@@ -1,8 +1,8 @@
 <?php
-namespace Components\User\Backend;
+namespace Components\Auth\Backend;
 
 use Components\System\Models\ComponentModel;
-use Components\User\Models\BehaviorModel;
+use Components\Auth\Models\BehaviorModel;
 use Ixiangs\System;
 use Toy\Web;
 
@@ -88,7 +88,7 @@ class BehaviorController extends Web\Controller
         });
         return Web\Result::templateResult(
             array('model' => $model, 'components'=>$components),
-            'user/behavior/edit'
+            'auth/behavior/edit'
         );
     }
 }

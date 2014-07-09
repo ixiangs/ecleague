@@ -4,6 +4,7 @@ namespace Toy\Web;
 class Component
 {
 
+    private $_id = '';
     private $_code = '';
     private $_name = '';
     private $_version = '';
@@ -14,6 +15,7 @@ class Component
 
     public function __construct($settings)
     {
+        $this->_id = $settings['id'];
         $this->_code = $settings['code'];
         $this->_name = $settings['name'];
         $this->_author = $settings['author'];
@@ -23,7 +25,13 @@ class Component
         $this->_listeners = array_key_exists('listeners', $settings) ? $settings['listeners'] : null;
     }
 
-    public function getCode(){
+    public function getId()
+    {
+        return $this->_id;
+    }
+
+    public function getCode()
+    {
         return $this->_code;
     }
 

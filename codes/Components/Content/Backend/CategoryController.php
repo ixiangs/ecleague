@@ -3,7 +3,7 @@ namespace Components\Content\Backend;
 
 use Components\Content\Models\CategoryModel;
 use Components\Content\Models\PublisherModel;
-use Components\User\Models\AccountModel;
+use Components\Auth\Models\AccountModel;
 use Toy\Web;
 
 class CategoryController extends Web\Controller

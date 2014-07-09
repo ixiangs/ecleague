@@ -1,8 +1,8 @@
 <?php
-namespace Components\User\Backend;
+namespace Components\Auth\Backend;
 
-use Components\User\Models\AccountModel;
-use Components\User\Models\RoleModel;
+use Components\Auth\Models\AccountModel;
+use Components\Auth\Models\RoleModel;
 use Toy\Web;
 
 class AccountController extends Web\Controller
@@ -183,7 +183,7 @@ class AccountController extends Web\Controller
                 'model' => $model,
                 'roles' => RoleModel::find()->fetch()->combineColumns('id', 'name')
             ),
-            'user/account/edit'
+            'auth/account/edit'
         );
     }
 }

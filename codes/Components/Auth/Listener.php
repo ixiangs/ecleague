@@ -1,7 +1,7 @@
 <?php
-namespace Components\User;
+namespace Components\Auth;
 
-use Components\User\Models\BehaviorModel;
+use Components\Auth\Models\BehaviorModel;
 use Toy\Web\Application;
 use Toy\Web\Template;
 

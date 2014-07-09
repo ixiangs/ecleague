@@ -1,6 +1,7 @@
 {
-    "code": "ixiangs_content",
-    "name": "Content",
+    "id": "ixiangs_content",
+    "code": "content",
+    "name": "Content Component",
     "version": "0.0.0.1",
     "author": "IXiangs Studio",
     "website": "ixiangs.com",

@@ -27,7 +27,7 @@ class Initializer
                     $conf = json_decode($content, true);
                     switch (json_last_error()) {
                         case JSON_ERROR_NONE:
-                            Application::$components[strtolower($conf['name'])] = new Component($conf);
+                            Application::$components[strtolower($conf['id'])] = new Component($conf);
                             break;
                         case JSON_ERROR_DEPTH:
                             echo 'Maximum stack depth exceeded';

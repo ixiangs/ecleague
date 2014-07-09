@@ -1,12 +1,12 @@
 <?php
-namespace Components\User;
+namespace Components\Auth;
 
 
 class Constant
 {
-    const TABLE_ACCOUNT = '{t}user_account';
-    const TABLE_ROLE = '{t}user_role';
-    const TABLE_BEHAVIOR = '{t}user_behavior';
+    const TABLE_ACCOUNT = '{t}auth_account';
+    const TABLE_ROLE = '{t}auth_role';
+    const TABLE_BEHAVIOR = '{t}auth_behavior';
 
     const ERROR_ACCOUNT_NOT_FOUND = 1;
     const ERROR_ACCOUNT_PASSWORD = 2;

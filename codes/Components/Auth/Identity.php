@@ -1,5 +1,5 @@
 <?php
-namespace Components\User;
+namespace Components\Auth;
 
 class Identity{
 

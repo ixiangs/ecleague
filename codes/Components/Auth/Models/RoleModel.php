@@ -1,8 +1,8 @@
 <?php
-namespace Components\User\Models;
+namespace Components\Auth\Models;
 
 use Toy\Orm;
-use Components\User\Constant;
+use Components\Auth\Constant;
 
 class RoleModel extends Orm\Model{
 

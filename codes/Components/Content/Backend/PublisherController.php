@@ -3,7 +3,7 @@ namespace Components\Content\Backend;
 
 use Components\Content\Models\PublisherModel;
 use Components\System\Models\ComponentModel;
-use Components\User\Models\AccountModel;
+use Components\Auth\Models\AccountModel;
 use Toy\Web;
 
 class PublisherController extends Web\Controller
@@ -17,7 +17,7 @@ class PublisherController extends Web\Controller
             ->select(ComponentModel::propertyToField('name', 'component_name'))
             ->select(AccountModel::propertyToField('username'))
             ->join(ComponentModel::propertyToField('id'), PublisherModel::propertyToField('component_id'))
-            ->join(AccountModel::propertyToField('id'), PublisherModel::propertyToField('user_id'))
+            ->join(AccountModel::propertyToField('id'), PublisherModel::propertyToField('account_id'))
             ->limit(PAGINATION_SIZE, ($pi - 1) * PAGINATION_SIZE)
             ->load();
         return Web\Result::templateResult(array(

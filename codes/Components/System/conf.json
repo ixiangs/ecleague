@@ -1,6 +1,7 @@
 {
-    "code": "ixiangs_system",
-    "name": "System",
+    "id": "ixiangs_system",
+    "code": "system",
+    "name": "系统组件",
     "version": "0.0.0.1",
     "author": "IXiangs Studio",
     "website": "ixiangs.com",

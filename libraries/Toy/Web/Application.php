@@ -78,7 +78,12 @@ class Application
 
     static function getRequestComponent()
     {
-        return self::$components[self::$context->router->component];
+        foreach(self::$components as $com){
+            if($com->getCode() == self::$context->router->component){
+                return $com;
+            }
+        }
+        return null;
     }
 
     static public function singleton()

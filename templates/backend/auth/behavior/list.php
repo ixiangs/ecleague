@@ -1,7 +1,7 @@
 <?php
 //$this->assign('toolbar', array(
-//    $this->html->anchor($this->localize->_('user_manage')),
-//    $this->html->anchor($this->localize->_('user_behavior_list'))
+//    $this->html->anchor($this->localize->_('auth_manage')),
+//    $this->html->anchor($this->localize->_('auth_behavior_list'))
 //));
 
 $this->assign('toolbar', array(

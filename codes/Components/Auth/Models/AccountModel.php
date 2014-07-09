@@ -1,11 +1,11 @@
 <?php
-namespace Components\User\Models;
+namespace Components\Auth\Models;
 
 use Toy\Orm;
 use Toy\Orm\Helper;
 use Toy\Util\EncryptUtil;
-use Components\User\Identity;
-use Components\User\Constant;
+use Components\Auth\Identity;
+use Components\Auth\Constant;
 
 class AccountModel extends Orm\Model
 {

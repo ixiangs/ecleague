@@ -1,8 +1,8 @@
 <?php
-namespace Components\User\Backend;
+namespace Components\Auth\Backend;
 
-use Components\User\Models\BehaviorModel;
-use Components\User\Models\RoleModel;
+use Components\Auth\Models\BehaviorModel;
+use Components\Auth\Models\RoleModel;
 use Toy\Web;
 
 class RoleController extends Web\Controller
@@ -80,7 +80,7 @@ class RoleController extends Web\Controller
             array(
                 'model' => $model,
                 'behaviors' => BehaviorModel::find()->asc('code')->fetch()->combineColumns('id', 'name')),
-            'user/role/edit'
+            'auth/role/edit'
         );
     }
 }

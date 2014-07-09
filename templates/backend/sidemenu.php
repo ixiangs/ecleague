@@ -21,12 +21,12 @@
             </ul>
         </li>
         <li class="has_sub">
-            <a href="#"> <span><?php echo $this->localize->_('user_manage'); ?></span>
+            <a href="#"> <span><?php echo $this->localize->_('auth_manage'); ?></span>
                 <span class="pull-right"><i class="fa fa-chevron-left"></i></span></a>
             <ul>
-                <li><a href="<?php echo $this->router->buildUrl('user/account/list'); ?>"><?php echo $this->localize->_('user_account_list'); ?></a></li>
-                <li><a href="<?php echo $this->router->buildUrl('user/role/list'); ?>"><?php echo $this->localize->_('user_role_list'); ?></a></li>
-                <li><a href="<?php echo $this->router->buildUrl('user/behavior/list'); ?>"><?php echo $this->localize->_('user_behavior_list'); ?></a></li>
+                <li><a href="<?php echo $this->router->buildUrl('auth/account/list'); ?>"><?php echo $this->localize->_('auth_account_list'); ?></a></li>
+                <li><a href="<?php echo $this->router->buildUrl('auth/role/list'); ?>"><?php echo $this->localize->_('auth_role_list'); ?></a></li>
+                <li><a href="<?php echo $this->router->buildUrl('auth/behavior/list'); ?>"><?php echo $this->localize->_('auth_behavior_list'); ?></a></li>
             </ul>
         </li>
         <li class="has_sub">

@@ -1,6 +1,6 @@
 <?php
 $dt = $this->html->grid($this->models);
-$dt->addLabelColumn($this->localize->_('content_title'), '@{title}', '', 'left');
+$dt->addLabelColumn($this->localize->_('title'), '@{title}', '', 'left');
 $dt->addLabelColumn($this->localize->_('publisher'), '@{publisher}', '', 'left');
 $dt->addStatusColumn($this->localize->_('status'), '@{status}', array(
         \Components\Content\Constant::STATUS_ARTICLE_PUBLISHED=>'<span class="label label-success">'.$this->localize->_('content_status_published').'</span>',

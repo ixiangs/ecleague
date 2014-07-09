@@ -40,7 +40,6 @@ class Listener
             return;
         }
 
-
         if ($curDomain->getLoginUrl() == $router->component . '/' . $router->controller . '/' . $router->action) {
             return;
         }
@@ -53,28 +52,28 @@ class Listener
             return;
         }
 
-        $uri = $context->request->getUri();
-        $behaviors = BehaviorModel::find()->load();
-        foreach ($behaviors as $behavior) {
-            $url = $behavior->getUrl();
-            if ($url) {
-                if ($url[0] == '/' && substr($url, -1) == '/') {
-                    if (preg_match($url, $uri)) {
-                        if (!$identity->hasBehavior($behavior->getCode())) {
-                            $response->redirect('/permissiondenied.html');
-                            $app->quit();
-                            return;
-                        }
-                    }
-                } elseif ($url == $uri) {
-                    if (!$identity->hasBehavior($behavior->getCode())) {
-                        $response->redirect('/permissiondenied.html');
-                        $app->quit();
-                        return;
-                    }
-                }
-            }
-        }
+//        $uri = $context->request->getUri();
+//        $behaviors = BehaviorModel::find()->load();
+//        foreach ($behaviors as $behavior) {
+//            $url = $behavior->getUrl();
+//            if ($url) {
+//                if ($url[0] == '/' && substr($url, -1) == '/') {
+//                    if (preg_match($url, $uri)) {
+//                        if (!$identity->hasBehavior($behavior->getCode())) {
+//                            $response->redirect('/permissiondenied.html');
+//                            $app->quit();
+//                            return;
+//                        }
+//                    }
+//                } elseif ($url == $uri) {
+//                    if (!$identity->hasBehavior($behavior->getCode())) {
+//                        $response->redirect('/permissiondenied.html');
+//                        $app->quit();
+//                        return;
+//                    }
+//                }
+//            }
+//        }
 
     }
 }

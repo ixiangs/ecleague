@@ -1,9 +1,7 @@
 <?php
 namespace Components\Auth\Backend;
 
-use Components\System\Models\ComponentModel;
 use Components\Auth\Models\BehaviorModel;
-use Ixiangs\System;
 use Toy\Web;
 
 class BehaviorController extends Web\Controller
@@ -14,9 +12,6 @@ class BehaviorController extends Web\Controller
         $pi = $this->request->getParameter("pageindex", 1);
         $count = BehaviorModel::find()->fetchCount();
         $models = BehaviorModel::find()
-                    ->select(ComponentModel::propertyToField('name', 'component_name'))
-                    ->select(BehaviorModel::propertiesToFields())
-                    ->join(ComponentModel::propertyToField('id'), BehaviorModel::propertyToField('component_id'))
                     ->limit(PAGINATION_SIZE, ($pi - 1) * PAGINATION_SIZE)
                     ->load();
         return Web\Result::templateResult(array(
@@ -44,7 +39,7 @@ class BehaviorController extends Web\Controller
 
         $vr = $model->validate();
         if ($vr !== true) {
-            $this->session->set('errors', $this->_('err_input_invalid'));
+            $this->session->set('errors', $lang->_('err_input_invalid'));
             return $this->getEditTemplateReult($model);
         }
 
@@ -57,7 +52,7 @@ class BehaviorController extends Web\Controller
         }
 
         if (!$model->save()) {
-            $this->session->set('errors', $this->_('err_system'));
+            $this->session->set('errors', $lang->_('err_system'));
             return $this->getEditTemplateReult($model);;
         }
 
@@ -83,11 +78,8 @@ class BehaviorController extends Web\Controller
 
     private function getEditTemplateResult($model)
     {
-        $components = ComponentModel::find()->load()->toArray(function($item){
-           return array($item->getId(), $item->getName());
-        });
         return Web\Result::templateResult(
-            array('model' => $model, 'components'=>$components),
+            array('model' => $model),
             'auth/behavior/edit'
         );
     }

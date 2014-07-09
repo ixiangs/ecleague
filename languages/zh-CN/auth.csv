@@ -1,4 +1,7 @@
-auth_manage,授权管理
+auth_manage,权限管理
+auth_group_list,分组列表
+auth_group_new,新建分组
+auth_group_edit,编辑分组
 auth_behavior_list,操作列表
 auth_behavior_new,新建操作
 auth_behavior_edit,编辑操作
@@ -19,3 +22,4 @@ auth_err_username,用户名不存在
 auth_type_admin,管理员
 auth_type_normal,普通会员
 auth_domain,域
+auth_group,分组

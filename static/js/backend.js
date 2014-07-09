@@ -20,6 +20,24 @@ function deleteSelectedRow(fid, url) {
 }
 
 window.addEvent('domready', function () {
+    $$('li.dropdown').addEvent('click', function(){
+       new Toy.Widget.Dropdown(this);
+    });
+    $('nav').getElements('.has_sub').each(function (item) {
+        item.addEvent('click', function () {
+            var a = this.getElement('a:first-child');
+            if (a.hasClass('subdrop')) {
+                a.removeClass('subdrop');
+                this.getFirst('ul').setStyle('display', 'none');
+                this.getElement('i').set('class', 'fa fa-chevron-left');
+            } else {
+                a.addClass('subdrop');
+                this.getFirst('ul').setStyle('display', 'block');
+                this.getElement('i').set('class', 'fa fa-chevron-down');
+            }
+
+        });
+    });
     $$('a.menubutton(0)').addEvent('click', function () {
         var mainbar = $$('.mainbar(0)');
         var ml = mainbar.getStyle('margin-left').toString().toInt();

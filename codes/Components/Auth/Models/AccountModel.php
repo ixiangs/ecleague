@@ -1,6 +1,7 @@
 <?php
 namespace Components\Auth\Models;
 
+use Toy\Event;
 use Toy\Orm;
 use Toy\Orm\Helper;
 use Toy\Util\EncryptUtil;
@@ -99,8 +100,9 @@ class AccountModel extends Orm\Model
             }
         }
 
-        return array(true, new Identity($m->id, $m->username,
-            $m->getDomains(), $roleCodes, $behaviorCodes));
+        $result = new Identity($m->id, $m->username, $m->getDomains(), $roleCodes, $behaviorCodes);
+        Event::dispatch(Constant::EVENT_ACCOUNT_LOGIN, null, $result);
+        return array(true, $result);
     }
 }
 
@@ -113,6 +115,7 @@ AccountModel::registerMetadata(array(
             Orm\StringProperty::create('email'),
             Orm\IntegerProperty::create('status'),
             Orm\ListProperty::create('domains'),
-            Orm\ListProperty::create('role_ids')
+            Orm\ListProperty::create('role_ids'),
+            Orm\IntegerProperty::create('group_id')
         ))
 );

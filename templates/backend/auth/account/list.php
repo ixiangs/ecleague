@@ -12,6 +12,7 @@ $dt->addLabelColumn($this->localize->_('auth_domain'), '@{domains}', 'small', 's
     ->setCellRenderer(function($column, $row, $index){
         return '<td class="small text-center"><span>'.implode(',', $row['domains']).'</span></td>';
     });
+$dt->addLabelColumn($this->localize->_('auth_group'), '@{group_name}', 'small', 'small text-center');
 $dt->addStatusColumn($this->localize->_('status'), '@{status}', array(
         \Components\Auth\Constant::STATUS_ACCOUNT_ACTIVATED=>'<span class="label label-success">'.$this->localize->_('auth_status_activated').'</span>',
         \Components\Auth\Constant::STATUS_ACCOUNT_NONACTIVATED=>'<span class="label label-warning">'.$this->localize->_('auth_status_nonactivated').'</span>',

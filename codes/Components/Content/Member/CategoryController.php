@@ -28,7 +28,7 @@ class CategoryController extends Web\Controller
 
     public function addAction()
     {
-        return $this->getEditTemplateReult(new RoleModel());
+        return $this->getEditTemplateReult(new CategoryModel());
     }
 
     public function editAction($id)

@@ -7,6 +7,7 @@ class FormField extends Element
     protected $input = null;
     protected $required = false;
     protected $validateRules = array();
+    protected $lableVisible = true;
     protected $description = null;
 
     public function __construct($label)
@@ -50,6 +51,15 @@ class FormField extends Element
         return $this;
     }
 
+    public function getLabelVisible(){
+        return $this->lableVisible;
+    }
+
+    public function setLabelVisible($value){
+        $this->lableVisible = $value;
+        return $this;
+    }
+
     public function getValidateRules()
     {
         return $this->validateRules;
@@ -84,8 +94,13 @@ class FormField extends Element
         }
 
         $html = array($this->renderBegin());
-        $html[] = '<label class="col-lg-2 control-label">' . $this->label . '</label>';
-        $html[] = '<div class="col-lg-10">';
+        if($this->lableVisible){
+            $html[] = '<label class="col-lg-2 control-label">' . $this->label . '</label>';
+            $html[] = '<div class="col-lg-10">';
+        }else{
+            $html[] = '<div class="col-lg-12">';
+        }
+
         $html[] = $this->input->render();
         $html[] = '</div>';
         $html[] = $this->renderEnd();

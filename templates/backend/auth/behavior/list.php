@@ -1,9 +1,4 @@
 <?php
-//$this->assign('toolbar', array(
-//    $this->html->anchor($this->localize->_('auth_manage')),
-//    $this->html->anchor($this->localize->_('auth_behavior_list'))
-//));
-
 $this->assign('toolbar', array(
     $this->html->anchor($this->localize->_('new'), $this->router->buildUrl('add'))
 ));
@@ -12,7 +7,6 @@ $dt = $this->html->grid($this->models);
 //$dt->addIndexColumn('#', 'index', 'index');
 $dt->addLabelColumn($this->localize->_('code'), '@{code}', 'large', 'left');
 $dt->addLabelColumn($this->localize->_('name'), '@{name}', '', 'left');
-$dt->addLabelColumn($this->localize->_('component'), '@{component_name}', '', 'left');
 //$dt->addLabelColumn($this->localize->_('url'), '{url}');
 $dt->addStatusColumn($this->localize->_('enable'), '@{enabled}', array(
         1=>'<span class="label label-success">'.$this->localize->_('yes').'</span>',

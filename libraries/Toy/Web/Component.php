@@ -58,11 +58,12 @@ class Component
     public function getBreadcrumbs()
     {
         if ($this->_breadcrumbs) {
-            $router = Application::$context->router;
-            $domain = $router->domain->getName();
-            if (array_key_exists($domain, $this->_breadcrumbs)) {
-                return $this->_breadcrumbs[$domain];
-            }
+            return $this->_breadcrumbs;
+//            $router = Application::$context->router;
+//            $domain = $router->domain->getName();
+//            if (array_key_exists($domain, $this->_breadcrumbs)) {
+//                return $this->_breadcrumbs[$domain];
+//            }
         }
         return null;
     }

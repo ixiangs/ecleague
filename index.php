@@ -13,6 +13,7 @@ if (preg_match('/^\/static\/|\.ico|\.html$/', $_SERVER["REQUEST_URI"])) {
     define('CODE_PATH', ROOT_PATH . 'codes' . DS);
     define('LIBRARY_PATH', ROOT_PATH . 'libraries' . DS);
     define('TEMP_PATH', ROOT_PATH . 'temp' . DS);
+    define('STATIC_URL', '/static/');
     define('JS_URL', '/static/js/');
     define('CSS_URL', '/static/css/');
     define('IMG_URL', '/static/img/');
@@ -37,7 +38,8 @@ if (preg_match('/^\/static\/|\.ico|\.html$/', $_SERVER["REQUEST_URI"])) {
     \Toy\Web\Configuration::$templateRoot = TEMPLATE_PATH;
     \Toy\Web\Configuration::$componentDirectory = ROOT_PATH.'codes'.DS.'Components';
     \Toy\Web\Configuration::addDomain('frontend', 'Frontend', '/', '/', '/', false, true);
-    \Toy\Web\Configuration::addDomain('backend', 'Backend', '/admin/', 'admin/index/login', 'admin/index/login', true);
+    \Toy\Web\Configuration::addDomain('member', 'Member', '/member/', 'index/index/index', 'index/passport/login', true);
+    \Toy\Web\Configuration::addDomain('backend', 'Backend', '/backend/', 'index/index/index', 'index/passport/login', true);
 
     \Toy\Web\Application::run();
 }

@@ -1,9 +1,4 @@
 <?php
-$this->assign('breadcrumb', array(
-    $this->html->anchor($this->localize->_('auth_manage')),
-    $this->html->anchor($this->localize->_($this->router->action == 'add' ? "user_new_behavior" : "user_edit_behavior"))
-));
-
 $this->assign('toolbar', array(
     $this->html->anchor($this->localize->_('back'), $this->router->buildUrl('list'))
         ->setAttribute('class', 'btn btn-default'),
@@ -12,10 +7,6 @@ $this->assign('toolbar', array(
 
 $f = $this->html->form()
     ->setAttribute('action', $this->router->buildUrl('save', '*'));
-$f->newField($this->localize->_('component'), true,
-    $this->html->select('component_id', 'data[component_id]', $this->model->getComponentId(), $this->components)
-        ->setCaption('')
-        ->addValidateRule('required', true));
 if ($this->model->getId()):
     $f->addStaticField($this->localize->_('code'), $this->model->getCode());
 else:

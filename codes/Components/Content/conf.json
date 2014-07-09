@@ -5,18 +5,19 @@
     "version": "0.0.0.1",
     "author": "IXiangs Studio",
     "website": "ixiangs.com",
+    "listeners": {
+        "authOnLogin": "\\Components\\Content\\Listener::authOnLogin"
+    },
     "breadcrumbs": {
-        "backend": {
-            "content": "content_manage",
-            "publisher_list": "content_publisher_list",
-            "publisher_add": "content_publisher_new",
-            "publisher_edit": "content_publisher_edit",
-            "category_list": "content_category_list",
-            "category_add": "content_category_new",
-            "category_edit": "content_category_edit",
-            "article_list": "content_article_list",
-            "article_add": "content_article_new",
-            "article_edit": "content_article_edit"
-        }
+        "content": "content_manage",
+        "publisher_list": "content_publisher_list",
+        "publisher_add": "content_publisher_new",
+        "publisher_edit": "content_publisher_edit",
+        "category_list": "content_category_list",
+        "category_add": "content_category_new",
+        "category_edit": "content_category_edit",
+        "article_list": "content_article_list",
+        "article_add": "content_article_new",
+        "article_edit": "content_article_edit"
     }
 }

@@ -27,6 +27,7 @@
                 <li><a href="<?php echo $this->router->buildUrl('auth/account/list'); ?>"><?php echo $this->localize->_('auth_account_list'); ?></a></li>
                 <li><a href="<?php echo $this->router->buildUrl('auth/role/list'); ?>"><?php echo $this->localize->_('auth_role_list'); ?></a></li>
                 <li><a href="<?php echo $this->router->buildUrl('auth/behavior/list'); ?>"><?php echo $this->localize->_('auth_behavior_list'); ?></a></li>
+                <li><a href="<?php echo $this->router->buildUrl('auth/group/list'); ?>"><?php echo $this->localize->_('auth_group_list'); ?></a></li>
             </ul>
         </li>
         <li class="has_sub">

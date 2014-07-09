@@ -10,17 +10,18 @@
         "webPostRoute": "\\Components\\Auth\\Listener::webPostRoute"
     },
     "breadcrumbs": {
-        "backend": {
-            "auth": "auth_manage",
-            "account_list": "auth_account_list",
-            "account_add": "auth_account_new",
-            "account_edit": "auth_account_edit",
-            "role_list": "auth_role_list",
-            "role_add": "auth_role_new",
-            "role_edit": "auth_role_edit",
-            "behavior_list": "auth_behavior_list",
-            "behavior_add": "auth_behavior_new",
-            "behavior_edit": "auth_behavior_edit"
-        }
+        "auth": "auth_manage",
+        "account_list": "auth_account_list",
+        "account_add": "auth_account_new",
+        "account_edit": "auth_account_edit",
+        "role_list": "auth_role_list",
+        "role_add": "auth_role_new",
+        "role_edit": "auth_role_edit",
+        "behavior_list": "auth_behavior_list",
+        "behavior_add": "auth_behavior_new",
+        "behavior_edit": "auth_behavior_edit",
+        "group_list": "auth_group_list",
+        "group_add": "auth_group_new",
+        "group_edit": "auth_group_edit"
     }
 }

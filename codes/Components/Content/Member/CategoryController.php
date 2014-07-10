@@ -13,11 +13,11 @@ class CategoryController extends Web\Controller
         $pi = $this->request->getParameter("pageindex", 1);
         $count = CategoryModel::find()
                     ->eq(CategoryModel::propertyToField('publisher_id'),
-                            $this->identity->getItem('publisher_id'))
+                            $this->context->identity->getItem('publisher_id'))
                     ->fetchCount();
         $models = CategoryModel::find()
             ->eq(CategoryModel::propertyToField('publisher_id'),
-                $this->identity->getItem('publisher_id'))
+                $this->context->identity->getItem('publisher_id'))
             ->limit(PAGINATION_SIZE, ($pi - 1) * PAGINATION_SIZE)
             ->load();
         return Web\Result::templateResult(array(
@@ -31,34 +31,41 @@ class CategoryController extends Web\Controller
         return $this->getEditTemplateReult(new CategoryModel());
     }
 
+    public function addPostAction()
+    {
+        return $this->save();
+    }
+
     public function editAction($id)
     {
         return $this->getEditTemplateReult(CategoryModel::load($id));
     }
 
-    public function savePostAction()
+    public function editPostAction($id)
+    {
+        return $this->save();
+    }
+
+    public function save()
     {
         $lang = $this->context->localize;
         $data = $this->request->getPost('data');
-        $model = $data['id'] ? CategoryModel::merge($data['id'], $data) : CategoryModel::create($data);
+        $model = $data['id'] ?
+            CategoryModel::merge($data['id'], $data) :
+            CategoryModel::create($data);
+        $model->setPublisherId($this->context->identity->getItem('publisher_id'))
+            ->setParentId(0)
+            ->setAccountId($this->context->identity->getId());
 
         $vr = $model->validate();
         if ($vr !== true) {
-            $this->session->set('errors', $this->_('err_input_invalid'));
+            $this->session->set('errors', $lang->_('err_input_invalid'));
             return $this->getEditTemplateReult($model);
         }
 
-        if ($model->isNewed()) {
-            $vr = $model->checkUnique();
-            if ($vr !== true) {
-                $this->session->set('errors', $lang->_('err_code_exists', $model->getCode()));
-                return $this->getEditTemplateReult($model);
-            }
-        }
-
         if (!$model->save()) {
-            $this->session->set('errors', $this->_('err_system'));
-            return $this->getEditTemplateReult($model);;
+            $this->session->set('errors', $lang->_('err_system'));
+            return $this->getEditTemplateReult($model);
         }
 
         return Web\Result::redirectResult($this->router->findHistory('list'));

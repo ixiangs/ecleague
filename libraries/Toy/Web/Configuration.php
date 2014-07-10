@@ -9,6 +9,7 @@ class Configuration
     static public $rendererClass = '\Toy\Web\Renderer';
     static public $localizeClass = '\Toy\Web\Localize';
     static public $routerClass = '\Toy\Web\Router';
+    static public $filterClass = '\Toy\Web\Filter';
     static public $sessionClass = '\Toy\Http\Session';
     static public $requestClass = '\Toy\Http\Request';
     static public $responseClass = '\Toy\Http\Response';

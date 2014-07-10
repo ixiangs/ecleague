@@ -4,19 +4,19 @@ namespace Toy\Http;
 class File
 {
 
-    //    private static $_mimeType = array(
-    //        'jpg' => 'image/jpeg', 'gif' => 'image/gif', 'png' => 'image/png',
-    //        'tif' => 'image/tiff', 'tiff' => 'image/tiff', 'ico' => 'image/x-icon',
-    //        'swf' => 'application/x-shockwave-flash', 'pdf' => 'application/pdf',
-    //        'zip' => 'application/zip', 'gz' => 'application/x-gzip', 'tar' => 'application/x-tar',
-    //        'bz' => 'application/x-bzip', 'bz2' => 'application/x-bzip2', 'txt' => 'text/plain',
-    //        'asc' => 'text/plain', 'htm' => 'text/html', 'html' => 'text/html',
-    //        'css' => 'text/css', 'js' => 'text/javascript', 'xml' => 'text/xml',
-    //        'xsl' => 'application/xsl+xml', 'ogg' => 'application/ogg', 'mp3' => 'audio/mpeg',
-    //        'wav' => 'audio/x-wav', 'avi' => 'video/x-msvideo', 'mpg' => 'video/mpeg',
-    //        'mpeg' => 'video/mpeg', 'mov' => 'video/quicktime', 'flv' => 'video/x-flv',
-    //        'php' => 'text/x-php'
-    //    );
+    private static $_mimeType = array(
+        'jpg' => 'image/jpeg', 'gif' => 'image/gif', 'png' => 'image/png',
+        'tif' => 'image/tiff', 'tiff' => 'image/tiff', 'ico' => 'image/x-icon',
+        'swf' => 'application/x-shockwave-flash', 'pdf' => 'application/pdf',
+        'zip' => 'application/zip', 'gz' => 'application/x-gzip', 'tar' => 'application/x-tar',
+        'bz' => 'application/x-bzip', 'bz2' => 'application/x-bzip2', 'txt' => 'text/plain',
+        'asc' => 'text/plain', 'htm' => 'text/html', 'html' => 'text/html',
+        'css' => 'text/css', 'js' => 'text/javascript', 'xml' => 'text/xml',
+        'xsl' => 'application/xsl+xml', 'ogg' => 'application/ogg', 'mp3' => 'audio/mpeg',
+        'wav' => 'audio/x-wav', 'avi' => 'video/x-msvideo', 'mpg' => 'video/mpeg',
+        'mpeg' => 'video/mpeg', 'mov' => 'video/quicktime', 'flv' => 'video/x-flv',
+        'php' => 'text/x-php'
+    );
 
     private $_fileName = '';
     private $_extension = '';
@@ -36,11 +36,12 @@ class File
         $this->_type = $file['type'];
         $this->_tmpName = $file['tmp_name'];
         $this->_size = $file['size'];
-        $this->__errorCode = $file['error'];
+        $this->_errorCode = $file['error'];
 
-        if ($this->checkExtension(array("jpg", "jpeg", "gif", "png"))) {
+        if ($this->checkExtension("jpg", "jpeg", "gif", "png")) {
             $arr = @getimagesize($this->_tmpName);
             if ($arr !== false) {
+                $this->_isImage = true;
                 $this->_width = $arr[0];
                 $this->_height = $arr[1];
             }
@@ -96,11 +97,6 @@ class File
     public function isImage()
     {
         return $this->_isImage;
-    }
-
-    public function getMd5Code()
-    {
-        return md5_file($this->_tmpName);
     }
 
     public function getMd5Name()

@@ -3,6 +3,7 @@ namespace Components\Content;
 
 
 use Components\Content\Models\PublisherModel;
+use Toy\Web\Application;
 
 class Listener
 {
@@ -14,7 +15,7 @@ class Listener
             ->load();
         if (count($query) > 0) {
             $publisher = $query->getFirst();
-            $argument->setItem('publisher_id', $publisher->getId());
+            Application::$context->session->set('publisherId', $publisher->getId());
         }
     }
 }

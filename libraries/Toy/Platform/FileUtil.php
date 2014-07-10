@@ -1,8 +1,62 @@
 <?php
 namespace Toy\Platform;
 
+use Toy\Util\RandomUtil;
+
 class FileUtil
 {
+
+    static public function createDirectory($path)
+    {
+        if (!self::isDirectory($path)) {
+            return mkdir($path, 0777, true);
+        }
+        return true;
+    }
+
+    static public function deleteDirectory($path)
+    {
+        if (self::isDirectory($path)) {
+            $dh = opendir($path);
+            while ($file = readdir($dh)) {
+                if ($file != "." && $file != "..") {
+                    $fullpath = $path . "/" . $file;
+                    if (!is_dir($fullpath)) {
+                        unlink($fullpath);
+                    } else {
+                        self::deleteDirectory($fullpath);
+                    }
+                }
+            }
+
+            closedir($dh);
+            if (rmdir($path)) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    static public function createSubDirectory($path, $size = 6)
+    {
+        self::createDirectory($path);
+        while (true) {
+            $tmp = RandomUtil::randomCharacters($size);
+            $dir = PathUtil::combines($path, $tmp);
+            if (!self::isDirectory($dir)) {
+                self::createDirectory($dir);
+                return $tmp;
+            }
+        }
+        return false;
+    }
+
+    static public function moveUploadFile($tmp, $target)
+    {
+        return move_uploaded_file($tmp, $target);
+    }
 
     static public function writeFile($filename, $data)
     {

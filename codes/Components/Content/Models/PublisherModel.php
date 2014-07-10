@@ -7,6 +7,15 @@ use Components\Content\Constant;
 class PublisherModel extends Orm\Model
 {
 
+    protected function afterInsert($db)
+    {
+        FileUtil::createDirectory(ASSET_PATH . 'content' . DS . $this->getId());
+    }
+
+    protected function afterDelete()
+    {
+        FileUtil::deleteDirectory(ASSET_PATH . 'content' . DS . $this->getId());
+    }
 }
 
 PublisherModel::registerMetadata(array(

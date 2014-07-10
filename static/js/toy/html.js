@@ -62,6 +62,7 @@ Toy.Validation.Validator = new Class({
     },
 
     validate: function () {
+        this.fireEvent('before');
         var success = true;
         Object.each(this.fields, function (field, name) {
             if (!field.check()) {

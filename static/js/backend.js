@@ -23,6 +23,7 @@ window.addEvent('domready', function () {
     $$('li.dropdown').addEvent('click', function(){
        new Toy.Widget.Dropdown(this);
     });
+
     $('nav').getElements('.has_sub').each(function (item) {
         item.addEvent('click', function () {
             var a = this.getElement('a:first-child');
@@ -38,6 +39,7 @@ window.addEvent('domready', function () {
 
         });
     });
+
     $$('a.menubutton(0)').addEvent('click', function () {
         var mainbar = $$('.mainbar(0)');
         var ml = mainbar.getStyle('margin-left').toString().toInt();

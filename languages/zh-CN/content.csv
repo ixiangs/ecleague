@@ -13,3 +13,5 @@ content_status_published,已发布
 content_status_unpublished,未发布
 content_status_draft,草稿
 content_status_disabled,禁用
+err_upload,上传失败
+err_upload_article,只能上传图片(.jpg、.jpeg、.png、.gif)

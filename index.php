@@ -1,7 +1,7 @@
 <?php
 
 
-if (preg_match('/^\/static\/|\.ico|\.html$/', $_SERVER["REQUEST_URI"])) {
+if (preg_match('/^\/static\/|^\/assets\/|\.ico|\.html$/', $_SERVER["REQUEST_URI"])) {
     return false;
 } else {
     date_default_timezone_set('PRC');
@@ -12,7 +12,8 @@ if (preg_match('/^\/static\/|\.ico|\.html$/', $_SERVER["REQUEST_URI"])) {
     define('TEMPLATE_PATH', ROOT_PATH . 'templates' . DS);
     define('CODE_PATH', ROOT_PATH . 'codes' . DS);
     define('LIBRARY_PATH', ROOT_PATH . 'libraries' . DS);
-    define('TEMP_PATH', ROOT_PATH . 'temp' . DS);
+    define('TMP_PATH', ROOT_PATH . 'tmp' . DS);
+    define('ASSET_PATH', ROOT_PATH . 'assets' . DS);
     define('STATIC_URL', '/static/');
     define('JS_URL', '/static/js/');
     define('CSS_URL', '/static/css/');
@@ -34,9 +35,9 @@ if (preg_match('/^\/static\/|\.ico|\.html$/', $_SERVER["REQUEST_URI"])) {
     ));
 
     \Toy\Web\Configuration::$trace = true;
-    \Toy\Web\Configuration::$languagePath = ROOT_PATH.'languages'.DS;
+    \Toy\Web\Configuration::$languagePath = ROOT_PATH . 'languages' . DS;
     \Toy\Web\Configuration::$templateRoot = TEMPLATE_PATH;
-    \Toy\Web\Configuration::$componentDirectory = ROOT_PATH.'codes'.DS.'Components';
+    \Toy\Web\Configuration::$componentDirectory = ROOT_PATH . 'codes' . DS . 'Components';
     \Toy\Web\Configuration::addDomain('frontend', 'Frontend', '/', '/', '/', false, true);
     \Toy\Web\Configuration::addDomain('member', 'Member', '/member/', 'index/index/index', 'index/passport/login', true);
     \Toy\Web\Configuration::addDomain('backend', 'Backend', '/backend/', 'index/index/index', 'index/passport/login', true);

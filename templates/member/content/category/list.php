@@ -1,7 +1,11 @@
 <?php
+$this->assign('toolbar', array(
+    $this->html->anchor($this->localize->_('new'), $this->router->buildUrl('add'))
+));
+
 $dt = $this->html->grid($this->models);
 $dt->addLabelColumn($this->localize->_('name'), '@{name}', '', 'left');
-$dt->addLabelColumn($this->localize->_('publisher'), '@{publisher}', '', 'left');
+$dt->addLinkColumn('', $this->localize->_('edit'), '@'.urldecode($this->router->buildUrl('edit', array('id'=>'{id}'))), 'edit', 'edit');
 $dt->addButtonColumn('', $this->localize->_('delete'), "@deleteConfirm('".urldecode($this->router->buildUrl('delete', array('id'=>'{id}')))."')", 'edit', 'edit');
 $this->assign('datatable', $dt);
 

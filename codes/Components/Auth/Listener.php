@@ -18,8 +18,7 @@ class Listener
                 $data['username'],
                 $data['domains'],
                 $data['roles'],
-                $data['behaviors'],
-                $data['items']
+                $data['behaviors']
             );
             $context->identity = $identity;
             Template::addHelper('identity', $identity);

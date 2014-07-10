@@ -8,15 +8,13 @@ class Identity{
 	private $_roles = null;
 	private $_behaviors = null;
 	private $_domains = null;
-    private $_items = null;
 
-	public function __construct($id, $username, $domains, $roles, $behaviors, $items = array()){
+	public function __construct($id, $username, $domains, $roles, $behaviors){
 		$this->_id = $id;
 		$this->_username = $username;
 		$this->_domains = $domains;
 		$this->_roles = $roles;
 		$this->_behaviors = $behaviors;
-        $this->_items = $items;
 	}
 
 	public function getId(){
@@ -41,15 +39,6 @@ class Identity{
 
     public function getDomains(){
         return $this->_domains;
-    }
-
-    public function getItem($name){
-        return $this->_items[$name];
-    }
-
-    public function setItem($name, $value){
-        $this->_items[$name] = $value;
-        return $this;
     }
 
     public function hasDomain($domain){
@@ -100,8 +89,7 @@ class Identity{
             'username'=>$this->_username,
             'roles'=>$this->_roles,
             'behaviors'=>$this->_behaviors,
-            'domains'=>$this->_domains,
-            'items'=>$this->_items
+            'domains'=>$this->_domains
         );
     }
 

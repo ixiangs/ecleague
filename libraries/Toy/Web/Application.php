@@ -8,6 +8,8 @@ class Application
 
     const WEB_ON_INITIALIZE = 'webOnInitialize';
     const WEB_ON_START = 'webOnStart';
+    const WEB_PRE_FILTRATE = 'webPreFiltrate';
+    const WEB_POST_FILTRATE = 'webPostFiltrate';
     const WEB_PRE_ROUTE = 'webPreRoute';
     const WEB_POST_ROUTE = 'webPostRoute';
     const WEB_PRE_HANDLER = 'webPreHandler';
@@ -33,6 +35,14 @@ class Application
     {
         self::$context->session->start();
         Event::dispatch(Application::WEB_ON_START, $this);
+        return $this;
+    }
+
+    protected function filtrate()
+    {
+        Event::dispatch(Application::WEB_PRE_FILTRATE, $this);
+        self::$context->filter->filtrate();
+        Event::dispatch(Application::WEB_POST_FILTRATE, $this);
         return $this;
     }
 
@@ -107,6 +117,9 @@ class Application
         $cls = Configuration::$sessionClass;
         self::$context->session = new $cls();
 
+        $cls = Configuration::$filterClass;
+        self::$context->filter = new $cls();
+
         $cls = Configuration::$routerClass;
         self::$context->router = new $cls();
 
@@ -119,7 +132,7 @@ class Application
         $cls = Configuration::$rendererClass;
         self::$context->renderer = new $cls();
 
-        self::singleton()->initialize()->start()->route()->handle()->render()->finish();
+        self::singleton()->initialize()->start()->filtrate()->route()->handle()->render()->finish();
     }
 
 }

@@ -6,3 +6,17 @@ realty_developer_edit,编辑开发商
 realty_uptown_list,住宅区列表
 realty_uptown_new,新建住宅区
 realty_uptown_edit,编辑住宅区
+realty_uptown_manage,小区管理
+realty_floor_count,楼层数
+realty_room_count,房间数
+realty_building_list,楼房列表
+realty_building_new,新建楼房
+realty_building_edit,编辑楼房
+realty_owner,业主
+realty_repair_list,在线维修
+realty_repair_time,报修时间
+realty_room_number,房号
+realty_repair_content,报修内容
+realty_complaint_list,在线投诉
+realty_complaint_time,投诉时间
+realty_complaint_content,投诉内容

@@ -4,9 +4,9 @@ $this->assign('toolbar', array(
 ));
 
 $dt = $this->html->grid($this->models);
-//$dt->addIndexColumn('#', 'index', 'index');
 $dt->addLabelColumn($this->localize->_('name'), '@{name}', '', 'left');
-$dt->addLabelColumn($this->localize->_('realty_developer'), '@{developer_name}', '', 'left');
+$dt->addLabelColumn($this->localize->_('realty_floor_count'), '@{floor_count}', 'small', 'left');
+$dt->addLabelColumn($this->localize->_('realty_room_count'), '@{room_count}', 'small', 'left');
 $dt->addLinkColumn('', $this->localize->_('edit'), '@'.urldecode($this->router->buildUrl('edit', array('id'=>'{id}'))), 'edit', 'edit');
 $dt->addButtonColumn('', $this->localize->_('delete'), "@deleteConfirm('".urldecode($this->router->buildUrl('delete', array('id'=>'{id}')))."')", 'edit', 'edit');
 $this->assign('datatable', $dt);

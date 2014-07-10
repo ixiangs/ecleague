@@ -30,9 +30,25 @@
             <!-- Breadcrumb -->
             <div class="bread-crumb">
                 <?php $breadcrumbs = \Toy\Web\Application::getRequestComponent('User')->getBreadcrumbs();?>
-                <a href="#"> <?php echo $this->localize->_($breadcrumbs[$this->router->component]); ?></a>
+                <a href="#">
+                    <?php
+                    if(array_key_exists($this->router->domain->getName().'_'.$this->router->component, $breadcrumbs)):
+                        echo $this->localize->_($breadcrumbs[$this->router->domain->getName().'_'.$this->router->component]);
+                    else:
+                        echo $this->localize->_($breadcrumbs[$this->router->component]);
+                    endif;
+                    ?>
+                </a>
                 <span class="divider">/</span>
-                <a href="#"> <?php echo $this->localize->_($breadcrumbs[$this->router->controller.'_'.$this->router->action]); ?></a>
+                <a href="#">
+                    <?php
+                    if(array_key_exists($this->router->domain->getName().'_'.$this->router->controller.'_'.$this->router->action, $breadcrumbs)):
+                        echo $this->localize->_($breadcrumbs[$this->router->domain->getName().'_'.$this->router->controller.'_'.$this->router->action]);
+                    else:
+                        echo $this->localize->_($breadcrumbs[$this->router->controller.'_'.$this->router->action]);
+                    endif;
+                    ?>
+                </a>
             </div>
 
             <div class="clearfix"></div>

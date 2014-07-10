@@ -5,13 +5,24 @@
     "version": "0.0.0.1",
     "author": "IXiangs Studio",
     "website": "ixiangs.com",
+    "listeners": {
+        "authOnLogin": "\\Components\\Realty\\Listener::authOnLogin"
+    },
     "breadcrumbs": {
         "realty": "realty_manage",
+        "member_realty": "realty_uptown_manage",
         "developer_list": "realty_developer_list",
         "developer_add": "realty_developer_new",
         "developer_edit": "realty_developer_edit",
         "uptown_list": "realty_uptown_list",
         "uptown_add": "realty_uptown_new",
-        "uptown_edit": "realty_uptown_edit"
+        "uptown_edit": "realty_uptown_edit",
+        "building_list": "realty_building_list",
+        "building_add": "realty_building_new",
+        "building_edit": "realty_building_edit",
+        "repair_list": "realty_repair_list",
+        "repair_detail": "realty_repair_list",
+        "complaint_list": "realty_complaint_list",
+        "complaint_detail": "realty_complaint_detail"
     }
 }

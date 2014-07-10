@@ -13,11 +13,11 @@ class CategoryController extends Web\Controller
         $pi = $this->request->getParameter("pageindex", 1);
         $count = CategoryModel::find()
                     ->eq(CategoryModel::propertyToField('publisher_id'),
-                            $this->context->identity->getItem('publisher_id'))
+                            $this->session->get('publisherId'))
                     ->fetchCount();
         $models = CategoryModel::find()
             ->eq(CategoryModel::propertyToField('publisher_id'),
-                $this->context->identity->getItem('publisher_id'))
+                $this->session->get('publisherId'))
             ->limit(PAGINATION_SIZE, ($pi - 1) * PAGINATION_SIZE)
             ->load();
         return Web\Result::templateResult(array(
@@ -48,23 +48,22 @@ class CategoryController extends Web\Controller
 
     public function save()
     {
-        $lang = $this->context->localize;
         $data = $this->request->getPost('data');
         $model = $data['id'] ?
             CategoryModel::merge($data['id'], $data) :
             CategoryModel::create($data);
-        $model->setPublisherId($this->context->identity->getItem('publisher_id'))
+        $model->setPublisherId($this->session->get('publisherId'))
             ->setParentId(0)
             ->setAccountId($this->context->identity->getId());
 
         $vr = $model->validate();
         if ($vr !== true) {
-            $this->session->set('errors', $lang->_('err_input_invalid'));
+            $this->session->set('errors', $this->localize->_('err_input_invalid'));
             return $this->getEditTemplateReult($model);
         }
 
         if (!$model->save()) {
-            $this->session->set('errors', $lang->_('err_system'));
+            $this->session->set('errors', $this->localize->_('err_system'));
             return $this->getEditTemplateReult($model);
         }
 
@@ -73,15 +72,15 @@ class CategoryController extends Web\Controller
 
     public function deleteAction($id)
     {
-        $m = RoleModel::load($id);
+        $m = CategoryModel::load($id);
 
         if (!$m) {
-            $this->session->set('errors', $this->languages->get('err_system'));
+            $this->session->set('errors', $this->localize->get('err_system'));
             return Web\Result::redirectResult($this->router->buildUrl('index'));
         }
 
         if (!$m->delete()) {
-            $this->session->set('errors', $this->languages->get('err_system'));
+            $this->session->set('errors', $this->localize->get('err_system'));
             return Web\Result::redirectResultt($this->router->buildUrl('index'));
         }
         return Web\Result::redirectResult($this->router->buildUrl('list'));

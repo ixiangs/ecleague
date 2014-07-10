@@ -6,7 +6,6 @@ use Components\Content\Models\ArticleModel;
 use Components\Content\Models\CategoryModel;
 use Toy\Platform\FileUtil;
 use Toy\Platform\PathUtil;
-use Toy\Util\RandomUtil;
 use Toy\Web;
 
 class ArticleController extends Web\Controller
@@ -18,7 +17,7 @@ class ArticleController extends Web\Controller
         $count = ArticleModel::find()->fetchCount();
         $models = ArticleModel::find()
             ->select(CategoryModel::propertyToField('name', 'category_name'))
-            ->join(CategoryModel::propertyToField('id'), ArticleModel::propertyToField('category_id'))
+            ->join(CategoryModel::propertyToField('id'), ArticleModel::propertyToField('category_id'), 'left')
             ->limit(PAGINATION_SIZE, ($pi - 1) * PAGINATION_SIZE)
             ->load();
         return Web\Result::templateResult(array(
@@ -116,6 +115,7 @@ class ArticleController extends Web\Controller
             ->eq(CategoryModel::propertyToField('publisher_id'), $this->session->get('publisherId'))
             ->fetch()
             ->combineColumns('id', 'name');
+        $categories[0] = $this->localize->_('content_uncategory');
         return Web\Result::templateResult(
             array('model' => $model, 'categories' => $categories),
             'content/article/edit'

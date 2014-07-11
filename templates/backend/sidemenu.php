@@ -4,6 +4,14 @@
                 <span><?php echo $this->localize->_('dashboard'); ?></span></a>
         </li>
         <li class="has_sub">
+            <a href="#"> <span><?php echo $this->localize->_('website_manage'); ?></span>
+                <span class="pull-right"><i class="fa fa-chevron-left"></i></span></a>
+            <ul>
+                <li><a href="<?php echo $this->router->buildUrl('website/website/list'); ?>"><?php echo $this->localize->_('website_list'); ?></a></li>
+                <li><a href="<?php echo $this->router->buildUrl('website/menu-type/list'); ?>"><?php echo $this->localize->_('website_menu_type_list'); ?></a></li>
+            </ul>
+        </li>
+        <li class="has_sub">
             <a href="#"> <span><?php echo $this->localize->_('content_manage'); ?></span>
                 <span class="pull-right"><i class="fa fa-chevron-left"></i></span></a>
             <ul>

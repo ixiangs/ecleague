@@ -1,6 +1,6 @@
 <div class="sidebar">
     <ul id="nav" style="">
-        <li><a href="/admin">
+        <li><a href="<?php echo '/'.$this->router->domain->getName(); ?>">
                 <span><?php echo $this->localize->_('dashboard'); ?></span></a>
         </li>
         <?php if($this->session->get('publisherId')): ?>

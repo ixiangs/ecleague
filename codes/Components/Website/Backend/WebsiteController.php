@@ -1,17 +1,18 @@
 <?php
-namespace Components\Realty\Backend;
+namespace Components\Website\Backend;
 
-use Components\Realty\Models\DeveloperModel;
+use Components\Auth\Models\AccountModel;
+use Components\Website\Models\WebsiteModel;
 use Toy\Web;
 
-class DeveloperController extends Web\Controller
+class WebsiteController extends Web\Controller
 {
 
     public function listAction()
     {
         $pi = $this->request->getParameter("pageindex", 1);
-        $count = DeveloperModel::find()->fetchCount();
-        $models = DeveloperModel::find()
+        $count = WebsiteModel::find()->fetchCount();
+        $models = WebsiteModel::find()
             ->asc('id')
             ->limit(PAGINATION_SIZE, ($pi - 1) * PAGINATION_SIZE)
             ->load();
@@ -24,12 +25,12 @@ class DeveloperController extends Web\Controller
 
     public function addAction()
     {
-        return $this->getEditTemplateResult(DeveloperModel::create());
+        return $this->getEditTemplateResult(WebsiteModel::create());
     }
 
     public function editAction($id)
     {
-        return $this->getEditTemplateResult(DeveloperModel::load($id));
+        return $this->getEditTemplateResult(WebsiteModel::load($id));
     }
 
     public function savePostAction()
@@ -37,8 +38,8 @@ class DeveloperController extends Web\Controller
         $lang = $this->context->localize;
         $data = $this->request->getPost('data');
         $model = $data['id'] ?
-            DeveloperModel::merge($data['id'], $data) :
-            DeveloperModel::create($data);
+            WebsiteModel::merge($data['id'], $data) :
+            WebsiteModel::create($data);
 
         $vr = $model->validate();
         if ($vr !== true) {
@@ -56,7 +57,7 @@ class DeveloperController extends Web\Controller
 
     public function deleteAction($id)
     {
-        $model = DeveloperModel::load($id);
+        $model = WebsiteModel::load($id);
 
         if ($model) {
             if (!$model->delete()) {
@@ -72,11 +73,24 @@ class DeveloperController extends Web\Controller
 
     private function getEditTemplateResult($model)
     {
+        $existsIds = WebsiteModel::find()
+            ->select('account_id')
+            ->fetch()
+            ->getColumnValues('account_id');
+        $accounts = AccountModel::find()->load()
+            ->filter(function ($item) use ($existsIds) {
+                if(in_array('backend', $item->getDomains())){
+                    return false;
+                }
+                return !in_array($item->getId(), $existsIds);
+            })->toArray(function ($item) {
+                return array($item->getId(), $item->getUsername());
+            });
         return Web\Result::TemplateResult(
             array(
-                'model' => $model
+                'model' => $model, 'accounts' => $accounts
             ),
-            'realty/developer/edit'
+            'website/website/edit'
         );
     }
 }

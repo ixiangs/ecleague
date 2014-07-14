@@ -26,7 +26,7 @@
                         <ul class="dropdown-menu">
 <!--                            <li><a href="#"><i class="fa fa-user"></i> Profile</a></li>-->
 <!--                            <li><a href="#"><i class="fa fa-cogs"></i> Settings</a></li>-->
-                            <li><a href="<?php echo $this->router->buildUrl('index/passport/logout'); ?>"><i class="fa fa-key"></i><?php echo $this->localize->_('logout') ?></a></li>
+                            <li><a href="<?php echo $this->router->buildUrl('void_index/passport/logout'); ?>"><i class="fa fa-key"></i><?php echo $this->localize->_('logout') ?></a></li>
                         </ul>
                     </li>
                 </ul>

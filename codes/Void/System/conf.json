@@ -1,0 +1,18 @@
+{
+    "id": "void_system",
+    "code": "void_system",
+    "name": "系统组件",
+    "version": "0.0.0.1",
+    "author": "IXiangs Studio",
+    "website": "ixiangs.com",
+    "listeners": {
+        "webOnStart": "\\Void\\System\\Listener::webOnStart"
+    },
+    "breadcrumbs": {
+        "backend": {
+            "system": "system_manage",
+            "component_list": "system_component_list",
+            "setting_edit": "system_setting"
+        }
+    }
+}

@@ -7,8 +7,7 @@ class Handler
     public function handle()
     {
         $router = Application::$context->router;
-        $controllerClass = "Components\\".
-            str_replace(' ', '', ucwords(str_replace('-', ' ', $router->component)))."\\".
+        $controllerClass = str_replace(' ', "\\", ucwords(str_replace('_', ' ', $router->component)))."\\".
             $router->domain->getNamespace()."\\".
             str_replace(' ', '', ucwords(str_replace('-', ' ', $router->controller))).'Controller';
         $inst = new $controllerClass();

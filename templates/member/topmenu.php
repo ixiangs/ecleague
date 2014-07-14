@@ -24,7 +24,7 @@
                         </a>
                         <!-- Dropdown menu -->
                         <ul class="dropdown-menu">
-                            <li><a href="<?php echo $this->router->buildUrl('index/passport/logout'); ?>">
+                            <li><a href="<?php echo $this->router->buildUrl('void_index/passport/logout'); ?>">
                                     <i class="fa fa-key"></i> <?php echo $this->localize->_('logout'); ?></a></li>
                         </ul>
                     </li>

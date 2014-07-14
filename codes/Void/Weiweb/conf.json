@@ -1,0 +1,16 @@
+{
+    "id": "void_weiweb",
+    "code": "void_weiweb",
+    "name": "菜单组件",
+    "version": "0.0.0.1",
+    "author": "IXiangs Studio",
+    "website": "ixiangs.com",
+    "breadcrumbs": {
+        "void_weiweb": "weiweb_manage",
+        "website_list": "weiweb_website_list",
+        "menutype_list": "weiweb_menutype_list",
+        "menu_list": "weiweb_menu_list",
+        "menu_add": "weiweb_menu_new",
+        "menu_edit": "weiweb_menu_edit"
+    }
+}

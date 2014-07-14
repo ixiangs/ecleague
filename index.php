@@ -37,10 +37,10 @@ if (preg_match('/^\/static\/|^\/assets\/|\.ico|\.html$/', $_SERVER["REQUEST_URI"
     \Toy\Web\Configuration::$trace = true;
     \Toy\Web\Configuration::$languagePath = ROOT_PATH . 'languages' . DS;
     \Toy\Web\Configuration::$templateRoot = TEMPLATE_PATH;
-    \Toy\Web\Configuration::$componentDirectory = ROOT_PATH . 'codes' . DS . 'Components';
+    \Toy\Web\Configuration::$componentDirectory = ROOT_PATH . 'codes';
     \Toy\Web\Configuration::addDomain('frontend', 'Frontend', '/', '/', '/', false, true);
-    \Toy\Web\Configuration::addDomain('member', 'Member', '/member/', 'index/index/index', 'index/passport/login', true);
-    \Toy\Web\Configuration::addDomain('backend', 'Backend', '/backend/', 'index/index/index', 'index/passport/login', true);
+    \Toy\Web\Configuration::addDomain('member', 'Member', '/member/', 'void_index/index/index', 'void_index/passport/login', true);
+    \Toy\Web\Configuration::addDomain('backend', 'Backend', '/backend/', 'void_index/index/index', 'void_index/passport/login', true);
 
     \Toy\Web\Application::run();
 }

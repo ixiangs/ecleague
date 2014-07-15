@@ -5,6 +5,20 @@
     "version": "0.0.0.1",
     "author": "IXiangs Studio",
     "website": "ixiangs.com",
+    "menu_types":{
+        "content_categories":{
+            "title":"content_categories",
+            "form": "/backend/void/content/menutype/categories"
+        },
+        "content_article_list":{
+            "title":"content_article_list",
+            "form": "/backend/void/content/menutype/articlelist"
+        },
+        "content_single_article":{
+            "title":"content_single_article",
+            "form": "/backend/void/content/menutype/singlearticle"
+        }
+    },
     "breadcrumbs": {
         "void_content": "content_manage",
         "publisher_list": "content_publisher_list",

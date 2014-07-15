@@ -4,6 +4,13 @@
                 <span><?php echo $this->localize->_('dashboard'); ?></span></a>
         </li>
         <li class="has_sub">
+            <a href="#"> <span><?php echo $this->localize->_('weiweb_manage'); ?></span>
+                <span class="pull-right"><i class="fa fa-chevron-left"></i></span></a>
+            <ul>
+                <li><a href="<?php echo $this->router->buildUrl('void_weiweb/menu/list'); ?>"><?php echo $this->localize->_('weiweb_menu_list'); ?></a></li>
+            </ul>
+        </li>
+        <li class="has_sub">
             <a href="#"> <span><?php echo $this->localize->_('content_manage'); ?></span>
                 <span class="pull-right"><i class="fa fa-chevron-left"></i></span></a>
             <ul>

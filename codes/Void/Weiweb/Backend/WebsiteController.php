@@ -1,8 +1,8 @@
 <?php
-namespace Void\Weiweb\Backend;
+namespace Void\Observer\Backend;
 
 use Toy\Web;
-use Void\Weiweb\WebsiteModel;
+use Void\Observer\WebsiteModel;
 
 class WebsiteController extends Web\Controller
 {

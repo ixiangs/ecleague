@@ -4,6 +4,7 @@ namespace Toy\Web;
 class Component
 {
 
+    private $_settings = null;
     private $_id = '';
     private $_code = '';
     private $_name = '';
@@ -15,13 +16,14 @@ class Component
 
     public function __construct($settings)
     {
-        $this->_id = $settings['id'];
-        $this->_code = $settings['code'];
-        $this->_name = $settings['name'];
-        $this->_author = $settings['author'];
-        $this->_version = $settings['version'];
-        $this->_website = $settings['website'];
-        $this->_breadcrumbs = array_key_exists('breadcrumbs', $settings) ? $settings['breadcrumbs'] : null;
+        $this->_settings = $settings;
+        $this->_id = $this->_settings['id'];
+        $this->_code = $this->_settings['code'];
+        $this->_name = $this->_settings['name'];
+        $this->_author = $this->_settings['author'];
+        $this->_version = $this->_settings['version'];
+        $this->_website = $this->_settings['website'];
+//        $this->_breadcrumbs = array_key_exists('breadcrumbs', $settings) ? $settings['breadcrumbs'] : null;
         $this->_listeners = array_key_exists('listeners', $settings) ? $settings['listeners'] : null;
     }
 
@@ -55,18 +57,24 @@ class Component
         return $this->_website;
     }
 
-    public function getBreadcrumbs()
-    {
-        if ($this->_breadcrumbs) {
-            return $this->_breadcrumbs;
-//            $router = Application::$context->router;
-//            $domain = $router->domain->getName();
-//            if (array_key_exists($domain, $this->_breadcrumbs)) {
-//                return $this->_breadcrumbs[$domain];
-//            }
+    public function getSetting($name){
+        if(array_key_exists($name, $this->_settings)){
+            return $this->_settings[$name];
         }
         return null;
     }
+//    public function getBreadcrumbs()
+//    {
+//        if ($this->_breadcrumbs) {
+//            return $this->_breadcrumbs;
+////            $router = Application::$context->router;
+////            $domain = $router->domain->getName();
+////            if (array_key_exists($domain, $this->_breadcrumbs)) {
+////                return $this->_breadcrumbs[$domain];
+////            }
+//        }
+//        return null;
+//    }
 
     public function getListeners()
     {

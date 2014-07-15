@@ -3,7 +3,6 @@ namespace Void\Weiweb;
 
 use Toy\Orm, Toy\Orm\Db;
 use Void\System;
-use Void\Weiweb\Constant;
 
 class WebsiteModel extends Orm\Model
 {

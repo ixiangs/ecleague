@@ -441,51 +441,212 @@ Toy.Widget.Dropdown = new Class({
         ignore: 'input, select, label'
     },
 
-    initialize: function(container, options){
+    initialize: function (container, options) {
         this.element = document.id(container);
         this.setOptions(options);
         this.boundHandle = this._handle.bind(this);
         document.id(document.body).addEvent('click', this.boundHandle);
     },
 
-    hideAll: function(){
+    hideAll: function () {
         var els = this.element.removeClass('open').getElements('.open').removeClass('open');
         this.fireEvent('hide', els);
         return this;
     },
 
-    show: function(subMenu){
+    show: function (subMenu) {
         this.hideAll();
         this.fireEvent('show', subMenu);
         subMenu.addClass('open');
         return this;
     },
 
-    destroy: function(){
+    destroy: function () {
         this.hideAll();
         document.body.removeEvent('click', this.boundHandle);
         return this;
     },
 
-    _handle: function(e){
+    _handle: function (e) {
         var el = e.target;
         var open = el.getParent('.open');
         if (!el.match(this.options.ignore) || !open) this.hideAll();
         if (this.element.contains(el)) {
             var parent;
-            if (el.match('[data-toggle="dropdown"]') || el.getParent('[data-toggle="dropdown"] !')){
+            if (el.match('[data-toggle="dropdown"]') || el.getParent('[data-toggle="dropdown"] !')) {
                 parent = el.getParent('.dropdown, .btn-group');
             }
 
             if (!parent) parent = el.match('.dropdown-toggle') ? el.getParent() : el.getParent('.dropdown-toggle !');
-            if (parent){
+            if (parent) {
                 e.preventDefault();
                 if (!open) this.show(parent);
             }
         }
     }
 });
+Toy.Widget.Modal = new Class({
 
+    Implements: [Options, Events],
+
+    options: {
+        persist: true,
+        closeOnClickOut: true,
+        closeOnEsc: true,
+        mask: true,
+        animate: true,
+        changeDisplayValue: true
+    },
+
+    initialize: function (element, options) {
+        this.element = document.id(element).store('modal', this);
+        this.setOptions(options);
+//        this.bound = {
+//            hide: this.hide.bind(this),
+//            bodyClick: function (e) {
+//                if (!e.target.getParent('.modal-content')) this.hide();
+//            }.bind(this),
+//            keyMonitor: function (e) {
+//                if (e.key == 'esc') this.hide();
+//            }.bind(this)
+//            animationEnd: this._animationEnd.bind(this)
+//        };
+
+        var showNow = false
+        if ((this.element.hasClass('fade') && this.element.hasClass('in')) ||
+            (!this.element.hasClass('hide') && !this.element.hasClass('hidden') && !this.element.hasClass('fade'))) {
+            if (this.element.hasClass('fade')) this.element.removeClass('in');
+            showNow = true;
+        }
+
+//        this._checkAnimate();
+
+        if (showNow) this.show();
+
+//        if (Bootstrap.version > 2){
+//            if (this.options.closeOnClickOut){
+//                this.element.addEvent('click', this.bound.bodyClick);
+//            }
+//        }
+    },
+
+    toElement: function () {
+        return this.element;
+    },
+
+//    _checkAnimate: function(){
+//        this._canAnimate = this.options.animate !== false && Browser.Features.getCSSTransition() && (this.options.animate || this.element.hasClass('fade'));
+//        if (!this._canAnimate) {
+//            this.element.removeClass('fade').addClass('hidden');
+//            if (this._mask) this._mask.removeClass('fade').addClass('hidden');
+//        } else if (this._canAnimate) {
+//            this.element.addClass('fade');
+//            if (Bootstrap.version >= 3) this.element.removeClass('hide').removeClass('hidden');
+//            if (this._mask){
+//                this._mask.addClass('fade');
+//                if (Bootstrap.version >= 3) this._mask.removeClass('hide').removeClass('hidden');
+//            }
+//        }
+//    },
+
+    show: function () {
+        if (this.visible) return;
+        this.element.addEvent('click:relay(.close, .dismiss, [data-dismiss=modal])', this.hide);
+        if (this.options.closeOnEsc) document.addEvent('keyup', this.keyMonitor);
+//        this._makeMask();
+//        if (this._mask) this._mask.inject(document.body);
+////        this.animating = true;
+//        if (this.options.changeDisplayValue) this.element.show();
+//        if (this._canAnimate) {
+//            this.element.offsetWidth; // force reflow
+//            this.element.addClass('in');
+//            if (this._mask) this._mask.addClass('in');
+//        } else {
+        this.element.removeClass('hide')
+            .removeClass('hidden')
+//            .setStyle('visibility', 'hidden')
+            .show();
+//        var mwidth = this.element.getElement('.modal-dialog').getWidth();
+//        var mheight = this.element.getElement('.modal-dialog').getHeight();
+//        var bwidth = document.body.getWidth();
+//        var bheight = document.body.getHeight();
+//        this.element.getElement('.modal-dialog').setStyle({
+//            top: (bheight - mheight) / 2,
+//            left: (bwidth - mwidth) / 2
+//
+//        });
+//        alert(document.body.getHeight());
+//        alert(bsize.height);
+//        alert(bwidth);
+//        alert(bheight);
+//        alert(mwidth);
+//        alert(mheight);
+//            if (this._mask) this._mask.show();
+//        }
+        this.visible = true;
+//        this._watch();
+    },
+
+    _watch: function () {
+//        if (this._canAnimate) this.element.addEventListener(Browser.Features.getCSSTransition(), this.bound.animationEnd);
+//        else this._animationEnd();
+    },
+
+//    _animationEnd: function(){
+//
+//    },
+
+    _keyMonitor: function (e) {
+        if (e.key == 'esc') this.hide();
+    },
+
+    destroy: function () {
+        if (this._mask) this._mask.destroy();
+        this.fireEvent('destroy', this.element);
+        this.element.destroy();
+        this._mask = null;
+        this.destroyed = true;
+    },
+
+    hide: function (event, clicked) {
+//        if (clicked) {
+//            var immediateParentPopup = clicked.getParent('[data-behavior~=BS.Popup]');
+//            if (immediateParentPopup && immediateParentPopup != this.element) return;
+//        }
+//        if (!this.visible || this.animating) return;
+//        this.animating = true;
+//        if (event && clicked && clicked.hasClass('stopEvent')){
+//            event.preventDefault();
+//        }
+//
+//        document.removeEvent('keyup', this.bound.keyMonitor);
+//        this.element.removeEvent('click:relay(.close, .dismiss, [data-dismiss=modal])', this.bound.hide);
+//
+//        if (this._canAnimate){
+//            this.element.removeClass('in');
+//            if (this._mask) this._mask.removeClass('in');
+//        } else {
+//            this.element.addClass('hidden').hide();
+//            if (this._mask) this._mask.hide();
+//        }
+//        this.visible = false;
+//        this._watch();
+    },
+
+    _makeMask: function () {
+        if (this.options.mask) {
+            if (!this._mask) {
+                this._mask = new Element('div.modal-backdrop.in');
+                if (this._canAnimate) this._mask.addClass('fade');
+            }
+        }
+        if (this.options.closeOnClickOut) {
+            if (this._mask) this._mask.addEvent('click', this.bound.hide);
+            else document.id(document.body).addEvent('click', this.bound.hide);
+        }
+    }
+
+});
 Toy.Widget.ProgressModal = {
 
     show: function () {

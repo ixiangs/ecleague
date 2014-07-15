@@ -1,11 +1,10 @@
 <?php
 namespace Void\Auth;
 
-use Void\Auth\BehaviorModel;
 use Toy\Web\Application;
 use Toy\Web\Template;
 
-class Listener
+class Observer
 {
 
     static public function webOnStart($app, $argument)

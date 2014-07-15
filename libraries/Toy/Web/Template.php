@@ -215,10 +215,15 @@ class Template
         $lang = Application::$context->request->getBrowserLanguage();
         $domain = Application::$context->router->domain;
         $extensions = Configuration::$templateExtensions;
+        if($path[0] != '/'){
+            $path = '/'.$path;
+        }
         $subPaths = array(
-            $domain->getName() . '/' . $lang . '/' . $path,
-            $domain->getName() . '/' . $path
+            $domain->getName() . '/' . $lang . $path,
+            $domain->getName() . $path,
+            $path
         );
+
         foreach ($extensions as $ex) {
             foreach ($subPaths as $subPath) {
                 $file = PathUtil::combines($root, $subPath, $ex);

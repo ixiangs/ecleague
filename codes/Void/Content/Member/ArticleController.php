@@ -119,7 +119,7 @@ class ArticleController extends Web\Controller
         $categories[0] = $this->localize->_('content_uncategory');
         return Web\Result::templateResult(
             array('model' => $model, 'categories' => $categories),
-            'void/content/article/edit'
+            'edit'
         );
     }
 }

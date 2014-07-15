@@ -26,22 +26,6 @@
 <div class="content">
     <?php echo $this->includeTemplate('sidemenu'); ?>
     <div class="mainbar">
-        <div class="page-head">
-            <!-- Breadcrumb -->
-            <div class="bread-crumb">
-                <?php $breadcrumbs = \Toy\Web\Application::getRequestComponent('User')->getBreadcrumbs();?>
-                <a href="#"> <?php echo $this->localize->_($breadcrumbs[$this->router->component]); ?></a>
-                <span class="divider">/</span>
-                <a href="#"> <?php
-                    echo $this->localize->_($breadcrumbs[
-                        str_replace('-', '_', $this->router->controller).'_'.
-                        str_replace('-', '_', $this->router->action)]);
-                ?></a>
-            </div>
-
-            <div class="clearfix"></div>
-
-        </div>
         <div class="matter">
             <div class="container">
                 <?php echo $this->renderBlock('content'); ?>

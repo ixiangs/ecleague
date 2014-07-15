@@ -96,7 +96,7 @@ class FormField extends Element
         $html = array($this->renderBegin());
         if($this->lableVisible){
             $html[] = '<label class="col-lg-2 control-label">' . $this->label . '</label>';
-            $html[] = '<div class="col-lg-10">';
+            $html[] = '<div class="col-lg-10 input-group">';
         }else{
             $html[] = '<div class="col-lg-12">';
         }

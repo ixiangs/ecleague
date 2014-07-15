@@ -6,8 +6,8 @@
     "author": "IXiangs Studio",
     "website": "ixiangs.com",
     "listeners": {
-        "webOnStart": "\\Void\\Auth\\Listener::webOnStart",
-        "webPostRoute": "\\Void\\Auth\\Listener::webPostRoute"
+        "webOnStart": "\\Void\\Auth\\Observer::webOnStart",
+        "webPostRoute": "\\Void\\Auth\\Observer::webPostRoute"
     },
     "breadcrumbs": {
         "void_auth": "auth_manage",

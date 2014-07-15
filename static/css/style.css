@@ -88,8 +88,8 @@ a:hover, a:active, a:focus {
 }
 
 .btn {
-    -webkit-border-radius: 2px;
-    border-radius: 2px;
+    -webkit-border-radius: 0px;
+    border-radius: 0px;
 }
 
 .btn:focus {
@@ -147,8 +147,8 @@ a:hover, a:active, a:focus {
 }
 
 .form-control {
-    -webkit-border-radius: 2px;
-    border-radius: 2px;
+    -webkit-border-radius: 0px;
+    border-radius: 0px;
 }
 
 .portlets {
@@ -254,16 +254,8 @@ form {
     margin: 0px;
 }
 
-form button {
-    font-size: 13px !important;
-}
-
-form input, form textarea {
-    font-size: 13px !important;
-}
-
 form label {
-    font-size: 13px;
+    font-size: 14px;
     line-height: 20px;
     font-weight: 600;
 }
@@ -1248,8 +1240,8 @@ header .nav.nav-pills > li > a:hover, header .nav.nav-pills > li > a:focus {
 /
 /
 background: #fafafa
-
 url
+
 (
 '../img/cream.png'
 )

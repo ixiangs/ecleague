@@ -18,7 +18,26 @@ class Renderer
                 $action = $router->action;
                 $component = $router->component;
                 $controller = $router->controller;
-                $path = $result->path ? $result->path : str_replace('_', '/', $component.'/'.$controller . '/' . $action);
+                $path = $result->path;
+                $parts = array($component, $controller, $action);
+                if (empty($path)) {
+                    $path = str_replace('_', '/', implode('/', $parts));
+                } elseif ($path[0] != '/') {
+                    $arr = explode('/', $path);
+                    $cnt = count($arr);
+                    if ($cnt == 3) {
+                        $parts = $arr;
+                    }
+                    if ($cnt == 2) {
+                        $parts[1] = $arr[0];
+                        $parts[2] = $arr[1];
+                    }
+                    if ($cnt == 1) {
+                        $parts[2] = $arr[0];
+                    }
+                    $path = str_replace('_', '/', implode('/', $parts));
+                }
+
                 $temp = new Template($result->data);
                 $response->write($temp->render($path));
                 break;

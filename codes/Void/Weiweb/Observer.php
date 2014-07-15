@@ -1,10 +1,10 @@
 <?php
-namespace Void\Realty;
+namespace Void\Weiweb;
 
 use Void\Realty\UptownModel;
 use Toy\Web\Application;
 
-class Listener
+class Observer
 {
 
     static public function authOnLogin($source, $argument)

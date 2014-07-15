@@ -87,7 +87,7 @@ class CategoryController extends Web\Controller
     {
         return Web\Result::templateResult(
             array('model' => $model),
-            'void/content/category/edit'
+            'edit'
         );
     }
 }

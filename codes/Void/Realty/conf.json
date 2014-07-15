@@ -6,7 +6,7 @@
     "author": "IXiangs Studio",
     "website": "ixiangs.com",
     "listeners": {
-        "authOnLogin": "\\Void\\Realty\\Listener::authOnLogin"
+        "authOnLogin": "\\Void\\Realty\\Observer::authOnLogin"
     },
     "breadcrumbs": {
         "void_realty": "realty_manage",

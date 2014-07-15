@@ -1,11 +1,10 @@
 <?php
 namespace Void\System;
 
-use Void\System\SettingModel;
 use Toy\Web\Template;
 use Toy\Web\Application;
 
-class Listener
+class Observer
 {
     static public function webOnStart($app, $argument)
     {

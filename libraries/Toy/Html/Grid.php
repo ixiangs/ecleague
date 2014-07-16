@@ -170,9 +170,9 @@ class Grid extends Element
     public function render()
     {
         $heads = array();
-        $filters = array();
         $body = array();
-//        $footer = array();
+        $filters = array();
+        $hasFilters = false;
 
         if ($this->checkboxVisible) {
             $heads[] = '<th class="checkbox-head"></th>';
@@ -189,7 +189,10 @@ class Grid extends Element
         foreach ($this->columns as $col) {
             $s = $col->renderFilter();
             if (!empty($s)) {
-                $filters[] = '<th class="filter-head">' . $s . '</th>';
+                $hasFilters = true;
+                $filters[] = '<th>' . $s . '</th>';
+            }else{
+                $filters[] = '<th></th>';
             }
         }
 
@@ -218,7 +221,9 @@ class Grid extends Element
             if ($this->sequenceVisible) {
                 array_unshift($filters, '<th class="checkbox-head"></th>');
             }
-            $result[] = '<tr class="row-filter">' . implode('', $filters) . '</tr>';
+            if($hasFilters){
+                $result[] = '<tr class="filter">' . implode('', $filters) . '</tr>';
+            }
         }
         $result[] = '</thead><tbody>';
         foreach ($body as $row) {

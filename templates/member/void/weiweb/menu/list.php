@@ -5,6 +5,7 @@ $this->assign('toolbar', array(
 
 $dt = $this->html->grid($this->models);
 $dt->addLabelColumn($this->localize->_('title'), '@{title}', '', 'left');
+$dt->addStatusColumn($this->localize->_('weiweb_menu_type'), '@{type_id}', $this->types, 'middle', 'left');
 $dt->addLinkColumn('', $this->localize->_('edit'), '@'.urldecode($this->router->buildUrl('edit', array('id'=>'{id}'))), 'edit', 'edit');
 $dt->addButtonColumn('', $this->localize->_('delete'), "@deleteConfirm('".urldecode($this->router->buildUrl('delete', array('id'=>'{id}')))."')", 'edit', 'edit');
 $this->assign('datatable', $dt);

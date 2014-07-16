@@ -11,7 +11,7 @@ content_publisher_list,发布者列表
 content_publisher_new,新建发布者
 content_publisher_edit,编辑发布者
 content_categories,文章分类,
-content_single_article,文章内容
+content_single_article,文章
 content_status_published,已发布
 content_status_unpublished,未发布
 content_status_draft,草稿

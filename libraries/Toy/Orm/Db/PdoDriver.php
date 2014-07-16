@@ -257,7 +257,11 @@ class PdoDriver extends BaseDriver
                         $result[] = $v[1] . ' IS NOT NULL';
                         break;
                     case 'like':
-                        $result[] = $v[1] . " LIKE " . $this->escape($v[2]) . "";
+                        $s = $this->escape($v[2]);
+                        if ($s[0] == "'") {
+                            $s = substr($s, 1, -1);
+                        }
+                        $result[] = $v[1] . " LIKE '%" . $s . "%'";
                         break;
                     case 'in':
                         $arr = array();

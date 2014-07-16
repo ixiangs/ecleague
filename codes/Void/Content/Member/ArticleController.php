@@ -13,12 +13,23 @@ class ArticleController extends Web\Controller
 
     public function listAction()
     {
-        $pi = $this->request->getParameter("pageindex", 1);
-        $count = ArticleModel::find()->fetchCount();
-        $models = ArticleModel::find()
+        $pi = $this->request->getQuery("pageindex", 1);
+        $title = $this->request->getQuery('title');
+        $categoryid = $this->request->getQuery('categoryid');
+        $find = ArticleModel::find()
+            ->eq(ArticleModel::propertyToField('account_id'), $this->context->identity->getId());
+        if($title){
+            $find->like(ArticleModel::propertyToField('title'), $title);
+        }
+        if(strlen($categoryid) > 0){
+            $find->eq(ArticleModel::propertyToField('category_id'), $categoryid);
+        }
+        $count = $find->fetchCount();
+
+        $models = $find->resetSelect()
+            ->select(ArticleModel::propertiesToFields())
             ->select(CategoryModel::propertyToField('name', 'category_name'))
             ->join(CategoryModel::propertyToField('id'), ArticleModel::propertyToField('category_id'), 'left')
-            ->eq(ArticleModel::propertyToField('account_id'), $this->context->identity->getId())
             ->limit(PAGINATION_SIZE, ($pi - 1) * PAGINATION_SIZE)
             ->load();
         return Web\Result::templateResult(array(
@@ -78,16 +89,16 @@ class ArticleController extends Web\Controller
             ArticleModel::merge($data['id'], $data) :
             ArticleModel::create($data);
         $model->setPublisherId($this->session->get('publisherId'))
-            ->setEditorId($identity->getId())
+            ->setAccountId($identity->getId())
             ->setStatus(Constant::STATUS_ARTICLE_PUBLISHED);
         if ($model->validate() !== true) {
             $this->session->set('errors', $this->localize->_('err_input_invalid'));
-            return $this->getEditTemplateReult($model);
+            return $this->getEditTemplateResult($model);
         }
 
         if (!$model->save()) {
             $this->session->set('errors', $this->localize->_('err_system'));
-            return $this->getEditTemplateReult($model);;
+            return $this->getEditTemplateResult($model);;
         }
 
         return Web\Result::redirectResult($this->router->findHistory('list'));
@@ -108,6 +119,20 @@ class ArticleController extends Web\Controller
             return Web\Result::redirectResult($this->router->buildUrl('list'));
         }
         return Web\Result::redirectResult($this->router->buildUrl('list'));
+    }
+
+    public function selectAction(){
+        $result = $this->listAction();
+        $categories = CategoryModel::find()
+            ->eq('account_id', $this->context->identity->getId())
+            ->fetch()
+            ->combineColumns('id', 'name');
+        $categories[0] = $this->localize->_('content_uncategory');
+        ksort($categories);
+        $data = $result->data;
+        $data['categories'] = $categories;
+        $result->data = $data;
+        return $result;
     }
 
     private function getEditTemplateResult($model)

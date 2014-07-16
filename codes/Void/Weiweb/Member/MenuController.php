@@ -18,8 +18,19 @@ class MenuController extends Web\Controller
             ->eq('account_id', $this->context->identity->getId())
             ->limit(PAGINATION_SIZE, ($pi - 1) * PAGINATION_SIZE)
             ->load();
+        $types = array();
+        $locale = $this->localize;
+        foreach (Web\Application::$components as $component) {
+            $mts = $component->getSetting('menu_types');
+            if ($mts) {
+                foreach ($mts as $k => $v) {
+                    $types[$k] = $locale->_($v['title']);
+                }
+            }
+        }
         return Web\Result::templateResult(array(
                 'models' => $models,
+                'types'=>$types,
                 'total' => $count,
                 'pageIndex' => $pi)
         );
@@ -99,6 +110,11 @@ class MenuController extends Web\Controller
             return Web\Result::redirectResult($this->router->buildUrl('list'));
         }
         return Web\Result::redirectResult($this->router->buildUrl('list'));
+    }
+
+    public function iconAction()
+    {
+        return Web\Result::templateResult();
     }
 
     private function getEditTemplateResult($model)

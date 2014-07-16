@@ -13,10 +13,12 @@ realty_building_list,楼房列表
 realty_building_new,新建楼房
 realty_building_edit,编辑楼房
 realty_owner,业主
-realty_repair_list,在线维修
+realty_repair_online,在线维修
+realty_complaint_online,在线投诉
+realty_repair_list,报修列表
 realty_repair_time,报修时间
 realty_room_number,房号
 realty_repair_content,报修内容
-realty_complaint_list,在线投诉
+realty_complaint_list,投诉列表
 realty_complaint_time,投诉时间
 realty_complaint_content,投诉内容

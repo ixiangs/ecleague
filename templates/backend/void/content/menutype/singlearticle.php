@@ -1,29 +1,23 @@
 <?php
-//$selectedCategory = 0;
-//if($this->model->getLink()){
-//    parse_str(parse_url($this->model->getLink(), PHP_URL_QUERY), $arr);
-//    $selectedCategory = $arr['categoryid'];
-//}
+$articleTitle = '';
+if($this->model->getLink()){
+    parse_str(parse_url($this->model->getLink(), PHP_URL_QUERY), $arr);
+    $articleId = $arr['id'];
+    $articleTitle = \Void\Content\ArticleModel::load($articleId)->getTitle();
+}
+
 $this->form->newField($this->localize->_('content_single_article'), true,
-    $this->html->textbox('single_article', '', '')
+    $this->html->textbox('single_article', '', $articleTitle)
         ->setRightAddon($this->html->button('button', $this->localize->_('weiweb_select'))
             ->setAttribute('id', 'select_article')));
 
 $this->beginBlock('other');
 ?>
 <div id="article_list_modal" class="modal hide" role="dialog" aria-labelledby="myModalLabel" aria-hidden="false">
-<div class="modal-dialog">
+<div class="modal-dialog modal-lg">
 <div class="modal-content">
-<div class="modal-header">
-<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-<h4 class="modal-title">Modal title</h4>
-</div>
 <div class="modal-body">
-<p>One fine body…</p>
-</div>
-<div class="modal-footer">
-<button type="button" class="btn btn-default" data-dismiss="modal" aria-hidden="true">Close</button>
-<button type="button" class="btn btn-primary">Save changes</button>
+<iframe style="margin: 0;padding: 0;border: none;width:100%;height: 450px;" src="<?php echo $this->router->buildUrl('void_content/article/select');?>"></iframe>
 </div>
 </div>
 </div>
@@ -38,15 +32,13 @@ $this->beginScript('content_menutype');
         $('select_article').addEvent('click', function(){
            articleModal.show();
         });
+        function createArticleLink(aid, atitle){
+            $('link').set('value', 'void_content/article/detail?id=' + aid);
+            $('single_article').set('value', atitle);
+            articleModal.hide();
+        }
         $('link').set('readonly', 'readonly');
-//        $('article_category').addEvent('change', function () {
-//            var selected = this.getSelected();
-//            if (selected[0].get('value') == '') {
-//                $('link').set('value', '');
-//            } else {
-//                $('link').set('value', 'void_content/article/list?categoryid=' + selected[0].get('value'));
-//            }
-//        });
+
     </script>
 <?php
 $this->endScript();

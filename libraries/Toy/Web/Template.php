@@ -208,6 +208,12 @@ class Template
         return implode("\n", $result);
     }
 
+    public function renderCssBlocks()
+    {
+        $result = array_values($this->document->getCssBlocks());
+        return implode("\n", $result);
+    }
+
     public function render($path)
     {
         $allPaths = array();

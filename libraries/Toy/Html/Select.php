@@ -54,7 +54,9 @@ class Select extends InputElement
         }
 
         foreach ($this->options as $option => $text) {
-            if ($this->value == $option) {
+            if (!is_null($this->value) &&
+                    strlen($this->value) == strlen($option) &&
+                    $this->value == $option) {
                 $html[] = "<option value=\"$option\" selected>$text</option>";
             } else {
                 $html[] = "<option value=\"$option\">$text</option>";

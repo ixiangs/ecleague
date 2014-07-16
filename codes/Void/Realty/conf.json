@@ -5,6 +5,16 @@
     "version": "0.0.0.1",
     "author": "IXiangs Studio",
     "website": "ixiangs.com",
+    "menu_types":{
+        "realty_repair":{
+            "title":"realty_repair_online",
+            "form": "/backend/void/realty/menutype/repair"
+        },
+        "realty_complaint":{
+            "title":"realty_complaint_online",
+            "form": "/backend/void/realty/menutype/complaint"
+        }
+    },
     "listeners": {
         "authOnLogin": "\\Void\\Realty\\Observer::authOnLogin"
     },

@@ -89,6 +89,12 @@ class Helper
         return $res;
     }
 
+    public function fileInput($id = null, $name = null, $value = null)
+    {
+        $res = new FileInput(array('id' => $id, 'name' => $name, 'value' => $value));
+        return $res;
+    }
+
     public function newElement($tag, array $attrs = array())
     {
         return new Element($tag, $attrs);

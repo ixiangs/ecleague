@@ -4,13 +4,30 @@ namespace Toy\Html;
 class FileInput extends InputElement
 {
     private $_uploadUrl = null;
+    private $_maxCount = 1;
+
+    public function __construct($attrs = array())
+    {
+        $attrs['type'] = 'hidden';
+        parent::__construct('input', $attrs);
+    }
 
     public function getUploadUrl(){
         return $this->_uploadUrl;
     }
 
-    public function setUploadField($value){
+    public function setUploadUrl($value){
         $this->_uploadUrl = $value;
+        return $this;
+    }
+
+    public function getMaxCount(){
+        return $this->_maxCount;
+    }
+
+    public function setMaxCount($value){
+        $this->_maxCount = $value;
+        return $this;
     }
 
     public function render($data = array())
@@ -19,34 +36,12 @@ class FileInput extends InputElement
             return call_user_func($this->renderer, $this);
         }
 
-        $res = '';
-        if (!is_null($this->_leftAddon)) {
-            if ($this->_leftAddon instanceof ButtonGroup) {
-                $res .= '<div class="input-group-btn">';
-                $res .= $this->_leftAddon->render();
-                $res .= '</div>';
-            } elseif ($this->_leftAddon instanceof Element) {
-                $res .= '<span  class="input-group-btn">';
-                $res .= $this->_leftAddon->render();
-                $res .= '</span >';
-            } else {
-                $res .= $this->_leftAddon;
-            }
-        }
-        $res .= '<input type="text" ' . $this->renderAttribute($data) . '/>';
-        if (!is_null($this->_rightAddon)) {
-            if ($this->_rightAddon instanceof ButtonGroup) {
-                $res .= '<div class="input-group-btn">';
-                $res .= $this->_leftAddon->render();
-                $res .= '</div>';
-            } elseif ($this->_rightAddon instanceof Element) {
-                $res .= '<span  class="input-group-btn">';
-                $res .= $this->_rightAddon->render();
-                $res .= '</span >';
-            } else {
-                $res .= $this->_rightAddon;
-            }
-        }
-        return $res;
+        $value = $this->getAttribute('value');
+        $result = '<div id="icon_container" class="file-container" '
+                . 'data-max-count="'.$this->_maxCount.'">';
+        $result .= '</div><div class="clearfix"></div>';
+        $result .= '<iframe src="'.$this->_uploadUrl.'" style="height:40px;width:100%;border:none;padding:0;margin:0"></iframe>';
+        $result .= '<input '.$this->renderAttribute($data).'/>';
+        return $result;
     }
 }

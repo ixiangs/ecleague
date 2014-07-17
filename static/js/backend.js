@@ -19,9 +19,49 @@ function deleteSelectedRow(fid, url) {
     }
 }
 
+function uploadSuccess(id, image) {
+    var el = $(id);
+    var container = $(id + '_container');
+    if (container.get('data-max-count') == 1) {
+        el.set('value', image.url);
+    } else {
+        el.set('value', el.get('value') + ',' + image.url);
+    }
+    var img = new Element('div.well')
+        .adopt(new Element('img.img-thumbnail', {'src': image.url}))
+        .adopt(new Element('div.operation', {
+            'html':'<a target="_blank" href="' + image.url + '">查看</a>&nbsp;'+
+                   '<a href="javascript:void(0)" onclick="deleteUpload(this, ' + id + ')">删除</a>'
+        }));
+    container.adopt(img);
+}
+
+function deleteUpload(el, id){
+    var well = el.getParents('.well(0)');
+    var img = well.getElement('.img-thumbnail(0)');
+    var hidden = $(id);
+    hidden.set('value', hidden.get('value').replace(img.get('src'), ''));
+    well.destroy();
+}
+
 window.addEvent('domready', function () {
-    $$('li.dropdown').addEvent('click', function(){
-       new Toy.Widget.Dropdown(this);
+    $$('li.dropdown').addEvent('click', function () {
+        new Toy.Widget.Dropdown(this);
+    });
+
+    $$('.file-container').each(function (item) {
+        item.addEvent('mouseover:relay(.well)',function (e) {
+            this.getElement('.operation').show();
+        }).addEvent('mouseout:relay(.well)', function (e) {
+            this.getElement('.operation').hide();
+        });
+        var hidden = item.getParent().getElement('input[type="hidden"](0)');
+        if(hidden.get('value').length > 0){
+            var imgs = hidden.get('value').split(',');
+            for(var i = 0; i < imgs.length; i++){
+                uploadSuccess(hidden.get('id'), {url:imgs[i]});
+            }
+        }
     });
 
     $('nav').getElements('.has_sub').each(function (item) {

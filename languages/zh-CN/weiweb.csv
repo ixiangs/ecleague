@@ -10,3 +10,4 @@ weiweb_target,目标
 weiweb_icon,图标
 weiweb_menu_type,菜单类型
 weiweb_select,选择
+weiweb_err_upload_icon,只能上传图片(.jpg、.jpeg、.png、.gif)

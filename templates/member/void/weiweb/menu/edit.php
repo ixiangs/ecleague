@@ -21,8 +21,8 @@ $f->newField($this->localize->_('title'), true,
     $this->html->textbox('title', 'data[title]', $this->model->getTitle())
         ->addValidateRule('required', true));
 $f->newField($this->localize->_('weiweb_icon'), false,
-    $this->html->newElement('iframe',
-        array('src'=>$this->router->buildUrl('icon', array('id'=>$this->model->getId())), 'class'=>'upload-frame')));
+    $this->html->fileInput('icon', 'data[icon]', $this->model->getIcon())
+        ->setUploadUrl($this->router->buildUrl('icon', array('id'=>$this->model->getId()))));
 $f->newField($this->localize->_('enable'), true,
     $this->html->select('enabled', 'data[enabled]', $this->model->getStatus(), array(
         '1' => $this->localize->_('yes'),

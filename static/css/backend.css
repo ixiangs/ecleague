@@ -117,8 +117,46 @@ table.table tbody tr td.true {
     color: #2b542c;
 }
 
-.form-option-list{height:auto;}
-.form-option-list .checkbox-inline+.checkbox-inline{margin-left:0px;}
+.form-group .file-container {
+    margin-bottom: 5px;
+}
+
+.form-group .file-container .well {
+    background-color: #ffffff;
+    padding: 0;
+    width: 140px;
+    height: 140px;
+    float: left;
+    position: relative;
+}
+
+.form-group .file-container .img-thumbnail {
+    width: 140px;
+    height: 140px;
+    border: none;
+    padding: 0;
+    position: absolute;
+}
+
+.form-group .file-container .well .operation {
+    height: 40px;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: #eeeeee;
+    position: absolute;
+    text-align: center;
+    font-size: 120%;
+    padding-top: 0.5em;
+}
+
+.form-option-list {
+    height: auto;
+}
+
+.form-option-list .checkbox-inline + .checkbox-inline {
+    margin-left: 0px;
+}
 
 #progress_modal .modal-dialog .modal-content .progress {
     margin-bottom: 0px;
@@ -168,18 +206,6 @@ table.table tbody tr td.true {
     background-image: none;
 }
 
-/*.panel-thin {*/
-    /*margin-bottom: 5px;*/
-/*}*/
-
-/*.panel-thin .panel-heading {*/
-    /*padding: 5px 5px 5px 5px;*/
-/*}*/
-
-/*.panel-thin .panel-body {*/
-    /*padding: 5px 5px 5px 5px;*/
-/*}*/
-
 .sortable {
     padding: 5px 0 5px 0;
 }
@@ -201,4 +227,7 @@ table.table tbody tr td.true {
     cursor: move;
 }
 
-.upload-frame{border: 1px solid #ccc;width:100%;}
+.upload-frame {
+    border: 1px solid #ccc;
+    width: 100%;
+}

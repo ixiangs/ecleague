@@ -106,7 +106,15 @@ class Router
     {
         $url = $this->buildAction($url);
         if (is_array($params)) {
-            $url .= '?' . http_build_query($params);
+            $arr = array();
+            foreach ($params as $k => $v) {
+                if (!empty($v)) {
+                    $arr[$k] = $v;
+                }
+            }
+            if (count($arr) > 0) {
+                $url .= '?' . http_build_query($arr);
+            }
         } elseif (is_string($params) && $params == '*') {
             $query = Application::$context->request->getAllQuery();
             if (is_array($query) && count($query) > 0) {

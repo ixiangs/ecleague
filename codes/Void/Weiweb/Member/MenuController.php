@@ -1,6 +1,9 @@
 <?php
 namespace Void\Weiweb\Member;
 
+use Toy\Platform\FileUtil;
+use Toy\Platform\PathUtil;
+use Toy\Util\RandomUtil;
 use Void\Auth;
 use Toy\Web;
 use Void\Weiweb\MenuModel;
@@ -30,7 +33,7 @@ class MenuController extends Web\Controller
         }
         return Web\Result::templateResult(array(
                 'models' => $models,
-                'types'=>$types,
+                'types' => $types,
                 'total' => $count,
                 'pageIndex' => $pi)
         );
@@ -54,7 +57,7 @@ class MenuController extends Web\Controller
     public function addAction($type)
     {
         return $this->getEditTemplateResult(new MenuModel(array(
-            'type_id'=>$type
+            'type_id' => $type
         )));
     }
 
@@ -80,7 +83,7 @@ class MenuController extends Web\Controller
         $model = $data['id'] ?
             MenuModel::merge($data['id'], $data) :
             MenuModel::create($data);
-        if($model->isNewed()){
+        if ($model->isNewed()) {
             $model->setAccountId($this->context->identity->getId());
         }
         $vr = $model->validate();
@@ -117,6 +120,29 @@ class MenuController extends Web\Controller
         return Web\Result::templateResult();
     }
 
+    public function iconPostAction()
+    {
+        $upload = $this->request->getFile('uploadfile');
+        $path = PathUtil::combines(ASSET_PATH, 'weiweb', 'menus');
+        if ($upload->isOk() && $upload->isImage()) {
+            while (true) {
+                $fname = RandomUtil::randomCharacters() . '.' . $upload->getExtension();
+                $target = $path . DS . $fname;
+                if (!FileUtil::checkExists($target)) {
+                    FileUtil::moveUploadFile($upload->getTmpName(), $target);
+                    return Web\Result::templateResult(array(
+                        'error' => 0,
+                        'width' => $upload->getWidth(),
+                        'height' => $upload->getHeight(),
+                        'url' => '/assets/weiweb/menus/' . $fname));
+                }
+            }
+        }
+        return Web\Result::templateResult(array(
+            'error' => 1,
+            'message' => $this->localize->_('err_upload_article')));
+    }
+
     private function getEditTemplateResult($model)
     {
         $type = $model->getTypeId();
@@ -135,7 +161,7 @@ class MenuController extends Web\Controller
             }
         }
         return Web\Result::templateResult(
-            array('model' => $model, 'typeName'=>$typeName, 'formPath' => $path),
+            array('model' => $model, 'typeName' => $typeName, 'formPath' => $path),
             'edit'
         );
     }

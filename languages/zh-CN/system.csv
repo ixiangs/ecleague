@@ -55,11 +55,13 @@ select_file,选择...
 select_all,全选
 unselect_all,全不选
 dashboard,首页
+look,查看
 type,类型
 component,组件
 offline,离线
 website_title,网站标题
 website_description,网站描述
-system_manage,系统管理
+err_upload_accept,只能上传文件 {accept}
+sysem_manage,系统管理
 system_setting,网站设置
 system_component_list,组件列表

@@ -89,9 +89,9 @@ class Helper
         return $res;
     }
 
-    public function fileInput($id = null, $name = null, $value = null)
+    public function iframeInput($id = null, $name = null, $value = null)
     {
-        $res = new FileInput(array('id' => $id, 'name' => $name, 'value' => $value));
+        $res = new IframeInput(array('id' => $id, 'name' => $name, 'value' => $value));
         return $res;
     }
 

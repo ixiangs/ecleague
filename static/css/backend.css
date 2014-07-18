@@ -10,7 +10,7 @@
     list-style: none;
     background: none;
 }
-
+.well{border-radius: 0px;}
 .stacked:after,
 .stacked:before {
     border: none;
@@ -117,37 +117,39 @@ table.table tbody tr td.true {
     color: #2b542c;
 }
 
-.form-group .file-container {
-    margin-bottom: 5px;
+.upload-container {
+
 }
 
-.form-group .file-container .well {
+.upload-container .well {
     background-color: #ffffff;
+    margin: 0px 2px 0px 2px;
     padding: 0;
     width: 140px;
-    height: 140px;
     float: left;
-    position: relative;
+    border-bottom: none;
+    border-top: none;
+    border-left: none;
 }
 
-.form-group .file-container .img-thumbnail {
+.upload-container .img-thumbnail {
     width: 140px;
     height: 140px;
     border: none;
     padding: 0;
-    position: absolute;
 }
 
-.form-group .file-container .well .operation {
-    height: 40px;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    background-color: #eeeeee;
-    position: absolute;
+.upload-container .well .operation {
     text-align: center;
-    font-size: 120%;
-    padding-top: 0.5em;
+    font-size: 100%;
+}
+
+.upload-iframe {
+    border: 1px solid #ccc;
+    height: 164px;
+    width: 100%;
+    padding: 0;
+    margin: 0
 }
 
 .form-option-list {

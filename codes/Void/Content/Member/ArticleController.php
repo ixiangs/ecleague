@@ -67,14 +67,14 @@ class ArticleController extends Web\Controller
         $upload = $this->request->getFile('imgFile');
         $dir = $this->request->getQuery('directory');
         $fname = 'source.' . $upload->getExtension();
-        $path = PathUtil::combines(ASSET_PATH, 'articles', $this->context->identity->getId(), $dir);
+        $path = PathUtil::combines(ASSET_PATH, 'articles', $dir);
         if ($upload->isOk() && $upload->isImage()) {
             $tmp = FileUtil::createSubDirectory($path);
             $target = PathUtil::combines($path, $tmp, $fname);
             FileUtil::moveUploadFile($upload->getTmpName(), $target);
             return Web\Result::jsonResult(array(
                 'error' => 0,
-                'url' => '/assets/articles/' . $this->context->identity->getId() . '/' . $dir . '/' . $tmp . '/' . $fname));
+                'url' => '/assets/articles/' . $dir . '/' . $tmp . '/' . $fname));
         }
         return Web\Result::jsonResult(array(
             'error' => 1,

@@ -115,15 +115,24 @@ class MenuController extends Web\Controller
         return Web\Result::redirectResult($this->router->buildUrl('list'));
     }
 
-    public function iconAction()
+    public function iconAction($id = null)
     {
-        return Web\Result::templateResult();
+        $files = array();
+        if($id){
+            $files[] = MenuModel::load($id)->getIcon();
+        }
+        return Web\Result::templateResult(array(
+            'files'=>$files,
+            'maxCount'=>1,
+            'inputId'=>'icon',
+            'accept'=>'.jpg,.jpeg,.gif,.png'
+        ), '/upload');
     }
 
     public function iconPostAction()
     {
         $upload = $this->request->getFile('uploadfile');
-        $path = PathUtil::combines(ASSET_PATH, 'weiweb', 'menus');
+        $path = PathUtil::combines(ASSET_PATH, 'weiweb', 'menus', 'icons');
         if ($upload->isOk() && $upload->isImage()) {
             while (true) {
                 $fname = RandomUtil::randomCharacters() . '.' . $upload->getExtension();
@@ -131,16 +140,19 @@ class MenuController extends Web\Controller
                 if (!FileUtil::checkExists($target)) {
                     FileUtil::moveUploadFile($upload->getTmpName(), $target);
                     return Web\Result::templateResult(array(
-                        'error' => 0,
-                        'width' => $upload->getWidth(),
-                        'height' => $upload->getHeight(),
-                        'url' => '/assets/weiweb/menus/' . $fname));
+                        'files'=>array('/assets/weiweb/menus/icons/' . $fname),
+                        'maxCount'=>1,
+                        'inputId'=>'icon',
+                        'accept'=>'.jpg,.jpeg,.gif,.png'
+                    ), '/upload');
                 }
             }
         }
         return Web\Result::templateResult(array(
-            'error' => 1,
-            'message' => $this->localize->_('err_upload_article')));
+            'files'=>$this->request->getPost('existed_files'),
+            'maxCount'=>1,
+            'inputId'=>'icon'
+        ), '/upload');
     }
 
     private function getEditTemplateResult($model)

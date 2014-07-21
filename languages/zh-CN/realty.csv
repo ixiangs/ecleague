@@ -22,3 +22,8 @@ realty_repair_content,报修内容
 realty_complaint_list,投诉列表
 realty_complaint_time,投诉时间
 realty_complaint_content,投诉内容
+realty_repairer,维修员
+realty_staff_position,职位
+realty_staff_list,员工列表
+realty_staff_new,新建员工
+realty_staff_edit,编辑员工

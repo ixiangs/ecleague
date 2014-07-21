@@ -26,6 +26,7 @@
                     <li><a href="<?php echo $this->router->buildUrl('void_realty/building/list'); ?>"><?php echo $this->localize->_('realty_building_list'); ?></a></li>
                     <li><a href="<?php echo $this->router->buildUrl('void_realty/repair/list'); ?>"><?php echo $this->localize->_('realty_repair_list'); ?></a></li>
                     <li><a href="<?php echo $this->router->buildUrl('void_realty/complaint/list'); ?>"><?php echo $this->localize->_('realty_complaint_list'); ?></a></li>
+                    <li><a href="<?php echo $this->router->buildUrl('void_realty/staff/list'); ?>"><?php echo $this->localize->_('realty_staff_list'); ?></a></li>
                 </ul>
             </li>
         <?php endif;?>

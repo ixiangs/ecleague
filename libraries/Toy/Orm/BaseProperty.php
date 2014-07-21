@@ -1,7 +1,7 @@
 <?php
 namespace Toy\Orm;
 
-abstract class BaseProperty extends \Toy\Object
+abstract class BaseProperty
 {
 
     private $_name = null;

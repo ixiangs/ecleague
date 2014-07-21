@@ -9,4 +9,5 @@ class Constant
     const TABLE_BUILDING = '{t}realty_building';
     const TABLE_REPAIR = '{t}realty_repair';
     const TABLE_COMPLAINT = '{t}realty_complaint';
+    const TABLE_STAFF = '{t}realty_staff';
 } 

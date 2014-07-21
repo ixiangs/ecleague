@@ -49,7 +49,8 @@ label,标签
 text,文本
 export,导出
 import,导入
-phone,电话,
+phone,固定电话,
+mobile,移动电话
 upload,上传
 select_file,选择...
 select_all,全选

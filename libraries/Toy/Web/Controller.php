@@ -55,10 +55,17 @@ abstract class Controller
                 $rf = new \ReflectionClass($this);
                 $params = $rf->getMethod($method)->getParameters();
                 $arguments = array();
+                foreach($params as $mp){
+                    if($mp->isDefaultValueAvailable()){
+                        $arguments[$mp->getName()] = $mp->getDefaultValue();
+                    }else{
+                        $arguments[$mp->getName()] = null;
+                    }
+                }
                 foreach ($this->request->getAllParameters() as $n => $v) {
                     foreach ($params as $p) {
                         if ($p->getName() == $n) {
-                            $arguments[] = $v;
+                            $arguments[$p->getName()] = $v;
                             break;
                         }
                     }

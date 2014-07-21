@@ -21,13 +21,7 @@ class ArticleModel extends Orm\Model
 
     public function createDirectory()
     {
-        $path = PathUtil::combines(ASSET_PATH, 'articles', $this->account_id);
-        if (!empty($this->directory)) {
-            if (FileUtil::checkExists($path, $this->directory)) {
-                return true;
-            }
-        }
-
+        $path = PathUtil::combines(ASSET_PATH, 'articles');
         while (true) {
             $rmd = RandomUtil::randomCharacters();
             if (!FileUtil::isDirectory($path . DS . $rmd)) {
@@ -52,6 +46,8 @@ ArticleModel::registerMetadata(array(
         Orm\IntegerProperty::create('start_time')->setDefaultValue(0),
         Orm\IntegerProperty::create('end_time')->setDefaultValue(0),
         Orm\IntegerProperty::create('status')->setDefaultValue(0),
-        Orm\StringProperty::create('directory')->setUpdateable(false)
+        Orm\StringProperty::create('directory')->setUpdateable(false),
+        Orm\StringProperty::create('intro_image'),
+        Orm\StringProperty::create('article_image')
     )
 ));

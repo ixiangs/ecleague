@@ -17,6 +17,7 @@ realty_repair_online,在线维修
 realty_complaint_online,在线投诉
 realty_repair_list,报修列表
 realty_repair_time,报修时间
+realty_finished_time,完成时间
 realty_room_number,房号
 realty_repair_content,报修内容
 realty_complaint_list,投诉列表

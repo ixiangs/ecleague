@@ -16,7 +16,9 @@ class RepairController extends Web\Controller
             ->eq('uptown_id', $this->session->get('uptownId'))
             ->fetchCount();
         $models = RepairModel::find()
-            ->eq('uptown_id', $this->session->get('uptownId'))
+            ->select(StaffModel::propertyToField('name', 'repairer_name'))
+            ->join(StaffModel::propertyToField('id'), RepairModel::propertyToField('repairer_id'), 'left')
+            ->eq(RepairModel::propertyToField('uptown_id'), $this->session->get('uptownId'))
             ->limit(PAGINATION_SIZE, ($pi - 1) * PAGINATION_SIZE)
             ->load();
         return Web\Result::templateResult(array(

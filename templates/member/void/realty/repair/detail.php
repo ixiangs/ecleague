@@ -23,7 +23,7 @@ if(!$this->model->repairer_id):
             ->addValidateRule('required', 'true'));
 else:
     $f->addStaticField($this->localize->_('realty_repairer'), $this->model->getRepairerName());
-    $f->addStaticField($this->localize->_('realty_repair_time'), $this->model->getRepairTime());
+    $f->addStaticField($this->localize->_('realty_finished_time'), $this->model->getFinishedTime());
 endif;
 $this->assign('form', $f);
 echo $this->includeTemplate('layout\form');

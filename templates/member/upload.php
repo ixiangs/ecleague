@@ -69,7 +69,7 @@
     <div class="clearfix"></div>
 </div>
 <form id="upload_form" method="POST"
-      action="<?php echo $this->formAction; ?>" enctype="multipart/form-data">
+      action="<?php echo $this->uploadAction; ?>" enctype="multipart/form-data">
 <span class="btn btn-success fileinput-button">
 <span><?php echo $this->localize->_('upload') ?></span>
 <input type="file" id="upload_file" name="uploadfile" data-accept="<?php echo $this->accept; ?>"/>

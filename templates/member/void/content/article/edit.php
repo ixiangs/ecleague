@@ -19,6 +19,16 @@ $f->newField($this->localize->_('title'), true,
 $f->newField($this->localize->_('category'), true,
     $this->html->select('category_id', 'data[category_id]', $this->model->getCategoryId(), $this->categories)
         ->addValidateRule('required', true));
+$f->newField($this->localize->_('content_intro_image'), false,
+    $this->html->IframeInput('intro_image', 'data[intro_image]', $this->model->getIntroImage())
+        ->setIframeUrl($this->router->buildUrl('images',
+            array('id'=>$this->model->getId(), 'type'=>'intro', 'directory'=>$this->model->getDirectory())))
+        ->setIframeClass('upload-iframe'));
+$f->newField($this->localize->_('content_article_image'), false,
+    $this->html->IframeInput('article_image', 'data[article_image]', $this->model->getArticleImage())
+        ->setIframeUrl($this->router->buildUrl('images',
+            array('id'=>$this->model->getId(), 'type'=>'article', 'directory'=>$this->model->getDirectory())))
+        ->setIframeClass('upload-iframe'));
 $f->newField($this->localize->_('status'), true,
     $this->html->select('status', 'data[status]', $this->model->getStatus(), array(
         \Void\Content\Constant::STATUS_ARTICLE_PUBLISHED => $this->localize->_('content_status_published'),
@@ -43,7 +53,12 @@ $this->beginScript('account');
             window.editor = K.create('#content', {
                 allowFlashUpload: false,
                 allowMediaUpload: false,
-                uploadJson: '<?php echo $this->router->buildUrl('upload', array('directory'=>$this->model->getDirectory())); ?>',
+                filePostName: 'uploadfile',
+                height: 450,
+                uploadJson: '<?php echo $this->router->buildUrl('upload',
+                    array('id'=>$this->model->getId(),
+                            'directory'=>$this->model->getDirectory(),
+                            'type'=>'editor')); ?>',
                 items:[
                     'source', '|', 'undo', 'redo', '|', 'preview', 'cut', 'copy', 'paste',
                     'plainpaste', 'wordpaste', '|', 'justifyleft', 'justifycenter', 'justifyright',

@@ -23,6 +23,6 @@ RepairModel::registerMetadata(array(
         Orm\IntegerProperty::create('uptown_id')->setNullable(false),
         Orm\IntegerProperty::create('created_time')->setNullable(false),
         Orm\IntegerProperty::create('repairer_id'),
-        Orm\IntegerProperty::create('repair_time')
+        Orm\IntegerProperty::create('finished_time')
     )
 ));

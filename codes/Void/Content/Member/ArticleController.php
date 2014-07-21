@@ -1,6 +1,7 @@
 <?php
 namespace Void\Content\Member;
 
+use Toy\Util\RandomUtil;
 use Void\Content\Constant;
 use Void\Content\ArticleModel;
 use Void\Content\CategoryModel;
@@ -18,10 +19,10 @@ class ArticleController extends Web\Controller
         $categoryid = $this->request->getQuery('categoryid');
         $find = ArticleModel::find()
             ->eq(ArticleModel::propertyToField('account_id'), $this->context->identity->getId());
-        if($title){
+        if ($title) {
             $find->like(ArticleModel::propertyToField('title'), $title);
         }
-        if(strlen($categoryid) > 0){
+        if (strlen($categoryid) > 0) {
             $find->eq(ArticleModel::propertyToField('category_id'), $categoryid);
         }
         $count = $find->fetchCount();
@@ -62,23 +63,65 @@ class ArticleController extends Web\Controller
         return $this->save();
     }
 
-    public function uploadAction()
+    public function uploadAction($id = null, $type = null)
     {
-        $upload = $this->request->getFile('imgFile');
+        $upload = $this->request->getFile('uploadfile');
         $dir = $this->request->getQuery('directory');
-        $fname = 'source.' . $upload->getExtension();
         $path = PathUtil::combines(ASSET_PATH, 'articles', $dir);
         if ($upload->isOk() && $upload->isImage()) {
-            $tmp = FileUtil::createSubDirectory($path);
-            $target = PathUtil::combines($path, $tmp, $fname);
-            FileUtil::moveUploadFile($upload->getTmpName(), $target);
-            return Web\Result::jsonResult(array(
-                'error' => 0,
-                'url' => '/assets/articles/' . $dir . '/' . $tmp . '/' . $fname));
+            $target = null;
+            $fname = null;
+            while (true) {
+                $fname = RandomUtil::randomCharacters() . '.' . $upload->getExtension();
+                $target = $path . DS . $fname;
+                if (!FileUtil::checkExists($target)) {
+                    FileUtil::moveUploadFile($upload->getTmpName(), $target);
+                    break;
+                }
+            }
+
+            switch ($type) {
+                case 'editor':
+                    return Web\Result::jsonResult(array(
+                        'error' => 0,
+                        'url' => '/assets/articles/' . $dir . '/' . $fname));
+                case 'intro':
+                case 'article':
+                    return Web\Result::templateResult(array(
+                        'files' => array('/assets/articles/' . $dir . '/' . $fname),
+                        'maxCount' => 1,
+                        'inputId' => $type == 'intro' ? 'intro_image' : 'article_image',
+                        'accept' => '.jpg,.jpeg,.gif,.png',
+                        'uploadAction' => $this->router->buildUrl('upload', array(
+                                'id' => $id, 'type' => $type, 'directory' => $dir
+                            ))
+                    ), '/upload');
+            }
+
         }
         return Web\Result::jsonResult(array(
             'error' => 1,
             'message' => $this->localize->_('err_upload_article')));
+    }
+
+    public function imagesAction($id = null, $type = null, $directory = null)
+    {
+        $files = array();
+        if ($id) {
+            $image = ArticleModel::load($id)->getData($type == 'intro' ? 'intro_image' : 'article_image');
+            if($image){
+                $files[] = $image;
+            }
+        }
+        return Web\Result::templateResult(array(
+            'files' => $files,
+            'maxCount' => 1,
+            'inputId' => $type == 'intro' ? 'intro_image' : 'article_image',
+            'accept' => '.jpg,.jpeg,.gif,.png',
+            'uploadAction' => $this->router->buildUrl('upload', array(
+                    'id' => $id, 'type' => $type, 'directory'=>$directory
+                ))
+        ), '/upload');
     }
 
     private function save()
@@ -121,7 +164,8 @@ class ArticleController extends Web\Controller
         return Web\Result::redirectResult($this->router->buildUrl('list'));
     }
 
-    public function selectAction(){
+    public function selectAction()
+    {
         $result = $this->listAction();
         $categories = CategoryModel::find()
             ->eq('account_id', $this->context->identity->getId())

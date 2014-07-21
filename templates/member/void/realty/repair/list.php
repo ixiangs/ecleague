@@ -4,6 +4,9 @@ $dt->addLabelColumn($this->localize->_('realty_owner'), '@{contacts}', 'middle',
 $dt->addLabelColumn($this->localize->_('phone'), '@{phone}', 'middle', 'left');
 $dt->addLabelColumn($this->localize->_('realty_room_number'), '@{building}/{floor}/{room}', '', 'left');
 $dt->addLabelColumn($this->localize->_('realty_repair_time'), '@{created_time}', 'small', 'left');
+$dt->addLabelColumn($this->localize->_('realty_repairer'), '@{repairer_name}', 'small', 'left');
+$dt->addLabelColumn($this->localize->_('realty_finished_time'), '@{finished_time}', 'small', 'left');
+
 $dt->addLinkColumn('', $this->localize->_('look'), '@'.urldecode($this->router->buildUrl('detail', array('id'=>'{id}'))), 'edit', 'edit');
 $this->assign('datatable', $dt);
 

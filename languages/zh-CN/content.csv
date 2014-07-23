@@ -18,5 +18,9 @@ content_status_draft,草稿
 content_status_disabled,禁用
 content_intro_image,介绍图片
 content_article_image,全文图片
+content_introduction,简介
+content_content,内容
+content_loading,正在加载...
+content_load_over,已全部加载
 err_upload,上传失败
 err_upload_article,只能上传图片(.jpg、.jpeg、.png、.gif)

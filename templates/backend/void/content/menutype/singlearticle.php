@@ -7,9 +7,7 @@ if($this->model->getLink()){
 }
 
 $this->form->newField($this->localize->_('content_single_article'), true,
-    $this->html->textbox('single_article', '', $articleTitle)
-        ->setRightAddon($this->html->button('button', $this->localize->_('weiweb_select'))
-            ->setAttribute('id', 'select_article')));
+    $this->html->textbox('single_article', '', $articleTitle)->setAttribute('id', 'select_article'));
 
 $this->beginBlock('other');
 ?>
@@ -34,7 +32,7 @@ $this->beginScript('content_menutype');
         });
         function createArticleLink(aid, atitle){
             $('link').set('value', 'void_content/article/detail?id=' + aid);
-            $('single_article').set('value', atitle);
+            $('select_article').set('value', atitle);
             articleModal.hide();
         }
         $('link').set('readonly', 'readonly');

@@ -19,6 +19,10 @@ class Context
     {
     }
 
+    public function hasItem($name){
+        return array_key_exists($name, $this->items);
+    }
+
     public function __get($name)
     {
         if (array_key_exists($name, $this->items)) {

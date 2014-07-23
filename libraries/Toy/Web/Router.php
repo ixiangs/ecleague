@@ -62,9 +62,10 @@ class Router
 
     public function buildAction($url = "")
     {
+        $parts = parse_url($url);
         list($len, $domain, $component, $controller, $action) = array(0, null, null, null, null);
         if (!empty($url)) {
-            $arr = explode('/', $url);
+            $arr = explode('/', $parts['path']);
             $len = count($arr);
         }
         switch ($len) {
@@ -99,7 +100,15 @@ class Router
                 $action = $arr[3];
                 break;
         }
-        return $domain->getStartUrl() . $component . '/' . $controller . '/' . $action;
+        $parts['path'] = $domain->getStartUrl() . $component . '/' . $controller . '/' . $action;
+        $result = $parts['path'];
+        if(array_key_exists('query', $parts)){
+            $result .= '?'.$parts['query'];
+        }
+        if(array_key_exists('fragment', $parts)){
+            $result .= '#'.$parts['fragment'];
+        }
+        return $result;
     }
 
     public function buildUrl($url = "", $params = NULL)
@@ -113,12 +122,20 @@ class Router
                 }
             }
             if (count($arr) > 0) {
-                $url .= '?' . http_build_query($arr);
+                if(strpos('?', $url) === false){
+                    $url .= '?' . http_build_query($arr);
+                }else{
+                    $url .= '&' . http_build_query($arr);
+                }
             }
         } elseif (is_string($params) && $params == '*') {
             $query = Application::$context->request->getAllQuery();
             if (is_array($query) && count($query) > 0) {
-                $url .= '?' . http_build_query($query);
+                if(strpos('?', $url) === false){
+                    $url .= '?' . http_build_query($query);
+                }else{
+                    $url .= '&' . http_build_query($query);
+                }
             }
         }
         return $url;

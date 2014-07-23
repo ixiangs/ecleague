@@ -9,6 +9,8 @@ class FormField extends Element
     protected $validateRules = array();
     protected $lableVisible = true;
     protected $description = null;
+    private $_leftAddon = null;
+    private $_rightAddon = null;
 
     public function __construct($label)
     {
@@ -16,6 +18,30 @@ class FormField extends Element
             'class' => 'form-group'
         ));
         $this->label = $label;
+    }
+
+    public function getLeftAddon()
+    {
+        return $this->_leftAddon;
+    }
+
+    public function setLeftAddon($value)
+    {
+        $this->setAttribute('class', 'input-group');
+        $this->_leftAddon = $value;
+        return $this;
+    }
+
+    public function getRightAddon()
+    {
+        return $this->_rightAddon;
+    }
+
+    public function setRightAddon($value)
+    {
+        $this->setAttribute('class', 'input-group');
+        $this->_rightAddon = $value;
+        return $this;
     }
 
     public function getRequired()
@@ -95,16 +121,38 @@ class FormField extends Element
 
         $html = array($this->renderBegin());
         if($this->lableVisible){
-            $html[] = '<label class="col-lg-2 control-label">' . $this->label . '</label>';
-            $html[] = '<div class="col-lg-10 input-group">';
-        }else{
-            $html[] = '<div class="col-lg-12">';
+            $html[] = '<label class="control-label">' . $this->label . '</label>';
         }
 
+        if (!is_null($this->_leftAddon)) {
+            if ($this->_leftAddon instanceof ButtonGroup) {
+                $html[] = '<div class="input-group-btn">';
+                $html[] = $this->_leftAddon->render();
+                $html[] = '</div>';
+            } elseif ($this->_leftAddon instanceof Element) {
+                $html[] = '<div  class="input-group-btn">';
+                $html[] = $this->_leftAddon->render();
+                $html[] = '</div>';
+            } else {
+                $html[] = $this->_leftAddon;
+            }
+        }
         $html[] = $this->input->render();
-        $html[] = '</div>';
-        $html[] = $this->renderEnd();
+        if (!is_null($this->_rightAddon)) {
+            if ($this->_rightAddon instanceof ButtonGroup) {
+                $html[] = '<div class="input-group-btn">';
+                $html[] = $this->_leftAddon->render();
+                $html[] = '</div>';
+            } elseif ($this->_rightAddon instanceof Element) {
+                $html[] = '<div  class="input-group-btn">';
+                $html[] = $this->_rightAddon->render();
+                $html[] = '</div>';
+            } else {
+                $html[] = $this->_rightAddon;
+            }
+        }
 
+        $html[] = $this->renderEnd();
         return implode('', $html);
     }
 }

@@ -3,7 +3,6 @@ namespace Toy\Web;
 
 use Toy\Log\Logger;
 use Toy\Platform\PathUtil;
-use Toy\Html\Helper;
 use Toy\Html\Document;
 
 class Template
@@ -33,9 +32,6 @@ class Template
 
     public function __get($name)
     {
-        if (array_key_exists($name, self::$_helpers)) {
-            return self::$_helpers[$name];
-        }
         return $this->get($name);
     }
 
@@ -64,8 +60,13 @@ class Template
             return self::$_data[$name];
         }
 
-        if ($name == 'html') {
-            return Helper::singleton();
+        if (array_key_exists($name, self::$_helpers)) {
+            return self::$_helpers[$name];
+        }
+
+        $cr = $this->applicationContext->$name;
+        if(isset($cr)){
+            return $cr;
         }
 
         return $default;
@@ -217,15 +218,18 @@ class Template
     public function render($path)
     {
         $allPaths = array();
-        $root = Configuration::$templateRoot;
         $lang = Application::$context->request->getBrowserLanguage();
         $domain = Application::$context->router->domain;
+        $root = Configuration::$templateRoot;
+        $theme = Configuration::$templateTheme;
         $extensions = Configuration::$templateExtensions;
-        if($path[0] != '/'){
-            $path = '/'.$path;
+        if ($path[0] != '/') {
+            $path = '/' . $path;
         }
         $subPaths = array(
-            $domain->getName() . '/' . $lang . $path,
+            $domain->getName() . DIRECTORY_SEPARATOR . $theme . DIRECTORY_SEPARATOR . $lang . $path,
+            $domain->getName() . DIRECTORY_SEPARATOR . $theme . $path,
+            $domain->getName() . DIRECTORY_SEPARATOR . $lang . $path,
             $domain->getName() . $path,
             $path
         );

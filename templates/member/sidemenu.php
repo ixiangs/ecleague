@@ -8,6 +8,8 @@
                 <span class="pull-right"><i class="fa fa-chevron-left"></i></span></a>
             <ul>
                 <li><a href="<?php echo $this->router->buildUrl('void_weiweb/menu/list'); ?>"><?php echo $this->localize->_('weiweb_menu_list'); ?></a></li>
+                <li><a href="<?php echo $this->router->buildUrl('void_weiweb/setting/edit'); ?>"><?php echo $this->localize->_('weiweb_website_setting'); ?></a></li>
+
             </ul>
         </li>
         <li class="has_sub">

@@ -10,6 +10,7 @@ class Initializer
 
     public function initialize()
     {
+        Template::addHelper('html', \Toy\Html\Helper::singleton());
         PathUtil::scanCurrent(Configuration::$componentDirectory, function ($dir1, $info) {
 
             PathUtil::scanCurrent($dir1, function ($file1, $fileinfo2) {

@@ -15,10 +15,10 @@ class MenuController extends Web\Controller
     {
         $pi = $this->request->getParameter("pageindex", 1);
         $count = MenuModel::find()
-            ->eq('account_id', $this->context->identity->getId())
+            ->eq('website_id', $this->session->get('websiteId'))
             ->fetchCount();
         $models = MenuModel::find()
-            ->eq('account_id', $this->context->identity->getId())
+            ->eq('website_id', $this->session->get('websiteId'))
             ->limit(PAGINATION_SIZE, ($pi - 1) * PAGINATION_SIZE)
             ->load();
         $types = array();
@@ -84,7 +84,8 @@ class MenuController extends Web\Controller
             MenuModel::merge($data['id'], $data) :
             MenuModel::create($data);
         if ($model->isNewed()) {
-            $model->setAccountId($this->context->identity->getId());
+            $model->setAccountId($this->context->identity->getId())
+                ->setWebsiteId($this->session->get('websiteId'));
         }
         $vr = $model->validate();
         if ($vr !== true) {
@@ -118,14 +119,14 @@ class MenuController extends Web\Controller
     public function iconAction($id = null)
     {
         $files = array();
-        if($id){
+        if ($id) {
             $files[] = MenuModel::load($id)->getIcon();
         }
         return Web\Result::templateResult(array(
-            'files'=>$files,
-            'maxCount'=>1,
-            'inputId'=>'icon',
-            'accept'=>'.jpg,.jpeg,.gif,.png'
+            'files' => $files,
+            'maxCount' => 1,
+            'inputId' => 'icon',
+            'accept' => '.jpg,.jpeg,.gif,.png'
         ), '/upload');
     }
 
@@ -140,18 +141,18 @@ class MenuController extends Web\Controller
                 if (!FileUtil::checkExists($target)) {
                     FileUtil::moveUploadFile($upload->getTmpName(), $target);
                     return Web\Result::templateResult(array(
-                        'files'=>array('/assets/weiweb/menus/icons/' . $fname),
-                        'maxCount'=>1,
-                        'inputId'=>'icon',
-                        'accept'=>'.jpg,.jpeg,.gif,.png'
+                        'files' => array('/assets/weiweb/menus/icons/' . $fname),
+                        'maxCount' => 1,
+                        'inputId' => 'icon',
+                        'accept' => '.jpg,.jpeg,.gif,.png'
                     ), '/upload');
                 }
             }
         }
         return Web\Result::templateResult(array(
-            'files'=>$this->request->getPost('existed_files'),
-            'maxCount'=>1,
-            'inputId'=>'icon'
+            'files' => $this->request->getPost('existed_files'),
+            'maxCount' => 1,
+            'inputId' => 'icon'
         ), '/upload');
     }
 
@@ -172,8 +173,23 @@ class MenuController extends Web\Controller
                 }
             }
         }
+        $parents = MenuModel::find(false)
+            ->select('id', MenuModel::propertyToField('parent_id', 'parentId'), 'title')
+            ->eq('account_id', $this->context->identity->getId())
+            ->asc('parent_id');
+        if ($model->getId()) {
+            $parents->ne('id', $model->getId());
+        }
+        $parents = $parents->load()->toArray(function ($item) {
+            return array(null, array(
+                'id'=>$item->getId(),
+                'value' => $item->getId(),
+                'text' => $item->getTitle(),
+                'parentId' => $item->getParentId()
+            ));
+        });
         return Web\Result::templateResult(
-            array('model' => $model, 'typeName' => $typeName, 'formPath' => $path),
+            array('model' => $model, 'typeName' => $typeName, 'formPath' => $path, 'parents' => $parents),
             'edit'
         );
     }

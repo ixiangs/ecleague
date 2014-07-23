@@ -38,6 +38,10 @@ class Renderer
                     $path = str_replace('_', '/', implode('/', $parts));
                 }
 
+//                $data = $result->data;
+//                if(!array_key_exists('html', $data)){
+//                    $data['html'] = \Toy\Html\Helper::singleton();
+//                }
                 $temp = new Template($result->data);
                 $response->write($temp->render($path));
                 break;

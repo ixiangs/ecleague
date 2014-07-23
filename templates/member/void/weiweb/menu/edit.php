@@ -20,6 +20,9 @@ $f->addStaticField($this->localize->_('weiweb_menu_type'), $this->typeName);
 $f->newField($this->localize->_('title'), true,
     $this->html->textbox('title', 'data[title]', $this->model->getTitle())
         ->addValidateRule('required', true));
+$f->newField($this->localize->_('weiweb_parent_menu'), false,
+    $this->html->treeSelect('parent_id', 'data[parent_id]', $this->model->getParentId(), $this->parents)
+        ->setRoot(0, $this->localize->_('weiweb_root_menu')));
 $f->newField($this->localize->_('weiweb_icon'), false,
     $this->html->IframeInput('icon', 'data[icon]', $this->model->getIcon())
         ->setIframeUrl($this->router->buildUrl('icon', array('id'=>$this->model->getId())))

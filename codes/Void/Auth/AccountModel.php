@@ -101,7 +101,7 @@ class AccountModel extends Orm\Model
         }
 
         $result = new Identity($m->id, $m->username, $m->getDomains(), $roleCodes, $behaviorCodes);
-        Event::dispatch(Constant::EVENT_ACCOUNT_LOGIN, null, $result);
+        Event::dispatch(Constant::EVENT_ACCOUNT_LOGIN, $m, $result);
         return array(true, $result);
     }
 }

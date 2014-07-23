@@ -34,11 +34,12 @@ $f->newField($this->localize->_('status'), true,
         \Void\Content\Constant::STATUS_ARTICLE_PUBLISHED => $this->localize->_('content_status_published'),
         \Void\Content\Constant::STATUS_ARTICLE_UNPUBLISHED => $this->localize->_('content_status_unpublished')
     )));
-$f->newField($this->localize->_('content'), true,
+$f->newField($this->localize->_('content_introduction'), false,
+    $this->html->textarea('introduction', 'data[introduction]', $this->model->getIntroduction())
+        ->setAttribute('style', 'height:60px'));
+$f->newField($this->localize->_('content_content'), true,
     $this->html->textarea('content', 'data[content]', $this->model->getContent())
-        ->setAttribute('style', 'height:300px')
-        ->addValidateRule('required', true))
-    ->setLabelVisible(false);
+        ->addValidateRule('required', true));
 $f->addHidden('id', 'data[id]', $this->model->getId());
 $f->addHidden('directory', 'data[directory]', $this->model->getDirectory());
 $this->assign('form', $f);

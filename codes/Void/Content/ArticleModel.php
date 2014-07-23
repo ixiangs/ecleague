@@ -47,6 +47,7 @@ ArticleModel::registerMetadata(array(
         Orm\IntegerProperty::create('end_time')->setDefaultValue(0),
         Orm\IntegerProperty::create('status')->setDefaultValue(0),
         Orm\StringProperty::create('directory')->setUpdateable(false),
+        Orm\StringProperty::create('introduction'),
         Orm\StringProperty::create('intro_image'),
         Orm\StringProperty::create('article_image')
     )

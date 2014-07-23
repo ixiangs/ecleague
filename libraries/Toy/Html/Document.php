@@ -9,9 +9,19 @@ class Document
     protected $cssBlocks = array();
     protected $metadatas = array();
     protected $breadcrumbs = array();
+    protected $title = '';
 
     private function __construct()
     {
+    }
+
+    public function getTitle(){
+        return $this->title;
+    }
+
+    public function setTitle($value){
+        $this->title = $value;
+        return $this;
     }
 
     public function getMetadatas()

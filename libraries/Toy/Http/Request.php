@@ -34,7 +34,8 @@ class Request implements \ArrayAccess
 
     public function isAjax()
     {
-        return array_key_exists('HTTP_X_REQUESTED_WITH', $_SERVER) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest';
+        return (array_key_exists('HTTP_X_REQUESTED_WITH', $_SERVER) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest')
+            || (array_key_exists('X-Requested-With', $_SERVER) && strtolower($_SERVER['X-Requested-With']) == 'xmlhttprequest');
     }
 
     public function isHttps()

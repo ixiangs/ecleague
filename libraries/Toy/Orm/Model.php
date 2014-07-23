@@ -107,7 +107,8 @@ abstract class Model implements \ArrayAccess, \Iterator
         return count($this->changedProperties) > 0;
     }
 
-    public function propertyIsChanged($name){
+    public function propertyIsChanged($name)
+    {
         return in_array($name, $this->changedProperties);
     }
 
@@ -357,7 +358,9 @@ abstract class Model implements \ArrayAccess, \Iterator
     {
         $props = $this->metadata->getProperties();
         foreach ($row as $field => $value) {
-            $this->data[$field] = array_key_exists($field, $props) ? $props[$field]->fromDbValue($value) : $value;
+            $this->data[$field] = array_key_exists($field, $props) ?
+                $props[$field]->fromDbValue($value) :
+                $value;
         }
         $this->originalData = $this->data;
         return $this;

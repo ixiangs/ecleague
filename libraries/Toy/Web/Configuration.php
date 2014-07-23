@@ -16,6 +16,7 @@ class Configuration
     static public $languagePath = null;
     static public $templateExtensions = array('.php');
     static public $templateRoot = '';
+    static public $templateTheme = '';
     static public $componentDirectory = null;
     static public $logger = null;
     static public $trace = false;

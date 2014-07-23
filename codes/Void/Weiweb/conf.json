@@ -5,6 +5,10 @@
     "version": "0.0.0.1",
     "author": "IXiangs Studio",
     "website": "ixiangs.com",
+    "listeners": {
+        "webPostRoute": "\\Void\\Weiweb\\Observer::webPostRoute",
+        "authOnLogin": "\\Void\\Weiweb\\Observer::authOnLogin"
+    },
     "breadcrumbs": {
         "void_weiweb": "weiweb_manage",
         "website_list": "weiweb_website_list",

@@ -71,6 +71,7 @@ class ArticleController extends Web\Controller
         if ($upload->isOk() && $upload->isImage()) {
             $target = null;
             $fname = null;
+            FileUtil::createDirectory($path);
             while (true) {
                 $fname = RandomUtil::randomCharacters() . '.' . $upload->getExtension();
                 $target = $path . DS . $fname;

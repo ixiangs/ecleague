@@ -122,20 +122,12 @@ class Router
                 }
             }
             if (count($arr) > 0) {
-                if(strpos('?', $url) === false){
-                    $url .= '?' . http_build_query($arr);
-                }else{
-                    $url .= '&' . http_build_query($arr);
-                }
+                $url .= (strpos($url, '?') === false? '?': '&') . http_build_query($arr);
             }
         } elseif (is_string($params) && $params == '*') {
             $query = Application::$context->request->getAllQuery();
             if (is_array($query) && count($query) > 0) {
-                if(strpos('?', $url) === false){
-                    $url .= '?' . http_build_query($query);
-                }else{
-                    $url .= '&' . http_build_query($query);
-                }
+                $url .= (strpos($url, '?') === false? '?': '&') . http_build_query($arr);
             }
         }
         return $url;

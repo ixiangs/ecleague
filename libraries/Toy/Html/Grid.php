@@ -118,6 +118,20 @@ class Grid extends Element
         return $col;
     }
 
+    public function addTextboxColumn($headText, $attrs, $rules = null, $headCss = null, $cellCss = null)
+    {
+        $span = new Textbox(array_key_exists('type', $attrs)? $attrs['type']: 'text');
+        $span->setAttribute($attrs);
+        if(is_array($rules)){
+            foreach($rules as $k=>$v){
+                $span->addValidateRule($k, $v);
+            }
+        }
+        $col = $this->createColumn($headText, $headCss, $cellCss);
+        $col->getCell()->addChild($span);
+        return $col;
+    }
+
 //    public function addCheckboxColumn($checkboxName, $checkboxValue, $checkboxId, $headText, $headCss = null, $cellCss = null)
 //    {
 //        $span = new Element('input', array(

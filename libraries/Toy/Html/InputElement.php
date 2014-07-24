@@ -16,7 +16,7 @@ class InputElement extends Element
         return $this;
     }
 
-    public function renderAttribute()
+    public function renderAttribute($data = array())
     {
         foreach ($this->validateRules as $name => $rule) {
             $this->setAttribute('data-validate-' . $name, $rule['value'] === true ? 'true' : $rule['value']);
@@ -24,6 +24,6 @@ class InputElement extends Element
                 $this->setAttribute('data-validate-' . $name . '-msg', $rule['message']);
             }
         }
-        return parent::renderAttribute();
+        return parent::renderAttribute($data);
     }
 }

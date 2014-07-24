@@ -9,5 +9,5 @@ class Constant
     const TABLE_WEBSITE = '{t}weiweb_website';
 
     const STATUS_MENU_ENABLE = 1;
-    const STATUS_MENU_DISABLED = 0;
+    const STATUS_MENU_DISABLED = 2;
 } 

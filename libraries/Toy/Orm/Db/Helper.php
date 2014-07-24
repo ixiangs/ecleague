@@ -53,11 +53,15 @@ class Helper
             $db->open();
             $db->begin();
             $result = $handler($db);
-            $db->commit();
+            if (!$result) {
+                $db->rollback();
+            } else {
+                $db->commit();
+            }
             return $result;
         } catch (\Exception $ex) {
             $db->rollback();
-            if(!is_null($error)){
+            if (!is_null($error)) {
                 return $error($ex);
             }
             throw $ex;

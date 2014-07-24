@@ -38,7 +38,6 @@ class TreeSelect extends Select
             } else {
                 $html[] = '<option value="' . $this->_root['value'] . '">' . $this->_root['text'] . '</option>';
             }
-
         }
 
         $this->sortOptions(0, $level);
@@ -55,7 +54,8 @@ class TreeSelect extends Select
 
     private function sortOptions($parentId = 0, $level = 0)
     {
-        foreach ($this->options as $option) {
+        for($i = 0; $i < count($this->options); $i++){
+            $option = $this->options[$i];
             if ($option['parentId'] == $parentId) {
                 $option['level'] = $level;
                 $this->_sortedOptions[] = $option;

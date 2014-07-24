@@ -14,6 +14,7 @@ weiweb_parent_menu,父菜单
 weiweb_root_menu,根菜单
 weiweb_err_upload_icon,只能上传图片(.jpg、.jpeg、.png、.gif)
 weiweb_err_background_image,只能上传图片(.jpg、.jpeg、.png)
+weiweb_sort,排序
 weiweb_website_setting,网站设置
 weiweb_background_color,背景颜色
 weiweb_background_image,背景图片

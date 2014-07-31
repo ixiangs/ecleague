@@ -1,6 +1,4 @@
 <?php
-
-
 if (preg_match('/^\/static\/|^\/assets\/|\.ico|\.html$/', $_SERVER["REQUEST_URI"])) {
     return false;
 } else {

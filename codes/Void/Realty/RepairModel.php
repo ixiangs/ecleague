@@ -2,8 +2,6 @@
 namespace Void\Realty;
 
 use Toy\Orm, Toy\Orm\Db;
-use Void\System;
-use Void\Realty\Constant;
 
 class RepairModel extends Orm\Model
 {

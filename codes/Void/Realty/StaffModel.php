@@ -2,7 +2,6 @@
 namespace Void\Realty;
 
 use Toy\Orm, Toy\Orm\Db;
-use Void\System;
 
 class StaffModel extends Orm\Model
 {

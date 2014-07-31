@@ -1,7 +1,6 @@
 <?php
-namespace Void\System;
+namespace Void\Core;
 
-use Void\System\Constant;
 use Toy\Orm;
 
 class SettingModel extends Orm\Model{

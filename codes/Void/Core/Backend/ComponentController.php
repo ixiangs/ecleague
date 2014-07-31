@@ -1,7 +1,7 @@
 <?php
-namespace Void\System\Backend;
+namespace Void\Core\Backend;
 
-use Void\System\ComponentModel;
+use Void\Core\ComponentModel;
 use Toy\Web;
 
 class ComponentController extends Web\Controller

@@ -1,8 +1,5 @@
 <?php
-namespace Void\System;
-
-
-use Void\System\ComponentModel;
+namespace Void\Core;
 
 class Helper {
 

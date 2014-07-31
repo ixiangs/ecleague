@@ -1,12 +1,12 @@
 <?php
-namespace Void\Weiweb\Member;
+namespace Void\Website\Member;
 
 use Toy\Platform\FileUtil;
 use Toy\Platform\PathUtil;
 use Toy\Util\RandomUtil;
 use Void\Auth;
 use Toy\Web;
-use Void\Weiweb\WebsiteModel;
+use Void\Website\WebsiteModel;
 
 class SettingController extends Web\Controller
 {

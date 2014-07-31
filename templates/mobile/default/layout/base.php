@@ -25,7 +25,7 @@
 <ul class="nav nav-justified">
 <?php
 $menus = $this->website->getMenus()
-->eq('status', \Void\Weiweb\Constant::STATUS_MENU_ENABLE)
+->eq('status', \Void\Website\Constant::STATUS_MENU_ENABLE)
 ->asc('parent_id', 'ordering')
 ->load();
 foreach ($menus as $menu):

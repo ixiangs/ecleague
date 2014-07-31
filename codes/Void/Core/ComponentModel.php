@@ -1,7 +1,7 @@
 <?php
-namespace Void\System;
+namespace Void\Core;
 
-use Void\System\Constant;
+use Void\Core\Constant;
 use Toy\Orm;
 
 class ComponentModel extends Orm\Model

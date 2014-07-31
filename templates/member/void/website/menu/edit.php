@@ -16,16 +16,16 @@ $f = $this->html->form();
 $this->assign('form', $f);
 
 
-$f->addStaticField($this->localize->_('weiweb_menu_type'), $this->typeName);
+$f->addStaticField($this->localize->_('website_menu_type'), $this->typeName);
 $f->newField($this->localize->_('title'), true,
     $this->html->textbox('title', 'data[title]', $this->model->getTitle())
         ->addValidateRule('required', true));
-$f->newField($this->localize->_('weiweb_parent_menu'), false,
+$f->newField($this->localize->_('website_parent_menu'), false,
     $this->html->treeSelect('parent_id', 'data[parent_id]', $this->model->getParentId(), $this->parents)
-        ->setRoot(0, $this->localize->_('weiweb_root_menu')));
-$f->newField($this->localize->_('weiweb_sort'), false,
+        ->setRoot(0, $this->localize->_('website_root_menu')));
+$f->newField($this->localize->_('website_sort'), false,
     $this->html->select('ordering', 'data[ordering]', $this->model->getOrdering(), $this->orderings));
-$f->newField($this->localize->_('weiweb_icon'), false,
+$f->newField($this->localize->_('website_icon'), false,
     $this->html->IframeInput('icon', 'data[icon]', $this->model->getIcon())
         ->setIframeUrl($this->router->buildUrl('icon', array('id' => $this->model->getId())))
         ->setIframeClass('upload-iframe'));
@@ -35,7 +35,7 @@ $f->newField($this->localize->_('enable'), true,
         '0' => $this->localize->_('no')
     )));
 $this->includeTemplate($this->formPath);
-$f->newField($this->localize->_('weiweb_link'), true,
+$f->newField($this->localize->_('website_link'), true,
     $this->html->textbox('link', 'data[link]', $this->model->getLink())
         ->addValidateRule('required', true));
 $f->addHidden('id', 'data[id]', $this->model->getId());

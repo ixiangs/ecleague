@@ -82,7 +82,7 @@ class BuildingController extends Web\Controller
     {
         return Web\Result::templateResult(
             array('model' => $model),
-            'realty/building/edit'
+            'edit'
         );
     }
 }

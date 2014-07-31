@@ -8,18 +8,18 @@ $dt->addLabelColumn($this->localize->_('title'), '@{title}', '', 'left')
     ->setCellRenderer(function($cell, $row, $index){
         return '<td>'.str_repeat('-', $row['level']).' '.$row['title'].'</td>';
     });
-$dt->addTextboxColumn($this->localize->_('weiweb_sort'),
+$dt->addTextboxColumn($this->localize->_('website_sort'),
     array('value'=>'@{ordering}', 'name'=>'@orderings[{id}]', 'maxlength'=>2, 'class'=>'ordering', 'style'=>'width:60px;'),
     array('required'=>'true', 'integer'=>'true'),
     'small', 'left')
     ->setHeadRenderer(function($cell){
-        return '<th class="small"><div class="pull-left">'.$this->localize->_('weiweb_sort').'</div>'
+        return '<th class="small"><div class="pull-left">'.$this->localize->_('website_sort').'</div>'
                 .'<div class="pull-right">'
                 .'<a href="javascript:saveOrdering()">'
                 .'<span class="glyphicon glyphicon-floppy-disk"></span>'
                 .'</a></div></th>';
     });;
-$dt->addStatusColumn($this->localize->_('weiweb_menu_type'), '@{type_id}', $this->types, 'middle', 'left');
+$dt->addStatusColumn($this->localize->_('website_menu_type'), '@{type_id}', $this->types, 'middle', 'left');
 $dt->addLinkColumn('', $this->localize->_('edit'), '@'.urldecode($this->router->buildUrl('edit', array('id'=>'{id}'))), 'edit', 'edit');
 $dt->addButtonColumn('', $this->localize->_('delete'), "@deleteConfirm('".urldecode($this->router->buildUrl('delete', array('id'=>'{id}')))."')", 'edit', 'edit');
 $this->assign('datatable', $dt);

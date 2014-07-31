@@ -1,5 +1,5 @@
 <?php
-namespace Void\Weiweb;
+namespace Void\Website;
 
 use Toy\Html\Document;
 use Toy\Web\Configuration;

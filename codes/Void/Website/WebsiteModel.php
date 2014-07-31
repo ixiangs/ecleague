@@ -1,8 +1,7 @@
 <?php
-namespace Void\Weiweb;
+namespace Void\Website;
 
 use Toy\Orm, Toy\Orm\Db;
-use Void\System;
 
 class WebsiteModel extends Orm\Model
 {

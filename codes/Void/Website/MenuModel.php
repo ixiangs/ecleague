@@ -1,14 +1,58 @@
 <?php
-namespace Void\Weiweb;
+namespace Void\Website;
 
 use Toy\Orm, Toy\Orm\Db;
-use Void\System;
 
 class MenuModel extends Orm\Model
 {
 
     protected function beforeInsert($db)
     {
+        $this->insertOrdering($db);
+        return parent::beforeInsert($db);
+    }
+
+    protected function beforeUpdate($db)
+    {
+        if ($this->propertyIsChanged('parent_id')){
+            $this->insertOrdering($db);
+            return parent::beforeUpdate($db);
+        }
+
+        if ($this->propertyIsChanged('ordering')) {
+            $co = $this->ordering;
+            $so = $this->originalData['ordering'];
+            if($so < $co){
+                self::find()
+                    ->eq('parent_id', $this->parent_id)
+                    ->le('ordering', $co)
+                    ->ge('ordering', $co)
+                    ->load()
+                    ->each(function ($item) use ($db) {
+                        Db\Helper::update(Constant::TABLE_MENU, array(
+                            'ordering' => $item->ordering + 1
+                        ))
+                            ->eq('id', $item->id)
+                            ->execute($db);
+                    });
+            }elseif($so > $co){
+                self::find()
+                    ->eq('parent_id', $this->parent_id)
+                    ->ge('ordering', $co)
+                    ->load()
+                    ->each(function ($item) use ($db) {
+                        Db\Helper::update(Constant::TABLE_MENU, array(
+                            'ordering' => $item->ordering + 1
+                        ))
+                            ->eq('id', $item->id)
+                            ->execute($db);
+                    });
+            }
+
+        }
+    }
+
+    private function insertOrdering($db){
         if ($this->ordering == 0) {
             $max = self::find(false)
                 ->select('ordering')
@@ -30,26 +74,6 @@ class MenuModel extends Orm\Model
                         ->execute($db);
                 });
         }
-
-        return parent::beforeInsert($db);
-    }
-
-    protected function beforeUpdate($db)
-    {
-        if ($this->propertyIsChanged('parent_id') || $this->propertyIsChanged('ordering')) {
-            self::find()
-                ->eq('parent_id', $this->parent_id)
-                ->ge('ordering', $this->ordering)
-                ->load()
-                ->each(function ($item) use ($db) {
-                    Db\Helper::update(Constant::TABLE_MENU, array(
-                        'ordering' => $item->ordering + 1
-                    ))
-                        ->eq('id', $item->id)
-                        ->execute($db);
-                });
-        }
-        return parent::afterInsert($db);
     }
 }
 

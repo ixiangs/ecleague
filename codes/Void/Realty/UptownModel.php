@@ -2,9 +2,6 @@
 namespace Void\Realty;
 
 use Toy\Orm, Toy\Orm\Db;
-use Void\System;
-use Void\Content\PublisherModel;
-use Void\Realty\Constant;
 
 class UptownModel extends Orm\Model
 {

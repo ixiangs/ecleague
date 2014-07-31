@@ -1,5 +1,5 @@
 <?php
-namespace Void\System;
+namespace Void\Core;
 
 use Toy\Web\Template;
 use Toy\Web\Application;

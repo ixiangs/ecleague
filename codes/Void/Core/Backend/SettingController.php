@@ -1,7 +1,7 @@
 <?php
-namespace Void\System\Backend;
+namespace Void\Core\Backend;
 
-use Void\System\SettingModel;
+use Void\Core\SettingModel;
 use Toy\Web;
 
 class SettingController extends Web\Controller

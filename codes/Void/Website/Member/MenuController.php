@@ -1,5 +1,5 @@
 <?php
-namespace Void\Weiweb\Member;
+namespace Void\Website\Member;
 
 use Toy\Orm\Db\Helper;
 use Toy\Platform\FileUtil;
@@ -7,8 +7,8 @@ use Toy\Platform\PathUtil;
 use Toy\Util\RandomUtil;
 use Void\Auth;
 use Toy\Web;
-use Void\Weiweb\Constant;
-use Void\Weiweb\MenuModel;
+use Void\Website\Constant;
+use Void\Website\MenuModel;
 
 class MenuController extends Web\Controller
 {
@@ -156,7 +156,7 @@ class MenuController extends Web\Controller
     public function iconPostAction()
     {
         $upload = $this->request->getFile('uploadfile');
-        $path = PathUtil::combines(ASSET_PATH, 'weiweb', 'menus', 'icons');
+        $path = PathUtil::combines(ASSET_PATH, 'website', 'menus', 'icons');
         if ($upload->isOk() && $upload->isImage()) {
             while (true) {
                 $fname = RandomUtil::randomCharacters() . '.' . $upload->getExtension();
@@ -164,7 +164,7 @@ class MenuController extends Web\Controller
                 if (!FileUtil::checkExists($target)) {
                     FileUtil::moveUploadFile($upload->getTmpName(), $target);
                     return Web\Result::templateResult(array(
-                        'files' => array('/assets/weiweb/menus/icons/' . $fname),
+                        'files' => array('/assets/website/menus/icons/' . $fname),
                         'maxCount' => 1,
                         'inputId' => 'icon',
                         'accept' => '.jpg,.jpeg,.gif,.png'

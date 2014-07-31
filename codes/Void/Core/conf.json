@@ -6,7 +6,7 @@
     "author": "IXiangs Studio",
     "website": "ixiangs.com",
     "listeners": {
-        "webOnStart": "\\Void\\System\\Observer::webOnStart"
+        "webOnStart": "\\Void\\Core\\Observer::webOnStart"
     },
     "breadcrumbs": {
         "backend": {

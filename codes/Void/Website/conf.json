@@ -6,8 +6,8 @@
     "author": "IXiangs Studio",
     "website": "ixiangs.com",
     "listeners": {
-        "webPostRoute": "\\Void\\Weiweb\\Observer::webPostRoute",
-        "authOnLogin": "\\Void\\Weiweb\\Observer::authOnLogin"
+        "webPostRoute": "\\Void\\Website\\Observer::webPostRoute",
+        "authOnLogin": "\\Void\\Website\\Observer::authOnLogin"
     },
     "breadcrumbs": {
         "void_weiweb": "weiweb_manage",

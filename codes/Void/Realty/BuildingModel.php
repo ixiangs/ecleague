@@ -9,7 +9,7 @@ class BuildingModel extends Orm\Model
 }
 
 BuildingModel::registerMetadata(array(
-    'table' => Constant::TABLE_BUILDING,
+    'table' => VOID_REALTY_TABLE_BUILDING,
     'properties' => array(
         Orm\IntegerProperty::create('id')->setPrimaryKey(true)->setAutoIncrement(true),
         Orm\StringProperty::create('name')->setNullable(false),

@@ -2,7 +2,6 @@
 namespace Void\Content;
 
 use Toy\Orm;
-use Void\Content\Constant;
 use Toy\Platform\FileUtil;
 use Toy\Platform\PathUtil;
 use Toy\Util\RandomUtil;
@@ -36,7 +35,7 @@ class ArticleModel extends Orm\Model
 }
 
 ArticleModel::registerMetadata(array(
-    'table' => Constant::TABLE_ARTICLE,
+    'table' => VOID_CONTENT_TABLE_ARTICLE,
     'properties' => array(
         Orm\IntegerProperty::create('id')->setPrimaryKey(true)->setAutoIncrement(true),
         Orm\IntegerProperty::create('category_id')->setNullable(false),

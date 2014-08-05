@@ -56,10 +56,17 @@ class Initializer
         });
 
         foreach (Application::$components as $component) {
-            $listeners = $component->getListeners();
+            $listeners = $component->getSetting('listeners');
             if ($listeners) {
                 foreach ($listeners as $en => $eh) {
                     Event::attach($en, $eh);
+                }
+            }
+
+            $constants = $component->getSetting('constants');
+            if ($constants) {
+                foreach ($constants as $k=>$v) {
+                    define($k, $v);
                 }
             }
         }

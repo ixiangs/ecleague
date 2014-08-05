@@ -9,6 +9,22 @@
         "webOnStart": "\\Void\\Auth\\Observer::webOnStart",
         "webPostRoute": "\\Void\\Auth\\Observer::webPostRoute"
     },
+    "constants": {
+        "VOID_AUTH_TABLE_ACCOUNT": "{t}auth_account",
+        "VOID_AUTH_TABLE_ROLE": "{t}auth_role",
+        "VOID_AUTH_TABLE_BEHAVIOR": "{t}auth_behavior",
+        "VOID_AUTH_TABLE_GROUP": "{t}auth_group",
+        "VOID_AUTH_STATUS_ACCOUNT_ACTIVATED": "1",
+        "VOID_AUTH_STATUS_ACCOUNT_NONACTIVATED": "2",
+        "VOID_AUTH_STATUS_ACCOUNT_DISABLED": "3",
+        "VOID_AUTH_EVENT_ACCOUNT_LOGIN": "authOnLogin",
+        "VOID_AUTH_ERROR_ACCOUNT_NOT_FOUND": "1",
+        "VOID_AUTH_ERROR_ACCOUNT_PASSWORD": "2",
+        "VOID_AUTH_ERROR_ACCOUNT_DISABLED": "3",
+        "VOID_AUTH_ERROR_ACCOUNT_NONACTIVATED": "4",
+        "VOID_AUTH_ERROR_ACCOUNT_REPEATED": "5",
+        "VOID_AUTH_ERROR_UNKNOW": "99"
+    },
     "breadcrumbs": {
         "void_auth": "auth_manage",
         "account_list": "auth_account_list",

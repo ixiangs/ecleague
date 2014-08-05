@@ -9,7 +9,7 @@ class ComplaintModel extends Orm\Model
 }
 
 ComplaintModel::registerMetadata(array(
-    'table' => Constant::TABLE_COMPLAINT,
+    'table' => VOID_REALTY_TABLE_COMPLAINT,
     'properties' => array(
         Orm\IntegerProperty::create('id')->setPrimaryKey(true)->setAutoIncrement(true),
         Orm\StringProperty::create('contacts')->setNullable(false),

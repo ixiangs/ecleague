@@ -31,8 +31,8 @@ $f->newField($this->localize->_('content_article_image'), false,
         ->setIframeClass('upload-iframe'));
 $f->newField($this->localize->_('status'), true,
     $this->html->select('status', 'data[status]', $this->model->getStatus(), array(
-        \Void\Content\Constant::STATUS_ARTICLE_PUBLISHED => $this->localize->_('content_status_published'),
-        \Void\Content\Constant::STATUS_ARTICLE_UNPUBLISHED => $this->localize->_('content_status_unpublished')
+        VOID_CONTENT_STATUS_ARTICLE_PUBLISHED => $this->localize->_('content_status_published'),
+        VOID_CONTENT_STATUS_ARTICLE_UNPUBLISHED => $this->localize->_('content_status_unpublished')
     )));
 $f->newField($this->localize->_('content_introduction'), false,
     $this->html->textarea('introduction', 'data[introduction]', $this->model->getIntroduction())

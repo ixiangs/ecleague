@@ -2,8 +2,6 @@
 namespace Void\Content\Backend;
 
 use Void\Content\CategoryModel;
-use Void\Content\PublisherModel;
-use Void\Auth\AccountModel;
 use Toy\Web;
 
 class CategoryController extends Web\Controller

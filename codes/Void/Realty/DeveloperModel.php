@@ -10,7 +10,7 @@ class DeveloperModel extends Orm\Model
 }
 
 DeveloperModel::registerMetadata(array(
-    'table' => Constant::TABLE_DEVELOPER,
+    'table' => VOID_REALTY_TABLE_DEVELOPER,
     'properties' => array(
         Orm\IntegerProperty::create('id')->setPrimaryKey(true)->setAutoIncrement(true),
         Orm\StringProperty::create('name')->setNullable(false)

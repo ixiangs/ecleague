@@ -5,6 +5,10 @@
     "version": "0.0.0.1",
     "author": "IXiangs Studio",
     "website": "ixiangs.com",
+    "constants": {
+        "VOID_CORE_TABLE_COMPONENT": "{t}system_component",
+        "VOID_CORE_TABLE_SETTING": "{t}system_setting"
+    },
     "listeners": {
         "webOnStart": "\\Void\\Core\\Observer::webOnStart"
     },

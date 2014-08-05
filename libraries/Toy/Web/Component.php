@@ -23,7 +23,6 @@ class Component
         $this->_author = $this->_settings['author'];
         $this->_version = $this->_settings['version'];
         $this->_website = $this->_settings['website'];
-//        $this->_breadcrumbs = array_key_exists('breadcrumbs', $settings) ? $settings['breadcrumbs'] : null;
         $this->_listeners = array_key_exists('listeners', $settings) ? $settings['listeners'] : null;
     }
 
@@ -62,22 +61,5 @@ class Component
             return $this->_settings[$name];
         }
         return null;
-    }
-//    public function getBreadcrumbs()
-//    {
-//        if ($this->_breadcrumbs) {
-//            return $this->_breadcrumbs;
-////            $router = Application::$context->router;
-////            $domain = $router->domain->getName();
-////            if (array_key_exists($domain, $this->_breadcrumbs)) {
-////                return $this->_breadcrumbs[$domain];
-////            }
-//        }
-//        return null;
-//    }
-
-    public function getListeners()
-    {
-        return $this->_listeners;
     }
 }

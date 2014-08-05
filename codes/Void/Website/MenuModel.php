@@ -14,7 +14,7 @@ class MenuModel extends Orm\Model
 
     protected function beforeUpdate($db)
     {
-        if ($this->propertyIsChanged('parent_id')){
+        if ($this->propertyIsChanged('parent_id')) {
             $this->insertOrdering($db);
             return parent::beforeUpdate($db);
         }
@@ -22,7 +22,7 @@ class MenuModel extends Orm\Model
         if ($this->propertyIsChanged('ordering')) {
             $co = $this->ordering;
             $so = $this->originalData['ordering'];
-            if($so < $co){
+            if ($so < $co) {
                 self::find()
                     ->eq('parent_id', $this->parent_id)
                     ->le('ordering', $co)
@@ -35,10 +35,11 @@ class MenuModel extends Orm\Model
                             ->eq('id', $item->id)
                             ->execute($db);
                     });
-            }elseif($so > $co){
+            } elseif ($so > $co) {
                 self::find()
                     ->eq('parent_id', $this->parent_id)
                     ->ge('ordering', $co)
+                    ->lt('ordering', $so)
                     ->load()
                     ->each(function ($item) use ($db) {
                         Db\Helper::update(Constant::TABLE_MENU, array(
@@ -52,7 +53,8 @@ class MenuModel extends Orm\Model
         }
     }
 
-    private function insertOrdering($db){
+    private function insertOrdering($db)
+    {
         if ($this->ordering == 0) {
             $max = self::find(false)
                 ->select('ordering')

@@ -18,7 +18,7 @@ class StaffModel extends Orm\Model
 }
 
 StaffModel::registerMetadata(array(
-    'table' => Constant::TABLE_STAFF,
+    'table' => VOID_REALTY_TABLE_STAFF,
     'properties' => array(
         Orm\IntegerProperty::create('id')->setPrimaryKey(true)->setAutoIncrement(true),
         Orm\IntegerProperty::create('uptown_id')->setNullable(false),

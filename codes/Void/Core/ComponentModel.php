@@ -10,7 +10,7 @@ class ComponentModel extends Orm\Model
 }
 
 ComponentModel::registerMetadata(array(
-    'table' => Constant::TABLE_COMPONENT,
+    'table' => VOID_CORE_TABLE_COMPONENT,
     'properties' => array(
         Orm\StringProperty::create('id')->setPrimaryKey(true),
         Orm\StringProperty::create('code')->setNullable(false)->setUnique(true),

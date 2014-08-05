@@ -2,7 +2,6 @@
 namespace Void\Auth;
 
 use Toy\Orm;
-use Void\Auth\Constant;
 
 class BehaviorModel extends Orm\Model
 {
@@ -10,7 +9,7 @@ class BehaviorModel extends Orm\Model
 }
 
 BehaviorModel::registerMetadata(array(
-    'table' => Constant::TABLE_BEHAVIOR,
+    'table' => VOID_AUTH_TABLE_BEHAVIOR,
     'properties' => array(
         Orm\IntegerProperty::create('id')->setPrimaryKey(true)->setAutoIncrement(true),
         Orm\StringProperty::create('code')->setUnique(true)->setUpdateable(false),

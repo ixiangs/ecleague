@@ -10,7 +10,7 @@ class GroupModel extends Orm\Model
 }
 
 GroupModel::registerMetadata(array(
-    'table' => Constant::TABLE_GROUP,
+    'table' => VOID_AUTH_TABLE_GROUP,
     'properties' => array(
         Orm\IntegerProperty::create('id')->setPrimaryKey(true)->setAutoIncrement(true),
         Orm\StringProperty::create('code')->setUnique(true)->setUpdateable(false),

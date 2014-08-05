@@ -3,8 +3,6 @@ namespace Void\Content\Backend;
 
 use Void\Content\ArticleModel;
 use Void\Content\CategoryModel;
-use Void\Content\PublisherModel;
-use Void\Auth\AccountModel;
 use Toy\Web;
 
 class ArticleController extends Web\Controller

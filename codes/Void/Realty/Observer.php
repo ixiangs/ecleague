@@ -1,7 +1,6 @@
 <?php
 namespace Void\Realty;
 
-use Void\Realty\UptownModel;
 use Toy\Web\Application;
 
 class Observer

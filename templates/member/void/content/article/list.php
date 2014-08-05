@@ -11,9 +11,9 @@ $dt->addLabelColumn($this->localize->_('category'), '@{category_name}', 'middle'
         return '<td>'.($cname? $cname: $this->localize->_('content_uncategory')).'</td>';
     });
 $dt->addStatusColumn($this->localize->_('status'), '@{status}', array(
-        \Void\Content\Constant::STATUS_ARTICLE_PUBLISHED=>'<span class="label label-success">'.$this->localize->_('content_status_published').'</span>',
-        \Void\Content\Constant::STATUS_ARTICLE_UNPUBLISHED=>'<span class="label label-warning">'.$this->localize->_('content_status_unpublished').'</span>',
-        \Void\Content\Constant::STATUS_ARTICLE_DISABLED=>'<span class="label label-danger">'.$this->localize->_('content_status_disabled').'</span>'),
+        VOID_CONTENT_STATUS_ARTICLE_PUBLISHED=>'<span class="label label-success">'.$this->localize->_('content_status_published').'</span>',
+        VOID_CONTENT_STATUS_ARTICLE_UNPUBLISHED=>'<span class="label label-warning">'.$this->localize->_('content_status_unpublished').'</span>',
+        VOID_CONTENT_STATUS_ARTICLE_DISABLED=>'<span class="label label-danger">'.$this->localize->_('content_status_disabled').'</span>'),
     'small', 'small text-center');
 $dt->addLinkColumn('', $this->localize->_('edit'), '@'.urldecode($this->router->buildUrl('edit', array('id'=>'{id}'))), 'edit', 'edit');
 $dt->addButtonColumn('', $this->localize->_('delete'), "@deleteConfirm('".urldecode($this->router->buildUrl('delete', array('id'=>'{id}')))."')", 'edit', 'edit');

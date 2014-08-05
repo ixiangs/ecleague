@@ -9,7 +9,7 @@ class RepairModel extends Orm\Model
 }
 
 RepairModel::registerMetadata(array(
-    'table' => Constant::TABLE_REPAIR,
+    'table' => VOID_REALTY_TABLE_REPAIR,
     'properties' => array(
         Orm\IntegerProperty::create('id')->setPrimaryKey(true)->setAutoIncrement(true),
         Orm\StringProperty::create('contacts')->setNullable(false),

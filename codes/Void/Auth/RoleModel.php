@@ -2,7 +2,6 @@
 namespace Void\Auth;
 
 use Toy\Orm;
-use Void\Auth\Constant;
 
 class RoleModel extends Orm\Model{
 
@@ -12,7 +11,7 @@ class RoleModel extends Orm\Model{
 }
 
 RoleModel::registerMetadata(array(
-    'table'=>Constant::TABLE_ROLE,
+    'table'=>VOID_AUTH_TABLE_ROLE,
     'properties'=>array(
         Orm\IntegerProperty::create('id')->setPrimaryKey(true)->setAutoIncrement(true),
         Orm\StringProperty::create('code')->setUnique(true)->setUpdateable(false),

@@ -3,10 +3,7 @@ namespace Void\Auth;
 
 use Toy\Event;
 use Toy\Orm;
-use Toy\Orm\Helper;
 use Toy\Util\EncryptUtil;
-use Void\Auth\Identity;
-use Void\Auth\Constant;
 
 class AccountModel extends Orm\Model
 {
@@ -34,15 +31,15 @@ class AccountModel extends Orm\Model
     {
         $m = static::load($id);
         if (!$m->comparePassword($old)) {
-            return Constant::ERROR_ACCOUNT_PASSWORD;
+            return VOID_AUTH_ERROR_ACCOUNT_PASSWORD;
         }
 
         if ($m->comparePassword($old)) {
-            $res = Helper::update(Constant::TABLE_ACCOUNT, array('password' => EncryptUtil::encryptPassword($new)))
+            $res = Helper::update(VOID_AUTH_TABLE_ACCOUNT, array('password' => EncryptUtil::encryptPassword($new)))
                 ->eq('id', $id)
                 ->execute($db);
             if (!$res) {
-                return Constant::ERROR_UNKNOW;
+                return VOID_AUTH_ERROR_UNKNOW;
             }
         }
         return true;
@@ -53,17 +50,17 @@ class AccountModel extends Orm\Model
         $m = static::find()->eq('username', $username)->load()->getFirst();
 
         if (empty($m)) {
-            return array(Constant::ERROR_ACCOUNT_NOT_FOUND, null);
+            return array(VOID_AUTH_ERROR_ACCOUNT_NOT_FOUND, null);
         }
         if (!$m->comparePassword($password)) {
-            return array(Constant::ERROR_ACCOUNT_PASSWORD, null);
+            return array(VOID_AUTH_ERROR_ACCOUNT_PASSWORD, null);
         }
 
         switch ($m->status) {
-            case Constant::STATUS_ACCOUNT_NONACTIVATED:
-                return array(Constant::ERROR_ACCOUNT_NONACTIVATED, null);
-            case Constant::STATUS_ACCOUNT_DISABLED:
-                return array(Constant::ERROR_ACCOUNT_DISABLED, null);
+            case VOID_AUTH_STATUS_ACCOUNT_NONACTIVATED:
+                return array(VOID_AUTH_ERROR_ACCOUNT_NONACTIVATED, null);
+            case VOID_AUTH_STATUS_ACCOUNT_DISABLED:
+                return array(VOID_AUTH_ERROR_ACCOUNT_DISABLED, null);
         }
 
         $behaviorCodes = array();
@@ -101,13 +98,13 @@ class AccountModel extends Orm\Model
         }
 
         $result = new Identity($m->id, $m->username, $m->getDomains(), $roleCodes, $behaviorCodes);
-        Event::dispatch(Constant::EVENT_ACCOUNT_LOGIN, $m, $result);
+        Event::dispatch(VOID_AUTH_EVENT_ACCOUNT_LOGIN, $m, $result);
         return array(true, $result);
     }
 }
 
 AccountModel::registerMetadata(array(
-        'table' => Constant::TABLE_ACCOUNT,
+        'table' => VOID_AUTH_TABLE_ACCOUNT,
         'properties' => array(
             Orm\IntegerProperty::create('id')->setPrimaryKey(true)->setAutoIncrement(true),
             Orm\StringProperty::create('username')->setUnique(true)->setUpdateable(false),

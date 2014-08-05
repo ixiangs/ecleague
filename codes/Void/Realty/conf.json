@@ -5,13 +5,21 @@
     "version": "0.0.0.1",
     "author": "IXiangs Studio",
     "website": "ixiangs.com",
-    "menu_types":{
-        "realty_repair":{
-            "title":"realty_repair_online",
+    "constants": {
+        "VOID_REALTY_TABLE_DEVELOPER": "{t}realty_developer",
+        "VOID_REALTY_TABLE_UPTOWN": "{t}realty_uptown",
+        "VOID_REALTY_TABLE_BUILDING": "{t}realty_building",
+        "VOID_REALTY_TABLE_REPAIR": "{t}realty_repair",
+        "VOID_REALTY_TABLE_COMPLAINT": "{t}realty_complaint",
+        "VOID_REALTY_TABLE_STAFF": "{t}realty_staff"
+    },
+    "menu_types": {
+        "realty_repair": {
+            "title": "realty_repair_online",
             "form": "/backend/void/realty/menutype/repair"
         },
-        "realty_complaint":{
-            "title":"realty_complaint_online",
+        "realty_complaint": {
+            "title": "realty_complaint_online",
             "form": "/backend/void/realty/menutype/complaint"
         }
     },
